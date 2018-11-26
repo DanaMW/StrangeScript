@@ -10,5 +10,4 @@ freenode ( irc://chat.freenode.net ) in #StrangeScript
 ```
 I currently run it using AdiIRC [Here](https://www.adiirc.com)
 
-Get AdiIRC at this tiny little button :)
 [![AdIRC](icons/AdiIRC.ico)](https://www.adiirc.com)
