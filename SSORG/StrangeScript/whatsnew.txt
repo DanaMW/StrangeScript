@@ -1,0 +1,374 @@
+* What is New in version 6.1?
+  Released August 29th, 2003.
+
+A fresh new version of mIRC! With this new release we hope to address most, if not all, of the comments, requests and remarks we received after the release of version 6.03, a year ago. Lots and lots of new features and functions have been implemented.
+
+Lots of things have been fixed. Like the default browser issue, a /background bug, an editor dialog bug that most likely was the cause of odd script problems, a memory bug relating to registry handling, a /whois related memory bug, a problem with background pictures, and a popup menu resources bug.
+
+Lots of other things have improved; All Socks5 firewall error messages are now displayed correctly, double-clicking on web/ftp hotlinks now displays a warning dialog before the site is opened, and an important change was made to the way files are created, opened, read, etc. for window logging, dcc sends/gets, and the list channels dialog. The amount of files opened for logging, sends/gets, etc. is no longer limited to a maximum total of 50 or so open files. DCC commands, such as /dcc send, ignore, etc. are now also handled in the form /dccsend, /dccignore, etc. and should also allow /dccallow etc.
+
+We're now using Visual C++ .NET 7.0 to compile mIRC. This also means nicknames are sorted a bit different, nicks beginning with certain non-alphabetic characters eg. _ ' etc. are being placed above normal nicks. This appears to be the standard sorting method in Windows, which Visual C++ abides by consistently. It now applies to the whole of mIRC.
+Support for the .jpeg extension has been added, custom file-handling commands and identifiers which allow you to open multiple files for reading and writing. A file type ignore warning explains why a file transfer is ignored, with a direct link to the options dialog, dcc ignore section. Also a new section was added to the servers.ini file from which mIRC will select an initial network to connect to. mIRC no longer defaults to DALnet. 
+
+Lots of interface changes this time; Check out the visual styles and new buttons, dialogs, menus etc. A single toolbar button replaces the previously separated aliases, remotes and popups button. The red light is now on when any of ctcp/event/raw are enabled, and off when they are all disabled. A right-click on the toolbar button displays a most recently used files list. At first this looks a bit odd, but it will just take some getting used to. With the color scheme option you can switch between different color schemes easily. 
+
+And scripters, there is lots of fun for you; with the $ event prefix the matchtext section of a remote event definition can now contain a regular expression! Binary variables no longer have an upper limit on the number of bytes that can be stored. And $compress() and $decompress() functions have been added that compress/decompress files and binary variables. The result is raw compressed data. Khaled managed to load a multi-megabyte file into a binary variable and compress, encode and write it to a new file, and then reverse the process. Fun stuff eh!
+
+- The "enable" sounds option in the sounds dialog now affects most sounds, including highlight, notify, window/icon flashing, etc. Sound requests and Agents still need to be enabled/disabled individually. This does not affect the use of sound-related commands in scripts.
+
+- Pressing Control-C while marking text in a window now copies the text and cancels the mark process. It took eight years to think of that. It's all about quality you know ;)
+
+- Remember how you can 'collapse' all windows you have opened on a network into their status window with Alt+F1? The status window switchbar button now displays the highlight state of all associated windows hidden with Alt+F1.
+
+- Disconnecting via the file menu/toolbar/disconnect command now results in a soft disconnect, allowing any pending server info to be displayed. Incoming data will not trigger scripts, etc. during this time. Eg. if you connect to EFnet, and then disconnect, EFnet sends a "Closing Link" message to the client. Past versions of mIRC wouldn't display that since they were performing a hard disconnect.
+
+Ok, I have to stop. There is too much to tell in this limited space. You'll have to dig through the help file and the list 
+below to get hold of the complete list of changes and their impact. If you have questions, may we invite you to the message boards on mIRC's website? These discussion forums offer great help with everything related to mIRC and its features.
+
+I'm sure you will have a lot of fun with this new mIRC! 
+Tjerk Vonck.
+
+____________________________
+29/08/2003 - mIRC v6.1
+
+Full list of Fixes and Additions in mIRC 6.1:
+
+1.Fixed editboxes in options/custom dialogs using double-border when
+  themes are enabled.
+2.Fixed default browser issue.
+3.Fixed $serverip bug.
+4.The $awaytime value is now available in scripts that handle numeric
+  305.
+5.Fixed $isid when used as first parameter in $iif().
+6.Fixed $nick().idle time being incorrectly reset in certain
+  situations, eg. /mode changes on a nickname.
+7.Fixed listbox size in firewall dialog.
+8.Fixed $sorttok() not handling negative numbers.
+9.Fixed custom window visual style display bug.
+10.Fixed $input() bug when multiple $input() dialogs were opened at
+   the same time.
+11.Fixed /set /inc /dec -cz bug which caused -cz to stop in some
+   situations.
+12.Fixed $script() and $alias() bug when handling LFNs.
+13.Fixed /amsg and /ame trying to send to non-joined channels.
+14.Double-clicking on web/ftp hotlink now displays a warning dialog
+   before the site is opened.
+15.Fixed /color bug.
+16.Fixed Control + mark/copy not working in custom windows.
+17.Fixed /background bug, wasn't applying settings in some
+   situations.
+18.$os now returns NET for .NET systems.
+19.Fixed Editor dialog bug, was not reading text in the editbox
+   correctly in some situations.
+20.All Socks5 firewall error messages are now displayed correctly.
+21.Added /play [-a] [alias] [channel/nick/stop] <filename> [delay]
+   makes /play use specified alias instead of /msg or /notice.
+22.Files opened for logging, sends/gets, etc. are no longer limited
+   to a maximum total of 50 or so open files.
+23./dcc commands, such as /dcc send, ignore, etc. are now also
+   handled in the form /dccsend, /dccignore, etc.
+24.Added 'r' switch regex match method to $read() and /write.
+25.Added /clipboard -n switch, appends $crlf to text.
+26.Added /dcc nick -sgcf <oldnick> <newnick>, allows you to change
+   the nickname associated with a dcc send/get/chat/fserve.
+27.Added $file().shortfn/longfn properties.
+28.Nicknames in channel part/quit messages now show mode prefix.
+29.Added multsel value for custom dialog listbox controls.
+30.Uninstaller will now work even if you have other copies of mIRC
+   running.
+31.Now using Visual C++ .NET 7.0 to compile mIRC.
+32.Fixed memory bug relating to registry handling.
+33.The /did -cf switches now scroll the cursor into view when used
+   on an editbox.
+34./window now handles negative font sizes correctly.
+35./window -o now displays a desktop window in a non-active state.
+36.Fixed /drawtext default colors and font/size bugs.
+37.Fixed tab completion wildcard handling bug for identifiers and
+   variables.
+38.Added support for .jpeg extension.
+39.Fixed /play -e display bug.
+40.$duration() can now handle h:m:s format and if N = 3 it outputs
+   in h:m:s format.
+41.Fixed /hop bug when part message specified.
+42.Extended $crc(text|&binvar|filename,[N]) where N = 0 for plain
+   text, 1 for &binvar, 2 for filename (default).
+43.Extended $disk(path|N) where N = 0 for total available drives,
+   and N > 0 to access each drive. $disk().path returns drive path.
+44.Pressing enter key in a dcc get dialog while focus is in editbox
+   now accepts the dcc.
+45.Added identifier warning option to editor dialog options menu,
+   halts script if identifier doesn't exist.
+46.Fixed /aop bug.
+47.Fixed /whois related memory bug.
+48.The "no such nick" message is now shown only in the query window
+   if one is open.
+49.Added /qmsg and /qme, send message/action to all open query
+   windows.
+50.If "hide desktop windows when minimized" is enabled, can now hold
+   down shift key when minimizing to prevent hiding.
+51.Channels list files are now saved to their own channels folder.
+52.Fixed $bvar().long/word bug when used with a binary variable
+   containing insufficient bytes.
+53.Changed DCC section in Options dialog, moved Ignore to own
+   section, and Folders section now uses a listview control.
+54.Changed default visual styles.
+55.Notify list dialog now uses listview, and added notify offline
+   sound.
+56.Added $ceil(N) and $floor(N), round to next highest or next
+   lowest integer.
+57.Fixed $asin(), $acos(), and $atan() bugs.
+58.Fixed /playctrl gpf bug.
+59.Fixed /ignore -wuN combination causing unignore to fail.
+60.Fixed "use default" not working in background menu item for
+   channel windows.
+61.Added $msfile(dir,title,oktext) identifier, same as $sfile() but
+   allows selection of multiple files. Returns N, number of selected
+   files. $msfile(N) returns each file. If a user selects too many
+   files, $msfile() returns -1.
+62.Updated libraries to PNG 1.2.5, zlib 1.1.4, and PCRE v4.3.
+63.Fixed $base() bug.
+64.Fixed $group() bug.
+65.Fixed editor dialog not re-aligning and spacing out text when a
+   file is changed and saved.
+66.Fixed $chan().limit and other related bugs.
+67.Fixed list channels dialog gpf bug.
+68.Added custom file-handling commands and identifiers, which allow
+   you to open multiple files for reading and writing.
+
+   /fopen [-n] <name> <filename>
+       If file open fails, script continues to run. See $ferr
+       and $feof below.
+
+   /fclose <name | wildcard>
+       Closes specified files.
+
+   /flist [name | wildcard]
+       Lists open files
+
+   /fseek <name> <position>
+       -l <name> <line number>
+       -n <name> <next line>
+       -w <name> <wildcard>
+       -r <name> <regex>
+
+       Sets read/write pointer to specified position in file.
+
+   /fwrite [-bn] <name> <text | &binvar>
+       -b indicates that a &binvar is being specified
+       -n appends a cr/lf to the line
+
+   $fopen(name | N) .fname .pos .eof .err
+       .eof and .err must be checked after each file access
+       command or identifier, since file access errors will
+       not halt a script.
+
+   $fread(name | N)
+       Returns next cr/lf delimited line.
+
+   $fread(name | N, M, &binvar)
+       Returns number of bytes read into binary variable, where
+       M is the number of bytes to read.
+
+   $fgetc(name | N)
+       Returns character value
+
+   $feof and $ferr
+       May be used to refer to the result of the last file
+       access attempt in any script, where $feof = end of file
+       was reached, and $ferr = error accessing file.
+
+69.Added file type ignore warning, which pops up when a file type is
+   ignored, and explains why, with a direct link to the options
+   dialog, dcc ignore section.
+70.Extended /drawpic, can now draw icons from ico/exe/dll files.
+71.Fixed $findfile() not halting on control+break key in some cases.
+72.Added $rawmsg, returns raw server line for server events.
+73.Fixed background picture fill/stretch/etc. display bug in windows.
+74.Extended $send()/$get() .status propery to also return "sent",
+   "received", and "failed". The .done property is still supported.
+75.All alias and remote files in the Editor can now be unloaded, and
+   a default empty file will be created.
+76.Changed buttons in all dialogs to standard size. Many dialogs were
+   re-designed to accomodate this.
+77.Browse folder button in dcc get dialog now shows a folder icon.
+78.Play button in sounds dialog now shows a play icon.
+79.Changed the way the add/delete buttons work in the Address book
+   dialog, and made changes to the info section.
+80.Simplified connect dialog, and added a separate servers dialog.
+81.Added a new section to servers.ini, with the following format:
+
+   [networks]
+   n0=Quakenet
+   n1=EFnet
+   n2=Undernet
+   n3=DALnet
+
+   A newly installed mIRC, which is missing the "host" entry in the
+   [mirc] section in mirc.ini, will select an initial random server
+   from this list.
+
+82.Added $file().attr, returns file attributes.
+83.Fixed $regsub() gpf bug with long strings.
+84.Can now use /* and */ to comment out multiple lines in an alias,
+   popup, or script. Each be used alone on a single line.
+85.Fixed script custom @menu gpf bug.
+86.Fixed tabbed dialogs display bug.
+87.Fixed line marker being saved to log/buffer as empty line.
+88.The /dns command now indicates if a request is being queued.
+89.Fixed /echo -iN display bug causing indented part of a wrapped
+   line to display control codes.
+90.In the DCC Resume and Accept ctcp messages, mIRC now uses the
+   original transfer filename instead of "file.ext".
+91.A single toolbar button is now used for the editor dialog. The
+   red light is now on when any of ctcp/event/raw are enabled, and
+   off when they are all disabled. A right-click on the toolbar
+   button now displays a most recently used files list.
+92.Fixed "on top" setting for main mIRC window not being set on
+   startup.
+93.Merge logfiles feature now closes all open logs before attempting
+   a merge and then reopens the logs after the merge is finished.
+94.Fixed memory bug in logfiles merge dialog.
+95.Added $input() options: 'r' creates a retrycancel dialog, 'd'
+   plays the system sound associated with each system icon, 'g' right
+   aligns buttons.
+96.Channels list now displays channel names which begin with a non-
+   recognized prefix.
+97.On a throttled connection attempt, mIRC will now wait 60 seconds.
+98.Fixed mIRC not opening a new webbrowser for "latest news", "how to
+   register" etc. links.
+99.Fixed bug in "On Send" setting in catcher dialog.
+100.Channel central topic editbox is now limited to TOPICLEN length
+    specific in server numeric 005.
+101.Fixed timed unban in /ban command not working with half-ops.
+102.Search option in View Logs dialog now actually searches through
+    files for matching text, as well as matching on the filename.
+103.Added /ban -k switch, performs a ban/kick. You can specify a kick
+    message as the last parameter.
+104.Incoming part messages are no longer truncated to 65 characters.
+105.Added Alt+D shortcut to open Aliases section in script editor,
+    due to conflicting Alt+A in Favorites menu. The Favorites menu
+    can however be turned off, in which case Alt+A will revert to
+    opening Aliases.
+106.Added "navigation clicks" to sounds dialog, makes a sound when
+    you click on a url or hotlink such as a channel/user name.
+107.Changed the way colors are referenced for events text in windows
+    so that colors are now an index to the color type eg. "Normal
+    text", as opposed to the 16 color palette.
+108.The log view dialog now allows you to merge/delete files that are
+    in use. It closes log files if necessary before using them, and
+    then re-opens them afterwards.
+109.Empty lines are now stripped out of popup menu definitions in
+    editor dialog.
+110.Many interface changes and improvements.
+111.Added color scheme option to colors dialog to allow you to switch
+    between different color schemes easily.
+112.Fixed /server -n -i bug not setting nicknames in new server
+    window.
+113.Fixed irc:// links not using default port value.
+114.Fixed main menu flickering when switching windows.
+115.Fixed /amsg and /ame bug when a long message is specified.
+116.Fixed $submenu() bug, was over-evaluating parameters.
+117.Fixed /rename bug.
+118.Notify list now displays network name and server address.
+119.Fixed $bfind() bug.
+120.Fixed $base() floating point handling bug.
+121.When repeatedly calling /notify to add multiple nicknames to the
+    notify list, mIRC now pauses for one second before updating the
+    server to prevent flooding.
+122.The $() identifier used in the matchtext section of a remote
+    event definition can now use $1- to reference the incoming line.
+123.The matchtext section of a remote event definition can now
+    contain a regular expression. You must specify the $ event prefix
+    to use this feature.
+
+    on $*:TEXT:m/regular expression/switches:#:/echo message: $1-
+
+    The 'm' and switches are optional. The // are required. If
+    switches are used they must be standard PCRE switches, otherwise
+    the match will fail. You can use switch 'S' to strip control
+    codes from $1-.
+
+124.On systems that support it, mIRC uses the new format for the
+    browse for folder dialog, eg. $sdir() etc.
+125.Added toolbar disconnect confirm option: requires two clicks
+    to disconnect from a server, to prevent accidental disconnects.
+126.Fixed $mp3() not returning correct .length for large mp3s.
+127.The on CONNECTFAIL event now sets $1- to the error message.
+128.Fixed $isdde() bug.
+129.Added /color -s "scheme name" to allow changing of color schemes,
+    and /color -l to reload color settings from mirc.ini.
+130.Individual incoming lines (numeric 322 during a channel listing)
+    can now be /halted in a script.
+131.Fixed popup menu resources bug. Submenus which were merged due to
+    duplicate names were not being freed afterwards.
+132.Control+Enter with a /! prefixed command now triggers on INPUT.
+133.Changing the flash settings in IRC options now applies them to
+    all open windows (whose flash settings weren't manually enabled).
+134.Fixed finger server bug.
+135.Added $line().state property, returns selection state for a line
+    in a @window listbox.
+136.Control+Break no longer halts a script if it is pressed while
+    mIRC is not the active application.
+137.Fixed long script filenames not being displayed correctly in
+    Editor dialog.
+138.Added $didreg() identifier, same as $didwm() but uses regex.
+139.Extended $fline(), where the T parameter can be 1 to use a
+    listbox, 2 to use regex, or 3 for both.
+140.Closing a debug @window now turns off debugging for that server.
+141.Added "paste confirm" option to confirm dialog, displays warning
+    you when you try to paste more than N lines of text to a window.
+142.Added Key combination Alt+X to toggle maximized state of a
+    window.
+143.Binary variables no longer have an upper limit on the number of
+    bytes that can be stored.
+144.Added $compress(file|&bvar, blN) and $decompress(file|&bvar, blN)
+    that compress/decompress files/binary variables. The result is
+    raw compressed data. Where -b indicates a binary variable in the
+    first parameter, and -lN sets a compression level of 1 to 6 (the
+    default is 6).
+145.Added /write -n switch, prevents /write from appending the line
+    with a $crlf.
+146.Using /hdec on a non-existent hash table item now sets it to a
+    default value of -1.
+147.Added /debug -i <...> [identifier] which calls the specified
+    identifier before a debug line is logged. The return value of
+    the identifier is used as the debug line.
+148.The "enable" sounds option in the sounds dialog now affects most
+    sounds, including highlight, notify, window/icon flashing, etc.
+    Sound requests and Agents still need to be enabled/disabled
+    individually. This does not affect the use of sound-related
+    commands in scripts.
+149.Pressing Control-C while marking text in a window now copies the
+    text and cancels the mark process.
+150.Added /server -pfoc switches, which prevent: perform, popup
+    favorites folder, autojoin channels, and on connect event, on
+    connecting to a server.
+151.Time and date identifiers eg. $ctime() now return $null if an
+    invalid time/date is specified.
+152.Status window switchbar button now displays highlight state of
+    associated windows hidden with Alt+F1.
+153.Disconnecting via the file menu/toolbar/disconnect command now
+    results in a soft disconnect, allowing any pending server info
+    to be displayed. Incoming data will not trigger scripts, etc.
+    during this time.
+154.Added "show nicks on join" option to IRC options dialog.
+155.Added "Alt+Z closes active window" option to keys dialog.
+156.The $ticks identifier should now take account of the 49.7 day
+    windows tick counter wrapping around to zero.
+157.When connecting to a server, named addresses are now resolved
+    before checking for a match in the firewall exclude list.
+158.Fixed "session time" not being written to log files at midnight.
+159.Fixed $modefirst and $modelast not working in on op/deop/etc.
+    events.
+160.Status window titlebar now displays connect info when you are not
+    connected to a server.
+161.$calc($null) now returns zero instead of $null.
+162.Fixed $dns(0).ip not returning ip address for a failed ip address
+    lookup.
+163.Fixed $rand() number distribution bug.
+164.Fixed mark/copy display bug.
+165.Fixed /did not showing/hiding tabs and their contents properly.
+166.Added $comcall(name, alias,...) and $dllcall(filename, alias,...)
+    identifiers, same format as $com() and $dll(), except these
+    return immediately and allow the script to continue running. When
+    the COM/DLL returns, the specified alias is called.

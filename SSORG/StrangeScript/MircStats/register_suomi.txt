@@ -1,0 +1,76 @@
+mIRCStats-rekisteröinti
+=======================
+Muista katsoa myös http://www.nic.fi/~mauvinen/mircstats/register.html
+
+
+
+mIRCStats-IRC-tilastogeneraattori sisältää paljon ominaisuuksia, joiden käyttöönotto 
+onnistuu rekisteröimällä käyttämäsi kopion. Voit katsoa listan nykyisistä 
+rekisteröintiä vaativista ominaisuuksista tiedostosta register.txt
+
+Rekisteröinnin jälkeen saat parin päivän sisällä sähköpostitse henkilökohtaisen
+rekisteröintikooditiedostosi, joka sijoitetaan mircstats-hakemistoosi. 
+
+Tämä koodi oikeuttaa ohjelman käyttämään kaikkia uusia ominaisuuksia rajoituksetta.
+
+
+
+Voit halutessasi rekisteröidä mIRCStats:in www.shareit.com:in tarjoamalla salatulla 
+on-line-rekisteröinnillä (http://shareit1.element5.com/programs.html?productid=106728), 
+mutta koska rekisteröintipalvelun käytöstä joutuu maksamaan pienen käyttömaksun, tarjoan 
+suomalaisille käyttäjille mahdollisuuden rekisteröidä ohjelman hiukan halvemmalla 
+maksamalla maksun suoraan tililleni. On-line-rekisteröintimaksu on normaalisti 15 USD, 
+mutta suoraan tilille maksettuna rekisteröintimaksu on 12 EUR.
+
+
+Rekisteröinti onnistuu helpoiten seuraavasti:
+
+1) Maksa 12 EUR tilille 573165-436888, laita viestiksi sähköpostiosoitteesi tai nimesi.
+2) Ilmoita itsestäsi seuraavat tiedot:
+
+	Nimesi: 		___________________________________
+	Katuosoite: 		___________________________________
+	Postitoimipaikka: 	___________________________________
+	EMail-osoite: 		___________________________________
+
+     - joko sähköpostitse osoitteeseen mircstats@nic.fi 
+       (kerro myös maksupäivä, jotta voin tarkistaa maksun tulleen perille)
+
+     - tai lähetä tietosi sekä kopio rekisteröintimaksun kuitista
+       kirjeellä osoitteeseen 	
+				Mikko Auvinen
+				Kukkakedonkuja 1 A 3
+				36110 Ruutana
+
+
+ Huom! Muista liittää mukaan sähköpostiosoitteesi ja nimesi, jotta henkilökohtainen 
+       rekisteröintikoodisi voidaan generoida ja toimittaa oikeaan osoitteeseen
+       1-3 päivän sisällä.
+     
+
+Rekisteröintikoodi on voimassa aina, joten kerran rekisteröidyttyäsi olet oikeutettu 
+käyttämään myös kaikkia tulevien versioiden uusia ominaisuuksia!
+
+
+Muista että rekisteröintikoodisi on henkilökohtainen, etkä saa antaa sitä muiden käyttöön.
+Jos levitettyjä koodeja löytyy, ne tullaan mitätöimään.
+
+
+
+-----
+By registering mIRCStats you are agreeing to the following terms:
+
+1. mIRCStats is supplied as is.  The author disclaim all warranties,
+expressed or implied, including, without limitation, the warranties
+of merchantability and of fitness for any purpose. The author assumes
+no liability for damages, direct or consequential, which may result
+from the use of mIRCStats.
+
+2. You are responsible for maintaining the confidentiality
+of your registration code and are liable for any harm resulting
+from disclosing or allowing disclosure of your registration code.
+
+3. Registration code is personal, you are not allowed to generate 
+stats for other peoples' channels with features which need licencing.
+This means that providing stats service is not allowed. Contact 
+mircstats@nic.fi if you are planning to set up a service like that.

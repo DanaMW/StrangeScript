@@ -1,0 +1,3 @@
+421: Strange <$1 Lag-SS <$2 Unknown <$3 command <$4
+421: [Param1: Strange] [Param2: Lag-SS] [Param3: Unknown] [Param4: command]
+421: [Param1: Strange] [Param2: Lag-CK 98648739] [Param3: Unknown] [Param4: command]

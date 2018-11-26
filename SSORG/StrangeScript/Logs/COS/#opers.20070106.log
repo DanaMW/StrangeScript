@@ -1,0 +1,36 @@
+
+Session Start: Sat Jan 06 06:17:37 2007
+Session Ident: #opers
+(06:17:37)   º( Join )º( Strange )º( dana@xXx-3B306654 )º
+(06:17:37)   º( Auto Setup )º( #opers )º( HALTED )º( Rumble Mode )º( ON )º
+(06:17:38)   º( Speed )º( Join )º( #opers )º( Synched in: )º( 0.063 secs )º
+(06:17:38)  º(DALnet)º( LOGON Event triggered )º
+(06:17:38)  º(DALnet)º( Server Notice )º( *** Looking up your hostname... )º
+(06:17:38)  º(DALnet)º( Server Notice )º( *** Checking Ident )º
+(06:17:38)  º(DALnet)º( Server Notice )º( *** Found your hostname )º
+(06:17:38)  º(DALnet)º( Server Notice )º( *** Got Ident response )º
+(06:17:38)  º(DALnet)º( Server Info )º( There are 150 users and 31492 invisible on 40 servers )º
+(06:17:38)  º(DALnet)º( Server Info )º( 83 IRC Operators online )º
+(06:17:38)  º(DALnet)º( Server Info )º( 15773 channels formed )º
+(06:17:38)  º(DALnet)º( Server Info )º( I have 2873 clients and 1 servers )º
+(06:17:38)  º(DALnet)º( Server Info )º( Current local users: 2873 Max: 3885 )º
+(06:17:38)  º(DALnet)º( Server Info )º( Current global users: 31642 Max: 44822 )º
+(06:17:38)  º(DALnet)º( Server Notice )º( *** Notice -- motd was last changed at 19/2/2005 14:03 )º
+(06:17:38)  º(DALnet)º( Server Connect Count )º( 16524 )º( Using: )º( StrangeScript v6.21.12.19.2006 )º
+(06:17:38)  º(DALnet)º( Auto-Identify )º( ON )º( You are being Auto-Identified using )º( ripmeagain )º
+(06:17:38)  º(DALnet)º( Server )º( Set at )º( DALnet )º
+(06:17:39)  º(DALnet)º( Rumble Mode )º( ON )º
+(06:17:39) NOTICE(DALnet): º( NickServ )º  This nick is owned by someone else. Please choose another.
+(06:17:39) NOTICE(DALnet): º( NickServ )º  If this is your nick, type: /msg NickServ@services.dal.net IDENTIFY <password>
+(06:17:39) NOTICE(DALnet): º( NickServ )º  Your nick will be changed in 60 seconds if you do not comply.
+(06:17:41)  º(DALnet)º( ERROR )º( /hidden.rooms )º( #house-of-insults )º( This error happens when the room modes are null )º
+(06:17:42)   º( Part )º( Strange )º( dana@xXx-3B306654 )º
+Session Close: Sat Jan 06 06:17:42 2007
+
+Session Start: Sat Jan 06 17:00:11 2007
+Session Ident: #opers
+(17:00:11)   º( Join )º( Strange )º( dana@xXx-3B306654 )º
+(17:00:11)   º( Auto Setup )º( #opers )º( HALTED )º( Rumble Mode )º( ON )º
+(17:00:11)   º( Speed )º( Join )º( #opers )º( Synched in: )º( 0.062 secs )º
+(17:00:15)   º( Part )º( Strange )º( dana@xXx-3B306654 )º
+Session Close: Sat Jan 06 17:00:15 2007

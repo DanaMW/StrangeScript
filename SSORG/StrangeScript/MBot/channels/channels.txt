@@ -1,0 +1,11 @@
+dev.strangeout.com Wed Sep 24 11:58:16 2003
+#help 2 admin@strangeout.com || StrangeOut Network Help and Information || http://www.strangeout.com
+#HobbyShop 4 Hobby Fun Room
+#mIRC 3 mIRC scripting
+#rOOt 1 root access
+#StrangeOut 20 IRC Gets a boost from the big boy? --> http://www.cnn.com/2003/TECH/internet/09/24/microsoft.chat/index.html
+#TheTwilightZone 2 Crazy
+#lakeserv 1 LakeServ Support Channel [ http://www.lakeserv.tk ]
+#Trivia 1 Trivia
+#StrangeScript 2 7,7 6,6 3,1~11»3}9®3{11«3~6,6 7,7 7,2 Home 7,7 6,6 3,1~11»3}9®3{11«3~6,6 7,7 
+#deathrow 1 Welcome to the home of Lethal_INjection

@@ -1,0 +1,16 @@
+Fileserver commands
+The commands availabe to a user connected to your fileserver are:
+cd <directory> - change to the specified directory. 
+dir [-b|k] [-#] [/w] - lists the name and size of each file in the current directory. The /w switch
+forces a 	wide listing. The [-b|k] selects bytes or k's. The [-#] specifies the number of files on
+each line in a horizontal listing.
+ls [-b|k] [-#] - lists the name of each file in the currenty directory using a wide listing.
+get <filename> - asks the fileserver to DCC Send the specified file.
+read [-numlines] <filename.txt> - reads the specified text file.
+The user will be sent a default of 20 lines and then prompted whether to continue listing.
+The -numlines option changes the default number of lines to a value between 5 and 50.
+help - lists the available commands.
+exit or bye - terminates the connection.
+Note:
+If a user is idle for too long the fileserver will automatically close the connection.
+A user is limited to opening a single fileserver session at any one time.

@@ -1,0 +1,461 @@
+*** Language file for mIRCStats : lang_suomi.msl
+
+// your name here (will be shown in the bottom bar)
+100: Ave
+
+// HTML title text
+
+0: [channelname]-tilastot - koonnut: [name1]
+
+// Page title: 1=user name given, 2= user name not given
+
+1: [name1] esittää: [channelname]-statistiikat ([today])
+2: [channelname] kanavastatistiikat - väännetty päivänä [today]
+
+
+// Subtitle: 3=One day stats, 4=more than one day
+// [name1]=Day of week for start day, [date1]=start date like '1.1.1999'
+// [name2]=Day of week for end day,   [date2]=end date like '2.1.1999'
+
+3: Tilastointipäivä: [name1] [date1]
+4: Höpinät kerätty ajanjaksolta [name1] [date1] - [name2] [date2]
+4: Löpinät peräisin väliltä [name1] [date1] - [name2] [date2]
+
+
+5: Tällä [number1]:n päivän ajanjaksolla [channelname]:lla kävi [number2] ihmistä.
+6: Tunnit
+7: Nimi
+8: Nimeä
+
+9: Rivien määrä
+9: Aktiivisuus riveinä
+10: Satunnainen rivi
+10: Satunnainen otos
+
+11: Sunnuntai
+12: Maanantai
+13: Tiistai
+14: Keskiviikko
+14: Pikkulauantai
+15: Torstai
+16: PERJANTAI
+17: Lauantai
+
+***
+
+// Channel load by weekdays
+28: Viikkotilasto
+28: Viikoittainen aktiivisuus
+28: Aktiviteetti viikonpäivittäin
+
+// Daily stats title
+30: Vuorokausitilastot
+30: Päiväkohtainen aktiivisuus
+30: Päivät ja rivimäärät
+
+// Daily stats subtitle
+31: (Rivien määrä / 6 tuntia)
+
+***
+
+// Hourly stats title
+32: Tuntitilastot
+32: Aktiviteetti tunneittain
+
+***
+
+// User stats title
+33: Käyttäjätilastot
+33: Kovimmat naputtelijat
+33: Kanavan aktiivisimmat
+
+//User stats subtitle
+34: (Järjestetty rivimäärän mukaan)
+34: eniten kirjoittanut ekana
+
+
+// Non-detailed user table title. [number1] = threshold linecount
+35: He kirjoittivat alle [number1] riviä:
+35: Vaihtopenkkiläiset, alle [number1] tokaisua:
+35: Ei-niin-aktiiviset - alle [number1] rivin ihmiset
+
+// [number1]=number of nicks who did not make it to stats
+36: Lisäksi [channelname]:lla oli [number1] muuta henkilöä lorvailemassa...
+36: Lisäksi kanavalla kävi [number1] hlöä.
+
+
+// User stats title when "Show Top N nicks" selected. [number1] = Number of nicks in table.
+37: TOP [number1]
+37: [channelname]:n [number1] aktiivisinta henkilöä
+37: [number1] kovinta naputtelijaa
+
+// Non-detailed user table title when "Show Top N nicks" selected. [number1] = number of nicks in main table
+38: Top [number1]:een pyrkijät
+38: Melkein yhtä aktiivisia olivat
+38: He eivät ihan yltäneet kärkiryhmään
+
+
+*** Topic table
+
+// Topic title : [number1]=number of topics  
+// (this is shown if report has less than 6 topics)
+
+40: Otsikko vaihtui [number1] kertaa
+40: Otsikoiden määrä: [number1]
+
+// Topic title (6 or more topics) [number1]=number of topics
+41: Otsikoiden kokonaismäärä : [number1]
+41: Topiikkia vaihdettiin kokonaiset [number1] kertaa
+41: Kanavan otsake vaihtui [number1] kertaa.
+
+// Title for '5 topics' table
+42: Viisi satunnaista otsikkoa
+42: Viisi otosta parhaimmasta päästä:
+ 
+// Topic table title 'Changed by'
+43: Vaihtanut
+43: Keksijä
+43: Vaihtaja
+43: Persoona
+
+// Topic table title 'Changed by'
+44: Uusi otsikko
+44: Vaihtoi otsikoksi tämmöisen:
+
+
+*** Big numbers
+
+//big numbers title
+50: Muuta tietoa
+50: Satunnaista faktaa kanavalta:
+
+//most joins. [name1]=nick, [number1]=number of joins
+51: [name1] kävi [channelname]:lla yhteensä [number1] kertaa
+51: [name1] vieraili [channelname]:lla useiten ([number1] kertaa tarkalleen)
+
+//most descriptions (/me). [name1]=nick, [number1]=number of descs
+52: [name1] selitteli itsestään [number1] kertaa
+52: [name1] kirjoitti /me - lauseita [number1] kertaa
+52: Eniten /me-lauseita kirjoitti [name1] ([number1] kertaa...) 
+
+
+// 'Sample:'
+53: Esimerkki:
+53: Esimerkiksi näin:
+53: Esim.
+
+//best kicker. [name1]=nick, [number1]=number of kicks he gave
+54: [name1] potki ulos [number1] häirikköä. 
+54: [name1] käytti isännän oikeutta reippaimmin ja potkaisi pois [number1] ei-toivottua henkilöä. 
+54: Eniten potkuja jakeli [name1] ([number1] kpl.)
+
+//second best kicker. [name1]=nick, [number1]=number of kicks he gave
+55: Myös [name1] yritti päteä ja antoi potkut [number1]:lle henkilölle
+55: Osansa hoiti myös [name1], joka kenkäisi ulos [number1] häirikköä.
+
+
+//got kicked most times. [name1]=nick, [number1] = got this amount of kicks
+56: [name1] sai eniten potkuja - [number1] kappaletta...
+56: Aaaaand tö Oscar goes to: [name1] - sai kenkää [number1] kertaa!!
+56: Kipeän aunuksen hankki [name1] - kenkää persiille [number1] kertaa.
+56: Aaaaand weeee have a winner!! [name1] sai potkut [number1] kertaa!
+
+//runner-up kicked person. [name1]=nick, [number1]=number of kicks he got
+57: Toiseksi eniten potkittiin [name1]:a - [number1] kertaa.
+57: Aivan vähille ei jäänyt myöskään [name1]. Kengittiin pois [number1] kertaa.
+
+//most hunted lines [name1]=nick, [number1]=number of texts found, [name2]=hunted text
+58: [name1] toisti itseään ja sanoi [name2] [number1] kertaa...
+58: Itseään toisteli [name1] ja tokaisi [name2] kaikenkaikkiaan [number1] kertaa.
+58: "Sama sana monta kertaa"-palkinto: [name1] - sanoi [name2] [number1] kertaa.
+
+//most '!'-marks. [name1]=nick, [name2]=percentage. example: "17 %"
+59: Kovin huutaja oli [name1] joka huusi [name2] kaikista sanomisistaan!
+59: Huutomerkin käytön taitaja: [name1], jonka kirjoittamista riveistä [name2] sisälsi huutomerkkejä.
+59: Kovaäänisin henkilö [channelname]:lla oli [name1] - [name2] lauseista sisälsi huutomerkkejä!
+
+//second loudest [name1]=nick, [name2]=percentage. example: "17 %"
+60: Toiseksi kovin karjuja oli [name1] - [name2] huudettuja rivejä!
+60: Melkein yhtä reikäpäinen (muttei ihan) oli [name1] - [name2] huudettuja rivejä!
+
+//most '?'-marks. [name1]=nick, [name2]=percentage. example: "17 %"
+
+61: [name1]:lla oli paljon epäselviä asioita - [name2] riveistä oli kysymyksiä. 
+61: [name1]:llä on kyselykausi - [name2] riveistä kyssäreitä.
+61: [name1] oli tiedonjanoinen ja kyseli paljon. ([name2] koko tuotannostaan oli kysymyksiä...)
+
+//second in '?'-list [name1]=nick, [name2]=percentage. example: "17 %"
+62: ...hopeamitali menee [name1]:lle - kysymyksiä [name2].
+62: Kohtuullisen paljon asioita kyseli myös [name1] ([name2]).
+  
+
+//longest lines:
+63: [name1] kirjoitti pisimmät rivit - [number1] kirjainta per rivi.
+63: Kalle Päätalo-award: [name1] - keskim. rivinpituus kunnioitettavat [number1] kirjainta per rivi.
+63: [name1]:llä oli vaikeuksia ENTERin paikallistamisessa joten rivit venyivät pituuteen [number1] kirjainta/rivi...
+
+//average line length [number1]=avg. number of letters.
+64: [channelname]:n rivien keskipituus on [number1] kirjainta.
+64: [channelname]:n keskivertovierailija kirjoittaa muuten [number1] kirjainta riville, About.
+64: [channelname]:n keskimääräinen rivinpituus on muutes [number1] kirjainta. Kerro kavereillesikin.
+
+//most nicks-table topic
+65: Eniten nickejä
+65: Persoonallisuusongelmaiset
+65: Nikki-ihmiset
+
+//sub-title
+66: (Vieläkään ei sopiva ole löytynyt, [name2]...:)
+66: (...hei jotain rajaa siihen nimenmuutteluunkin, [name2]!)
+66: (Täällä mitään nikkiä tarvii vaihdella, [name2]...)
+
+// gave most ops
+67: [name1] jakoi eniten oppeja (@) - [number1] kappaletta.
+
+// deopped most times.
+68: [name1] menetti operaattorin arvonsa useimmin, eli [number1] kertaa...
+
+//most lines written in CAPS. [name1]=nick, [number1]=number of capitalized lines
+69: Joku on käynyt liimaamassa [name1]n näppäimistöstä shiftin pohjaan - [number1] isoilla kirjoitettua riviä!
+69: Caps-mestari on [name1] [number1]:lla shifti pohjassa kirjoitetulla rivillään!
+
+
+// ** nick who spoke most with oneself... ([number1]=count)
+80: [name1] esitti eniten yksinpuheluita - kirjoitti [number1] kertaa yli 5 riviä peräkkäin...
+80: Omaa Kivaa-palkinto menee [name1]:lle - keskusteli itsensä kanssa todistettavasti [number1] kertaa...
+80: [name1] näpytteli kanavalle yli 5 riviä putkeen [number1] kertaa.
+
+81: Myös [name1] jutteli paljon itsekseen - [number1] yksinpuhelua.
+81: Kanavaa yritti aktivoida myös [name1] ja kertoi tarinoita yksinään [number1] kertaa.
+
+
+// Activity peak detection: [number1]=number of persons, [string1]=interval.
+82: Aktiivisuushuippu nähtiin kun [number1] oli paikalla [string1]
+82: Kanava oli aktiivisimmillaan [string1], paikalla oli tuolloin [number1] ihmistä.
+
+// Activity peak subtitle: [number1] length of the interval in minutes (0...60)
+83: Kyseisen [number1] minuutin aikana paikalla olivat:
+83: [number1] minuutin aikana kanavalla tarinoivat seuraavat henkilöt:
+
+
+*** Long term stats
+
+//Title texts: weekly(70), two week sections(71), mohtly(72), two(73) and three(74) month sections.
+
+70: Viikottaiset tilastot
+70: Tolppa per viikko.
+71: [channelname] kahden viikon jaksoissa:
+72: Kuukausittaiset tilastot
+72: Pitkän linjan tilastot (Tolppa per kuukausi)
+73: Kahden kuukauden jaksot
+73: Kaksikuukautiset ajanjaksot 
+74: Kolmen kuukauden jaksot
+
+75: Puolivuosittainen aktiviteetti
+76: Vuosittainen aktiviteetti [channelname]:lla
+
+
+//Total number of lines in channel history.
+//[name1] = number of lines with thousand separators like 12,123,233
+
+78: Yhteensä [name1] riviä
+78: Rivien kokonaismäärä [channelname]:lla on [name1].
+78: Yhteensä ollaan naputeltu tasan [name1] riviä.
+
+
+//Estimated number of lines for current section
+//(not implemented yet.)
+
+79: Arvio tälle jaksolle: [number1] riviä.
+79: Arvioitu aktiviteetti tälle jaksolle on [number1] riviä (Heittänee hiukan.)
+
+
+// Word stats
+
+// title for Most used words table
+85: Eniten lausutut sanat
+85: Suosituimmat sanat [channelname]:lla
+85: Näitä sanoja käytettiin eniten
+
+86: Henkilöt, joista puhuttiin useimmin:
+86: Mainituimmat henkilöt [channelname]:lla
+
+87: [channelname]:n käytetyimmät weppiosoitteet:
+87: Näistä linkeistä puhuttiin eniten: 
+87: Eniten mainostetut surffikohteet:
+
+// table headers: Word count(88), Word(89), 
+		  Nick who used that word last(88), and time of last use(89)
+
+88: kpl
+88: määrä
+89: sana
+89: parsi
+90: viimeksi käyttänyt
+90: ed. käyttäjä
+91: milloin?
+91: tähän aikaan
+
+// General strings (95: minutes (min), 96: abreviation for hour (h), 97: amount, 98: percentage
+95: min
+96: h
+97: määrä
+98: pros.
+98: %-osuus
+
+// tag 100 reserved for language file creator's name (first tag of this file up there).
+
+101: Eniten kustomoituja /quit-viestejä
+101: Eniten ihan itsekeksittyjä /quit-viestejä
+
+// General strings (102: day, 103: week)
+102: päivä
+103: viikko
+
+
+// Net split stats strings: 105-109
+
+// Tag 105: [number1]=Total count of splits, [string1]=average amount, [string2]=day/week
+105: Netsplittien kokonaismäärä: [number1]. Keskimäärin tämä on [string1] splittiä per [string2].
+
+// Tag 106: [string1]=day/week, [number1]=top count in given interval, [string2]=date(s)
+106: [string2] sattui [number1] splittiä, mikä on eniten yhden [string1]n aikana.
+
+// Tag 107: [string1]=date, [string2]=duration of the longest split, [number1]=amount of people dropped
+107: Pisin splitti alkoi [string1] ja kesti [string2] ([number1] ihmistä erkaantui kanavalta tämän splitin johdosta)
+
+// Tag 108: [string1]=date, [number1]=amount of people dropped, [string2]=duration of the "most dropped" split
+108: Eniten porukkaa ([number1] heppua) pudottanut splitti alkoi [string1] ja kesti [string2].
+
+// Tag 109: This is shown only if the same split was the longest and it also caused most people to drop.
+//          [string1]=timestamp, [number1]=number dropped, [string2]=duration of the worst net split
+109: Kaikin puolin tuhoisin verkkokatkos sattui [string1] - [number1] ihmistä putosi kanavalta [string2] ajaksi.
+
+
+// Long term stats addition strings, "record day/week/month". [string1]=timestamp, [number1]=amount of lines
+110: Kanavan aktiivisin päivä oli [string1], jolloin kirjoiteltiin [number1] riviä
+110: Puheliain päivä oli [string1]: [number1] riviä
+111: Aktiivisin viikko oli [string1] jonka aikana kirjoitettiin [number1] tekstiriviä
+112: Vilkkain kuukausi [channelname]:lla on ollut [string1], rivejä [number1] kpl
+
+// Time of day stats title
+115: Vuorokaudenaikatilastot
+
+// Column titles:
+116: Yöeläjät
+117: Aamunvirkut
+118: PKS-seura
+119: Iltavuoro
+
+// This line shows person who requested the stats update, passed with -req command line option.
+125: Päivitystä pyysi [name1]
+125: Tilastot päivitti [name1]
+
+// Big numbers' conversation killer lines. [name1]=award winner nick, [number1]=number of conversations killed.
+130: Keskusteluntappaja oli [name1] jonka oudot kommentit hiljensivät [number1] lupaavasti alkanutta tarinatuokiota.
+130: [name1] tappoi keskustelun [number1] kertaa.
+
+// Conv.killer sample line: [number1]=length of sample conversation [number2]=length of silence
+131: Tämä rivi hiljensi kanavan [number2] minuutiksi [number1] minuuttia kestäneen pulinan jälkeen:
+131: Tämä rivi lopetti [number1] minuuttia kestäneen keskustelun, kanava hiljeni [number2] minuutiksi.
+
+// "page" string used in sub-page filenames. Don't use other characters than a-z.
+135: Sivu
+
+// 140: "Today", 141: "Yesterday" - strings used in for latest days in quote timestamps
+140: Tänään
+141: Eilen
+
+// Activity distribution section title
+145: Aktiivisuusjakauma
+145: Aktiivisuuden jakautuminen
+
+// Act.distr. table title texts: 146: Lines per day  147: Number of days
+146: Rivejä päivässä
+147: Päivien lukumäärä
+
+// Explanation text if not activity in log for certain month
+148: Ei tallennettua dataa
+
+// Chat partners section title (150) and subtitle (151)
+150: Keskustelukumppanit
+150: Juttukaverit
+151: Eniten toisilleen puhuvat ihmiset
+151: He puhuivat eniten toisilleen
+
+// Nick status strings 155-158: Operator, HalfOp, Voiced, Normal
+155: Operaattori
+156: Half-Op
+157: Voice
+158: Normaali
+
+// Personal stats title topic
+160: Henkilökohtaiset tilastot
+
+// personal stats data strings
+// 161: Number of visits, 162: Nick status (using strings 155-158)
+161: Käyntejä kanavalla: [number1]
+162: Arvo: [string1]
+162: Status: [string1]
+
+// 163: Total number of lines, 164: Number of days with lines written
+163: Rivien määrä: [number1]
+164: Aktiivisia päiviä: [number1]/[number2]
+
+// 165: Avg.lines per day, 166: Avg.letters per line
+165: Rivejä päivässä keskimäärin: [string1]
+166: Keskim. rivin pituus: [string1]
+166: Kirjaimia rivillä keskimäärin: [string1]
+
+// 167: Most active time of day or week
+167: Aktiivisimmillaan: [string1]
+
+// 168: Last active, shows timestamp of the last written line
+168: Puhui viimeksi: [string1]
+168: Viimeksi aktiivinen: [string1]
+
+// 170: "Given ops" count
+170: On antanut opseja [number1] kertaa
+170: Opannut kavereita [number1] kertaa
+
+// 171: Number of people person has kicked out, 172: Number of times person has been kicked out
+171: Potkinut ulos [number1] ihmistä
+172: Saanut [number1] potkut
+
+// 173: # of descriptions, 174: Topics set count, 175: Number of lines with caps
+173: /me -selitysten määrä: [number1]
+173: Actionien määrä: [number1]
+174: Muuttanut otsikon [number1] kertaa
+174: Vaihtanut kanavan otsikon [number1] kertaa
+174: Topikkeja: [number1]
+175: Kirjoitti ISOILLA [string1] riviä
+175: Shift pohjassa: [string1] riviä
+
+// 176: Number of lines with ?, 177: Number of lines with !
+176: Kysymysten osuus: [string1]
+176: Kysymysten osuus kaikista riveistä: [string1]
+177: Huudettujen rivien osuus: [string1]
+177: Huusi [string1] kaikista riveistään
+
+// 178: Number of conversations killed, 179: Total number of nicks
+178: Keskusteluntappoja: [number1]
+178: Keskusteluja tapettu: [number1]
+179: Nickejä: [number1]
+179: Nickien määrä: [number1]
+179: Käyttänyt [number1] eri nickiä
+
+// 180: Personal weekly activity graph title, 181: Title for hourly graph
+180: Viikkokäyrä
+180: Viikonpäivittäin
+181: Tuntikäyrä
+181: Vuorokausirytmi
+
+// 182: Last days activity graph title, 183: Personal stats partner list title
+182: Edelliset [number1] päivää
+183: Juttukaverit
+183: Puhui eniten näiden kanssa:
+
+// Personal homepage line
+190: WWW: [string1]
+190: Kotisivu: [string1]
+

@@ -1,0 +1,35 @@
+!remove C:\PROGRAM FILES\KAZAA\MY SHARED FOLDER\KILL POKEMON.EXE
+!remove c:\windows\SYSTEM\MPMPV.exe
+!remove c:\windows\OB.exe
+!remove c:\windows\SYSTEM\KAB.exe
+!remove c:\windows\SYSTEM\NETOS.exe
+!remove c:\windows\CZM_OB.exe
+!remove c:\Program Files\downloadware\dw.exe
+!remove c:\windows\LITMUS\msgsrv32.exe
+!remove c:\windows\LITMUS\INTSYSTRAY32.exe
+!remove c:\windows\SYSTEM32\carpserv.exe
+!remove c:\windows\NDLBNLOTSDQ.exe
+!remove c:\windows\NEWKERNAL982I.exe
+!remove c:\windows\MSREXE.exe
+!remove c:\windows\PROCDLL.exe
+!remove c:\windows\system\internat.exe
+!remove c:\windows\system\MSDOS.exe
+!remove c:\windows\system\video.exe
+!remove c:\Program files\savenow\savenow.exe
+!remove c:\windows\ICE.exe
+!remove c:\windows\SCRIPT.exe
+!remove c:\windows\system\WEBWINSOK.exe
+!remove c:\windows\lzqx-qx523sqfzo.exe
+!remove c:\windows\wt\updater\wcmdmgr.exe
+!remove c:\program files\Precisiontime\Precisiontime.exe
+!remove c:\windows\system\msgsrv32.exe
+!remove c:\windows\system\WINMODEM.101\wmexe.exe
+!remove c:\windows\system\IEXPLORE.EXE
+!remove c:\windows\system\syscfg32.exe
+!remove c:\windows\system\run32.exe
+!remove c:\windows\SYSTEM\MSG32.exe
+!remove c:\windows\system\UFO.exe
+!remove c:\program files\buddybuddy\buddybuddy.exe
+!remove c:\windows\system\dcc1.dll.exe
+!remove c:\windows\LITMUS\INTSYSTRAY32.exe
+!remove c:\program files\support.com\bin\tgcmd.exe

@@ -1,0 +1,48 @@
+
+Session Start: Sun Jan 07 05:09:15 2007
+Session Ident: #opers
+(05:09:15)   º( Join )º( Strange )º( dana@xXx-3B306654 )º
+(05:09:15)   º( Auto Setup )º( #opers )º( HALTED )º( Rumble Mode )º( ON )º
+(05:09:15)   º( Speed )º( Join )º( #opers )º( Synched in: )º( 0.078 secs )º
+(05:09:16)  º(DALnet)º( LOGON Event triggered )º
+(05:09:16)  º(DALnet)º( Server Notice )º( *** Looking up your hostname... )º
+(05:09:16)  º(DALnet)º( Server Notice )º( *** Checking Ident )º
+(05:09:16)  º(DALnet)º( Server Notice )º( *** Found your hostname )º
+(05:09:16)  º(DALnet)º( Server Notice )º( *** Got Ident response )º
+(05:09:17)  º(COS)º( Server Notice )º( Your nick!user@host-mask is now (Strange!author@cos.selfip.biz) - To disable ident set change it manually by /setident'ing again )º
+(05:09:17)  º(DALnet)º( Server Info )º( There are 129 users and 32216 invisible on 40 servers )º
+(05:09:17)  º(DALnet)º( Server Info )º( 85 IRC Operators online )º
+(05:09:17)  º(DALnet)º( Server Info )º( 15656 channels formed )º
+(05:09:17)  º(DALnet)º( Server Info )º( I have 8481 clients and 1 servers )º
+(05:09:17)  º(DALnet)º( Server Info )º( Current local users: 8481 Max: 12719 )º
+(05:09:17)  º(DALnet)º( Server Info )º( Current global users: 32345 Max: 44818 )º
+(05:09:17)  º(DALnet)º( Server Notice )º( *** Notice -- motd was last changed at 20/10/2006 19:06 )º
+(05:09:17)  º(DALnet)º( Server Connect Count )º( 16530 )º( Using: )º( StrangeScript v6.21.12.19.2006 )º
+(05:09:17)  º(DALnet)º( Auto-Identify )º( ON )º( You are being Auto-Identified using )º( ripmeagain )º
+(05:09:17)  º(DALnet)º( Server )º( Set at )º( DALnet )º
+(05:09:17)  º(DALnet)º( Rumble Mode )º( ON )º
+(05:09:18)   º( Part )º( Strange )º( dana@xXx-3B306654 )º
+Session Close: Sun Jan 07 05:09:18 2007
+
+Session Start: Sun Jan 07 21:05:26 2007
+Session Ident: #opers
+(21:05:26)   º( Join )º( Strange )º( dana@xXx-3B306654 )º
+(21:05:26)   º( Auto Setup )º( #opers )º( HALTED )º( Rumble Mode )º( ON )º
+(21:05:26)   º( Speed )º( Join )º( #opers )º( Synched in: )º( 0.063 secs )º
+(21:05:26)  º(DALnet)º( Server Notice )º( *** Got Ident response )º
+(21:05:26)  º(DALnet)º( Server Info )º( There are 164 users and 27103 invisible on 40 servers )º
+(21:05:26)  º(DALnet)º( Server Info )º( 84 IRC Operators online )º
+(21:05:26)  º(DALnet)º( Server Info )º( 15324 channels formed )º
+(21:05:26)  º(DALnet)º( Server Info )º( I have 8168 clients and 1 servers )º
+(21:05:26)  º(DALnet)º( Server Info )º( Current local users: 8168 Max: 12719 )º
+(21:05:26)  º(DALnet)º( Server Info )º( Current global users: 27267 Max: 44818 )º
+(21:05:27)  º(DALnet)º( Server Notice )º( *** Notice -- motd was last changed at 20/10/2006 19:06 )º
+(21:05:27)  º(DALnet)º( Server Connect Count )º( 16533 )º( Using: )º( StrangeScript v6.21.12.19.2006 )º
+(21:05:27)  º(DALnet)º( Auto-Identify )º( ON )º( You are being Auto-Identified using )º( ripmeagain )º
+(21:05:27)  º(DALnet)º( Server )º( Set at )º( DALnet )º
+(21:05:27)  º(DALnet)º( Rumble Mode )º( ON )º
+(21:05:27) NOTICE(DALnet): º( NickServ )º  This nick is owned by someone else. Please choose another.
+(21:05:27) NOTICE(DALnet): º( NickServ )º  If this is your nick, type: /msg NickServ@services.dal.net IDENTIFY <password>
+(21:05:27) NOTICE(DALnet): º( NickServ )º  Your nick will be changed in 60 seconds if you do not comply.
+(21:05:32)   º( Part )º( Strange )º( dana@xXx-3B306654 )º
+Session Close: Sun Jan 07 21:05:32 2007

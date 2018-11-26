@@ -1,0 +1,75 @@
+ Volume in drive C is 40 GIG
+ Volume Serial Number is B42B-0A59
+
+ Directory of C:\NEW_FILES_CHECK
+
+12/02/2006  04:30 AM    <DIR>          .
+12/02/2006  04:30 AM    <DIR>          ..
+11/15/2006  11:33 PM            61,595 ACD.Systems.ACDSee.v9.0.Keymaker.Only.READ.NFO-ZWT.zip
+11/26/2006  05:07 PM       284,011,853 AcroPro.zip
+11/27/2006  04:12 PM            50,797 Adobe Acrobat 8 keygen.zip
+11/23/2006  09:19 PM        26,241,989 AdventNet ManageEngine Wi-Fi Manager v.5.0 Professional.zip
+11/04/2006  03:10 PM       172,908,357 Aero Glass Themes XP Version IV + 32 themes (AIO) by Just_4_Fun_Team.zip
+11/21/2006  11:51 PM         7,018,508 Alcohol 120% 1.9.6 Build 4719.zip
+11/23/2006  09:05 PM         7,398,031 Alcohol 120% 1.9.6.4719.zip
+11/23/2006  09:08 PM         6,507,861 AnyDVD+CloneDVD.zip
+11/29/2006  03:10 PM        31,513,015 AV Voice Changer Software Diamond Edition 4.0 with Plug-Ins.zip
+11/09/2006  11:36 AM        22,589,239 avg7.1+firewall.zip
+11/05/2006  02:13 AM         2,133,391 BulletProof FTP Server 2.15.zip
+11/06/2006  10:56 PM         1,311,792 Clock.Tray.Skins.v3.5.WinNT2kXP.Cracked-ViRiLiTY.zip
+11/20/2006  01:41 AM       391,913,115 COREL TECHNICAL v12 suite.zip
+11/18/2006  12:47 AM         8,217,510 CuteFTP 8.0.3 Build 10.12.2006.2 Professional Edition.zip
+11/06/2006  10:56 PM         7,682,406 DeepBurner Pro v1.8.0.225.zip
+11/26/2006  05:26 PM        12,977,464 DFX Audio Enhancer .zip
+11/15/2006  11:31 PM        35,269,880 Diskeeper2007-Professional.zip
+10/30/2006  10:09 PM     1,292,559,778 Dragon Naturally Speaking Preferred 9.zip
+11/05/2006  02:15 AM         7,091,376 Drivermax & Registry Mechanic.zip
+11/25/2006  06:09 PM         5,311,278 DVDFab Platinum 3.0.4.0 - Final.zip
+11/20/2006  01:09 AM         9,870,032 First Page 2006-final-3.00-setup.zip
+11/25/2006  06:26 PM        13,626,077 FlashChat.zip
+12/02/2006  09:36 PM    <DIR>          Games
+11/15/2006  11:34 PM            87,572 IE7 Validation Bypass.zip
+11/28/2006  06:07 AM         6,787,043 Incredimail Outlook.zip
+11/03/2006  10:22 PM        10,109,356 IncrediMail_Build_2592.zip
+11/11/2006  07:14 PM         2,797,331 IsoBuster Pro 1.9.1 Final.zip
+11/30/2006  07:37 PM        10,138,217 Jewel.of.Atlantis.Deluxe.zip
+11/20/2006  01:10 AM         6,249,893 keywin.zip
+11/23/2006  09:05 PM        10,763,217 Leuke Mail.zip
+11/25/2006  06:10 PM       326,598,123 Macromedia.Studio.8.zip
+11/17/2006  10:23 AM       613,618,621 Microsoft.Office.2007.Enterprise.zip
+11/18/2006  01:33 PM           110,341 Mitchell On Demand 5.8 Key.zip
+12/01/2006  01:04 AM    <DIR>          Movies
+11/23/2006  09:10 PM        45,437,720 N360PB.zip
+11/07/2006  12:41 AM       197,081,409 Nero Premium 7.5.7.0.zip
+11/15/2006  11:33 PM         6,708,179 nmsetup.zip
+10/20/2006  11:06 PM       301,625,965 NORTON SYSTEMWORKS 2006-ORIGINAL CD + Serial &Activation.rar
+11/15/2006  11:33 PM           864,508 Noteworthy Composer.zip
+11/30/2006  07:26 PM        49,118,665 Office 2007 Add Ins.zip
+11/20/2006  11:47 PM         1,298,425 PCMedik 6.10.23.2006.zip
+10/16/2006  01:12 AM         4,530,043 PGP Command Line 9.5.0.zip
+10/16/2006  01:12 AM        80,746,839 PGP Desktop Professional 9.5.0.zip
+10/22/2006  11:35 PM       332,664,364 Photoshop 9.0 CS 2.zip
+11/20/2006  11:24 PM       358,080,220 Powercinema-incl.zip
+11/23/2006  09:07 PM           822,962 PowerISO35.zip
+11/23/2006  09:17 PM        57,264,441 quickenDeluxe.zip
+11/09/2006  11:39 AM        10,557,158 SAM broadcaster 3.4.3.zip
+11/20/2006  02:22 AM        11,991,308 Sandra Pro.Home 2007 Multilingual+Keygen.zip
+11/03/2006  10:20 PM        11,903,176 SiSoftware Sandra Pro Business v2007 SP1.zip
+11/15/2006  11:30 PM        18,746,795 Slysoft.AnyDVD 6.0.8.2.CloneCD v.5.2.9.1.CloneDVD v.2.9.0.1.CloneDVD Mobile v.1.1.2.1.ink.Crack.by punjab.zip
+11/04/2006  12:28 AM       114,378,918 Sound Forge 8.zip
+11/05/2006  07:54 PM             2,331 Speedup Emule Abc Eng.txt
+11/20/2006  01:10 AM         9,683,488 SpywareDoctor.zip
+11/22/2006  12:07 AM        72,334,483 Stylus Studio 2007 XML Enterprise Suite 8.1.735d.zip
+10/31/2006  04:10 PM        61,985,107 Symantec Antivirus Corporate Edition for Vista v10.2.224.zip
+11/14/2006  04:09 AM        14,912,736 Symantec BootMagic ver.8.05 Build 295.zip
+11/20/2006  10:25 PM           542,533 Sysinternals.zip
+11/20/2006  01:11 AM         1,679,014 Total Commander 6.55a.zip
+11/27/2006  04:28 AM         9,599,337 TuneUp Utilities 2007 (Final).zip
+11/28/2006  06:07 AM         3,836,354 USB Drive Data Recovery v2.0.1.5.zip
+10/22/2006  02:33 AM     1,383,030,913 VMware Mac OSX x86.HDD.Image VMWare-iND-tiger 13.08.2005.tar.bz2
+11/05/2006  08:22 AM        13,382,635 Webroot Spy Sweeper 5.2.3 Build 2125.zip
+10/21/2006  09:50 PM           339,953 Windows Xp Validation Crack 4e.zip
+11/20/2006  01:26 AM         1,377,697 WinISO.v5.3-LasH.zip
+11/09/2006  11:35 AM        88,714,822 ZoneAlarm.zip
+              64 File(s)  6,598,767,556 bytes
+               4 Dir(s)   3,523,313,664 bytes free

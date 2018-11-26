@@ -1,0 +1,185 @@
+mIRCStats Registration
+======================
+See also http://www.nic.fi/~mauvinen/mircstats/register.html
+
+
+
+Some mIRCStats features require a license to fully activate them.
+
+After you have made your registration you will receive 
+your PERSONAL registration file by email within next 1-3 days. 
+
+Just place that file (license.txt) into your mircstats directory and 
+you can start using fully functional new features like:
+
+** Personal stats (only available for registered users!)
+     - Create personal sections with detailed data for top users
+
+** Custom stats (only available for registered users!)
+     - Create your own constantly changing stats sections!
+
+** Chat Partners (only available for registered users!)
+     - Find out who chats most with whom?
+
+** Word stats (only available for registered users!)
+     - Most used words - when those words were last used and by whom?
+     - Lists nicknames who are mentioned in channel discussion most often.
+     - Most used URLs in channel - shows them as direct links!
+
+** Manual nick connection file
+     - Specify which nicks actually belong to one person
+     - Separate persons who use same irc client
+     - You can use wildcards (* and ?) in nick filters
+     - Link nicks to their homepages!
+     - Use any IMAGE instead of nickname in user stats!
+
+** Unlimited nick exclusion list!
+     - Filter out channel bots and stats-abusing persons)
+
+** Weekly and Hourly activity graphs 
+
+** More Big Numbers sections
+
+** Monthly activity calendars
+
+** Highlight URLs as links in random quites, descriptions and topics.
+
+** Use your small "Channel logo" instead of "@" to show channel operators or voiced nicks
+
+** Compensate time zones by adding -+ hours to your log timestamps
+
+** Unlock options which are only available for registered users (title styles etc..)
+
+** You can shrink the mIRCStats info bar in the bottom of the page
+
+** ...and a lot of other nice features!
+
+
+This is a FULL LIFETIME REGISTRATION so you are 
+entitled to use also all the future enhancements!
+
+
+
+Registration fee in USD: 15.00
+You can also pay in EURO, the price will be converted using the current exchange rate.
+
+
+
+
+You can enter the registration online on the Internet at
+http://shareit1.element5.com/programs.html?productid=106728
+
+Alternatively, you can go to http://www.shareit.com and 
+enter the program number there: 106728
+
+
+If you do not have access to the Internet, you can register via phone, fax 
+or postal mail. Please print out the following form, and fax or mail it to:
+
+ShareIt!
+element 5 AG
+Vogelsanger Str. 78
+D-50823 Cologne
+Germany / Europe
+ 
+Phone:      +49 221 - 31088-0
+Fax: 	    +49 221 - 31088-99
+E-Mail:     register@shareit.com
+
+US and Canadian customers may also order by calling 1-800-903-4152. (Orders
+only please! We cannot provide any technical information about the program.)
+
+US check and cash orders can be sent to our US office at:
+
+ShareIt! Inc.
+PO Box 844
+Greensburg, PA 15601-0844
+USA
+
+Tel. 724-853-6618
+Fax. 724-850-8187
+
+
+If you have problems with phone or fax numbers, you can check the up-to-date info at
+http://www.element5.com/ or http://www.shareit.com/  -> Follow the "Contact" link.
+
+
+------------------------------------------------------------------------------
+
+Registration form for mIRCStats
+
+
+Program No.: 106728
+
+Last name: ___________________________________
+
+First name: ____________________________________
+
+Company: ____________________________________
+
+Street and #: ______________________________________
+
+City, State, postal code: ________________________________
+
+Country: _______________________________________
+
+Phone: _____________________________________
+
+Fax: ________________________________________
+
+E-Mail: ______________________________________
+
+*** Please do not forget to include your e-mail address. ***
+*** We will use e-mail to communicate with you. ***
+
+
+How would like to receive the registration key/full version?
+
+e-mail
+
+
+How would you like to pay the registration fee:
+
+credit card - wire transfer - EuroCheque - cash
+
+
+Credit card information (if applicable)
+
+Credit card: Visa - Eurocard/Mastercard - American Express - Diners Club
+
+Card holder: ________________________________
+
+Card No.: ___________________________________ Expiration Date: ________
+
+
+
+Date / Signature: ___________________________
+
+
+
+------------------------------------------------------------------------------
+
+
+
+Remember that registration code is personal, so you are not allowed
+to give it to anyone else. If distributed registration codes are
+found, they will be disabled.
+
+
+-----
+By registering mIRCStats you are agreeing to the following terms:
+
+1. mIRCStats is supplied as is.  The author disclaim all warranties,
+expressed or implied, including, without limitation, the warranties
+of merchantability and of fitness for any purpose. The author assumes
+no liability for damages, direct or consequential, which may result
+from the use of mIRCStats.
+
+2. You are responsible for maintaining the confidentiality
+of your registration code and are liable for any harm resulting
+from disclosing or allowing disclosure of your registration code.
+
+3. Registration code is personal, you are not allowed to generate 
+stats for other peoples' channels with features which need licencing.
+This means that providing stats service is not allowed. Contact 
+mircstats@nic.fi if you are planning to set up a service like that.

@@ -1,0 +1,42 @@
+:Base MIRCSTATS.HLP
+:Title mIRCStats
+1 What is mIRCStats?
+2 Overview=OHPF0B5
+2 History=OHPA091
+2 How to register=OHP11C2
+2 Author=OHP12B0
+2 Thanks=OHP1355
+1 Getting started
+2 Setup=OHP2332
+2 Creating first stats=OHP9200
+2 Configuration files=OHP20E0
+2 Support=OHP8340
+1 Setting options
+2 Main options=OHP1141
+2 HTML output=OHPB040
+2 Page layouts=OHP72F2
+2 Layout sections=OHP4140
+2 Nick display=OHP7195
+2 Stylesheet=OHPD175
+2 Colours=OHP42C4
+2 History=OHP374
+2 Miscellaneous=OHP1C6
+2 Language=OHP3235
+2 Log parser=OHP4051
+2 Nicks=OHP32F5
+2 Date & Time=OHP5383
+2 File transfer=OHP7064
+2 Debugging=OHP33
+1 Stats sections
+2 Enabled sections=OHPE043
+2 Basic tables=OHP9272
+2 Basic graphs=OHP8073
+2 Personal stats=OHP2324
+2 Big numbers=OHP2230
+2 Word stats=OHPF033
+2 Custom stats=OHP32F1
+1 Inside mIRCStats
+2 Command line parameters=OHP12E0
+2 Ways to automate your stats updates=OHPA346
+2 Performance=OHPB192
+2 Network activity=OHP3272

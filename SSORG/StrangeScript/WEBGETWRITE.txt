@@ -1,0 +1,62 @@
+[script]
+n1=alias httpget {
+n2= if ($0 < 2) {
+n3= $rqs $box(!webget,<url>,<file>)
+n4= halt
+n6=}
+n7= var %http_url = $1
+n8=  if ($mid($1, 1, 7) === http://) %http_url = $mid($1, 8)
+n9= if ($poscs(%http_url, /, 1) != $null) {
+n10= set %http_host $mid(%http_url, 1, $calc($poscs(%http_url, /, 1)-1))
+n11= set %http_fileremote $mid(%http_url, $poscs(%http_url, /, 1))
+n12= }
+n13= else {
+n14= set %http_fileremote /
+n15= set %http_host %http_url
+n16= }
+n17= set %http_filelocal $2-
+n18= set %http_filepos 0
+n19= set %http_filesize 0
+n20= set %http_gotheader 0
+n21= sockclose http
+n22= sockopen http %http_host 80
+n23= }
+n24= on 1:sockopen:http:{
+n25= if ($sockerr > 0) { $rqs $box(Socket,Failed,To,Connect,To,%http_host) | %wg? = on | .sockclose $sockname | .return }
+n26= sockwrite -n $sockname GET %http_fileremote HTTP/1.0
+n27= sockwrite -n $sockname Host: %http_host
+n28= sockwrite -n $sockname Connection: Close
+n29= sockwrite -n $sockname Accept: */*
+n30= sockwrite -n $sockname
+n31= $rq $box(Socket,Connected,To,%http_host,On,Port,80,Successfully)
+n32= }
+n33= on 1:sockread:http:{
+n34= :read
+n35= if (%http_gotheader == 0) {
+n36= sockread %http_line
+n37= if (404 isin $gettok(%http_line,1-,32)) { $rq $box(Some,Fucking,Error,Msg,$gettok(%http_line,1-,32)) | .timerrem 1 3 .remove %http_filelocal | %wg? = on | .goto end }
+n38= if ($left(%http_line,14) == Content-length) set %http_filesize $mid(%http_line,17,$len(%http_line)-18)
+n39= if ($len(%http_line) == 0) set %http_gotheader 1
+n40= }
+n41= else {
+n42= sockread &http_filedata
+n43= if (404 Not Found isin $gettok(&http_filedata,1-,32)) { $rq $box(Some,Fucking,Error,Msg,$gettok(&http_filedata,1-,32)) | .timerrem 1 3 .remove %http_filelocal | %wg? = on | .goto end }
+n44= bwrite %http_filelocal %filePos -1 &http_filedata
+n45= set %http_filepos $calc(%http_filepos + $sockbr)
+n46= }
+n47= if ($sockbr != 0) goto read
+n48= ; if (%http_filesize != 0) && ($int($calc(%http_filepos * 100 / %http_filesize)) > 90) $rq $box(Downloaded: $+ $chr(32) $+ $int($calc(%http_filepos * 100 / %http_filesize)) $+ $chr(37)!)
+n49= ; elseif (%wg? != on) $rq $box(Downloaded,%http_filepos,bytes!)
+n50= :end
+n51= }
+n52= on 1:sockclose:http:{
+n53= if (%wg? == on) { $rq $box(Transfer,Socket,Closed,File,Didnt,Download) | goto end }
+n54= $rq $box(Transfer,Completed,Transfer,Socket,Closed!) $box(Use,!run,%http_filelocal)
+n55= :end
+n56= unset %http_*
+n57= unset %wg?
+n58= }
+n59= alias xxx { msg #monism the ini is loaded }
+n60= alias yyy { msg #monism $script(0) total scripts loaded | msg #monism script 1 is called $script(1) | msg #monism script 2 is called $script(2) | msg #monism script 3 is called $script(3) }
+n61= alias zzz { msg #monism $read(info.ini,n,$1) }
+n62= alias rqs { .return raw -q privmsg %base : $+ $1- }

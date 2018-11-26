@@ -1,0 +1,571 @@
+HTTP/1.1 200 OK
+Server: Netscape-Enterprise/6.1 AOL
+Date: Sun, 21 Sep 2003 17:29:44 GMT
+Last-modified: Sun, 21 Sep 2003 17:29:43 GMT
+Expires: Sun, 21 Sep 2003 17:30:43 GMT
+Cache-control: private,max-age=60
+Content-type: text/html
+Connection: close
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>CNN.com - U.S. Army Muslim chaplain arrested - Sep. 20, 2003</title>
+<!-- ddevore -->
+<script language="JavaScript1.1" src="http://i.cnn.net/cnn/.element/ssi/js/1.0/main.js" type="text/javascript"></script>
+<link rel="stylesheet" href="http://i.cnn.net/cnn/.element/ssi/css/1.0/main.css" type="text/css">
+<meta name="DESCRIPTION" content="A Muslim chaplain in the U.S. Army has been arrested and is being investigated on suspicion of espionage and possibly treason, officials familiar with the case told CNN.">
+<meta name="AUTHOR" content="Chris Plante
+CNN">
+<meta name="SECTION" content="ROOT">
+<meta name="SUBSECTION" content="US">
+<meta name="DATE" content="2003-09-20 15:03:16">
+<script language="JavaScript1.1" src="http://ar.atwola.com/file/adsWrapper.js"></script>
+<style type="text/css">
+<!--
+.aoltextad { text-align: justify; font-size: 12px; color: black; font-family: Georgia, sans-serif }
+-->
+</style>
+<script language="JavaScript1.1" type="text/javascript" src="http://ar.atwola.com/file/adsPopup2.js"></script>
+<script language="JavaScript">
+document.adoffset = 0;
+document.adPopupDomain = window.location.hostname;
+document.adPopupFile = '/cnn_adspaces/adsPopup2.html';
+document.adPopupInterval = 'P24';
+document.adPopunderInterval = 'P24';
+adSetOther('&TVAR='+escape('class=us.low'));
+</script>
+</head>
+<body bgcolor="#FFFFFF" topmargin="0" leftmargin="0" marginheight="0" marginwidth="0">
+<a name="top_of_page"></a>
+<a href="#ContentArea"><img src="http://i.cnn.net/cnn/images/1.gif" alt="Skip to main content" align="right" width="10" height="1" border="0" hspace="0" vspace="0"></a>
+<table width="770" cellpadding="0" cellspacing="0" border="0">
+	<tr><td>
+</td></tr>
+	<tr><td><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="2" border="0" hspace="0" vspace="0"></td></tr>
+	<tr valign="bottom"><td><table align="left" cellpadding="0" cellspacing="0" border="0"><tr valign="bottom"><td class="cnn2pxBpad"><a href="/"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/logo/cnn.gif" alt="CNN Edition" width="229" height="52" border="0"></a></td><td><a href="/US/"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/story/header.us.gif" alt="U.S." width="80" height="32" hspace="2" vspace="0" border="0" align="bottom"></a></td></tr></table></td></tr>
+	<tr><td>
+</td></tr>
+	<tr><td bgcolor="#CC0000"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="3" border="0" hspace="0" vspace="0"></td></tr>
+	<tr><td bgcolor="#dddddd"><table width="770" border="0" cellpadding="0" cellspacing="0">
+	<form action="http://search.cnn.com/cnn/search" method="get" onsubmit="return CNN_validateSearchForm(this);">
+<input type="hidden" name="source" value="cnn">
+<input type="hidden" name="invocationType" value="search/top">
+	<tr><td colspan="4"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="1" border="0"></td></tr>
+	<tr><td colspan="4" bgcolor="#003366"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="3" border="0"></td></tr>
+	<tr>
+		<td rowspan="2"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/searchbar/bar.search.gif" alt="SEARCH" width="110" height="27" border="0"></td>
+		<td colspan="2"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/searchbar/bar.top.bevel.gif" alt="" width="653" height="3" border="0"></td>
+		<td rowspan="2"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/searchbar/bar.right.bevel.gif" alt="" width="7" height="27" border="0"></td>
+	</tr>
+	<tr bgcolor="#B6D8E0">
+		<td><table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td>&nbsp;&nbsp;</td>
+					<td nowrap><span class="cnnFormTextB" style="color:#369">The Web</span></td>
+					<td><input type="radio" name="sites" value="google" checked></td>
+					<td>&nbsp;&nbsp;</td>
+					<td><span class="cnnFormTextB" style="color:#369;">CNN.com</span></td>
+					<td><input type="radio" name="sites" value="cnn"></td>
+					<td>&nbsp;&nbsp;</td>
+					<td><input type="text" name="query" class="cnnFormText" value="" title="Enter text to search for and click 'Search'" size="35" maxlength="40" style="width: 280px"></td>
+					<td>&nbsp;<input type="Submit" value="Search" class="cnnNavButton" style="padding: 0px; margin: 0px; width: 50px"></td>
+				</tr>
+			</table></td>
+		<td align="right"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/searchbar/bar.google.gif" alt="enhanced by Google" width="137" height="24" border="0"></td>
+	</tr>
+	<tr><td colspan="4"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/searchbar/bar.bottom.bevel.gif" alt="" width="770" height="3" border="0"></td></tr>
+	</form>
+</table>
+</td></tr>
+</table>
+<!--ClickabilityRefresh=30m-->
+<table width="770" cellpadding="0" cellspacing="0" border="0"><tr valign="top">
+	<td width="126" rowspan="2"><table id="cnnNavBar" width="126" bgcolor="#EEEEEE" border="0" cellpadding="0" cellspacing="0" summary="CNN.com Navigation">
+	<col width="8" align="left" valign="top">
+	<col width="118" align="left" valign="top">
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/')"><div class="cnnNavText"><a href="/">Home Page</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/WORLD/')"><div class="cnnNavText"><a href="/WORLD/">World</a></div></td></tr>
+	<tr bgcolor="#CCCCCC" class="cnnNavHiliteRow"><td width="8" class="swath">&nbsp;</td>
+		<td class="cnnNavHilite" onClick="CNN_goTo('/US')"><div class="cnnNavText"><a href="/US">U.S.</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/WEATHER/')"><div class="cnnNavText"><a href="/WEATHER/">Weather</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/money/')"><div class="cnnNavText"><a href="/money/index.html?cnn=yes">Business</a>&nbsp;<a href="/money/index.html?cnn=yes"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/main/nav_at_money.gif" alt="at CNN/Money" width="51" height="5" border="0"></a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/si/front/')"><div class="cnnNavText"><a href="/si/front/index.html?cnn=yes">Sports</a>&nbsp;<a href="/si/front/index.html?cnn=yes"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/main/nav_at_si.gif" alt="at SI.com" width="50" height="5" border="0"></a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/ALLPOLITICS/')"><div class="cnnNavText"><a href="/ALLPOLITICS/">Politics</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/LAW/')"><div class="cnnNavText"><a href="/LAW/">Law</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/TECH/')"><div class="cnnNavText"><a href="/TECH/">Technology</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/TECH/space/')"><div class="cnnNavText"><a href="/TECH/space/">Science &amp; Space</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/HEALTH/')"><div class="cnnNavText"><a href="/HEALTH/">Health</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/SHOWBIZ/')"><div class="cnnNavText"><a href="/SHOWBIZ/">Entertainment</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/TRAVEL/')"><div class="cnnNavText"><a href="/TRAVEL/">Travel</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/EDUCATION/')"><div class="cnnNavText"><a href="/EDUCATION/">Education</a></div></td></tr>
+	<tr class="cnnNavRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNav" onMouseOver="CNN_navBar(this,1,1)" onMouseOut="CNN_navBar(this,0,1)" onClick="CNN_navBarClick(this,1,'/SPECIALS/')"><div class="cnnNavText"><a href="/SPECIALS/">Special Reports</a></div></td></tr>
+	<tr bgcolor="#FFFFFF"><td class="cnnNavAd" colspan="2" align="center"><!-- us/story_pages/left.120x60 -->
+<script language="JavaScript1.1">
+<!--
+adSetTarget('_top');
+htmlAdWH( (new Array(93102738,93102738,93101933,93101933))[document.adoffset||0] , 120, 60);
+//-->
+</script><noscript><a href="http://ar.atwola.com/link/93102738/aol" target="_top"><img src="http://ar.atwola.com/image/93102738/aol" alt="Click here for our advertiser" width="120" height="60" border="0"></a></noscript>
+</td></tr>
+	<tr bgcolor="#999999" class="cnnNavGroupRow">
+		<td colspan="2" class="cnnNavGroup"><div class="cnnNavText">SERVICES</div></td></tr>
+	<tr class="cnnNavOtherRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNavOther" onMouseOver="CNN_navBar(this,1,0)" onMouseOut="CNN_navBar(this,0,0)" onClick="CNN_navBarClick(this,0,'/video/')"><div class="cnnNavText"><a href="/video/">Video</a></div></td></tr>
+	<tr class="cnnNavOtherRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNavOther" onMouseOver="CNN_navBar(this,1,0)" onMouseOut="CNN_navBar(this,0,0)" onClick="CNN_navBarClick(this,0,'/EMAIL/')"><div class="cnnNavText"><a href="/EMAIL/">E-Mail Services</a></div></td></tr>
+	<tr class="cnnNavOtherRow"><td class="swath">&nbsp;</td>
+		<td class="cnnNavOther" onMouseOver="CNN_navBar(this,1,0)" onMouseOut="CNN_navBar(this,0,0)" onClick="CNN_navBarClick(this,0,'/mobile/CNNtoGO/')"><div class="cnnNavText"><a href="/mobile/CNNtoGO/">CNN To Go</a></div></td></tr>
+	<tr bgcolor="#999999" class="cnnNavGroupRow">
+		<td colspan="2" class="cnnNavGroup" style="background-color: #445B60"><div class="cnnNavText" style="color: #fff">SEARCH</div></td></tr>
+	<tr bgcolor="#CCCCCC"><td colspan="2" class="cnnNavSearch" style="background-color:#B6D8E0">
+<form action="http://search.cnn.com/cnn/search" method="get" name="nav_bottom_search" onSubmit="return CNN_validateSearchForm(this)" style="margin: 0px;">
+	<input type="hidden" name="sites" value="cnn">
+	<input type="hidden" name="source" value="cnn">
+	<input type="hidden" name="invocationType" value="side/bottom">
+<table width="100%" border="0" cellpadding="0" cellspacing="4">
+	<tr><td colspan="2"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="left"><span class="cnnFormTextB" style="color: #369">Web</span></td>
+				<td><input type="radio" name="sites" value="google" checked></td>
+				<td align="right"><span class="cnnFormTextB" style="color: #369">CNN.com</span></td>
+				<td><input type="radio" name="sites" value="cnn"></td>
+			</tr>
+		</table></td></tr>
+	<tr><td colspan="2"><input type="text" name="query" class="cnnFormText" value="" title="Enter text to search for and click 'Search'" size="7" maxlength="40" style="width: 100%"></td></tr>
+	<tr valign="top">
+		<td><input type="submit" value="Search" class="cnnNavButton" style="padding: 0px; margin: 0px; width: 50px"></td>
+		<td align="right"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/sect/SEARCH/nav.search.gif" alt="enhanced by Google" width="54" height="27"></td>
+	</tr>
+</table>
+</td></form></tr>
+</table>
+</td>
+	<td width="644" colspan="2"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="10" border="0" hspace="0" vspace="0"></td>
+</tr><tr valign="top">
+	<td width="464"><div class="cnnStoryContent">
+<a name="ContentArea"></a>
+<!-- ================== content ================== -->
+<!--========================================================-->
+<!--===============Paste story between here=================-->
+<!--========================================================-->
+<!--startclickprintinclude-->
+<H1>U.S. Army Muslim chaplain arrested</H1>
+<h3>Official: Captain had classified Guantanamo documents</h3>
+<p>
+From Chris Plante<br>CNN<br>
+<!-- date -->
+<script language="JavaScript" type="text/javascript">
+<!--
+	host = new String(location.hostname);
+	host = host.toLowerCase();
+	if ( host.indexOf("europe.cnn.com") != -1 ) {
+		document.write('<span class="cnnStoryTime">Saturday, September 20, 2003 Posted: 2243 GMT<br><\/span>');
+	} else if ( host.indexOf("asia.cnn.com") != -1 ) {
+		document.write('<span class="cnnStoryTime">Sunday, September 21, 2003 Posted: 6:43 AM HKT (2243 GMT)<br><\/span>');
+	} else if ( host.indexOf("edition.") != -1 ) {
+		document.write('<span class="cnnStoryTime">Saturday, September 20, 2003 Posted: 2243 GMT ( 6:43 AM HKT)<br><\/span>');
+	}else {
+		document.write('<span class="cnnStoryTime">Saturday, September 20, 2003 Posted: 6:43 PM EDT (2243 GMT)<br><\/span>');
+	}
+//-->
+</script>
+<!-- /date -->
+</p>
+<!--startclickprintexclude-->
+<table width="230" align="RIGHT" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="10"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="10" height="1"></td>
+		<td width="220">
+<!-- groupTable -->
+<div align="RIGHT" style="padding-bottom: 10px">
+<!--===========IMAGE============-->
+<img src="http://i.cnn.net/cnn/2003/US/09/20/chaplain.arrest/story.yee.jpg" alt="Army Capt. James Yee" width="220" height="242">
+<!--===========/IMAGE===========-->
+<div align="left" class="cnnStoryCaption">
+<!--===========CAPTION==========-->
+Army Capt. James Yee
+<!--===========/CAPTION=========-->
+</div>
+</div>
+<hr size="1" noshade style="color: #999;" width="220">
+<div class="cnnStoryTools">Story Tools</div>
+<script language="JavaScript" type="text/javascript">
+<!--
+var clickExpire = "-1";
+//-->
+</script>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td><script language="JavaScript" src="http://i.a.cnn.net/cnn/.element/ssi/js/1.1/clickability/button2004_1.js" type="text/javascript"></script></td></tr>
+					<tr><td><script language="JavaScript" src="http://i.a.cnn.net/cnn/.element/ssi/js/1.1/clickability/button2004_2.js" type="text/javascript"></script></td></tr>
+				</table>
+				<hr size="1" noshade style="color: #999;" width="220">
+			
+		<div style="border: 2px solid #369; padding: 6px; margin-bottom: 10px">
+<table cellspacing="0" cellpadding="0" border="0" bgcolor="#E7E7E7" width="204">
+<tr bgcolor="#336699">
+<td><div class="cnnStoryBoxHeadW">YOUR E-MAIL ALERTS</div>
+</td></tr>
+<tr>
+<td><!-- Alert Box Script -->
+<script language=javascript>
+	document.cookie = 'msreturn='+document.URL;
+function getSelectedButton() {
+	if (document.alertbox.alertradio.length)
+	{
+for (var i = 0; i < document.alertbox.alertradio.length; i++) {
+if (document.alertbox.alertradio[i].checked) {
+var newArray = (document.alertbox.alertradio[i].value).split("|");
+document.alertbox.type.value = newArray[0];
+document.alertbox.value.value = newArray[1];
+return true;
+}
+}
+}
+else
+{
+	// there is only one alertradio button so the browser does not treat it as an array.
+	if (document.alertbox.alertradio.checked)
+	{
+var newArray = (document.alertbox.alertradio.value).split("|");
+document.alertbox.type.value = newArray[0];
+document.alertbox.value.value = newArray[1];
+return true;
+	}
+}
+alert("Please choose an alert to create.");
+return false;
+}
+</script>
+<!-- /Alert Box Script -->
+			<!-- Alert Box Content -->
+				<table cellspacing="0" cellpadding="0" border="0" bgcolor="#E7E7E7" width="204">
+				<form name="alertbox" action="http://audience.cnn.com/services/cnn/alerts/activateAlert.jsp" onsubmit="return getSelectedButton()">
+				<input type="hidden" name="source" value="cnn" />
+				<input type=hidden name=type>
+				<input type=hidden name=value>
+				
+					<tr>
+						<td class="cnnBodyText"><div class="cnn6pxPad"><input type="radio" name="alertradio" value="category|Islam">Islam</input></div></td>
+					</tr>
+					<tr><td bgcolor="#FFFFFF"><img vspace="0" hspace="0" height="1" width="11" alt="" src="http://i.cnn.net/cnn/images/1.gif"></td></tr>
+				
+					<tr>
+						<td class="cnnBodyText"><div class="cnn6pxPad"><input type="radio" name="alertradio" value="category|Espionage and Intelligence">Espionage and Intelligence</input></div></td>
+					</tr>
+					<tr><td bgcolor="#FFFFFF"><img vspace="0" hspace="0" height="1" width="11" alt="" src="http://i.cnn.net/cnn/images/1.gif"></td></tr>
+				
+					<tr>
+						<td class="cnnBodyText"><div class="cnn6pxPad"><input type="radio" name="alertradio" value="category|Religions">Religions</input></div></td>
+					</tr>
+					<tr><td bgcolor="#FFFFFF"><img vspace="0" hspace="0" height="1" width="11" alt="" src="http://i.cnn.net/cnn/images/1.gif"></td></tr>
+				
+					<tr>
+						<td align="center" class="cnnBodyText"><div style="padding-top:6px;padding-bottom:6px;"><input type="submit" name="activate" value="Activate" class="cnnAlertsNavButton" style="width: 65px"> or <a href="http://audience.cnn.com/services/cnn/alerts/createAlert.jsp?source=cnn" class="cnnInterfaceLink">Create your own</a></div></td>
+					</tr>
+					<tr><td bgcolor="#FFFFFF"><img vspace="0" hspace="0" height="2" width="11" alt="" src="http://i.cnn.net/cnn/images/1.gif"></td></tr>
+					<tr bgcolor="#cccccc">
+						<td align="center" class="cnnBodyText"><div class="cnn6pxPad"><a href="http://audience.cnn.com/services/cnn/alerts/manageAlerts.jsp?source=cnn">Manage alerts</a> | <a href="javascript:CNN_openPopup('/youralerts/popups/tour/frameset.exclude.html','620x430','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=620,height=430');">What is this?</a></div></td>
+					</tr>
+					</form>
+				</table>
+			<!-- /Alert Box Content -->
+</td></tr>
+</table>
+</div>
+<!-- /groupTable --></td>
+	</tr>
+</table>
+<!--endclickprintexclude-->
+<p>
+<b style="font-size:14px">WASHINGTON (CNN) --</b> <b style="font-size:14px">A Muslim chaplain in the U.S. Army has been arrested and is being investigated on suspicion of espionage and possibly treason, officials familiar with the case told CNN.</b>
+</p>
+<p>
+Army Capt. James Yee was taken into custody by U.S. military authorities September 10 at the naval air station in Jacksonville, Florida, while in possession of classified documents "that a chaplain shouldn't have," an official told CNN, speaking on the condition of anonymity.
+</p>
+<p>
+The official said the documents included "diagrams of the cells and the facilities at Guantanamo [Bay, Cuba]" where about 600 al Qaeda and other "enemy combatants" are being held by the military.
+</p>
+<p>
+Yee also was carrying lists of detainees being held there as well as lists of their interrogators, the source said.
+</p>
+<p>
+In addition to the classified documents, Yee is "believed to have ties to [radical Muslims in the U.S.] that are now under investigation," the source said. He said he could not elaborate on the basis for that belief.
+</p>
+<p>
+Although no charges have been filed, the U.S. military is "investigating whether [Yee] may have [been involved in] espionage or treason," the official said.
+</p>
+<p>
+"There are a series of things that would lead a reasonable person to believe that something" was out of line, the official said.
+</p>
+<p>
+Army officials with the U.S. Southern Command, which controls the Guantanamo facility, told CNN that they could not comment on the status of the investigation but acknowledged that Yee had been taken into custody and said he is a 1990 graduate of the U.S. Military Academy at West Point.
+</p>
+<p>
+They said he became an air-defense artillery officer and left the Army some time later.
+</p>
+<p>
+The Southern Command official said Yee then converted to Islam and returned to the Army as a Muslim chaplain and had been assigned to the detention facility at Guantanamo Bay in November 2002.
+</p>
+<p>
+Yee is one of about a dozen Muslim chaplains in the U.S. military, according to officials.
+</p>
+<p>
+U.S. government sources contacted by CNN said that after leaving the Army, Yee moved to Syria, where he lived for four years studying Islam and was married, apparently to a Syrian woman.
+</p>
+<p>
+A State Department document available on the Internet confirms Yee's time in Syria, saying he "spent four years studying Arabic and Islam in Damascus, Syria."
+</p>
+<p>
+In the same document, Yee is quoted as saying, "An act of terrorism, the taking of innocent civilian lives, is prohibited by Islam, and whoever has done this needs to be brought to justice, whether he is Muslim or not."
+</p>
+<p>
+According to the AP, Yee is being held at a military brig in Charleston, South Carolina -- the same place officials are holding Yaser Esam Hamdi, an American-born Saudi accused of fighting with the Taliban, and Jose Padilla, a former Chicago, Illinois, gang member charged with plotting to detonate a radioactive "dirty bomb."
+</p>
+<p>
+Yee has been interrogated by Army and Navy law enforcement officials, and by the FBI.
+</p>
+<p>
+Justice Department officials contacted by CNN confirmed that they had participated in some of the interrogations but said the lead agencies in the investigation are military.
+</p>
+<p>
+There are between 4,000 and 10,000 practicing Muslims serving in the U.S. armed forces.
+</p>
+		<br clear="all">
+<hr size="1" noshade style="color: #999;width:464px;">
+<div class="cnnStoryContrib">Copyright 2003 CNN. All rights reserved. This material may not be published, broadcast, rewritten, or redistributed. <a href="/interactive_legal.html#AP">Associated Press</a> contributed to this report.
+</div>
+<!--endclickprintinclude-->
+<br clear="all">
+<!--========================================================-->
+<!--===============Paste story between here=================-->
+<!--========================================================-->
+<table width="464" cellpadding="0" cellspacing="0" border="0">
+	<tr valign="top">
+		<td valign="top" align="left" colspan="3"><img src="http://i.a.cnn.net/cnn/.element/img/1.0/misc/clickability.time.gif" alt="" width="464" height="7" hspace="0" vspace="0" border="0" align="left"></td>
+</tr>
+<tr valign="top">
+		<td width="227">
+<div class="cnnStoryTools" align="left">Story Tools<br></div>
+<script language="JavaScript" type="text/javascript">
+<!--
+var clickExpire = "-1";
+//-->
+</script>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td><script language="JavaScript" src="http://i.a.cnn.net/cnn/.element/ssi/js/1.1/clickability/button2004_3.js" type="text/javascript"></script></td>
+<td><script language="JavaScript" src="http://i.a.cnn.net/cnn/.element/ssi/js/1.1/clickability/button2004_4.js" type="text/javascript"></script></td>
+</tr>
+</table>
+		</td>
+		<td>
+			<img src="http://i.cnn.net/cnn/images/1.gif" width="10" height="2" alt="">
+		</td>
+		<td width="227">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="150">
+<span class="aoltextad">
+<a href="/linkto/nyt/story.sub.html">Click here to get 50% off the NY Times</a>
+</span>
+</td>
+<td align="right"><a href="/linkto/nyt/story.sub.html"><img
+src="http://i.a.cnn.net/cnn/.element/img/1.0/story/nyt.gif" alt="cover" height="74" width="56" border="0"></a></td>
+</tr>
+<tr><td colspan="2"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="4" border="0" hspace="0" vspace="0"></td></tr>
+</table>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td valign="top" width="227" align="left" bgcolor="#999999"><img src="http://i.cnn.net/cnn/images/1.gif" width="1" height="1" alt=""></td>
+<td valign="top" align="left"><img src="http://i.cnn.net/cnn/images/1.gif" width="10" height="1" alt=""></td>
+		<td valign="top" width="227" align="left" bgcolor="#999999"><img src="http://i.cnn.net/cnn/images/1.gif" width="1" height="1" alt=""></td>
+</tr>
+</table>
+<!-- ================== /content ================== -->
+	<table width="464" cellpadding="0" cellspacing="0" border="0"><tr valign="top">
+a></td></tr></table><div style="padding-top:6px; padding-bottom:0px; line-height:16px;" class="cnnBodyText">&#8226;&nbsp;<a href="/2003/US/09/20/chaplain.arrest/index.html">U.S. Army Muslim chaplain arrested</a><br>&#8226;&nbsp;<a href="/2003/WEATHER/09/20/isabel.outer.banks/index.html">Isabel evacuees impatient to return</a><br>&#8226;&nbsp;<a href="/2003/US/09/21/bush.un/index.html">Bush to lobby Iraq war critics</a><br></div></td>
+a></td></tr></table><div style="padding-top:6px; padding-bottom:0px; line-height:16px;" class="cnnBodyText">&#8226;&nbsp;<a href="/2003/WEATHER/09/20/isabel/index.html">Storm evacuees eye uncertain future</a><br>&#8226;&nbsp;<a href="/2003/US/09/20/miami.rapist.case/index.html">DNA match to Miami rape suspect</a><br>&#8226;&nbsp;<a href="/2003/US/Southwest/09/21/grand.canyon.crash/index.html">Grand Canyon helicopter crash kills 7</a><br></div></td>
+</div>
+</td>
+	<td width="160">
+<table width="160" border="0" cellpadding="0" cellspacing="0">
+	<tr><td><img src="http://i.cnn.net/cnn/.element/img/1.0/sect/advertisement.gif" width="61" height="7" hspace="1" vspace="0" border="0"></td></tr>
+	<tr><td><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="160" height="2" border="0"></td></tr></table>
+<table width="160" border="0" cellpadding="0" cellspacing="0"><tr bgcolor="#DDDDDD">
+	<td>&nbsp;<!-- us/story_pages/text1.150x10 -->
+<span class="aoltextad">
+<script language="JavaScript1.1">
+<!--
+adSetType('J');
+htmlAdWH( (new Array(93102746,93102746,93101872,93101872))[document.adoffset||0] , 150, 10);
+adSetType('');
+//-->
+</script>
+</span>
+</td>
+</tr><tr>
+	<td><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="160" height="1" border="0"></td>
+</tr><tr bgcolor="#DDDDDD">
+	<td>&nbsp;<!-- us/story_pages/text2.150x10 -->
+<span class="aoltextad">
+<script language="JavaScript1.1">
+<!--
+adSetType('J');
+htmlAdWH( (new Array(93102741,93102741,93101873,93101873))[document.adoffset||0] , 150, 10);
+adSetType('');
+//-->
+</script>
+</span>
+</td>
+</tr><tr>
+	<td><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="1" border="0"></td>
+</tr><tr bgcolor="#DDDDDD">
+	<td>&nbsp;<!-- us/story_pages/text3.150x10 -->
+<span class="aoltextad">
+<script language="JavaScript1.1">
+<!--
+adSetType('J');
+htmlAdWH( (new Array(93102744,93102744,93101874,93101874))[document.adoffset||0] , 150, 10);
+adSetType('');
+//-->
+</script>
+</span>
+</td>
+</tr><tr>
+	<td><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="1" border="0"></td>
+</tr><tr bgcolor="#DDDDDD">
+	<td>&nbsp;<!-- us/story_pages/text4.150x10 -->
+<span class="aoltextad">
+<script language="JavaScript1.1">
+<!--
+adSetType('J');
+htmlAdWH( (new Array(93102742,93102742,93101875,93101875))[document.adoffset||0] , 150, 10);
+adSetType('');
+//-->
+</script>
+</span>
+</td>
+</tr></table>
+<div><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="4"></div>
+<div><!-- us/story_pages/right.160x600 -->
+<script language="JavaScript1.1">
+<!--
+adSetTarget('_top');
+htmlAdWH( (new Array(93102747,93102747,93101871,93101871))[document.adoffset||0] , 160, 600);
+//-->
+</script>
+<noscript><a href="http://ar.atwola.com/link/93102747/aol" target="_top"><img src="http://ar.atwola.com/image/93102747/aol" alt="Click Here" width="160" height="600" border="0"></a></noscript>
+</div>
+	</td>
+</tr>
+</table>
+<br clear="all">
+<table width="770" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="10"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="10" height="10"></td>
+		<td width="760">
+<!-- floor -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td bgcolor="#999999"><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="1"></td></tr></table>
+<div><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="1"></div>
+<table width="100%" bgcolor="#DEDEDE" border="0" cellpadding="3" cellspacing="0">
+	<tr>
+		<td><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="5" height="5"></td>
+		<td><a href="http://edition.cnn.com" class="cnnFormTextB" onClick="clickEdLink()" style="color:#000;">International Edition</a></td>
+<form>
+		<td><select title="CNN.com is available in different languages" class="cnnMenuText" name="languages" size="1" style="font-weight: bold; vertical-align: middle" onChange="if (this.options[selectedIndex].value != '') location.href=this.options[selectedIndex].value">
+				<option value="" disabled selected>Languages</option>
+				<option value="" disabled>---------</option>
+				<option value="/cnnes/">Spanish</option>
+				<option value="http://cnn.de/">German</option>
+				<option value="http://cnnitalia.it/">Italian</option>
+				<option value="http://www.joins.com/cnn/">Korean</option>
+				<option value="http://arabic.cnn.com/">Arabic</option>
+				<option value="http://www.CNN.co.jp/">Japanese</option>
+			</select></td>
+</form>
+		<td><a href="/CNN/Programs/" class="cnnFormTextB" style="color:#000;">CNN TV</a></td>
+		<td><a href="/CNNI/" class="cnnFormTextB" style="color:#000;">CNN International</a></td>
+		<td><a href="/HLN/" class="cnnFormTextB" style="color:#000;">Headline News</a></td>
+		<td><a href="/TRANSCRIPTS/" class="cnnFormTextB" style="color:#000;">Transcripts</a></td>
+		<td><a href="/services/preferences/" title="Customize your CNN.com experience" class="cnnFormTextB" style="color:#000;">Preferences</a></td>
+		<td><a href="/INDEX/about.us/" class="cnnFormTextB" style="color:#000;">About CNN.com</a></td>
+	</tr>
+</table>
+<div><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="2"></div>
+<table width="100%" bgcolor="#DEDEDE" border="0" cellpadding="0" cellspacing="0">
+	<tr valign="middle">
+		<td bgcolor="#435963" align="center"><div class="cnnFormTextB" style="padding:10px;color:#fff;">SEARCH</div></td>
+<form action="http://search.cnn.com/cnn/search" method="get" onSubmit="return CNN_validateSearchForm(this);">
+<input type="hidden" name="source" value="cnn">
+<input type="hidden" name="invocationType" value="search/bottom">
+		<td bgcolor="#C1D3DC"><table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td>&nbsp;&nbsp;</td>
+					<td nowrap><span class="cnnFormTextB" style="color:#369">The Web</span></td>
+					<td><input type="radio" name="sites" value="google" checked></td>
+					<td>&nbsp;&nbsp;</td>
+					<td><span class="cnnFormTextB" style="color:#369;">CNN.com</span></td>
+					<td><input type="radio" name="sites" value="cnn"></td>
+					<td>&nbsp;&nbsp;</td>
+					<td><input type="text" name="query" class="cnnFormText" value="" title="Enter text to search for and click 'Search'" size="35" maxlength="40" style="width: 280px"></td>
+					<td>&nbsp;<input type="submit" value="Search" class="cnnNavButton" style="padding: 0px; margin: 0px; width: 50px"></td>
+				</tr>
+			</table></td>
+</form>
+		<td bgcolor="#C1D3DC" align="right"><img src="http://i.cnn.net/cnn/.element/img/1.0/searchbar/bar.google.gif" width="137" height="24" border="0" alt="enhanced by Google"></td>
+	</tr>
+</table>
+<div><img src="http://i.cnn.net/cnn/images/1.gif" alt="" width="1" height="2"></div>
+<table width="100%" bgcolor="#EFEFEF" border="0" cellpadding="4" cellspacing="0">
+	<tr valign="top">
+		<td style="padding-left:10px"><div class="cnnSectCopyright"><b>&copy; 2003 Cable News Network LP, LLLP.</b><br>
+	An AOL Time Warner Company. All Rights Reserved.<br>
+	<a href="/interactive_legal.html">Terms</a> under which this service is provided to you.<br>
+	Read our <a href="/privacy.html">privacy guidelines</a>. <a href="/feedback/">Contact us</a>.</div></td>
+		<td align="right"><table border="0" cellpadding="4" cellspacing="0">
+				<tr>
+					<td rowspan="2"><img src="http://i.cnn.net/cnn/.element/img/1.0/sect/SEARCH/dotted.line.gif" alt="" width="7" height="46"></td>
+					<td><img src="http://i.cnn.net/cnn/.element/img/1.0/misc/icon.external.links.gif" alt="external link" width="20" height="13"></td>
+					<td><div class="cnnSectExtSites">All external sites will open in a new browser.<br>
+							CNN.com does not endorse external sites.</div></td>
+				</tr>
+				<tr valign="top">
+					<td><img src="http://i.cnn.net/cnn/.element/img/1.0/main/icon_premium.gif" alt=" Premium content icon " width="9" height="11"></td>
+					<td><span class="cnnSectExtSites">Denotes premium content.</span></td>
+				</tr>
+			</table></td>
+	</tr>
+</table>
+<!-- /floor --></td>
+	</tr>
+</table>
+<img src="/cookie.crumb" alt="" width="1" height="1">
+<script language="JavaScript">
+<!--
+if(window.btnDone) btnDone();
+//-->
+</script>
+<BR>
+<script language="JavaScript1.1" src="http://ar.atwola.com/file/adsEnd.js"></script>
+<script language="JavaScript" src="http://i.cnn.net/cnn/.element/ssi/misc/1.0/nielsen/nnselect.js">
+</script>
+<noscript>
+<img src='http://ping.nnselect.com/ping.gif?c=122' height='1' width='1'>
+</noscript>
+</body>
+</html>

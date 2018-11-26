@@ -1,0 +1,7 @@
+foreground = no
+client = yes
+accept = localhost:9755,128
+connect = 128.252.249.71:8000
+[s1]
+accept = 9755,128
+connect = 128.252.249.71:8000

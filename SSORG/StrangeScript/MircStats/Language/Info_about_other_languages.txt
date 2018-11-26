@@ -1,0 +1,15 @@
+Download your own language from:
+
+http://www.nic.fi/~mauvinen/mircstats/language/
+or http://www.mircstats.com/language/
+
+
+	Mikko Auvinen
+	email: mircstats@nic.fi
+
+You can also create your own language files. If you manage to create a great one, 
+check it with "language file inspectation tool" at "HTML Output/Language" settings page
+and make sure there's no errors in it. Send the file to mircstats@nic.fi. Thanks!
+
+---------------------------------------------------------
+mIRCStats WWW: http://www.nic.fi/~mauvinen/mircstats/

@@ -1,0 +1,105 @@
+alias BNC.Server {
+  set %BNC.version StrangeBNC v 1.2
+  if ($1 == INFO) {
+    var %tmp.b = $sock(BNCUSER*,0)
+    if (%tmp.b == $null) { var %tmp.b = 0 }
+    $report(BNC,INFO,$null,$null,Listing Information for %BNC.version).active
+    $report(BNC,INFO,$null,$null,There is currently %tmp.b connection(s) to the BNC server.).active
+    var %tmp.bnci = 1
+    while (%tmp.bnci <= $sock(BNCUSER*,0)) {
+      $report(BNC,INFO,User %tmp.bnci,%BNC.nick [ $+ [ $right($sock(BNCUSER*,%tmp.bnci),-7) ] ] ,%BNC.user [ $+ [ $right($sock(BNCUSER*,%tmp.bnci),-7) ] ] ).active
+      $report(BNC,INFO,User %tmp.bnci,Connected to %BNC.server [ $+ [ $right($sock(BNCUSER*,%tmp.bnci),-7) ] ] ).active
+      inc %tmp.bnci
+      if (%tmp.bnci > $sock(BNCUSER*,0)) { break }
+    }
+    return
+  }
+  if ($key(settings,Sbnc.active) == $null) { keywrite settings Sbnc.active OFF | setupshow BNC Server offline }
+  if ($key(settings,Sbnc.port) == $null) { keywrite settings Sbnc.port 1000 | setupshow BNC Port $key(settings,Sbnc.port) }
+  if ($key(settings,Sbnc.active) == ON) { if ($sock(BNCS) == $null) { socklisten BNCS $key(settings,Sbnc.port) } | set %BNC.count 1 }
+  if ($key(settings,Sbnc.active) == OFF) { sockclose BNCS* | sockclose BNCUSER* | sockclose BNCRELAY* | unset %BNC.nick* %BNC.user* %BNC.pass* %BNC.authed* %BNC.level* }
+  return
+}
+
+on 1:SOCKLISTEN:BNCS:{
+  sockaccept BNCUSER [ $+ [ %BNC.count ] ]
+  sockwrite -n BNCUSER [ $+ [ %BNC.count ] ] notice :******************************************
+  sockwrite -n BNCUSER [ $+ [ %BNC.count ] ] notice :*** Welcome to %BNC.version  ***
+  sockwrite -n BNCUSER [ $+ [ %BNC.count ] ] notice :******************************************
+  sockwrite -n BNCUSER [ $+ [ %BNC.count ] ] notice :Please use /quote PASS <password>
+  inc  %BNC.count
+  $report(BNC,Someone connecting to BNC,Connection number,%BNC.count).active
+  halt
+}
+on *:SOCKREAD:BNCUSER*:{
+  if ($sockerr > 0) { $report(Sock Error,$sockname,READ,$sock($sockname).wserr,$sock($sockname).wsmsg).status | return }
+  :next.bnc.read
+  sockread %bnc.read.line
+  if ($sockbr == 0) { return }
+  if ($gettok(%bnc.read.line,1,32) == SUB) {
+    if (%BNC.level [ $+ [ $right($sockname,-7) ] ] != ADMIN) { goto next.bnc.read }
+    sockwrite -n $sockname notice :Here are the Admin commands. Currently $sock(BNCUSER*,0) connections active.
+    var %tmp.b = $sock(BNCUSER*,0)
+    if (%tmp.b == $null) { var %tmp.b = 0 }
+    sockwrite -n $sockname notice :BNC ... Listing Information for %BNC.version ...
+    sockwrite -n $sockname notice :There is currently %tmp.b connection(s) to the BNC server.
+    var %tmp.bnci = 1
+    while (%tmp.bnci <= $sock(BNCUSER*,0)) {
+      sockwrite -n $sockname notice :User %tmp.bnci %BNC.nick [ $+ [ $right($sock(BNCUSER*,%tmp.bnci),-7) ] ]  %BNC.user [ $+ [ $right($sock(BNCUSER*,%tmp.bnci),-7) ] ]
+      sockwrite -n $sockname notice :User %tmp.bnci Connected to %BNC.server [ $+ [ $right($sock(BNCUSER*,%tmp.bnci),-7) ] ]
+      inc %tmp.bnci
+      if (%tmp.bnci > $sock(BNCUSER*,0)) { break }
+    }
+    goto next.bnc.read
+  }
+  if ($gettok(%bnc.read.line,1,32) == PASS) {
+    if ($gettok(%bnc.read.line,2,32) == $key(settings,Sbnc.adpass)) {
+      sockwrite -n $sockname notice :Now use /quote CONN <server ip> $chr(91) $+ <port> $+ $chr(93) $chr(91) $+ <password> $+ $chr(93)
+      $report(BNC,ADMIN password sent,%bnc.read.line,Connection number,$right($sockname,-7)).active
+      set %BNC.authed $+ $right($sockname,-7) YES
+      set %BNC.level $+ $right($sockname,-7) ADMIN
+      goto next.bnc.read
+    }
+    if ($gettok(%bnc.read.line,2,32) == $key(settings,Sbnc.pass)) {
+      sockwrite -n $sockname notice :Now use /quote CONN <server ip> $chr(91) $+ <port> $+ $chr(93)
+      $report(BNC,USER password sent,%bnc.read.line,Connection number,$right($sockname,-7)).active
+      set %BNC.authed $+ $right($sockname,-7) YES
+      set %BNC.level $+ $right($sockname,-7) USER
+      goto next.bnc.read
+    }
+    sockwrite -n $sockname notice :Your password didnt match.
+    goto next.bnc.read
+  }
+  if ($gettok(%bnc.read.line,1,32) == CONN) {
+    if (%BNC.authed [ $+ [ $right($sockname,-7) ] ] != YES) { sockwrite -n $sockname notice :You are not authorized to use CONN, you must /raw pass <password> first | goto next.bnc.read }
+    $report(BNC,Connecting to server,Connection $right($sockname,-7),%bnc.read.line).active
+    set %BNC.server [ $+ [ $right($sockname,-7) ] ] $gettok(%bnc.read.line,2,32) $gettok(%bnc.read.line,3,32)
+    if ($gettok(%bnc.read.line,4,32) != $null) { set %BNC.pass $+ $right($sockname,-7) $gettok(%bnc.read.line,4,32) }
+    if ($gettok(%bnc.read.line,3,32) == $null) { sockopen BNCRELAY [ $+ [ $right($sockname,-7) ] ] $gettok(%bnc.read.line,2,32) 6667 }
+    else { sockopen BNCRELAY [ $+ [ $right($sockname,-7) ] ] $gettok(%bnc.read.line,2,32) $gettok(%bnc.read.line,3,32) }
+    goto next.bnc.read
+  }
+  if ($gettok(%bnc.read.line,1,32) == NICK) && (%BNC.authed [ $+ [ $right($sockname,-7) ] ] != YES) { set %BNC.nick $+ $right($sockname,-7) $gettok(%bnc.read.line,2,32) | $report(BNC,Nick Saved,%BNC.nick [ $+ [ $right($sockname,-7) ] ] ,Connection number,$right($sockname,-7)).active | goto next.bnc.read }
+  if ($gettok(%bnc.read.line,1,32) == USER) && (%BNC.authed [ $+ [ $right($sockname,-7) ] ] != YES) { set %BNC.user $+ $right($sockname,-7) $gettok(%bnc.read.line,2-,32) | $report(BNC,User Saved,%BNC.user [ $+ [ $right($sockname,-7) ] ] ,Connection number,$right($sockname,-7)).active | goto next.bnc.read }
+  if ($sock(BNCRELAY [ $+ [ $right($sockname,-7) ] ] ) != $null) && (*god-find* !iswm %bnc.read.line) { sockwrite -n BNCRELAY [ $+ [ $right($sockname,-7) ] ] %bnc.read.line }
+  if ($key(settings,Sbnc.monitor) == ON) && (*Lag-CK* !iswm %bnc.read.line) { $report(BNC,Monitor,Connection number $right($sockname,-8),%bnc.read.line).active }
+  goto next.bnc.read
+}
+on 1:SOCKOPEN:BNCRELAY*:{
+  if ($sockerr > 0) { $report(Sock Error,$sockname,READ,$sock($sockname).wserr,$sock($sockname).wsmsg).status | return }
+  $report(Relay is open,Connection number,$right($sockname,-8)).active
+  if (%BNC.pass [ $+ [ $right($sockname,-8) ] ] != $null) { sockwrite -n $sockname pass %BNC.pass [ $+ [ $right($sockname,-8) ] ] $cr NICK %BNC.nick [ $+ [ $right($sockname,-8) ] ] $cr USER %BNC.user [ $+ [ $right($sockname,-8) ] ] }
+  else { sockwrite -n $sockname NICK %BNC.nick [ $+ [ $right($sockname,-8) ] ] $cr USER %BNC.user [ $+ [ $right($sockname,-8) ] ] }
+}
+on 1:SOCKREAD:BNCRELAY*:{
+  if ($sockerr > 0) { $report(Sock Error,$sockname,READ,$sock($sockname).wserr,$sock($sockname).wsmsg).status | return }
+  :next.relay.read
+  sockread %relay.read.line
+  if ($sockbr == 0) { return }
+  if ($sock(BNCUSER [ $+ [ $right($sockname,-8) ] ] ) != $null) && (*god-find* !iswm %relay.read.line) { sockwrite -n BNCUSER [ $+ [ $right($sockname,-8) ] ] %relay.read.line }
+  if ($key(settings,Sbnc.monitor) == ON) && (*Lag-CK* !iswm %relay.read.line) { $report(BNC,Monitor,Connection number $right($sockname,-8),%relay.read.line).active }
+  goto next.relay.read
+}
+on 1:SOCKCLOSE:BNCRELAY*:{ sockclose BNCUSER [ $+ [ $right($sockname,-8) ] ] | unset %BNC.nick [ $+ [ $right($sockname,-8) ] ] %BNC.user [ $+ [ $right($sockname,-8) ] ] %BNC.pass [ $+ [ $right($sockname,-8) ] ] %BNC.authed [ $+ [ $right($sockname,-8) ] ] | %BNC.level [ $+ [ $right($sockname,-8) ] ] }
+on 1:SOCKCLOSE:BNCUSER*:{ sockclose BNCRELAY [ $+ [ $right($sockname,-7) ] ] | unset %BNC.nick [ $+ [ $right($sockname,-7) ] ] %BNC.user [ $+ [ $right($sockname,-7) ] ] %BNC.pass [ $+ [ $right($sockname,-7) ] ] %BNC.authed [ $+ [ $right($sockname,-7) ] ] | %BNC.level [ $+ [ $right($sockname,-7) ] ] }
+

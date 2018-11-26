@@ -1,0 +1,419 @@
+// 	Language file for mIRCStats
+// 	Translation by Virginie
+//
+// 	Feel free to modify this file, or use it as support to create 
+// 	language configurations for your own language or "style."
+//
+//	If you create a nice translation for any language and wan't it to be used 
+//	also by others, send .msl-file to mircstats@nic.fi, so I can distribute 
+//	it with the next version of mIRCStats.
+//
+//
+// -- Some info about language configurations --
+//
+// mIRCstats reads the selected language file and saves lines to memory from where 
+// "html-section" reads entries whenever it needs to print something to html-file.
+// 
+// If more than one entry is found for a certain "language tag" (see tag 0), a random one 
+// of those is used in the report, thus making stats a bit different every time.
+// So it's recommended that you write more than one alternative lines for every tag!
+//
+//  
+// Variable names speak for themselves, but here's a brief explanation..
+//
+// * System variable names (must be used if there's one defined for a tag):
+//
+// [name1] or [name2] - normally a nickname, but also day of week and percentage ("99%")
+// [number1] or [number2] - numbers calculated for tag.
+// [date1] or [date2] - dates shown like: 19.4.1999
+// [string1] or [string2] - various strings
+// 
+// * Public variable names (can be used in any line):
+//
+// [channelname] - name of the logged irc channel 
+// [today] - this day like: 'Saturday 1.1.1111'  (day name picked from tags 11 - 17)
+// [version] - current version number of mIRCStats
+//
+// -- Language configurations start here --
+
+
+// your name here (will be shown in the bottom bar)
+
+100: Virginie
+
+// HTML title text 
+
+0: Statistiques du canal [channelname] par [name1]
+
+// Page title: 1=user name given
+
+1: Statistiques du canal [channelname] par [name1]
+
+// Page title: 2= user name not given
+
+2: Statistiques de [channelname]
+
+// Subtitle: 3=One day stats, 4=more than one day
+// [name1]=Day of week for start day, [date1]=start date like '1.1.1999'
+// [name2]=Day of week for end day,   [date2]=end date like '2.1.1999'
+
+3: Statistiques tirées de l'activité du canal, le [name1] [date1]
+
+4: Statistiques générées depuis [name1] [date1] jusqu'à [name2] [date2]
+
+
+// number of persons during reporting period: 
+// [number1] number of day in the stats - [number2] = number of nicks
+5: Pendant [number1] jours, [number2] personnes sont venues sur [channelname]
+
+// Texts: 6: "Hours", 7: "Nick", 8: "Nicks" (used in "most nicknames"-section (like 'Avenger: 3 Nicks').
+6: Heures
+7: Surnom
+8: Surnoms
+
+// user stats title texts: 9:'Number of lines', 10: 'Random line'
+9: Nombres de lignes
+10: Ligne au hasard
+
+
+// Week day names starting from sunday (11) to saturday (17)
+
+11: Dimanche
+12: Lundi
+13: Mardi
+14: Mercredi
+15: Jeudi
+16: Vendredi
+17: Samedi
+
+// Channel load by weekdays
+28: Activité du canal, par semaine
+
+***
+
+// Daily stats title
+30: Activité journalière
+
+// Daily stats subtitle
+31: (Nombre de lignes / 6 heures)
+
+***
+
+// Hourly stats title
+32: Fréquentation par heure
+***
+
+// User stats title
+33: Stats d'activité
+33: Personnes les plus actives
+
+//User stats subtitle
+34: (Tri par nombre de lignes écrites)
+
+
+// Non-detailed user table title. [number1] = threshold linecount
+35: Ils ont écrit moins de [number1] lignes:
+
+
+// [number1]=number of nicks who did not make it to stats
+36: Il y a aussi [number1] personnes qui n'ont rien dit...
+36: [number1] personnes ont fait acte de présence, mais sans rien dire...
+
+
+// User stats title when "Show Top N nicks" selected. [number1] = Number of nicks in table.
+37: Top [number1] des actifs
+37: [number1] personnes les plus actives
+
+// Non-detailed user table title when "Show Top N nicks" selected. [number1] = number of nicks in main table
+38: Les concurrents
+38: Ceux qui ont loupé le top [number1]
+
+
+*** Topic table
+
+// Topic title : [number1]=number of topics  
+// (this is shown if report has less than 6 topics)
+40: Le topic a été changé [number1] fois
+
+// Topic title (6 or more topics) [number1]=number of topics
+41: Nombre de changement de topics pendant la période de stats: [number1] fois
+
+// Title for '5 topics' table
+42: Cinq topics au hasard
+ 
+// Topic table title 'Changed by'
+43: Changé par
+
+// Topic table title 'Changed by'
+44: Sujet
+
+
+*** Big numbers
+
+//big numbers title
+50: Les "gros chiffres"
+
+
+//most joins. [name1]=nick, [number1]=number of joins
+51: [name1] ne sait pas trop s'il doit entrer ou sortir de [channelname] ([number1] va et viens...)
+
+//most descriptions (/me). [name1]=nick, [number1]=number of descs
+52: [name1] voulait vraiment dire ce qu'il faisait - [number1] descriptions. 
+
+// 'Sample:'-text here
+53: Exemple:
+
+
+//best kicker. [name1]=nick, [number1]=number of kicks he gave
+54: Le meilleur "kickeur" a été [name1], qui a viré [number1] personnes. 
+
+//second best kicker. [name1]=nick, [number1]=number of kicks he gave
+55: Second: [name1] avec seulement [number1] personnes!
+
+
+//got kicked most times. [name1]=nick, [number1] = got this amount of kicks
+56: [name1] a été viré [number1] fois... 
+56: [name1] s'est pris un pied au cul [number1] fois !
+
+//runner-up kicked person. [name1]=nick, [number1]=number of kicks he got
+57: Second: [name1] - viré [number1] fois.
+
+
+//most hunted lines [name1]=nick, [number1]=number of texts found, [name2]=hunted text
+58: [name1] sait bien ce que veut dire [name2] car il l'a répété [number1] fois... 
+58: [name1] est un perroquet: il a dit [name2] [number1] fois!
+
+
+//most '!'-marks. [name1]=nick, [name2]=percentage. example: "17 %"
+59: Le plus bruyant est [name1] avec [name2] de '!' dans ses phrases.
+
+//second loudest [name1]=nick, [name2]=percentage. example: "17 %"
+60: Le second: [name1] - [name2] de '!'.
+
+
+//most '?'-marks. [name1]=nick, [name2]=percentage. example: "17 %"
+61: [name1] se pose trop de questions: [name2] de '?' dans ses phrases.
+
+//second in '?'-list [name1]=nick, [name2]=percentage. example: "17 %"
+62: ... [name1] aussi d'ailleurs - [name2] de '?'.
+  
+
+//longest lines:
+63: [name1] a écrit les plus longues phrases: [number1] lettres par ligne.
+
+//average line length, [number1]=avg. number of letters.
+64: En moyenne sur [channelname], [number1] lettres par ligne.
+
+//most nicks-table topic
+65: Liste des personnes changeant souvent de nom:
+
+//sub-title ([name2]: person who had most nicks. This variable can also be left away.)
+
+// 66: (Still haven't found the best one, [name2]..)
+66: (C'est juste qu'ils n'arrivent pas à trouver le bon..)
+
+
+// ** for future use (=not implemented yet):
+
+// gave most ops
+67: [name1] donne beaucoup de @: [number1].
+
+// deopped most times.
+68: [name1] a enlevé [number1] '@'. 
+
+// most lines written in CAPS. [name1]=nick, [number1]=number of capitalized lines
+69: [name1] est resté collé à la touche SHIFT - Il a écrit [number1] lignes en majuscules!
+
+*** Long term stats (info read from history file).
+
+//Title texts: weekly(70), two week sections(71), monthly(72), 
+//             two(73), three(74), six(75) and twelve(76) month sections.
+
+70: Stats hebdomadaires
+71: Stats à long terme - 15 jours
+72: Stats mensuelles
+73: Stats à long terme - 2 mois
+74: Stats à long terme - 3 mois
+
+75: Stats à long terme - 6 mois
+76: Stats à long terme - une année
+
+
+//Total number of lines in channel history.
+//[name1] = number of lines with thousand separators like 12,123,233
+
+78: Total: [name1] lignes
+
+//Estimated number of lines for current section
+//(not implemented yet.)
+
+79: Estimation du nombre de lignes pour cette section: [number1] lignes
+79: Estimation pour cette saison: [number1] lignes.
+
+// ** nick who spoke most with oneself.. ([number1]=count)
+80: [name1] aime les monologues - 5 lignes d'un coup, [number1] fois...
+
+81: [name1] a fait des super monologues: [number1] fois !
+
+// Activity peak detection: [number1]=number of persons, [string1]=interval.
+82: L'activité maximale du channel: [number1] personnes étaient présentes pendant [string1]
+
+// Activity peak subtitle: [number1] length of the interval in minutes (0...60)
+83: L'activité des utilisateurs pendant ces [number1]-minutes étaient (dans l'ordre de parution):
+// Word stats
+
+// title for Most used words table
+85: Mots le plus souvent répétés
+
+86: Noms les plus souvent cités
+87: Adresses citées
+
+// table headers: Word count(88), Word(89), 
+		  Nick who used that word last(90), and time of last use(91)
+88: nb
+89: mot
+90: dit par
+91: à
+
+
+// General strings (95: minutes (min), 96: abreviation for hour (h), 97: amount, 98: percentage
+95: min
+96: h
+97: restant
+98: pourcentage
+
+// tag 100 reserved for language file creator's name (first tag of this file up there).
+
+
+// Custom quit message header in Big Numbers
+101: Messages de quit
+101: Quelques messages de quit souvent utilisés
+
+
+// General strings (102: day, 103: week)
+102: jour
+103: semaine
+
+
+// Net split stats strings: 105-109
+// Tag 105: [number1]=Total count of splits, [string1]=average amount, [string2]=day/week
+105: [number1] splits. En moyenne, [string1] splits par [string2]
+
+// Tag 106: [string1]=day/week, [number1]=top count in given interval, [string2]=date(s)
+106: Le plus de splits par [string1]: [number1] splits, le [string2]
+
+// Tag 107: [string1]=date, [string2]=duration of the longest split, [number1]=amount of people dropped
+107: Le plus long split: [string1] pendant [string2] ([number1] personnes virées)
+
+// Tag 108: [string1]=date, [number1]=amount of people dropped, [string2]=duration of the "most dropped" split
+108: Au pire, [number1] personnes virées ([string1]) pendant [string2].
+
+// Tag 109: This is shown only if the same split was the longest and it also caused most people to drop.
+//          [string1]=timestamp, [number1]=number dropped, [string2]=duration of the worst net split
+109: Le pire des splits: [string1] - [number1] personnes dégagées, pendant [string2]
+
+
+// Long term stats addition strings, "record day/week/month". [string1]=timestamp, [number1]=amount of lines
+110: Le jour le plus actif a été [string1] avec [number1] lignes.
+111: Meilleure semaine: [string1] - [number1] lignes
+112: Meilleur mois: [string1] avec [number1] lignes.
+
+// Time of day stats title
+115: Répartition journalière
+
+// Column titles:
+116: Les aigles de la Nuit
+117: Les oiseaux du matin
+118: L'équipe de l'après-midi
+119: Les actifs de la soirée
+
+// This line shows person who requested the stats update, passed with -req command line option.
+125: Mise à jour demandée par [name1]
+
+// Big numbers' conversation killer lines. [name1]=award winner nick, [number1]=number of conversations killed.
+130: La récompense du tueur de conversation revient à [name1] dont le commentaire final a mit fin à [number1] conversations.
+
+// Conv.killer sample line: [number1]=length of sample conversation [number2]=length of silence
+131: La ligne suivante a terminé [number1] - conversations et a été suivie de [number2] minutes de silence:
+
+// "page" string used in sub-page filenames. Don't use other characters than a-z.
+135: Page
+
+// 140: "Today", 141: "Yesterday" - strings used in for latest days in quote timestamps
+140: Aujourd'hui
+141: Hier
+
+// Activity distribution section title
+145: Répartition de l'activité
+
+// Act.distr. table title texts: 146: Lines per day  147: Number of days
+146: Lignes par jours
+147: Nombres de jours
+
+// Explanation text if not activity in log for certain month
+148: Activités non enregistrées
+
+// Chat partners section title (150) and subtitle (151)
+150: Les Duos
+151: Les meilleurs duos par répartition
+
+// Nick status strings 155-158: Operator, HalfOp, Voiced, Normal
+155: Operateur
+156: Demi-Operateur
+157: Voicé
+158: Utilisateur Normal
+
+// Personal stats title topic
+160: Statistiques Personnelles
+// 160: Détail du classement
+
+// personal stats data strings
+// 161: Number of visits, 162: Nick status (using strings 155-158)
+161: Visites: [number1]
+162: Status: [string1]
+
+// 163: Total number of lines, 164: Number of days with lines written
+163: Lignes: [number1]
+164: Jours actifs: [number1]/[number2]
+
+// 165: Avg.lines per day, 166: Avg.letters per line
+165: Moyenne de lignes par jour: [string1]
+166: Moyenne de lettres par ligne: [string1]
+
+// 167: Most active time of day or week
+167: Le plus actif: [string1]
+
+// 168: Last active, shows timestamp of the last written line
+168: Dernières paroles: [string1]
+
+// 170: "Given ops" count
+170: A donné l'OP [number1] fois
+
+// 171: Number of people person has kicked out, 172: Number of times person has been kicked out
+171: A kické [number1] personnes
+172: A été kické [number1] fois
+
+// 173: # of descriptions, 174: Topics set count, 175: Number of lines with caps
+173: Nombre de descriptions: [number1]
+174: Topics mis: [number1]
+175: Ratio de Majuscules: [string1]
+
+// 176: Number of lines with ?, 177: Number of lines with !
+176: Ratio des Questions: [string1]
+177: Ratio des Exclamations: [string1]
+
+// 178: Number of conversations killed, 179: Total number of nicks
+178: Conversations stoppées: [number1]
+179: Nombre de nicks utilisés: [number1]
+
+// 180: Personal weekly activity graph title, 181: Title for hourly graph
+180: Activitées hebdomadaires
+181: Activitées journalières
+
+// 182: Last days activity graph title, 183: Personal stats partner list title
+182: Derniers [number1] jours
+183: Parle le plus avec:
+
+// Personal homepage line
+190: Page d'acceuil: [string1]
+

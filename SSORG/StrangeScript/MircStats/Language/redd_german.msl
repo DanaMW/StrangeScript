@@ -1,0 +1,671 @@
+// 	German Language file for mIRCStats : lang_german.msl
+// 	Translation by redd <redd@uni.de> on 2002/06/12
+// your name here (will be shown in the bottom bar)
+
+100: redd
+
+// HTML title text 
+
+0: [channelname] Stats erstellt mit mIRCStats [version] von [name1]
+0: [channelname] Stats erstellt von [name1] - mit ein bisschen Unterstützung von mIRCStats [version]..:)
+0: [channelname] Stats von [name1]!
+0: [channelname] - Der Statistiktick von [name1], mit freundlicher Unterstützung von mIRCStats [version]
+0: [channelname] Stats von [name1], unterstützt von mIRCStats [version]
+0: [name1]s kleine [channelname] Stats
+0: Die [channelname] Stats von [name1] 
+0: Die aktuellen Channellstats von [channelname], erstellt von [name1]
+0: [name1] ist so frei und erstellt die [channelname] Stats!
+
+// Page title: 1=user name given
+
+1: [channelname] Stats erstellt von [name1]
+1: [channelname] Stats - von [name1] frisch auf den Tisch.
+1: [name1] präsentiert: Die aktuellen [channelname] Stats.
+1: Wer macht was in [channelname], made by [name1]
+1: Der [channelname] Statistiktick mit [name1]
+1: [name1]s kleine [channelname] Statistik
+1: [channelname] Stats von [name1]
+1: Statistiken von [channelname] - erstellt von [name1]
+1: [name1] verspürt den Drang das Geschehen in [channelname] aufzudecken!
+1: Was geht ab in [channelname]? Dank [name1] werdet ihr es erfahren!
+
+// Page title: 2= user name not given
+
+2: [channelname] Stats:
+2: Die aktuellen [channelname] Stats:
+2: Wer macht was in [channelname]:
+2: Der [channelname] Statistiktick:
+2: Statistiken von [channelname]:
+2: Was bisher in [channelname] geschah!
+
+// Subtitle: 3=One day stats, 4=more than one day
+// [name1]=Day of week for start day, [date1]=start date like '1.1.1999'
+// [name2]=Day of week for end day,   [date2]=end date like '2.1.1999'
+
+3: Stats erstellt für [name1], den [date1]
+3: Das war [name1], der [date1]
+3: [name1], der [date1], mal genau unter die Lupe genommen
+3: Hier eine genaue Analyse des [date1] ([name1])
+3: Statistiken für [name1], den [date1]
+3: Statistiken für den [date1], einen [name1]
+
+4: Stats erstellt von [name1], dem [date1] bis zum [name2], den [date2]
+4: Statistik für [name1], den [date1], bis [name2], den [date2]
+4: Was war los vom [name1], [date1], bis [name2], [date2]?
+4: Geschichte der Welt in 10.000 Teilen. Diesmal: [name1] ([date1]) - [name2] ([date2])
+4: Heute wurde [name1], der [date1], bis [name2], der [date2], unter die Lupe genommen
+4: Statistiken gab es hinreichend vom [name1], den [date1] bis zum [name2], den [date2]
+4: Die Statistik vom [name1], den [date1] bis zum [name2], den [date2] 
+
+
+// number of persons during reporting period: 
+// [number1] number of day in the stats - [number2] = number of nicks
+5: In diesen [number1] Tagen besuchten insgesamt [number2] Personen [channelname].
+5: In [number1] Tagen haben sich [number2] Personen auf [channelname] verirrt.
+5: Dafür mußten auf [channelname] immerhin [number2] Leute [number1] harte Tage arbeiten.
+5: Also immerhin [number1] ganze Tage in [channelname] - und [number2] Tatbeteiligte!
+5: In [channelname] haben sich in [number1] Tagen immerhin [number2] Leute getraut
+5: In [number1] Tagen besuchten [number2] Chatter [channelname].
+5: [channelname] erfreute sich in [number1] Tagen der Beliebtheit von [number2] Besuchern.
+5: [number2] Personen verirrten sich in [number1] Tagen in [channelname].
+
+// Texts: 6: "Hours", 7: "Nick", 8: "Nicks" (used in "most nicknames"-section (like 'Avenger: 3 Nicks').
+6: Uhr 
+7: Nick
+8: Nicks
+
+// user stats title texts: 9:'Number of lines', 10: 'Random line'
+9: Anzahl der Zeilen
+
+10: Zufällig ausgewählte Zitate
+
+// Week day names starting from sunday (11) to saturday (17)
+
+11: Sonntag
+12: Montag
+13: Dienstag
+14: Mittwoch
+15: Donnerstag
+16: Freitag
+17: Samstag
+
+// Channel load by weekdays
+28: Wöchentliche Channel Benutzung nach Wochentagen
+28: Wöchentliche Channel Belastung nach Wochentagen
+28: Channel Aktivitäten der Wochen nach Wochentagen
+28: Verlauf der Wochen (Auslastung) nach Wochentagen
+28: Wöchentlicher zugriff auf den Channel nach Wochentagen
+28: An welchen Wochentagen herrscht am meisten Betrieb?
+28: Wann ist denn hier am meisten los (Übersicht der Wochen nach Wochentagen)
+28: An welchen Wochentagen bekommt der Channel den meisten Besuch?
+28: An welchen Wochentagen haben die Chatter am meisten Zeit?
+
+***
+
+// Daily stats title
+30: Tägliche IRCing Aktivitäten
+30: Tägliche Statistiken
+30: Tägliche Auslastung
+30: Auslastung im Überblick
+30: Tägliche Chat Aktivität
+30: Wieviel an welchem Tag los war!
+30: Tages-Statistiken
+
+// Daily stats subtitle
+31: (Anzahl der Zeilen / 6 Stunden)
+31: (in Zeilen pro 6 Stunden)
+31: (Anzahl der Zeilen pro 6 Stunden)
+31: (Zeilen pro 6 Stunden)
+
+***
+
+// Hourly stats title
+32: Channelauslastung nach Stunden
+32: Wann ist denn hier am meisten los?
+32: Wann geht denn hier am meisten ab?
+32: Channelstatistiken für jede einzelne Stunde
+32: Stündliche Channelauslastung
+
+***
+
+// User stats title
+33: Die Labertaschen der Nation:
+33: Die redefreudigsten [channelname]'ler:
+33: Bei wem qualmt die Tastatur denn am meisten? ;)
+33: Unsere Meistertipper:
+33: Die redefreudigsten Chatter:
+33: Hier sieht man wer seine Flat bestens nutzt! =)
+33: Wer hat wohl in [channelname] am Meisten gesagt - diese Tabelle zeigt es dir!
+33: [channelname] wurde durch folgende Personen belastet: ;)
+33: Was wäre wenn einer der TOP-Chatter deine Telefonnummer hätte?? ;)
+
+//User stats subtitle
+34: (Nicks sortiert nach Anzahl geschriebener Zeilen)
+34: (Aufsteigend nach Zeilenzahl)
+34: (Sortiert nach Zeilenzahl) 
+34: (Wie kann man nur soviel labern?)
+34: (Die Spammer schlechthin....)
+
+// Non-detailed user table title. [number1] = threshold linecount
+35: Ferner lieferten weniger als [number1] Zeilen:
+35: Weniger als [number1] Zeilen, ts ts ts
+35: Weniger als [number1] Zeilen? Strengt euch mal an Mädelz! :o)
+35: Weniger als [number1] Zeilen registrierten wir von:
+35: Sehr schwache Leistungen - weniger als [number1] Zeilen - sahen wir von:
+35: Für weniger als [number1] Zeilen dürft ihr über diese Chatter lachen:
+35: Folgene Personen werden angeklagt, weniger als [number1] Zeilen geschrieben zu haben:
+
+// [number1]=number of nicks who did not make it to stats
+36: ...und wir hätten noch [number1] Topidler!
+36: Übriggebliebene [number1] Nicks hatten nicht soviel zu erzählen...
+36: Außerdem noch [number1] Leute, die keiner Erwähnung wert sind...
+36: Fast eingeschlafen sind dann noch [number1] Leute...
+36: Außerdem noch [number1] Leute, die nur einen Tastenblock haben
+36: Außerdem noch [number1] unwichtige Leute, die nicht erwähnenswert sind
+36: ...und noch [number1] Join/Parter? tztztz
+36: Noch weniger zu sagen hatten uns [number1] Leute!
+36: Irgentwas war noch...[number1] Besucher die es nicht in die Stats geschafft haben!
+36: [number1] Leute waren mit wichtigeren Dingen beschäfftigt als mit Chatten! ;o)
+36: Es gab [number1] Leute die anscheinend nix zu sagen hatten.
+36: Es idleten [number1] Besucher in [channelname] rum ohne was zu sagen.
+36: [number1] Leute dachten, dass jedes Wort 10pf kostet - wieso stimmt doch! :D Kontonr.:....
+
+// User stats title when "Show Top N nicks" selected. [number1] = Number of nicks in table.
+37: TOP [number1] Nicks
+37: Die [number1] meist aktiven Leude
+
+// Non-detailed user table title when "Show Top N nicks" selected. [number1] = number of nicks in main table
+38: Diese Chatter schafften es einfach nicht unter die Top [number1]
+38: Dann noch [number1] Looser, die einfach nicht schafften ;)
+
+*** Topic table
+
+// Topic title : [number1]=number of topics  
+// (this is shown if report has less than 6 topics)
+40: Das Topic wurde nur [number1] mal geändert.
+40: Die hohen Herren fanden es nur [number1] mal nötig das Topic zu wechseln.
+40: IRCdoc diagnostizierte "akuten Topicmangel" (Nur [number1] Topics für [channelname])...
+40: [number1] Topics sind einfach zu wenig!!!!
+40: Bisher gab es lediglich [number1] Topics...macht das sich das ändert! ;)
+
+// Topic title (6 or more topics) [number1]=number of topics
+41: Anzahl an Topics während der analysierten Zeit: [number1]
+41: Das Topic wurde insgesamt immerhin [number1] mal geändert.
+41: Bei [number1] Topics verliert man schnell den Überblick.
+41: Bisher gab es stolze [number1] Topics in diesem Channel. JUHUUU!
+41: [number1] Topics können sich sehen lassen...
+41: Dies ist eine kleine Auslese der [number1] Topics...
+
+// Title for '5 topics' table
+42: Zufällig ausgewählt: 5 Channel-Topics.
+42: Hier einmal fünf verschiedene Topics
+42: Diese Topics gab es:
+42: 5 zufällig gewählte Topics:
+42: Einige Topics von [channelname]:
+42: Legendäre Topics:
+ 
+// Topic table title 'Changed by'
+43: Geändert von:
+43: Gesetzt von:
+43: Täter:
+43: Der Schuldige:
+
+// Topic table title 'Changed by'
+44: Topic:
+44: Neues Topic:
+44: Die Tat:
+44: So sah das Topic danach aus:
+
+*** Big numbers
+
+//big numbers title
+50: Die [channelname] Welt in Zahlen
+50: [channelname] - Zahlen und Fakten
+50: Was Sie schon immer über [channelname] wissen wollten, ...
+50: Zahlen und Fakten von [channelname]
+50: Hoch interessante Zahlen und Fakten von [channelname]
+50: Fakten Fakten Fakten!!!
+50: Was wer schon alles im Channel vollbracht hat:
+50: Meisterleistungen der Besucher in [channelname]
+50: Du meinst deine Aktionen bleiben unbemerkt?...Hier wird alles ans Tageslicht gebracht von Agent ReDD
+
+//most joins. [name1]=nick, [number1]=number of joins
+51: [name1] konnte sich nicht entscheiden, ob er/sie bleibt oder geht, und betrat [channelname] [number1] mal..
+51: [name1] liebt das Rein-und-raus-spielchen und ist auf [channelname] immerhin [number1] mal gekommen :-)
+51: "Bleib ich drin oder geh ich lieber raus?" hat sich [name1] schon [number1] mal gefragt...
+51: [name1] ist ein bissl verwirrt und rejointe immerhin [number1] mal.
+51: [name1] hat [channelname] bereits [number1]mal betreten.
+51: Wenn [name1] so weiter macht ([number1] Joins) bekommt er/sie bald nen Ban wegen Massjoin. ;)
+51: Der absolute TOP Besucher ist [name1] mit [number1] Joins.
+51: Für [name1] gibts mit [number1] Joins bald ne SuperUser-Flat ;p
+
+//most descriptions (/me). [name1]=nick, [number1]=number of descs
+52: Mit seinem/ihrem deskriptiven Mitteilungsbedürfnis ließ uns [name1] [number1] mal an seinen Gefühlen teilhaben.
+52: Damit auch jeder weiß, was er/sie gerade macht, kamen insgesamt [number1] Actions von [name1].
+52: [name1] liebt Actions und führte insgesamt [number1] erfolgreich aus.
+52: Last-Action-Hero [name1] kam nicht um [number1] Actions herum =)
+52: Schon [number1]mal musste [name1] uns einfach mitteilen wie er/sie sich fühlt bzw. was er/sie gerade tut.
+52: Immer in Action mit [number1] Selbstbeschreibungen ist [name1]
+52: [name1] sollte sich vieleicht mal auf Hyperaktivität untersuchen lassen! ([number1] Actions)
+
+// 'Sample:'-text here
+53: Eine Kostprobe:
+53: Hier ein Beispiel:
+53: Wie? So:
+53: Ein Auszug:
+53: z.B.:
+
+//best kicker. [name1]=nick, [number1]=number of kicks he gave
+54: Der/Die böhse Beschützer/in von [channelname] war [name1], der/die seinen/ihrem Ruf bekam, nachdem er/sie [number1] Personen kickte. 
+54: Kandidat für den Vorstandsposten der Channelpolizei: [name1] mit bisher [number1] Kicks.
+54: Der Sheriff von [channelname] mit insgesamt [number1] Kicks war diesmal unangefochten [name1]
+54: Vorsicht, und bloß nichts falsches sagen: Der [number1]. Kick von [name1] könnte Dir gelten!
+54: [name1] führte insgesamt [number1] mal seine/ihre schlechte Laune an ahnungslosen Usern aus
+54: [name1] hat sich das Kicken anscheinend zum Hobby gemacht. Insgesammt schon [number1]mal!
+54: Achtung [name1]! Du hast durch deine [number1] Kicks nicht grade an Beliebtheit gewonnen.
+54: Anscheinen hat sich [name1] dem [channelname]-Security Service angeschlossen. Denn mit [number1] Kicks ist er/sie gut dabei!
+54: Seit auf der Hut wenn ihr euch mit [name1] unterhaltet, denn er/sie ist leicht reizbar und hat deswegen schon [number1] Leute gekickt!
+54: Der Award für die meisten Kicks ([number1] insgesamt) geht diesmal an [name1]!
+
+//second best kicker. [name1]=nick, [number1]=number of kicks he gave
+55: Auch [name1] versuchte kewl auszusehen und kickte [number1] Personen aus [channelname]..
+55: Naja, mit [number1] Kicks wird [name1] zur not noch Hilfssheriff...
+55: Auch nicht ungefährlich... bisher [number1] kicks aus [name1]s Richtung
+55: [name1] sollte man mit [number1] Kicks auch nicht unterschätzen
+55: [name1] versucht sich mit [number1] Kicks immernoch durchzusetzen
+55: Auch [name1] kickt gerne mal einen Störenfried. ([number1] Kicks)
+55: Auch [name1] hat schon [number1] Kicks.
+55: Nehmt euch in acht vor [name1], denn er/sie ist mit [number1] kicks nicht mehr weit von der Spitze entfernt!
+
+//got kicked most times. [name1]=nick, [number1] = got this amount of kicks
+56: In der Opferrolle: [name1] - bislang [number1] mal aus [channelname] gekickt.
+56: [name1] lernt's nie und wird sich sicher noch öfter als nur [number1] mal kicken lassen.
+56: [name1] musste [number1] mal die schlechte Laune der Sheriffs von [channelname] spüren ;)
+56: [name1] sollte besser aufpassen was er/sie sagt, denn er/sie wurde bereits [number1]mal gekickt.
+56: Anscheinend hat [name1] eine masochistische Veranlagung. Er/Sie lies sich bereits [number1]mal kicken.
+56: [number1] Kicks bekam [name1] reingewürgt. Ob gewollt oder nicht... ;)
+56: [name1] wurde bisher [number1]mal aus [channelname] gekickt. Stehst du auf sowas? =)
+
+//runner-up kicked person. [name1]=nick, [number1]=number of kicks he got
+57: Aber auch [name1] scheint mit seinen [number1] kicks auf Schmerzen zu stehen. *klopp*
+57: Immer wieder gern kicken ließ sich auch [name1] (bisher [number1] mal).
+57: [name1] bekam immerhin [number1] Schläge mit dem Rohrstock! autsch ;)
+57: Aber auch [name1] musste schon [number1]mal in den sauren Apfel beißen.
+57: Gekickt zu werden scheint IN zu sein, denn [name1] lies sich auch bereits [number1]mal kicken.
+57: Wenn du ([name1]) dich anstrengst kommst du bald noch weiter nach oben, aber [number1] Kicks sind leider noch zu wenig!
+
+
+//most hunted lines [name1]=nick, [number1]=number of texts found, [name2]=hunted text
+58: [name1] kennt wohl nicht die richtigen Wörter und sagte [name2] [number1]mal... 
+58: [name1] weiss, was er/sie zu sagen hat, und wiederholte [name2] [number1]mal.
+58: Gut, dass [name1] nur [number1] mal [name2] gesagt hat.
+58: [name1]'s Lieblingswort [name2] hat er/sie schon [number1] mal benutzt.
+58: Das Wort [name2] nimmt niemand gern in den Mund - außer [name1] - und zwar gleich [number1] mal!
+58: [name1] kennt wohl nur das Wort [name2] - das hat er/sie nämlich [number1] wiederholt
+58: [name1] ist nicht sehr kreativ und wiederholte schon [number1]mal: "[name2]"
+58: [name1] scheint gefallen an dem Wort "[name2]" gefunden zu haben! Denn er/sie lies es sich nicht nehmen dieses [number1] mal zu wiederholen.
+58: Es ist schon fast nicht zu glauben aber [name1] ist so begeistert von "[name2]", dass er/sie es uns schon [number1]mal sagen musste.
+
+
+//most '!'-marks. [name1]=nick, [name2]=percentage. example: "17 %"
+59: Der/Die/Das Lauteste war [name1] mit einem Brüllanteil von [name2]!
+59: Der Schreihals der Nation ist [name1] mit [name2] Brüllanteil seiner/ihrer Redezeit
+59: Wir sind nicht taub, [name1] - [name2] Brüll-Anteil auf [channelname]...!
+59: [name1] hatte insgesamt [name2] der Zeit in [channelname] ein Megaphon vor dem Mund
+59: [name1], [channelname] is kein Boot-Camp - also bitte nächstes mal weniger als [name2] Brüllen
+59: [name1] scheint nicht sehr viel in der Hose zu haben da er/sie [name2] seiner/ihrer Redezeit nur rumschreit und versucht so seinen Mann zu stehen! ;)
+59: Entweder hat [name1] vergessen die CAPSLOCK taste zu drücken oder er/sie kann wirklich nur schreien! [name2] der Zeit in [channelname]!
+59: Wenn [name1] bei seiner/ihrer Geburt schon so lange schrie ([name2]), gab es in diesem Krankenhaus bestimmt viele Fälle von Gehörsturz! ;P
+
+//second loudest [name1]=nick, [name2]=percentage. example: "17 %"
+60: Zweit Lauteste(r) im Sektor: [name1] - [name2] mit lauter Stimme!
+60: Naja, [name1] war mit [name2] auch nicht gerade unauffällig.
+60: [name1] will mit [name2] wohl dem Masterbrüller Konkurrenz machen
+60: Auch [name1] hatte anscheinend selten was zu tun - deswegen schrie er/sie [name2] seiner/ihrer Redezeit einfach mal ein bischen rum!
+60: [name1] lies sich vom Top-Brüller nichts gefallen und schrie [name2] seiner/ihrer Redezeit zurück!
+60: Ebenfalls versuchte es [name1] mit Brüllen ans Ziel zu kommen. Er/Sie probierte [name2] seiner/ihrer Redezeit, Gehör durch schreien zu erlangen.
+
+//most '?'-marks. [name1]=nick, [name2]=percentage. example: "17 %"
+61: [name1] sind viele Sachen unklar - deswegen bestanden auch [name2] der Zeilen aus Fragen. 
+61: Wieso bloß bestehen [name2] aller Zeilen von [name1] aus Fragen?
+61: [name1] stellt definitiv zuviele Fragen: [name2] der Redezeit!
+61: [name1] macht Günther Jauch Konkurrenz und stellte insgesamt [name2] seiner/ihrer Redezeit Fragen
+61: [name1] - noch is [channelname] kein Quiz-Channel. Das kriegst du mit [name2] Anteil an Fragen wohl nicht mit
+61: [name1] will mit seinen [name2] an Fragen wohl mal Quizmaster/in werden
+61: Wer nicht Fragt bleibt dumm!!! - Genau das scheint sich [name1] gemerkt zu haben und stellt zu [name2] Fragen.
+61: [name1] wird bald der Kopf platzen wenn er/sie weiterhin so viele Fragen stellt! ([name2] Fragen)
+61: [name1] sorgte mit seinen Sätzen ([name2] Fragen) immer für Gesprächsstoff.
+
+//second in '?'-list [name1]=nick, [name2]=percentage. example: "17 %"
+62: ...und die Silbermedallie geht an [name1] - mit einem Fragenanteil von [name2].
+62: Auch [name1] würde mit [name2] noch jedes Verhör meistern.
+62: Auch [name1] verspürt mit [name2] Fragen das Verlangen nach einem Quiz  
+62: ...und wer will [name1] schon [name2] der Redezeit beantworten
+62: Ja auch [name1] stellt zu viele Fragen. Insgesammt [name2] der Zeit in [channelname].
+62: Anscheinend ist auch [name1] nicht der/die Hellste, da er/sie bisher mit [name2] der Sätze versuchte seinen/ihren Horizont zu erweitern.
+  
+//longest lines:
+63: [name1] schrieb die längsten Zeilen - durchschnittlich [number1] Zeichen pro Zeile.
+63: [name1] nimmt den Mund gern mal voll. Wohlformulierte [number1] Zeichen pro Zeile sind es im Durchschnitt
+63: Durchschnittlich [number1] Zeichen pro Zeile haben wir von [name1] registriert.
+63: Manche mögen's lang. Zum Beispiel [name1] mit einem Durchschnitt von [number1] Zeichen pro Zeile.
+63: [name1] muss erst [number1] Zeichen pro Zeile schreiben bis seine/ihre Ente(r)taste funktioniert
+63: [name1] hat einen sehr grossen Wortschatz da er/sie seine/ihre Sätze im Durchschnitt mit [number1] Buchstaben versieht.
+63: Um mit [name1] mitzuhalten muss man schon mindestens [number1] Buchstaben pro Satz gebrauchen.
+63: Alles andere als dumm ist [name1], da er/sie in der Lage ist Sätze mit [number1] Zeichen zu erzeugen! =)
+
+//average line length, [number1]=avg. number of letters.
+64: Die durchschnittliche Zeilenlänge in [channelname] betrug [number1] Zeichen.
+64: Durchschnitt in [channelname] waren [number1] Zeichen.
+64: Das ist nicht übel - der [channelname] Durchschnitt lag nämlich nur bei [number1] Zeichen!
+64: Wogegen der Durchschnitt in [channelname] gerade mal bei [number1] Zeichen liegt.
+64: ...und der Durchschnitt von [channelname] lag nur bei [number1] Zeichen
+64: Wobei der Durchschnitt in [channelname] gerademal bei [number1] Zeichen pro Satz liegt.
+64: Alle anderen Besucher von [channelname] sollten sich am obrigen Beispiel orienteren und den Durchschnitt von [number1] im Channel etwas anheben!
+64: Diese Leistung ist sehr erstaunlich, da der Durchnitt in [channelname] gerademal bei [number1] Zeichen pro Satz liegt.
+
+//most nicks-table topic
+65: Liste der Personen mit den meisten Nicks:
+65: [channelname]'s Nick Flooder:
+65: Multiple Persönlichkeiten:
+65: Und hier die Nick-Flooder der laufenden Saison:
+65: Und hier die Shizophrenen der Nation:
+65: Viele verschiedene Persönlichkeiten haben:
+65: Wegen Nick-Flood bekommen folgenede Personen bald einen Ban ;) :
+65: Wer keine Probleme hat der macht sich eben welche:
+65: Leute, Nick-Flooding ist aber auch keine Lösung für eure Shizophrenie 
+
+//sub-title ([name2]: person who had most nicks. This variable can also be left away.)
+
+66: (Immernoch nicht den richtigen Nick gefunden, [name2]?)
+66: (Sie konnten einfach nicht den richtigen finden..)
+66: (Na, [name2], und DU kannst dich wohl wirklich nicht entscheiden!)
+66: (Langsam reicht es aber, oder nicht, [name2]?)
+66: [name2] - nächstes mal bitte deinen Psychater auf Shizophrenie aufmerksam machen
+66: Shizo [name2] hat wieder zugeschlagen ;)
+66: ([name2] hast du langsam mal genug?)
+66: (Armer [name2], muss sich bei jeder Entscheidung mit so vielen Persönlichkeiten rumschlagen.)
+
+// ** for future use (=not implemented yet):
+
+// gave most ops
+67: [name1] vergab die meisten Ops - zur Zeit [number1] davon.
+67: Sehr verantwortungsvoll: [number1] Ops wurden insgesamt von [name1] vergeben.
+67: [name1] vergab bereits [number1] OP Rechte - es is nur noch eine Frage der Zeit bis er/sie den Falschen erwischt.
+67: Zieh endlich mal die Gummistiefel aus [name1] und hör auf zu schleimen. [number1] OP's sind doch wirklich genug!
+67: [name1] hat in [channelname] am Meisten zu melden und vergibt regelmässig OPs. Bis jetzt [number1]mal.
+
+// deopped most times.
+68: [name1] benahm sich schlecht und wurde [number1]mal deopt..  
+68: Sehr verantwortungslos: [name1] ist seine Ops dafür [number1] mal losgeworden.
+68: [name1] vergreift sich immer wieder im Wort und wurde deswegen schon [number1]mal deOPt.
+68: Irgentwie ist [name1] in [channelname] nicht sehr beliebt, denn er/sie wurde bereits [number1]mal deOPt.
+68: Mit [number1] deOPs wird [name1] in [channelname] ebenfalls ganz schön rum geschubst.
+
+//most lines written in CAPS. [name1]=nick, [number1]=number of capitalized lines
+69: [name1] hat eine hartnäckige Shift Taste und schrieb schon [number1] Zeilen in CAPS.
+69: [name1]'s Shift-Taste scheint immer in Betrieb zu sein, da er/sie schon [number1] Zeilen in CAPS schrieb.
+69: Manchmal frag ich mich ob [name1] überhaupt eine Shift Taste hat? Bei [number1] Zeilen in CAPS is das auch nicht verwunderlich.
+
+//Title texts: weekly(70), two week sections(71), monthly(72), 
+//             two(73), three(74), six(75) and twelve(76) month sections.
+
+70: Wöchentliche Stats
+70: Wochenstatistik
+70: [channelname] - Wochenweise
+70: [channelname] - Woche für Woche
+
+71: Zweiwöchentliche Stats
+71: Zweiwochenstatistik
+71: [channelname] - Zweiwochenweise
+71: Lang-Zeit Statistiken - 2 Wochen
+
+72: Monatliche Stats
+72: Monatsstatistik
+72: [channelname] - Monateweise
+72: [channelname] - Monat für Monat
+72: Lang-Zeit Statistiken - 1 Monat
+
+73: Zweimonatliche Stats
+73: Zweimonatsstatistik
+73: [channelname] - Zweimonateweise
+73: Lang-Zeit Statistiken - 2 Monate
+
+74: Dreimonatliche Stats
+74: Quartalsstatistik
+74: [channelname] - Quartal für Quartal
+74: Lang-Zeit Statistiken - 3 Monate
+
+75: Halbjährliche Stats
+75: Halbjahrestatistik
+75: [channelname] - Halbjahresweise
+75: Lang-Zeit Statistiken - 1/2 Jahr
+
+76: Jährliche Stats
+76: Jahresstatistik
+76: [channelname] - Jahr für Jahr
+76: Lang-Zeit Statistiken - Jährliche Aktivität in [channelname]
+
+
+//Total number of lines in channel history.
+//[name1] = number of lines with thousand separators like 12,123,233
+
+78: Total: [name1] Zeilen
+78: Gesamte Anzahl an Zeilen: [name1]
+78: Gesamt: [name1] Zeilen
+78: Zeilenzahl gesamt: [name1]
+78: Insgesammt: [name1] Zeilen
+
+//Estimated number of lines for current section
+//(not implemented yet.)
+
+79: Durchschnittliche Anzahl an Zeilen für den aktuellen Zeitraum: [number1] Zeilen 
+79: Durchschnitt der Saison: [number1] Zeilen.
+79: Zeilenzahl durchschnittlich je Zeitraum: [number1] Zeilen
+79: Durchschnittlich [number1] Zeilen je Intervall.
+79: Geschätzte Anzahl an Zeilen für diese Zeitabschnitt: [number1] Zeilen
+
+// ** nick who spoke most with oneself.. ([number1]=count)
+80: [name1] schrieb die meisten Monologe - [number1]mal über 5 Zeilen am Stück 
+80: [name1] liebt Monologe und schrieb über 5 Zeilen am Stück - und das schon [number1] Mal...
+80: Wer keine Freunde hat der redet eben mit sich selber. So wie [name1] der das schon [number1]mal praktiziert hat. ;p
+80: [name1] redet wohl ziemlich viel, was auch der Grund dafür sein dürfte, dass er/sie das Meistens mit sich selber tut. Bis jetzt [number1]mal.
+
+81: Selten reinreden läßt sich auch [name1], der/die/das immerhin schon [number1] Selbstgespräche geführt hat.
+81: [name1] unterhielt sich ebenfalls schon [number1]mal mit sich selber!
+81: [name1] hat anscheinend auch nicht sehr viele Freunde, da er/sie sich schon [number1]mal mit sich selbst unterhielt.
+
+// Activity peak detection: [number1]=number of persons, [string1]=interval.
+82: Channel Aktivitätsrekord: [number1] Personen waren am [string1] aktiv.
+82: Am Meisten war hier am [string1] los, als sich [number1] Personen in [channelname] aufhielten.
+
+// Activity peak subtitle: [number1] length of the interval in minutes (0...60)
+83: Aktive User während diesem [number1]-Minuten Zeitraum waren:
+
+
+*** Long term stats (info read from history file).
+
+// Word stats
+
+// title for Most used words table
+85: Meist benutze Wörter:
+85: Am häufigsten benutze Wörter auf [channelname]:
+85: Das Top-Vokabular auf [channelname]: 
+85: Top Ten der benutzten Wörter auf [channelname]:
+85: Die am häufigsten benutzen Worte:
+
+86: Am häufigsten erwähnte Nicks:
+86: Oft erwähnte Nicks:
+86: Die am häufigsten beschuldigten Nicks:
+87: Meist genannten URLs:
+87: Es wurde Schleichwerbung gemacht für:
+
+// table headers: Word count(88), Word(89), 
+		  Nick who used that word last(90), and time of last use(91)
+88: Anzahl
+88: Gesamtzahl
+89: Wort
+90: zuletzt benutzt von
+90: als letztes genutzt von
+91: am
+
+
+// General strings (95: minutes (min), 96: abreviation for hour (h), 97: amount, 98: percentage
+95: min
+96: h
+97: Stück
+98: Prozentual
+
+// tag 100 reserved for language file creator's name (first tag of this file up there).
+
+
+// Custom quit message header in Big Numbers
+101: Am Meisten veränderte Quit Messages:
+101: Die aktivsten Quit-Message-Schreiber:
+101: Die unterschiedlichsten Quit-Messages hatten:
+
+// General strings (102: day, 103: week)
+102: Tag
+103: Woche
+
+
+// Net split stats strings: 105-109
+// Tag 105: [number1]=Total count of splits, [string1]=average amount, [string2]=day/week
+105: Anzahl an Netsplits: [number1]. Durchschnittlich sind das [string1] Splits pro [string2]
+105: [number1] Netsplits wurden während des Zeitraums festgestellt . Durchschnittlich waren das [string1] Splits pro [string2]
+
+// Tag 106: [string1]=day/week, [number1]=top count in given interval, [string2]=date(s)
+106: Die meisten Netsplits pro [string1]: [number1] Splits in [string2]
+
+// Tag 107: [string1]=date, [string2]=duration of the longest split, [number1]=amount of people dropped
+107: Der längste Netsplit ereignete sich am [string1] und er dauerte insgesamt [string2]! ([number1] Leute wurden bei diesem Split gedroppt)
+
+// Tag 108: [string1]=date, [number1]=amount of people dropped, [string2]=duration of the "most dropped" split
+108: Die meisten Leute, nämlich [number1], wurden am [string1] gedroppt. (Die Situation normalisierte sich nach [string2])
+
+// Tag 109: This is shown only if the same split was the longest and it also caused most people to drop.
+//          [string1]=timestamp, [number1]=number dropped, [string2]=duration of the worst net split
+109: Der schlimmste Netsplit: [string1] - [number1] Leute waren für [string2] verschollen
+109: Der schlimmste Netsplit zog am [string1] über uns her. Er lies [number1] Leute für [string2] verstummen.
+
+// Long term stats addition strings, "record day/week/month". [string1]=timestamp, [number1]=amount of lines
+110: Der belebteste Tag was bisher der [string1] - mit einer Anzahl von [number1] Zeilen 
+110: Der [string1] war bisher der aktivste Tag im Channel -  es wurden [number1] Zeilen gezählt.
+111: Die belebteste Woche: [string1] - [number1] Zeilen
+111: Die aktivste Woche war bisher [string1] mit [number1] Zeilen
+112: Der aktivste Monat in [channelname] war der [string1] mit einer Anzahl von [number1] Zeilen.
+112: Der ereignissreichste Monat in [channelname] war der [string1] mit einer Gesamtzahl von [number1] Zeilen.
+
+// Time of day stats title
+115: Zeitunterteilung der täglichen Stats
+
+// Column titles:
+116: Nachtsession
+116: Nachtkrabbler
+116: Nachtwächter
+116: Schlafgestörte
+
+117: Morgensession
+117: Frühe Vögel
+117: Frühstückchen
+117: Brötchenholer
+
+118: Nachmittagssession
+118: Nachmittagsschicht
+
+119: Abendsession
+119: Abendchatter
+
+// This line shows person who requested the stats update, passed with -req command line option.
+125: Update verlangt von [name1]
+
+// Big numbers' conversation killer lines. [name1]=award winner nick, [number1]=number of conversations killed.
+130: Der Unterhaltungs-Killer-Preis geht an [name1], dessen letztes Kommentar [number1] Unterhaltungen unterbrach.
+
+// Conv.killer sample line: [number1]=length of sample conversation [number2]=length of silence
+131: Mit folgender Zeile endete eine [number1]-minütige Unterhaltung, worauf [number2] Minuten geschwiegen wurden:
+
+// "page" string used in sub-page filenames. Don't use other characters than a-z.
+135: Seite
+
+// 140: "Today", 141: "Yesterday" - strings used in for latest days in quote timestamps
+140: Heute
+141: Gestern
+
+// Activity distribution section title
+145: Aktivitätsverteilung
+
+// Act.distr. table title texts: 146: Lines per day  147: Number of days
+146: Zeilen pro Tag
+147: Anzahl Tage
+
+// Explanation text if not activity in log for certain month
+148: Keine vorhandene Aktivität
+
+// Chat partners section title (150) and subtitle (151)
+150: Chat-Partner
+151: Leute, die sich am meisten miteinander unterhielten
+151: Na, mit wem haste wieder am Meisten geflirtet? :o)
+151: Welches Paar führte die meisten Dialoge?
+
+// Nick status strings 155-158: Operator, HalfOp, Voiced, Normal
+155: Operator
+156: Half-Operator
+157: Voiced user
+158: Normal user
+
+// Personal stats title topic
+160: Persönliche Stats
+160: Die Akten der Topchatter :)
+
+// personal stats data strings
+// 161: Number of visits, 162: Nick status (using strings 155-158)
+161: Besuche: [number1]
+162: Status: [string1]
+
+// 163: Total number of lines, 164: Number of days with lines written
+163: Zeilen: [number1]
+164: Aktive Tage: [number1]/[number2]
+
+// 165: Avg.lines per day, 166: Avg.letters per line
+165: ~ Zeilen pro Tag: [string1]
+166: ~ Zeichen pro Zeile: [string1]
+
+// 167: Most active time of day or week
+167: Aktivitätshoch: [string1]
+167: Am Meisten aktiv: [string1]
+
+// 168: Last active, shows timestamp of the last written line
+168: Letztes Lebenszeichen: [string1]
+168: Letzter Kommentar: [string1]
+
+// 170: "Given ops" count
+170: Anzahl vergebener OPs: [number1]
+
+// 171: Number of people person has kicked out, 172: Number of times person has been kicked out
+171: Hat [number1] User gekickt
+172: Wurde [number1] mal gekickt
+
+// 173: # of descriptions, 174: Topics set count, 175: Number of lines with caps
+173: Actions: [number1]
+174: Topics: [number1]
+175: CAPS Anteil: [string1]
+
+// 176: Number of lines with ?, 177: Number of lines with !
+176: Fragesatz Anteil: [string1]
+177: Ausrufesatz Anteil: [string1]
+
+// 178: Number of conversations killed, 179: Total number of nicks
+178: unterbrochene Unterhaltungen: [number1]
+179: Benutzte Nicks: [number1]
+
+// 180: Personal weekly activity graph title, 181: Title for hourly graph
+180: Wöchentliche Aktivität
+181: Stündliche Aktivität
+
+// 182: Last days activity graph title, 183: Personal stats partner list title
+182: Die letzten [number1] Tage
+183: Häufigste Chatpartner:
+
+// Personal homepage line
+190: Homepage: [string1]

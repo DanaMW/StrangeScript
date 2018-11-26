@@ -1,0 +1,698 @@
+16/08/2007 - mIRC v6.3
+
+Changes:
+1.Fixed /var bug when parsing multiple $identifiers() on one line.
+2.Fixed /auser bug halting script if user already existed.
+3.Fixed /toolbar -fl bug when an item in toolbar.ini contained a
+  popup @menu.
+4.Fixed custom DLL delay-unload feature so that it is only applied
+  when mIRC exits. In other cases, the DLL is unloaded immediately.
+5.Fixed mIRC always forcing an SSL +port if the last connection was
+  an SSL +port.
+6.Fixed popup menu positioning bug when pressing spacebar to display
+  popup close to edge of Windows desktop.
+7.Fixed $inroundrect() and $inellipse() bug.
+8.When connecting to a round robin dns pool ip address the original
+  connect address is now remembered and the connect message now has
+  "dns pool" appended to it.
+9.Fixed round robin dns pool ip address bug with SSL connections not
+  remembering original host address during verification.
+10.Fixed /queryrn bug not renaming same name with different case.
+11.Fixed right-click popup menu selections not working correctly
+   under Vista in some cases.
+12.Fixed Servers List popup menu not displaying items correctly.
+13.Fixed firewall password corruption bug.
+14.Fixed script editor minimize/restore bug.
+15.Fixed $sin/$cos/etc. rounding errors.
+16.Fixed ? marked urls being deleted incorrectly while mIRC was
+   running.
+17.Fixed color codes not being processed properly in wrapped lines
+   in some situations.
+18.Fixed URL links not being opened with default browser under Vista.
+19.The -r command line switch behaviour has been changed so that if
+   no path is specified after -r, mIRC will use the executable path.
+20.For Vista compatibility, new installations of mIRC now save all
+   settings in the User's "Application Data\mIRC" folder by default.
+
+   However, if the installer or mIRC find mirc.ini in the same folder
+   as mirc.exe they will use the mirc.exe folder for all settings.
+   Users installing over an old version of mIRC should therefore see
+   no change in behaviour.
+
+   The installer is now also aware of administrator and standard user
+   accounts and installs mIRC accordingly.
+
+21.Fixed command prefix /!. parsing inconsistencies across routines.
+22.Fixed "// echo hello" being parsed as "//echo hello". The parser
+   now halts parsing of empty // commands.
+23.Fixed reload logs bug, was loading logs in wrong order.
+24.Fixed on KICK event clearing $chan/$nick too early when you are
+   kicked from a channel.
+25.Fixed /drawtext color parsing bug in picture @windows.
+26.Fixed /toolbar -fs bug, icon size was being saved incorrectly.
+27.Fixed servers dialog intermittent gpf bug when sorting servers.
+28.Fixed /dcc send -l and -m parsing bugs.
+29.Fixed irc:// links not working under Vista.
+30.Changed registry handling to ensure that mIRC works the same way
+   whether run under administrator or standard user accounts.
+
+   mIRC no longer updates the Uninstall section of the registry to
+   point to the currently running mIRC, the Uninstall section is
+   now only set by the installer. Removed -nouninst command line
+   switch since this is no longer applicable.
+
+   Also irc:// links are now only added to the Current User registry,
+   not the local machine registry and this is only done when mIRC
+   is run, not by the installer.
+
+   The -service command line switch has been removed from the help
+   file though it is still supported under 95/98/ME.
+
+31.mIRC no longer uses an internal uninstaller, instead the install
+   program now places an uninstall.exe in the mIRC folder.
+32.Fixed dialog table definition not being able to call local aliases
+   if dialog was opened from the command line.
+33.Extended custom dialog "tab id" parameter to allow id to be an
+   alias/identifier.
+34.Fixed comments not being parsed correctly in the users list.
+35.Fixed mouse cursor display bug during mark/copy.
+36.Added internal U3 support to mIRC. mIRC looks for these command
+   line parameters -appStart, -appStop, and -hostCleanUp, and looks
+   for U3_HOST_EXEC_PATH and U3_APP_DATA_PATH environment variables.
+37.Fixed ini storage bug when using -portable switch.
+38.Changed -portable command line switch behaviour. Now makes mIRC
+   both 1) avoid use of the registry and 2) use the executable folder
+   as the mirc.ini folder.
+39.Fixed /if parser not reporting invalid operator for => and =<,
+   and added not support for !> !<= etc.
+40.Fixed window display bug when rejoining an already joined channel.
+41.Fixed /writeini and /remini not reporting an error if they were
+   unable to write to the file.
+42.Added support for positioning Treebar at top/bottom of mIRC window.
+43.Added support for network specific notify nicks. If no network
+   is specified, nick is used on all networks. Extended command to
+   /notify -n <nick> [network] [note], where -n indicates network
+   has been specified. Also added $notify().network.
+44.Changed "Received Files" explorer display to show folders pane.
+45.Notify/URLs list windows are now displayed in both the treebar
+   and the switchbar.
+46.Changed the way the notify list window is displayed on connect.
+47.Added -noreg command line switch to make mIRC avoid use of the
+   registry (to make up for old -portable behaviour).
+48.Fixed $input dialog (and other windows) not being centered on
+   desktop correctly if main mIRC window was minimized.
+49.Added support for numeric 005 TARGMAX and MAXTARGETS tokens
+   when sending privmsgs and notices in /amsg, /ame, /qme, /qmsg,
+   /omsg, and /onotice.
+50.Fixed notify list routine that was not correctly optimized, may
+   have led to high cpu usage/interface lag for some users.
+51.Fixed various dialogs opening centered in main window when opened
+   with keyboard shortcuts, eg. Alt+O, Alt+B, etc.
+52.Added support for notify list display in treebar, option enabled
+   via treebar popup menu.
+53.Added treebar menu option to use System menus or Window menus for
+   right-clicked treebar items. System menus are the default. Toggle
+   by holding shift key while right-clicking.
+54.Added $menutype and $menucontext to supplement $menu. They are
+   available during popup menu creation and indicate the menu type
+   and context of the menu being created.
+55.Changed left-click method on treebar items, it takes one click to
+   open and close windows now.
+56.Fixed issues with /mkdir and $isdir(). $isdir() will now only
+   accept folder names, whereas previously it was accepting filenames
+   as well.
+57.Changed status window icon so that you can now tell when it is
+   connected, connecting, logging on, or disconnecting.
+58.Alt+LeftClick no longer changes the status window icon, instead
+   it now adds a down arrow to the button. When clicked it displays
+   a popup menu of hidden windows.
+59.The status window title in switchbar/treebar now always shows the
+   network/server name, even when not connected.
+60.Added Buffer menu to custom @window system menu.
+61.Changed the way files are renamed/copied/deleted to resolve file
+   issues experienced by some users.
+62.Fixed favorites menu recent channels history bug.
+63.Changed the way $active works, was not consistent before.
+64.Changed on ACTIVE so that it always triggers when a window gets
+   the focus, was not triggering in all situations before.
+65.Fixed /unload not halting script on error.
+66.Added treebar support for spacebar to pop up menu for selected
+   item.
+67.Fixed $wrap() bug not handling bold control codes across multiple
+   lines correctly.
+68.If an incoming notice is displayed in more than one window eg. in
+   common channels or the active window, windows are now highlighted
+   only if necessary.
+69.Added /cnick -f switch that forces the addition of a new entry to
+   the list instead of updating an existing nick.
+70.Fixed relative path bug when handling short paths.
+71.Improved error handling in /load command.
+72.Added Notify and Urls List items to windows order dialog, affects
+   position of these items in treebar.
+73.Added support for on ^TABCOMP, triggers before a $id or %var is
+   evaluated.
+74.Changed $fserv() to $fserve(), old identifier still supported but
+   no longer documented.
+75.Fixed MDI background display flickering bug.
+76.The /setlayer command can now set the transparency of the main
+   mIRC window.
+77.When in the Script Editor mIRC no longer considers itself the
+   active application, this allows flash/beep/etc. events to trigger.
+78.All buttons that select/display files/folders now display the whole
+   file/path with ellipsis if necessary.
+79.Fixed nick color list freeze issue, instead of updating all nicks
+   immediately when colors change, now only updates them when they
+   are visible.
+80.Moved highlight dialog to address book and added regex support.
+81.Fixed options dialog memory leak.
+82.Fixed "Move status window..." bug in Group dialog.
+83.Fixed wildcard matching bug.
+84.Added support for tips, text balloons that pop up near the Windows
+   tray to notify you of various events such as incoming messages or
+   users in your notify list coming on or leaving IRC.
+
+   Tips only appear when mIRC is not the active application and are
+   hidden the moment mIRC becomes active.
+
+   Tips can be configured in the Options/Windows/Options dialog.
+
+   The Highlight dialog in the Address Book also supports tips for
+   matched items.
+
+   Tips can also be scripted using the $tip() identifier:
+
+   $tip(name,title,text,delay,iconfn,iconpos,alias,wid)
+   Returns Nth position of tip if successful, zero if not.
+
+   name - name of the tip
+   title - title
+   text - text
+   delay - from 3 to 60 seconds
+   iconfn - icon filename
+   iconpos - icon position in filename
+   alias - alias to perform when tip is double-clicked
+   wid - id of window to which tip belongs
+
+   name, title, text are required.
+   delay, iconfn, iconpos, alias, and wid can be $null.
+
+   $tip(name/N) can be used to list existing tips.
+
+   Notes:
+
+   Right-click in a tip pauses the time-out for all tips.
+
+   Shift+Left-click in a tip closes that tip.
+
+   Double-click in a tip triggers the alias if one is defined,
+   or opens the associated window if not.
+
+   The tip automatically fits the text into it and will at most
+   widen to quarter of your screen width.
+
+   New tips are queued until older tips time-out. Tips time-out
+   at a slower rate if they are not at the head of the queue.
+
+   If no wid is specified, the tip belongs to the status window
+   of the currently active connection.
+
+   A tip is closed if the window it belongs to is made active
+   or is closed, or if mIRC is made active and the tip belongs
+   to an MDI window.
+
+85.Fixed /showmirc -nt bug minimizing mIRC but not activating
+   the next application window.
+86.Fixed $mp3() not handling unicode tags correctly.
+87.Added $fullscreen identifier, returns 1 if an application is
+   running in full screen mode, 0 if not. This applies to game and
+   non-game applications.
+88.Fixed agent speaking bug.
+89.Extended /echo -iN to allow maximum N of 256.
+90.By popular request, changed logging method back to old method, no
+   longer uses name.N.log filename format.
+91.For new installs the "download" folder is now named "downloads"
+   and a "scripts" folder is created by default.
+92.Added $ebeeps identifier, returns sounds enabled/disabled state.
+93.Updated tab display routines to use XP/Vista themes.
+94.Fixed menubar spaces bug, all scripts are now aligned on load
+   using same align routine as editor.
+95.Removed support for mirc.hlp file on F1 key, only mirc.chm is
+   used now.
+96.Fixed editor "monitor file changes" bug with .ini files.
+97.When run under Vista mIRC now checks for a corresponding virtual
+   store folder at startup. Vista creates virtual store folders for
+   older non-Vista compatible applications, such as older versions
+   of mIRC. If mIRC finds such a folder, it displays a dialog box
+   allowing you to retrieve your old mIRC files and settings.
+98.Added $sha1(text|&binvar|filename,[N]) identifier, where N = 0
+   for plain text (default), 1 for &binvar, 2 for filename.
+99.Updated to PNG 1.2.18 and PCRE v7.2 libraries and to OpenSSL
+   0.9.8e support files.
+100.The about dialog now displays a second page that loads from the
+    mIRC website at http://www.mirc.com/regabout.html. No information
+    is sent to the server.
+101.Fixed custom dialog icon definitions not setting %var values
+    correctly on exit.
+102.Changed compiler optimization settings resulting in slightly
+    larger executable.
+103.Added Mode menu item to the View menu in the menubar that allows
+    you to switch between Normal and Compact modes. Compact mode
+    makes mIRC behave like a messenger with the treebar filling the
+    main window, all windows opening on the desktop, and so on.
+
+23/11/2006 - mIRC v6.21
+
+Changes:
+1.Fixed $timer().secs bug when used with /timer HH:MM.
+2.Fixed right-click on disabled toolbar button popping up menu.
+3.Fixed treebar and toolbar using same key accelerator in the view
+  menu.
+4.Changed wording in help file for /windows -D.
+5.Changed /winhelp to allow help system to search for help file if
+  it's not found in the mIRC folder.
+6.Fixed /toolbar -z3 not loading actual icon size from an .ico file.
+7.Fixed pressing spacebar in channel nicklist not popping up correct
+  menu.
+8.Fixed bug with popup menus displayed using spacebar in notify/url
+  listboxes.
+9.Fixed passive dcc send bug rejecting files in dcc ignore list.
+10.Fixed /window -h not being able to hide status window switchbar
+   buttons.
+11.Fixed various tabbed text display bugs in @window text/listbox.
+12.Fixed scripts reacting to superfuous windows mouse move messages.
+13.Fixed display bug in reversed tabbed text in listbox @windows.
+14.Fixed dcc get window not being auto-closed on time-out in some
+   situations.
+15.Improved /drawrot, now faster and supports float values.
+16.Changed the way mIRC displays popup menus so that it triggers
+   the WM_INITMENUPOPUP for plugin developers.
+17.The LOADINFO structure now returns a minor version value that is
+   right-padded with zeros, eg. "6 20".
+18.Fixed /drawpic parameter parsing bug.
+19.Fixed windows taking focus when mIRC is not the active application.
+20.Fixed $regsubex() bug with \0 parameter and various other
+   characters.
+21.Added $regsubex() \A parameter, non-spaced version of \a.
+22.Fixed issue with $lactive not always returning a value.
+23.Fixed horizontal scrollbar bug in tabbed listbox @windows.
+24.Optimized display speed of text in windows and listboxes.
+25.Improved /window -b speed.
+26.Improved $network return value when connected/disconnected when on
+   networks that use different network names in numerics 001/005.
+27.Fixed $dialog().focus not working correctly with comboboxes.
+28.Added on HOTLINK support for $() and %var in matchtext.
+29.When drag-dropping files on listboxes the listbox item under the
+   mouse is now highlighted.
+30.Fixed query windows in treebar/switchbar not being re-sorted on a
+   nickname change.
+31.Added Minimize/Close All menu items to treebar folder menus.
+32.Fixed script editor bug deleting very long lines instead of
+   truncating them.
+33.Fixed /window -c gpf bug when several status windows are open and
+   the first status window is closed.
+34.Fixed $window().state bug.
+35.Added $window().sbstate/tbstate, return switchbar/treebar button
+   state for a window.
+36.Updated library to PCRE v6.7, fixes various bugs.
+37.Updated support files to openssl v0.9.8b.
+38.Fixed on WAVEEVEND event not being triggered correctly.
+39.Fixed switchbar fill display bug.
+40.Fixed $didwm() bug not handling blank lines in editboxes.
+41.Fixed DCC Get behaviour if download folder does not exist.
+42.Fixed logging bug where logfiles were being lost if "make folder"
+   was enabled and the same status window was used to connect to
+   different networks.
+43.Fixed $eval() parsing bug when passed more than two parameters.
+44.Fixed nested $regsubex() gpf bug.
+45.Extended commandline -r and -i parameters to accept non-full
+   paths.
+46.IRC Servers dialog now uses a treeview to display the servers list.
+47.Fixed $inellipse() bug.
+48.Fixed kill event handling bug.
+49.Fixed $regml() bug.
+50.Fixed log filenames handling bug.
+51.Changed DNS routine so that it now randomizes the retrieved pool
+   of IP addresses to spread the load across connections.
+52.Fixed /btrunc bug.
+53.Added /server -z switch, minimizes new status window.
+54.Fixed numeric 345 not triggering on RAW event.
+55.Fixed dcc send time-out bug when sending empty file.
+56.Added command line switch -portable to make mIRC avoid use of the
+   registry, and $portable identifier.
+57.Fixed gif transparency issues.
+58.Added 48 x 48 icon to mIRC icon for Vista.
+59.Fixed minor cosmetic issues when running under Vista.
+60.Fixed /window -h not hiding desktop @window when it is first
+   created.
+61.Fixed Alt+N behaviour, when switchbar/treebar was enabled
+   Alt+N was selecting windows hidden with /window -h.
+62.Added Lock Bars option to toolbar/switchbar/treebar menus.
+63.Fixed treebar not remembering /window -i item open/closed state
+   when jumping between server items in treebar list.
+64.Fixed treebar not placing /window -z windows at end of list. This
+   affects custom @windows as well as other windows whose original
+   server window has been closed.
+65.Fixed Control+Minimize lock bug. Windows opened on the desktop
+   are now also minimized and locked, and system menus are no longer
+   usable without unlocking.
+66.Fixed editor dialog not remembering correct position if Windows
+   tray was in top/left position.
+67.Fixed /editbox not working with minimized/hidden windows.
+68.Added /toolbar -f[lsd] switches, load/save/delete toolbar in
+   toolbar.ini file. mIRC auto-loads toolbar.ini on startup.
+69.Fixed $rand() floating point handling bug.
+70.Changed PCRE compile options, previous change had resulted in
+   a significant performance decrease.
+71.Fixed $error being reset when an alias/identifier is called in the
+   :error section without using /reseterror.
+72.Fixed regex identifiers not handling script errors correctly.
+73.Fixed logfiles bug resulting in lost or corrupted logfiles when
+   connecting to multiple servers.
+74.Fixed reload logfiles bug when lines prefixed with both color
+   codes and timestamps.
+75.Fixed channel topic/mode bug, were not being cleared correctly
+   on reconnecting to a server.
+76.Fixed Treebar folder icon display bug.
+77.Added "Single click on tray icon to open" option to tray dialog.
+78.When settings are changed in logging dialog, the logging state of
+   windows and any open log filenames are now immediately updated to
+   reflect new settings.
+79.Added "Flash on chat message" option to IRC Options dialog.
+80.Added "Beep on chat message" option to Sounds dialog.
+81.Disabling sounds in the Sounds dialog now does actually disable
+   all sounds, even those using /splay or /beep.
+82.Fixed bug with Background pictures not applying correct display
+   method (center, fill, etc.) in some cases.
+83.Added new sound events to the Sounds dialog.
+84.Fixed DCC Send/Get progress bar display bug, was not showing
+   completed transfer in some situations.
+85.Fixed incorrect evaluation of parameters containing $nulls when
+   passed to identifiers.
+86.Fixed /ctcps, /events, and /remote not handling "off" parameter
+   correctly.
+87.Fixed $fline() and $line() returning results when "listbox"
+   specified and used with a non-listbox window.
+
+28/07/2006 - mIRC v6.2
+
+Changes:
+1.Undid changes that made the display smoother since slower computers
+  where unable to cope. The display now flickers a bit as in previous
+  versions.
+2.Changed mark/copy behaviour so that it works like it did in previous
+  versions.
+3.Fixed various $regsubex() bugs.
+4.Fixed switchbar not displaying at least first character of a window
+  name when ellipses are appended.
+5.Extended /did to support a long list of ids as opposed to only up
+  to 256 characters.
+6.Fixed agent speech being interrupted when Options dialog is closed.
+7.The Channel/Message beep settings in Options/Sounds are now applied
+  to all windows when the Options dialog is closed.
+8.Fixed bug with Control+F find dialog in desktop windows.
+9.Fixed bug with active window not being internally set correctly in
+  some situations.
+10.Fixed /window -t width measurements being smaller then previous
+   versions, changed back for compatibility.
+11.Fixed /localinfo incorrectly displaying DNS messages.
+12.Extended /drawpic -gN switch, where N = 1 for small icon, 2 for
+   large icon, and 3 for actual icon.
+13.Changed $findfile() so that it works as fast as in past versions
+   if the new semi-colon feature is not used. The semi-colon feature
+   is now also somewhat faster.
+14.Fixed change in / commandline parsing behaviour.
+15.Fixed text measurement bug which was affecting /drawtext, $height(),
+   $width(), and $wrap().
+16.Fixed Control+K bug in channel central topic when clicking on color
+   dialog to insert a color number.
+17.Fixed $longip() bug.
+18.Fixed UTF-8 bug when parsing notice, privmsg, and other commands
+   that contained comma-separated nicks as the target.
+19.Fixed SSL security dialog display bug when using /sockopen and SSL.
+20.Added $sock().addr which displays original named address if one was
+   used, and /socklist now also displays the named address.
+21.Fixed /names list display being truncated when a UHNAMES list is
+   returned with full addresses.
+22.Fixed SSL gpf bugs related to threading issues.
+23.Fixed auto-hide nicklist not hiding when mouse is moved outside of
+   the channel window.
+24.Added /clearall -a switch, applies to window on all connections.
+25.Added /timer -d switch, ensures that a timer and any subsequent
+   timers using the -d switch are triggered in that order.
+26.Fixed $iel()/$iil() bugs.
+27.Changed $me in on NICK messages so that it refers to your old nick
+   as in previous versions.
+28.Fixed bug in /dde connect parsing.
+29.Fixed decrease in picture @window display speed.
+30.Copying text from both a UTF-8 "display" or "encode" enabled window
+   now copies the text as unicode to the clipboard.
+31.Fixed /filter color bug when filtering text windows.
+32.Fixed bug relating to the order in which SJIS/JIS and UTF-8
+   encodings are applied when both options are enabled.
+33.Fixed $regsub() parsing bug.
+34.The $rawmsg identifier now works in the on CHAT event.
+35.Fixed flood protection bug, was UTF-8/SJIS/JIS double-encoding text
+   that was queued.
+36.Fixed switchbar button text color bug.
+37.Channel Folder now shows channel description alongside channel name.
+38.Fixed horizontal scrollbar being too long in all listbox windows
+   in mIRC.
+39.Fixed an old bug in the /flush command not parsing the -l switch
+   correctly.
+40.Added $did().isid property, returns $true or $false depending on
+   whether the specified id exists in the dialog.
+41.Added custom dialog listbox property "radio", creates listbox
+   of radioboxes.
+42.Pressing spacebar in custom dialog listbox of checkboxes now checks
+   or unchecks all selected items.
+43.Fixed spacebar not working in mIRC Options dialog treelist.
+44.Added "Match only whole words" option to Agents Lexicon dialog.
+45.Added $editbox().selstart/selend properties, return start and end of
+   selection in editbox, and /editbox -bNeN, set the start and end
+   of the selection.
+46.Added on TABCOMP event, triggers when a user presses the TAB key in
+   an editbox and mIRC is about to perform tab completion. Halting the
+   event prevents mIRC's default tab completion.
+
+   on *:TABCOMP:<*#?=!@>:echo event: $event target: $target line: $1-
+
+47.Can now specify a range of ids in on dialog events using a dash, eg.
+   on 1:dialog:name:event:1-5,6,7-8,9-11,10: { ... }
+48.Fixed multibyte editbox cursor display bug when switching between
+   windows.
+49.Tabbing into the editbox in the Editor dialog no longer selects all
+   text in the editbox.
+50.Fixed old bug in users list IP address/wildcard matching in remote
+   events.
+51.Fixed /drawscroll bug.
+52.Fixed switchbar button hottracking display bug.
+53.Fixed an empty $calc() halting a script with no error message.
+54.Changed behaviour of Recent Channels menu in favorites so that it
+   is now network-based as opposed to server-based, ie. if you have
+   several connections open to the same network, the Recent Channels
+   list is shared between them.
+55.Added custom dialog icon options, can now specify small, large, or
+   actual in icon dialog definition.
+56.The on ^HOTLINK event now triggers on right-click, use $mouse.key
+   to check for right mouse button.
+57.Added /run -h switch to hide the application being run.
+58.Fixed bug in /drawtext -bp where -b was not being parsed correctly
+   with the -p switch.
+59.Added support for UTF-8 display font substitution/linking, option
+   enabled by default in IRC/Messages dialog, should allow mIRC to
+   display all characters regardless of the font you are using,
+   assuming you have the required fonts on your system.
+60.Fixed UTF-8/Multibyte text-wrapping display bug.
+61.The $regml() identifier can now be used inside $regsubex().
+62.Fixed /font -z not affecting custom @windows.
+63.Added $activewid, $lactivewid, and $leftwinwid identifiers.
+64.Channels Folder now displays UTF-8 channel names and desciptions
+   correctly.
+65.Fixed window listboxes display bug with horizontal scrolling.
+66.Pressing Control+A in the URLs list and in custom @window listboxes
+   now selects all items.
+67.Fixed /scon /scid display bug when invalid id is used.
+68.Fixed font dialog not setting font for minimized windows.
+69.Custom DLLs are now delay-unloaded to allow subclassing DLLs to
+   work better. The UnloadDLL routine is still called at the same
+   point as before.
+70.Script editor now has minimize/maximize buttons.
+71.Pressing spacebar in the Lock dialog checkbox list now correctly
+   checks/unchecks an item.
+72.The toolbar can now be repositioned to top/bottom/left/right of
+   main mIRC window.
+73.Fixed Control+Break handling in scripts.
+74.Added /loadbuf -a switch to load text into active window.
+75.The $com() identifier now uses utf8 internally and the .result
+   property now returns utf8 text, when necessary.
+76.Added $cb(N,u) option, returns utf8 text.
+77.Fixed /splay not handling \\network directory format.
+78.Fixed nick/url/etc. right-click popup menu not working if text in
+   window scrolled while popup menu was visible.
+79.Fixed installer default folder bug under xp64.
+80.Updated library to PCRE v6.6, which supports limiting the regex
+   recursion depth. This prevent gpfs caused by runaway expressions.
+81.Fixed /drawcopy -n not updating window when no parameters are used.
+82.Fixed /sockread -nf bug, switches were not being parsed correctly.
+83.Buttons in top/bottom position switchbar are now wider by default.
+84.Fixed bug in Options dialog. When there were many channel/query/etc.
+   windows open the Options dialog would take a long time to close.
+85.Fixed focusing bug when using Alt+N to switch to Nth window right
+   after a window opened in a minimized state.
+86.Fixed $sfile() bug with some file name formats.
+87.Extended $os to handle Vista.
+88.Fixed bug in popup menu parsing when text contained { character.
+89.Invisible mode connect option is now enabled by default.
+90.Added a Treebar which lists connections and open windows, much like
+   the switchbar. It behaves like the switchbar in many ways as well,
+   eg. Shift/Control + left-click support, icon blinking, etc. and
+   uses various switchbar settings in the Options/Dialog.
+
+   Right-clicking on an item pops up the usual system menu for that
+   window. Right-clicking in an empty area of the treebar pops up a
+   menu with various display options.
+
+   The treebar width can be set by dragging the border with the mouse,
+   and the background and text colors can be set in the colors dialog.
+
+91.The right-click popup menus for the Toolbar/Switchbar now offer
+   options that were removed from the Options/Display dialog. The
+   Switchbar can now be resized by dragging the border of the bar
+   with the mouse.
+92.Fixed right-click popup menu bug where menus were being wrongly
+   displayed when clicking on window borders.
+93.Fixed switchbar display bug when scrolling with mousewheel.
+94.Fixed regex bug which was truncating long results instead of
+   returning a string too long error.
+95.Fixed /server gpf bug with long parameters.
+96.Added /window -D switch, allows toggling of desktop/mdi setting
+   for custom @windows via system menu.
+97.Added $fline().text property.
+98.Added /exit -nr switches, -n disables confirmation dialogs, and
+   -r restarts mIRC.
+99.Extended /window -nN switch, if N = 2, minimizes window without
+   auto-expanding its item in the treebar.
+100.Fixed / and /! not being treated as text with Control+Enter.
+101.Added Up/Down sort buttons for Options/DCC/Folders dialog to set
+    order of matching.
+102.Added "Minimize mIRC on close" option to Display/Windows dialog.
+103.The Reload logs feature in the logging dialog can now be set
+    separately for channels and chats.
+104.Fixed bug in the Line colors feature in the logging dialog, the
+    default line color is now reset correctly if colors are used in
+    the line.
+105.Fixed minimize option in DCC Send dialog not being applied
+    immediately to current dcc send.
+106.Added vertical tile option to toolbar and window menu, and to
+    auto tile section in Window/Group dialog.
+107.Added /abook -wncl switches, open the different tabs in the
+    address book dialog.
+108.Added "Preserve nicks" feature to Connect/Options dialog. If
+    enabled, mIRC will use /tnick internally to ensure that your
+    nicknames in the Connect dialog remain static. Also added /mnick
+    command to change your main nickname.
+109.Added "Include desktop windows" to the Display dialog. If
+    disabled, desktop windows are not displayed in the switchbar.
+110.Extended /window -wN switch, where 0 = hide from switchbar/treebar,
+    1 = show in switchbar, 2 = show in treebar, 3 = show in both.
+111.Fixed hotlinks not handling nicknames with multiple prefixes.
+112.Default colors are now stored internally in mIRC and are written
+    to mirc.ini if no colors are found.
+113.Default wav/mid/etc. dcc folder item is now only re-created if no
+    extensions section is found in mirc.ini.
+114.Extended SendMessage() support. The lParam value can now be used
+    to create a uniquely named mapped file. Where lParam = N, the
+    mapped filename is mIRCN. If lParam is zero, the filename is mIRC,
+    as in previous versions.
+115.Added "Auto" option to Switchbar lines setting in Options/Display
+    dialog. Auto-expands switchbar as number of buttons changes when
+    switchbar is in top/bottom position.
+116.Added "Multi-line toolbar" option to Options/Display dialog.
+117.Added /toolbar command, allows modification of toolbar buttons.
+
+    /toolbar -aidmsxkNnNzNebwhyNurctplor [N] <name/N> <tooltip>
+             <picfile|@> [x y w h] [/alias] [popfile|@]
+
+    -a = add button
+    -i = insert button at position [N]
+    -d = delete button at position [N] or <name>
+    -m = move button <name/N> to position [N]
+
+    -s = separator
+    -x = wide button
+
+    -kN = use when adding button to make it a check button
+          check/uncheck with N = 1 or N = 0
+
+    -nN = icon index in picfile
+    -zN = icon size, 1 = small, 2 = large, 3 = actual
+
+    -eb = enable/disable button [N] or <name>
+    -wh = show/hide button [N] or <name>
+
+    -yN = set transparency (0 to 255) for button [N] or <name>
+
+    -u = update display immediately
+    -r = reset buttons
+    -c = clear all buttons
+
+    To update properties for an existing button:
+
+    -t = tooltip
+    -p = picfile
+    -l = alias
+    -o = popup
+
+    name = unique name assigned to button/separator, it cannot be
+           a number
+
+    tooltip = text displayed when the mouse hovers over button
+
+    picfile|@ = picture filename or picture @window
+                min 16x16, max 256x256 pixels
+
+    x y w h = position in bitmap and size of bitmap to use
+              not for use with icons
+
+    /alias = command performed when button pressed, $!1 = name
+    popupfile|@ = popup filename or @menu name
+
+    The tooltip, picfile, alias and popup can be enclosed in quotes
+    if necessary. To clear an item use "" empty quotes.
+
+    $toolbar(name/N), if N = 0 returns number of buttons
+
+    Properties: name,type,tip,alias,popup,width,height,wide,
+                enabled,visible,checked,alpha
+
+    Note: modifying some of the default mIRC buttons, such as Connect,
+    Notify, etc. may not always work since they are managed by mIRC.
+    They can however be deleted.
+
+118.Fixed /signal -n bug, was allowing $? dialog in server event.
+119.Fixed /!.var conversion to /set -l, was not using the !. prefixes.
+120.mIRC now stores a [success] section in servers.ini that lists
+    servers that were connected to successfully. When you later
+    connect to a server group, the success list is used to prioritize
+    server connection attempts. "Clear History" via the servers list
+    popup menu clears this list.
+121.Fixed various multi-monitor right-click mouse button bugs.
+122.Added /help and /winhelp support for .chm files.
+123.Added aline/iline/sline/etc. -t switch, forces a re-wrap of all
+    lines in a window that have not yet been wrapped to the current
+    window size.
+124.Toolbar disconnect confirmation feature now displays a question
+    mark on the disconnect button when you try to disconnect.
+
+-
+
+The full versions.txt file has become too large to include in the
+distribution, so only the version information for the last version
+or so is being included from now on. You can still download the full
+versions.txt file from the mIRC website.
+
+-
+
+28/02/95 - mIRC v2.1a
+
+First public release.

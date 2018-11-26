@@ -1,0 +1,206 @@
+[common]
+Strange*
+
+[#unholyonline]
+h*a*m*;DarkVision ; NAME=@Hamzifer ; URL=http://www.kraventech.com/portal
+Rhi*a* ; NAME=Rhia
+Riss* ; NAME=Rissa
+UnholySoul* ; NAME=Guest(s)
+Tr*a*vis* ; NAME=@Travis
+*0*;sk4nk;anti-female;sk4n|;generiK* ; NAME=generiK
+*Kitten* ; NAME=%Tanana
+S*a*ven ; NAME=Saven
+K*a*r*a*;Betrayal ; NAME=Teki
+Tony* ; NAME=Tony
+SexyLexy ; NAME=Lauren
+
+// MANUAL NICK CONNECTION FILE for mIRCStats
+// mIRCStats is (C) Mikko 'Ave' Auvinen
+
+// (NOTE: lines starting with "//" or "##" are comment lines..)
+
+
+// See mIRCStats help for detailed information how to use nick connection files!
+
+
+// Problem has been that when someone is ircing from many different locations,
+// mIRCStats automatic nick connection never connects there nicks together,
+// because these nicks never rename to each other (like: nick is now known as nick_work)
+
+// Another problem is when several persons use the same irc client (and their nicks might
+// even start with the same letter), so mIRCStats thinks that these several nicks actually
+// belong to just one person.
+
+
+// NICK CONNECTION FILTERS
+
+// Here you can define which nicks actually do belong to one person - and which don't.
+// You can use wildcards which make your life much easier, because many persons use
+// several nicks like "Nick", "Nick_work", "Nick_sauna", "NckSurfin", "PartyNick" etc.. 
+
+// In these situations you could just tell mIRCStats that every nick which fits into
+// filter "*nick* ; nck*" is actually just one person.
+
+
+// NICK SEPARATION WITH FILTERS
+
+// If someone named "Nelly" is using Nick's computer occasionally, you can separate him
+// by defining another person with filter "nelly", so after this "Nick" and "Nelly" will
+// never be connected again.. 
+
+// You can also include '*' in the filter is also Nelly is using nicks like "Nelly_play" etc..
+
+// If you need to separate two persons Who use names like 'Nick' and 'Nickette' with some
+// additions after those names (like "NickWork"), you can do it by entering them in the
+// right order. mIRCStats searches from top to bottom for matching nick filter, so if you
+// put filter "nickette*" to the list first, and after that "nick*" - mIRCStats will
+// separate these two persons correctly. Now Nickette's nicks are screened out with the
+// first filter, Nicks' nicks match with the second filter. 
+// Vice versa it wouldn't work, because it that case both nicks would fit into "nick*" 
+// filter. 
+
+
+// SCREEN NAME
+
+// Another brand new feature is that you can define a "screen name" for any person you like
+// with "NAME=<screen name>" - directive. This might come handy when someone is actually
+// writing more lines with his "work nick" than with his real nick. In this case mIRCStats
+// would use the nick with most lines in stats. Now you can specify that no matter how 
+// few lines "Nick" actually wrote, this nick will be shown in the stats instead of 
+// "nick_work" or something else..
+
+// Note that screen name only applies in user stats (not in big numbers etc..)
+
+// EXTRA: With valid registration code you can also include HTML-codes to screen names, 
+// which means that you can put there almost anything - custom font styles, images etc..
+
+
+
+// URL ATTACHED WITH NICK
+
+// Nowadays many irc channels have web pages, where there's maybe a separate page for every
+// user on channel. 
+
+// A good idea is to attach an url with a person with mIRCStats directive "URL = <url>".
+// After that you stats viewers can just click and browse to any nick's homepage.
+
+
+// OTHER PROPERTIES
+
+// You can also specify the IMAGE property, normally used to show person's image in
+// his/her personal stats section
+
+// SLOGAN property is also shown in personal stats.
+
+
+
+
+// NICK CONNECTION FILE SECTIONS
+
+// Some people generate stats for many large channels. In this case it would be ineffective
+// to put all nicks from every channel just to one list, because - needless to say - this
+// kind of cross-connection is quite resource-eating process. It's also nicer to divide nicks
+// from many channels to logical sections by channel they are on.
+
+// mIRCStats uses [Section]-based nick handling. This way only needed nicks are loaded from 
+// file when you run stats for a channel. This makes log processing much faster and saves
+// also memory resources.
+
+// After all you might want to define some "nick groups" which apply to any channel you are
+// on. You can do this by putting them under [common]-section. It's good idea to put your
+// OWN nick under this section, this way you don't need to define it any more under other
+// sections.
+
+
+
+
+// LIMITATION: Unregistered version handles only two first nick connection lines,
+//             This is just to demonstrate the capabilities of mIRCStats nick connection.
+
+//             Please register your version to get your personal registration code.
+//	       Registered version can handle any number of nick connection rules and 
+//	       also HTML codes in screen names are allowed!
+
+//	       Run the program for further info. 
+
+
+
+// ADDITIONAL INFO
+
+// Wildcards you can use in filters:
+// * = any number of characters (example "Mic" and "Micky" would both fit into "mic*")
+// ? = exactly one character    (example "Micky" would fit into "Mick?")
+
+// You can have any number of filters per line (=person), but separate them with ';'
+
+// Filters are case-insensitive, so it same whether you write "NiCK*" or "nick*".
+
+
+
+
+
+// Nick connection info starts from here. Take some time to study the [#example]-section,
+// after that just define your own sections for channels you are on like [#mychannel] etc..
+
+
+
+
+
+// common section: these nick connection rules are loaded for every channel
+// Note that example line is commented out with //-characters.
+
+
+// [common]
+
+// NAME=Ave ;URL = http://www.students.tut.fi/~ave/; ave*        //This line is commented out
+
+
+
+
+
+// this is section for irc channel #example. These nicks come from examples above.
+// Please read more about special directives NAME and URL from above.
+
+[#example]
+
+NAME=<i>Nick</i> ; URL = http://www.com/~nick ; *nick* ; nck* ; 
+Nelly*
+
+
+
+// here's some other samples
+
+[#example2] 
+
+NAME=<img src="http://www.myserver.fi/~nick/friends/pics/snacky.gif"> ; Sn?cky*
+Pete* ; Petr?s ; NAME=Peter ; URL = http://www.server.fi/peter
+number6* ; n6_*
+donnax* ; donx*
+
+
+
+// feel free to add here your own sections for channels you are on. like [#channelname]
+
+
+
+[#mychannel]
+
+NAME=Number5 ; URL=http://server.fi/~n ; number5*;n5*
+mikron; mik_*
+a?ro ; URL=http://www.server.com/~afro
+thaq*
+eetu*
+zzu* ; NAME=ZZU
+pro?o*
+del*o
+
+
+[#mychannel2]
+
+jab?a*
+ja?mi*n*
+*H-R*
+g?nz?*
+*sko
+donnax*;donx*
+

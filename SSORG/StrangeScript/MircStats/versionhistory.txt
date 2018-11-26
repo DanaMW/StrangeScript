@@ -1,0 +1,738 @@
+                     =================================
+                     ==  mIRCStats VERSION HISTORY  ==
+                     =================================
+
+Features which are only available for registered users are marked (*) or (-)
+
+
+
+Version v1.19 released 7.6.2002
+--------------------------------
+
+ *  Dynamic fully configurable multiple(*) page layouts.
+    -  Divide stats into multiple pages
+    -  Add any html by adding "Own html" sections to layout
+       o This section is equipped with line parser which can be used to show
+         random lines from external file in stats as "Quote of the day" or
+         last few lines from a file as "Upcoming events" list for example.
+    -  Links can be shown as normal page list or "Table of contents"-list
+   (-) Virtually unlimited amount of pages can be used.
+       Unregistered version displays only two pages.
+
+(*) Personal stats added
+    - Shows user specific data for top users
+
+ *  On-line help
+    - Press F1 whenever you need any assistance.
+
+ *  FTP upload support
+    - Built-in ftp client can upload generated files to your web server.
+
+(*) Nick connection file handling improved and properties added
+    - Connection rules can now be divided into multiple lines by starting the
+      extra lines with >> -characters
+    - Current tags which can be used to define properties for each person:
+      NAME      - Full name of the person (possibly a large logo)
+      SHORTNAME - Nickname in text or possibly a very small logo
+      URL       - http:// to person's homepage or other link of interest
+      IMAGE     - Picture to be shown in nick's personal stats section
+      SLOGAN    - Slogan to be shown in nick's personal stats section
+      MODE      - Definitions which override nick properties read from log.
+                  (A comma-separated list of following possible values):
+                  o ISOP, NOTOP             - For controlling OP status
+                  o ISVOICE, NOTVOICE       - For controlling VOICE status
+                  o ISHALFOP, NOTHALFOP     - For controlling HALFOP status
+                  o ISEXCLUDED, NOTEXCLUDED - For excluding nick from stats
+                  o ISBOT                   - Bot status (Not yet in use in v1.19 but you can define it already)     
+
+(*) Conversation tracker
+    - Follows conversations and records most active chat partners for each user.
+
+ *  Cascading style sheets (CSS) cut down the size of the html files
+    - Style definition can be embedded into each html (default)
+      or used as a separate .css file
+
+ *  Colours can now be set by RGB codes
+    - Table colour settings can be previewed in Transition page
+
+ *  Activity distribution table added
+    -  Distribution chart of daily line counts
+   (-) Also displays monthly activity calendars for past months
+       See "History" page for settings
+
+(*) Multiple custom stats support added
+    - Also, custom stats can now be sorted by percentage of lines
+
+ *  Added half operator (+h) status detection.
+ *  Random quote timestamps can be shown in user table and custom stats.
+ *  Possibility to hide random quotes when people on channel don't want their lines to be displayed in web.
+ *  Configuration files are looked for in mIRCStats root directory and "Config" sub-directory.
+ *  Text lists can now be edited in separate editor by double-clicking the multi-line edit boxes.
+ *  Utilization and location of channel history file (history/channelname.msh) can now be controlled.
+ *  Improved timestamp parser. Accepts now also plain timestamps without start/end-chars, like hhmm.
+ *  Freely editable timezone info string can be shown with hourly stats and time of day stats.
+ *  When running mIRC with "Prefix own messages" unchecked, you can define your own nick for those lines.
+ *  Timestamp format also supports A/P prefix, and nn can be used as minutes like in mIRC.
+ *  Debug log can now be output also in automode and is named "DebugLog_[channelname].txt" by default.
+ *  More debug log prints:
+    - Detailed timespan and time overlapping info for each log.
+    - Custom stats debug info
+    - Time inconsistency info (detects problems with log time chronology, caused by date/time adjustments)
+
+10.6.2002 Additions to v1.19:
+
+ *  mIRC 6.02 logging format support added ('***' line prefix was changed to '*').
+ *  Graphs use now Arial font instead of Arial Narrow which is not default Windows font.
+
+12.6.2002 Additions to v1.19:
+
+ *  Fixed some bugs and added debug info if any header/footer file or "User html" file cannot be found.
+
+
+
+
+
+15.9.2001  - v1.18
+
+	 * Big numbers - Conversation killer stats added
+           Is triggered every time when nice and active conversation is "killed" for some minutes 
+	   by person who says something absolutely weird or stupid. See "Big numbers/Options" page.
+           
+       (*) Custom stats - Added EXCEPT statement:
+           You can add exception rules after "EXCEPT" line which selected lines must not match, eg:
+		
+		hi*
+		EXCEPT
+		high*
+		
+	   This selects any line starting with "hi" except lines starting with word "high".
+	   Amount of either filter or exception lines is not limited.
+
+
+	 * Timestamp parser redone
+           - Timestamp format is now fully configurable. Define timestamp with following identifiers:
+	     h  = one or two digit hour without leading zero
+	     hh = two-digit hour with leading zero (05)
+	     m  = one or two digit minute without leading zero.
+	     mm = two-digit minute with leading zero: (07)
+	     AP = AM/PM postfix, can be positioned anywhere
+
+	     Replace any other parts inside start&end character with non-conflicting char like x or z
+
+	   - examples: =3:37am=   -> in mIRCStats: =h:mmAP=
+	               [1234]     -> in mIRCStats: [hhmm]
+		       [Tue 9:37] -> in mIRCStats: [xxx h:mm]
+
+	     Note that default mIRC format [hh:mm] is still strongly recommended, it's also fastest to parse.
+
+
+	 * Configuration file types added
+	   - Possibility to save different parts of configuration into separate files. This makes managing
+             multiple channels much easier (also see the next *-section)
+
+	     Configuration types are:
+             o mIRCStats configuration files         (.cfg)
+	     o mIRCStats custom stats files     (.cust.cfg)
+             o mIRCStats colour files           (.clrs.cfg)
+             o mIRCStats timespan files         (.span.cfg)
+             o mIRCStats language setting files (.lang.cfg)
+
+	   - File types can be selected in config load/save dialog with "Type of File" drop-down box.
+
+	   - You can also use save config files to any sub-directories under your mIRCStats directory.
+
+	   - Try file Config/sample.cust.cfg for example custom stats configs.
+
+	 * New command line parameter style
+           mircstats.exe [-l logfile] [-h htmlfile] [-c configfile] [-r request_name]
+	   or
+           mircstats.exe [-log logfile] [-html htmlfile] [-cfg configfile] [-req request_name]
+
+	   Parameters can be in any order and you can load several config files by defining each of them
+           like -cfg my_stats.cfg -cfg spanish.lang.cfg -cfg 100_custom_stats.cust.cfg ...
+
+	   Configuration files can now be stored in separate directory(ies) under mIRCStats dir.
+           So if your config file is in c:\mircstats\configuration\myconfig.cfg then use "-cfg configuration\myconfig.cfg"
+
+	   Request nick can be used to pass the name of the person who requested stats update to mIRCStats.
+	   This is shown below main title in separate line (Language tag #125)
+
+	
+	 * Debug log added ("Debugging" selection page)
+           Output some important data how mIRCStats sees things:
+
+           - Full nick connection info: Logs all nicks listed as nick groups. 
+	     This should help you to keep your nick connection file in good shape.
+           - Big numbers debug data: See an explanation why some section is not shown.
+
+           Debug log is NOT printed when running in automatic mode to prevent many 
+           instances of mIRCStats writing simultaneously to the same debug log file.
+
+	 	
+	 * Added sample log file where you can check what real non-scripted mIRC log looks like
+           - #sample.log contains samples of mIRC logging format which is 100% supported by mIRCStats.
+
+
+	 * Some small additions and a lot of bug fixes.
+           - Added date format dd/mm/yyyy
+	   - User interface made bigger. Runs in "low resolution mode" if screen width < 800
+	   - Big numbers: Op status change is not counted if person ops or deops one of his own nicks.
+	   - Fixed nick separation bug when mIRC logging option "Show mode prefix" was used (not recommended).
+	   - Runner-up table column count limit now configurable
+          (-) Added "Case Sensitive" option to custom stats.
+	   - Colours saved now in rgb-hex numbers, the same format is used in HTML.
+	   - Request nick is now shown below main title in separate line (Language tag #125)
+
+
+30.4.2001  - v1.17 build 2
+
+	 * Bug fix version
+	       (-) Fixed bug: Custom Stats were not shown if Activity peak stats was not selected in 
+		   Big Numbers options.
+	       (-) Wildcards * and ? can now be searched with custom stats. Just prefix each * or ? with '\'
+		   character (For example *\?\?* searches for lines containing two sequential question marks '??')
+		-  Fixed bug: Channel name was not found when using some special mIRC output
+		   ('* Logging <channelname> to <dir/file>'). This caused troubles when channel specific nick 
+		   connection rules were not found.
+
+26.4.2001  - v1.17
+
+	 * Time of day stats table added
+
+	 * Big numbers: 2 New sections added:
+		-  CAPS detection
+	       (-) Peak activity detection (Searches for time there was most active users on the channel) 
+		-  You can now select which big numbers sections you want to be shown.
+		-  Also, you can randomly select configurable amount of sections to be shown. This is to
+		   prevent big numbers table growing too large (There's 15 sections already...)
+
+	 * Stats update log added ("Debugging" settings page). mIRCStats keeps a log file about stats page 
+	   updates in mIRC format. This makes it possible that you can analyze this log afterwards with
+	   mIRCStats and create stats about your mIRCStats updates! :) There's a specific language file
+ 	   at "languages" directory for that purpose called "lang_mircstatsupdates.msl". Some basic information
+	   (Line counts, nick counts...) are logged with each update.
+
+	 * New command line parameter: "-req [name]". Update scripts can pass nickname of the person who requested
+	   stats update to mIRCStats. This name is shown in html title.			
+
+	 * New language strings added because of these updates: 69, 82-83, 115-119. Check lang_english.msl
+ 	   or use language file inspection tool on "Language" settings page.
+
+
+13.1.2001  - v1.16 build 2
+
+	 * Just some bug fixes and minor improvements
+	 - Fixed "List index out of bounds" crash when using Automatic User Table size setting with very small logs.
+         - Added support for non-mIRC-standard "Session start" message without leading zero in day number.
+	 - In Automode the "New version" message is now shown in notepad. This lets mIRCStats finish and scripts
+	   can continue execution without user interaction.
+	 - Max amount of log files in multiple log analyzing is now virtually unlimited.
+	 - Fixed a bug in topics censor.
+
+
+12.12.2000 - v1.16
+	
+	(*) Added weekly stats section (visible if time span is over 2 weeks)
+	(*) Added new top domains in URL recognition procedure. (.aero, .biz, .coop, .info, .museum, .name, .pro)
+	 *  Voice status (+v) display added, registered users can use an image here. (in "HTML 2" settings page)
+	 *  Excluded nicks are completely ignored and these nicks are not counted in any stats section anymore.	
+	 *  Added an extra line in long term stats section showing the busiest month, week or day.
+
+	 *  New "Big numbers" stats:
+	    (-) Custom Quit Message stats (randomly sorted by "Amount of quit msgs" or "Highest percentage of qmsgs")
+	     -  Net split stats.
+
+	 *  Censored lines (define "filters" for those lines/topics which your don't want to see in your stats).
+	     -  Use this feature to clean up insultive language from your stats page.
+	     -  Skip lines with bot commands by using the appropriate filter ( !* matches all !commands)
+
+	 *  Language file inspection tool added. Use this to verify that your lang file is up-to-date and ok.
+	     - It informs you about completely missing tags (and lists those tags in english into a text file).
+             - Shows warnings if you have used a variable which cannot be used in a tag or you are missing
+               some variable which is important for that tag.	     
+
+	 *  User table sizes now configurable ("HTML 1" settings page)
+	 *  More options to configure stats tables ("HTML Misc" page)
+	 *  Separate "Common debug info" and "Nick debug" check boxes
+
+	 *  Plus tens of hours of "invisible" work (code optimisation, bug fixing, protection programming,
+	    data structure preparation for upcoming fancy features etc etc...)
+
+
+14.8.2000 - v1.15 (build 4)
+
+	* STILL some bug fixes!
+	 (-) Fixed colour bug when using colour effects in long custom stats tables.
+          - Corrected '?'-wildcard search. Should be exact now.
+	  - Table title selection bug corrected.
+          - Other minor stuff fixed.
+
+
+1.8.2000 - v1.15 (build 3) 
+
+        * Fixed following bugs:
+          - Memory was not cleared properly after pressing "Clear" button. This caused daily
+            line counts to increase if application was not closed between scans.
+
+	  - Also long term stats were affected by this bug. Improved data comparison and storing.
+
+          - In long term stats the average line length was occasionally shown as 0 (zero). Fixed.
+
+
+	ps. Added "Limitations" info at the end of this document.
+
+
+31.7.2000 - v1.15
+
+      (*) Custom stats section added! Find out who talk most about any self-defined
+          subject. Define different stats for every week day, day of month, every week etc.
+	  Further info available from "Custom stats settings" page.
+
+        * Maximum number of nicks (20000) limit is gone. Number of nicks is from now on limited
+          only by the amount of available memory in your computer.
+
+	* Major user interface changes. This had to be done to make it possible to handle 
+	  increasing number of settings easily.
+	  
+      (*) Detailed hourly load table option added.
+
+	* Possiblity to divide quotes into many lines to avoid them to be cutted.
+          (Html output/Html 1/Misc settings)
+
+        * Autoupdate script updated. mIRCStats is now launched with START /w command which doesn't
+          allow batch file execution to continue until mIRCStats has finished.
+	  
+
+30.4.2000 - v1.14.6
+
+	* A quick update because v1.14.5 pops up an update message from the beginning of
+	  May 2000. You can use this version until the next real update is released which 
+	  is a bit delayed from original plans. Sorry about that folks.
+
+
+23.1.2000 - v1.14.5
+
+	* Mostly small option additions and fixes requested by users.
+
+		- Use a custom divider in stats: You can now freely define 
+		  the divider HTML code under "HTML Structure" tab.
+
+	       (-) Some "Word stats" options added: Select which sections are shown
+		   and filter out unwanted words by putting them to the omit list.
+
+		- You can now select whether the html file name is automatically set
+		  based on the log filename or the channelname parsed from log.
+
+		- Fixed some small but annoying bugs.
+
+
+26.10.1999 - v1.14.4
+	
+	* Multiple log analyzing
+		- You can now combine many "daily timestamped" logs. Just select
+		  logs you want from "log browser" (press CTRL to select several logs), 
+		  or enter a log filter, like "mychannel_*.log". 
+		  Maximum number of logs you can analyze to single stats is 200.
+		  Logs are analyzed oldest-first. Log analyzing is started from
+		  that timestamp where previous log ended, so no lines are counted twice,
+		  even when connecting many logs logged in different clients.	
+
+	* Log timestamp modes configurable. In future mIRC versions you can decide how
+	  you want timestamps to appear in mIRC channel window. Anyway, it's recommended
+	  to keep using the default mode [hh:mm].
+
+	* Optimising..
+		- mIRCStats utilises now balanced binary trees (red-black trees),
+		  which is known to be one of the fastest search algorithm out there.
+				  
+		  BigChief ran some speed tests (thanks! :) with this version and an
+		  older one (v1.14), the speed increase was about 30% when log size was
+		  about 300K lines and there was around 4000 nicks in the log.
+
+		  For those of you who run stats for extremely crowded channels the
+	   	  speed boost should be over 50%!
+
+	* Bug fix
+		- The "New version message" window appeared sometimes without a reason 
+		  in previous versions. Amazing what one uninitialised BIT (boolean) 
+		  can cause!! :P
+
+
+
+15.10.1999 - v1.14.3
+
+	* Bug fixes
+		- Doh! I managed to screw up the "most deopped person"-detection
+		  in "Big Numbers" section - Now corrected. (See v.14.2 for details)
+		- Also applied some colour fixes.
+
+
+14.10.1999 - v1.14.2
+
+	* Added "Gave most ops" and "Got deopped most times"-section to Big Numbers.
+	  These are language tags 67 and 68. See lang_english for example.
+
+	* Bug fixes
+		- Fixed a small bug which caused long term stats to show errors
+	     	  when stats were generated for short time period (when channel name
+		  was not found in log).
+		- Channel Operator signs (@ or configured) is not shown if stats
+		  are generated for shorter time period than 3 days. Because Op
+		  data is collected from "nnn sets mode +o mmm" messages, there
+		  might be days when someone is already an op and there's no sign
+		  in the log about it.
+		- Changed default link colour back to title text colour.
+		- Improved Channel operator detection
+	       (-) Nick exclusion works now also in "Most referred nicks" table
+		   in Word stats.
+		
+
+11.10.1999 - v1.14
+
+	* Manual nick connection file
+     		- Specify which nicks actually belong to one person
+     		- Separate persons who use same irc client
+     		- You can use wildcards (* and ?) in nick filters
+     	       (-) Link nicks to their homepages!
+     	       (-) Use any IMAGE instead of nickname in user stats!
+
+
+	* Nick exclusion list!
+     		- Filter out channel bot(s) and stats-abusing persons)    
+
+	(*) Word stats 
+     		- Most used words - when those words were last used and by whom?
+		- Lists nicknames who are mentioned in channel discussion most often.
+     		- Most used URLs in channel - shows them as direct links!
+		- You can specify minimum length of acceptable words 
+
+	(*) Compensate time zones by adding -+ hours to your log timestamps
+
+	(*) Use your small "Channel logo" instead of "@" to show channel operators
+		- It's a good habit to put a small explanation about your
+		  new "Op sign" into header file (either mircstatsheader.txt or
+		  <channelname>header.txt), so your viewers will be less confused.. :)
+
+	(*) You can shrink the mIRCStats info bar in the bottom of the page
+
+	* Stats fonts selectable!
+	
+	* File access component re-programmed 
+		- This fixed problem when mIRCStats thought that log ended when someone 
+                  had pasted weird ASCII-chars to channel which contained also the 
+                  control character EOF (End-of-file). Now reads also through those.
+		- File reading optimised. Works now faster if you don't want to analyze
+		  the entire log, just some parts of it.
+
+	(*) Detect and activate URLs as web links in random quotes, topics etc..
+	
+	(*) More title styles
+
+
+
+
+15.8.1999 - v1.13
+
+	* Better config managing.
+	
+	* Some GUI fixes and enhancements
+		- Added "run minimized" option for automode.
+		- Clear button separated.
+		- Warns if user tries to use filenames with spaces.
+
+	* Long term stats: Total number of lines added to stats (language line #78).
+		- Uses Windows "digit grouping symbol" variable in formatting.
+		  (Control panel/Regional settings/Number)
+
+	* Log pre-analysing optimised, speed increase 100%-300% in that phase.	
+
+	* Some fixes:
+		- Date format bug fixed.
+		- If channel name not found in log, uses log filename instead.
+		- Topic stats: Ignores consecutive topic changes to same topic.
+		- Long term stats: Bug in line count handling fixed.
+
+	* New colour preset (sunrise)
+	
+	* Some strings added to language file 'english.msl' (tags 75-79)
+
+
+4.7.1999  - v1.12
+
+	* Some functional fixes
+	
+	* Date and time formats now configurable
+	  - Under "Language and Time" tab.
+
+	* Table title styles now configurable
+	  - Under "HTML structure" tab.
+
+	* Also included: mIRCStats autoupdate-zip package, which can be used to
+	  automatically update and upload html file to remote server.
+	  (Unzip it to "autoupdate" folder under your mircstats main folder.)
+
+
+9.6.1999  - v1.11
+
+	* "Most monologues"-section added. Shows the person who had most incidents when
+	  he wrote more than 5 consecutive lines to the channel.
+	  
+	  Uses language configuration tags 80 and 81. 
+	  See lang_english.msl in 'language' folder for sample.
+
+
+	* Fixed but in "Most nicks"-section which in certain situations caused a nick to
+	  be listed twice with different percentages. (?)
+
+	* Search algorithm optimised. Here's some proof (a 16Mb log with 2000 users):
+
+	  Before:	This page was created on 9.6.1999 22:14 with mIRCStats v1.10. 
+	  		Run time: 16 mins and 31 seconds.
+
+	  After:	This page was created on 9.6.1999 21:53 with mIRCStats v1.11. 
+	  		Run time: 2 mins and 57 seconds.
+
+
+	  Channels with lot of nicks get the greatest benefit out of this amendment.
+
+
+
+
+
+25.4.1999 - v1.10 (bug fix) 
+
+	* Fixed a bug in config handling. Previous versions did not set all checkbox
+ 	  states correctly.
+
+
+20.4.1999 - v1.10
+
+	* Language support added. Reads language configurations from selected file
+	  located at "Language" sub-directory. You can create similar files for your
+          own language, so stats look even more amazing! (You can also modify freely
+	  those ready language-files made by me.. :P
+
+	  Language files (.msl-files) can be opened with any text editor.
+
+
+	* History info gathering and long term stats table added. Program saves daily 
+	  info to a history file located at "History" sub-directory. After history file
+          size has exceeded 21 days (or you have made a large report with your old log 
+	  files), long term statistics-table is added to the bottom of the html-page.
+
+  	  You can run all your logs through the program only once. After this mIRCStats
+          always outputs also the long term table which contains all those days what you 
+          ever have put through this program!
+	 
+	  (Warning: some problems might occur in year 2004, when 5-year limit has
+                    been reached.. ;)
+
+	* Nick limit raised to 10000.
+
+	* "Wolfenstein" colour scheme added.
+
+	* Destination html-file can be now named freely, just uncheck that "auto assign"
+	  check box.
+
+
+
+ 
+
+13.3.1999 - v1.09
+
+	- HTML-structure fixed ( <head>-section ).
+	- Colour transformations enhanced (Sinus wave generator etc..) Check out!
+	- User header now under page title as default (location can be changed).
+	- Fixed kick counter to work also with new mIRC logging style.
+	- Line length - calculation fixed (v1.08 bugged in certain situations..)
+	- Added "most nicknames" cell to Big Numbers table. (works only when nick 
+	 	connecting is enabled).
+	- Random line collector rejects short lines ("Hi!")
+	- Clear-button added - you can run several stats without restarting the prog.
+
+	- Supports now also Linux Scrolls - logging style. (atleast normal lines..)	  
+
+
+11.2.1999 - v1.08
+
+	  *** Competition declared! - Make cool configurations in your statistics! mIRCStats
+	  is very easy to configure for nice and personal touch. Best looking pages will get
+	  a top spot in mIRCStats users link list.
+
+	  hint: Put your own html header code in mircstatsheader.txt - the program will
+   	        automatically add it to every stats you run. See v1.06 info for details.
+	  	example: <img src="http://your.server/your_own_logo.jpg"> will add a picture 
+		         to the top of every page you run! :)
+	  ***
+
+	
+	- Reporting enhancements: Table colour transformations (one more table sheet)
+	  and one entry added to "Big Numbers"-table.
+
+	- Possibility to disable initial countdown in automatic run mode.	
+
+	- Changed default font color to same than other texts - some page headers were
+	  too hard to see with previous colors.
+
+
+
+24.1.1999 - v1.07
+
+	- Word hunter enhancement: You can now give a list of words from where hunter picks one.
+
+	- Number of entries in user report is now controlled better and shouldn't grow too large.
+
+	- Program rejects now all nicks who wrote 0 lines.
+
+ 	- Info screen added. Notifies the user for updated versions and news.
+
+	- for IrcII and Eggdrop-users : if you don't remember to use ascii-mode in your 
+	  log-transfers, mIRCStats still can read the log FTP'ed using binary mode.
+
+	- Some minor updates for GUI and html-report. 
+
+   	*** mIRC v5.5 has now an option to trim log files. This helps keeping log processing
+	    times down. See mIRCStats FAQ or mIRC documentation for details.
+
+
+
+20.12.1998 - v1.06
+
+	- Background image support: Choose the image you want, mIRCStats will copy it to the
+	  same folder with the html-file and bars. Then just upload contents of that folder 
+	  to the server - that's it!
+
+	  (hint: Very colorful background image makes the page totally unreadable!!
+	   Mainly prefer ones you can find from the mIRCStats-folder.)
+
+
+  --->	- Html header and footer support! - No more hacking with the page source! :P
+	  Add your own piece of code to mircstatsheader.txt or/and mircstatsfooter.txt
+ 	  mIRCStats will then include those lines to the final report (provided that you 
+	  had appropriate boxes checked..) 
+
+ 	  For those of you who release statistics for many channels, it's possible to 
+	  define different kinds of headers and footers for every channel. Make them to
+	  files like 'mychannelheader.txt' or 'mychannelfooter.txt' (for #mychannel)
+
+
+	- Using same configs for channels like #bible and #deathmetal :) may lead to some 
+	  kind of compromises - now you can make different configurations for every channel
+          you run automatically. You can give the cfg-file as a parameter like this:
+
+  	  	mircstats.exe c:\logs\#mychannel.log c:\stats\mychannel.html -c mychannel_weekly_config.cfg
+	
+	  Defining special channel configs goes like this: 
+		- First run mircstats and set options, colours and files as you like.
+		- Press button 'Save configs' (goes to 'settings.cfg')
+	    	- Then copy 'settings.cfg' to 'mychannel_weekly_config.cfg' (for example..)
+
+	
+	- Fixed bug which caused 'Last N days'-selection not to work in the automode.
+
+
+	- !! There has been 2 sights of a strange error which caused log reading to stop
+	     in the middle of the file. The cause must have been that some person on a channel
+             had pasted some ascii-crap there, and those characters must have included
+	     the End-of-file mark, where mIRCStats stops reading.
+          
+             For similar errors, I added one line to the bottom of the html-source showing
+             the last line which was read. Just copy that line and search for it in the log file, 
+             so you should see some strange characters around that area. If you did, please send 
+             me a copy of that area of the log file to ave@cc.tut.fi, so I can try to fix the
+             program so that it wouldn't anymore jam in that position. 
+		
+	     Remove strange lines and save the log, so It will work again.
+ 
+
+
+05.12.1998 - v1.05
+	
+  !!!	- Major optimizations in log handling, application speeded up 40% to 80% depending 
+  !!!	  of the size of the log file !!!
+
+	  Test run: 897 kB log file:
+
+		mIRCStats v1.03 - "It took 39 seconds to create this page."
+		mIRCStats v1.05 - "It took 9 seconds to create this page."
+		----------------------------------------------------------
+		Result: v1.05 was 77% faster than the previous version.
+
+		
+05.12.1998 - v1.04
+
+	- Some parts added into 'Big Numbers'-section. Check them out...
+	- Fixed that 'feature' which caused upgrade-popup to appear 3 months too early.. :P
+	
+
+19.11.1998 - v1.03
+
+	- User interface fixes. (Earlier versions looked strange when using big fonts in Windows.
+				 wonder why no-one reported this earlier..)
+	- Some optimization in code.
+
+
+10.10.1998 - v1.02
+	
+	- Command line parameters added. From now on you can run the program with any 
+	  scheduler program and give the log name and result file as parameters.
+	  Parameter format is: mircstats.exe [source log] [dest. html file]  
+	
+	  EXAMPLE:
+		   mircstats.exe d:\mirc\logs\#paraakkeli.log c:\mircstats\today.html
+		
+	  !!! v1.06 addition: possibility to use channel specific cfg-files. 
+		
+	  EXAMPLE:
+		   mircstats.exe d:\mirc\logs\#paraakkeli.log c:\mircstats\today.html -c paraakkeli_one_day_settings.cfg
+
+
+	  mIRCStats runs then in AutoMode and uses configurations you have saved.  
+
+	  (this makes it possible to schedule automatic update of various channels, try it!
+	   You can also schedule a ftp program to automatically upload html's to web server)
+	  
+
+	- Word Hunter added - Choose a strange word and see who uses that word the most!
+	- Minor document structure and colour fixes. 		
+
+
+	- Eggdrop log handling now possible. Because Eggdrop doesn't include any date or
+	  channelname info in the log file, you have to add 2 lines in the beginning 
+	  of the log file.
+
+	  Needed lines are these two:
+
+Session Start: NOW Oct 10 00:00:00 1998
+*** Now talking in #ChannelName
+	
+	  (Naturally you must use correct day info at the line #1)
+
+	  mIRCStats uses this date and time as the base point to calculate times & dates.
+
+
+31.8.1998 - v1.01
+
+	- Some minor fixes
+
+
+28.8.1998 - v1.0
+
+	- Much more options (structure, parser, colours) to select from.
+	- Configuration saving added.
+	- Automatic run mode makes it possible to run the application as a scheduled task.
+
+
+12.8.1998 - v1.0beta(4)
+	Date format is not anymore dependant of windows' regional settings.
+
+
+9.8.1998 - v1.0beta(3)
+	Some minor fixes and ircII-style log reading added.
+
+
+5.8.1998 - v1.0beta(2)
+	Very disturbing crash bug fixed.
+
+-------------------
+
