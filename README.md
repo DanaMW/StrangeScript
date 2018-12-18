@@ -10,6 +10,6 @@ I also uploaded the COMPLETE and ORIGINAL StrangeScript in the
 hopes the code will be useful to someone. It really does have 
 everything in it, Have fun.
 ```
-I currently run it using AdiIRC [Here](https://www.adiirc.com)
+I currently run it using [AdiIRC](https://www.adiirc.com)
 
-[![AdIRC](icons/AdiIRC.ico)](https://www.adiirc.com)
+<img src="/icons/AdiIRC.ico" alt="AdiIrc"/>
