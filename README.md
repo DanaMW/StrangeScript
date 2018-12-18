@@ -12,4 +12,4 @@ everything in it, Have fun.
 ```
 I currently run it using [AdiIRC](https://www.adiirc.com)
 
-<img src="/icons/AdiIRC.ico" alt="AdiIrc"/>
+<img src="/StrangeScript/icons/AdiIRC.ico" alt="AdiIrc"/>
