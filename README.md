@@ -1,6 +1,6 @@
 # StrangeScript
 ```
-The original AdiIRC or mIRC script - StrangeScript ©1999-2019
+The original AdiIRC or mIRC script - StrangeScript ©1999-2021
 
 You will find me on freenode ( irc://chat.freenode.net ) in #StrangeScript
 
