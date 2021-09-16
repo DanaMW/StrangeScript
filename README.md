@@ -10,6 +10,8 @@ Forget freenode. I dropped that server like the rest of the world.
 I also uploaded the COMPLETE and ORIGINAL StrangeScript in the
 hopes the code will be useful to someone. It really does have
 everything in it, Have fun.
+
+@author Dana Meli
 ```
 I currently run it using [AdiIRC](https://www.adiirc.com)
 
