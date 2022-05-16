@@ -1,6 +1,6 @@
 # StrangeScript
 ```
-The original AdiIRC or mIRC script - StrangeScript ©1999-2022 Dana Meli-Wischman
+The original AdiIRC or mIRC script - StrangeScript ©1999-2022 Dana L. Meli-Wischman
 
 You will find me on:
 DalNet ( irc.dal.net ) in #StrangeScript
@@ -11,7 +11,7 @@ I also uploaded the COMPLETE and ORIGINAL StrangeScript in the
 hopes the code will be useful to someone. It really does have
 everything in it, Have fun.
 
-@author Dana Meli-Wischman
+@author Dana L. Meli-Wischman
 ```
 I currently run it using [AdiIRC](https://www.adiirc.com)
 
