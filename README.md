@@ -1,6 +1,6 @@
 # StrangeScript
 ```
-The original AdiIRC or mIRC script - StrangeScript ©1999-2022 Dana L. Meli-Wischman
+The original AdiIRC or mIRC script - StrangeScript ©1999-2023 Dana L. Meli-Wischman
 
 You will find me on:
 DalNet ( irc.dal.net ) in #StrangeScript
