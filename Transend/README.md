@@ -1,3 +1,3 @@
 # Transend AdiIrc Script
 
-Coming soon.
+Coming very soon.
