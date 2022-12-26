@@ -1,4 +1,4 @@
-# StrangeScript
+# StrangeScript(original) - StrangeScript(current) - Transend(new)
 ```
 The original AdiIRC or mIRC script - StrangeScript ©1999-2023 Dana L. Meli-Wischman
 
