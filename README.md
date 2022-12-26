@@ -1,5 +1,9 @@
-# StrangeScript(original) - StrangeScript(current) - Transend(new)
+# StrangeScript(original)
+# StrangeScript(current)
+# Transend(new)
+
 ```
+
 The original AdiIRC or mIRC script - StrangeScript ©1999-2023 Dana L. Meli-Wischman
 
 You will find me on:
@@ -14,7 +18,9 @@ SrangeScript Current is a trimmed down everything working version of the origina
 Transend AdiIrc - coming very soon.
 
 @author Dana L. Meli-Wischman
+
 ```
+
 I currently run it using [AdiIRC](https://www.adiirc.com)
 
 <img src="/StrangeScript/icons/AdiIRC.ico" alt="AdiIrc"/>
