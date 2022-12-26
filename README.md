@@ -1,6 +1,6 @@
-# StrangeScript(original)
-# StrangeScript(current)
-# Transend(new)
+# StrangeScript (original)
+# StrangeScript (current)
+# Transend AdiIrc (new)
 
 ```
 
