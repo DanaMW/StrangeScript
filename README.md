@@ -13,8 +13,8 @@ Libera.Chat ( irc.Libera.Chat ) in #StrangeScript,#Transend
 
 In strangeScript Original you have the script uploaded the
 COMPLETE and ORIGINAL StrangeScript in the hopes the code
-will be useful to someone. It really does  have
-everything in it, Have fun. The original was a mIRC script.
+will be useful to someone. It really does have everything
+in it, Have fun. The original was a mIRC script.
 
 SrangeScript Current is a trimmed down everything working
 version of the original script converted to run on AdiIrc.
