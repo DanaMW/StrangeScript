@@ -14,7 +14,7 @@ DalNet ( irc.dal.net ) in #StrangeScript,#Transend
 IRCgo ( irc.ircgo.org ) in #StrangeScript,#Transend
 Libera.Chat ( irc.Libera.Chat ) in #StrangeScript,#Transend
 
-WHat we have here is: 
+What we have here is: 
 
 StrangeScript (original)
 In strangeScript Original you have the script uploaded the
