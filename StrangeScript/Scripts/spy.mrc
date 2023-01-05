@@ -1,22 +1,50 @@
+alias spy {
+  if ($1 == ON) {
+    if ($2 == human) {
+        sockopen -n SpyHuman localhost 6667
+        return
+    }
+    if ($2 == ircgo) {
+        sockopen -n SpyIRCGo irc.IRCGo.org 6667
+        return
+    }
+    $report(Spy,$null,Input Error,$null,$null,$null,You need to do /SPY ON HUMAN or IRCGO).active
+    return
+  }
+  if ($1 == OFF) { 
+      sockclose *
+      return
+  }
+  if ($1 == WRITE) {
+    set %spy.value $2-
+    set %spy.trigger 1
+    return
+  }
+  if ($1 == SET) { }
+  if ($1 == SEND) { 
+      sockwrite -n $sockname privmsg %botchan :Send not configured
+  }
+  $report(Spy,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, SEND).active
+}
 on 1:SOCKOPEN:Spy*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
   if ($sockname == SpyHuman) {
     sockwrite -n $sockname pass %botpass
     sockwrite -n $sockname nick %botnick
     sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) : $+ $remove(%botnick,`)
-    sockwrite -n $sockname identify %botpass
-    sockwrite -n $sockname join #StrangeScript
+    .timer 1 5 sockwrite -n $sockname identify %boss %botpass
+    .timer 1 6 sockwrite -n $sockname identify %botpass
+    .timer 1 10 sockwrite -n $sockname join #StrangeScript
     privmsg $me $sockname is now open and set
-    halt
   }
   if ($sockname == SpyIRCGo) {
     sockwrite -n $sockname pass %botpass
     sockwrite -n $sockname nick %botnick
     sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) : $+ $remove(%botnick,`)
-    sockwrite -n $sockname identify %botpass
-    sockwrite -n $sockname join #StrangeScript
+    .timer 1 5 sockwrite -n $sockname identify %boss %botpass
+    .timer 1 6 sockwrite -n $sockname identify %botpass
+    .timer 1 10 sockwrite -n $sockname join #StrangeScript
     privmsg $me $sockname is now open and set
-    halt
   }
   if ($sockname == SpyDalNet) {
     ;sockwrite -n $sockname pass %botpass
@@ -25,7 +53,6 @@ on 1:SOCKOPEN:Spy*:{
     ;sockwrite -n $sockname identify %botpass
     ;sockwrite -n $sockname join #StrangeScript
     ;privmsg $me $sockname is now open and set
-    ;halt
   }
   ;elseif ($sockname == SpyXPEACE) { sockwrite -n $sockname pass %irc.nick.pass. [ $+ [ $lower($remove($sockname,Spy)) ] ] $crlf user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) }
   ;sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`)
@@ -34,16 +61,21 @@ on 1:SOCKOPEN:Spy*:{
   ;sockwrite -n $sockname nickserv identify recess %botpass
   ;.timer 1 3 sockwrite -n $sockname privmsg nickserv :identify recess %botpass
   ;sockwrite -n $sockname join #StrangeScript
-  privmsg $me $sockname is now open and set
+  ;privmsg $me $sockname is now open and set
 }
 on 1:SOCKREAD:Spy*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: READ $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
+  if (%spy.trigger == 1) { 
+    sockwrite -n $sockname privmsg %botchan : $+ %spy.value
+    .timer 1 1 set %spy.value -
+    .timer 1 1 set %spy.trigger 0
+  }
   :spyread
   sockread %spy.readline
   if ($sockbr == 0) { return }
   if ($gettok(%spy.readline,1,32) == PING) {
     sockwrite -n $sockname PONG $gettok(%spy.readline,2,32)
-    privmsg $me sent pong to $remove($gettok(%spy.readline,2,32),:)
+    ;privmsg $me sent pong to $remove($gettok(%spy.readline,2,32),:)
     set %clone.server. [ $+ [ $sockname ] ] $remove($gettok(%spy.readline,2,32),:)
   }
   if ($remove($left(%spy.readline,$calc($pos(%spy.readline,$chr(33),1) -1)),$chr(58)) == $me) && ($remove($gettok(%spy.readline,4,32),:,$chr(1)) == PING)  { sockwrite -n $sockname privmsg $me : $+ $chr(1) $+ PING $gettok(%spy.readline,5-6,32) $+ $chr(1) }
@@ -64,6 +96,7 @@ on 1:SOCKREAD:Spy*:{
   }
   if ($gettok(%spy.readline,2,32) == MODE) { privmsg $me $gettok(%server.spy. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) Mode $remove($gettok(%spy.readline,1,33),:) set $remove($gettok(%spy.readline,4-,32),:) on $remove($gettok(%spy.readline,3,32),:) }
   if ($gettok(%spy.readline,2,32) == PRIVMSG) {
+    ;if *-bc cycle*
     ;
     ;Ctcp Handling
     ;
