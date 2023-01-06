@@ -21,9 +21,10 @@ it more complete.
 
 StrangeScript (original)
 In strangeScript Original you have the script uploaded the
-COMPLETE and ORIGINAL StrangeScript just the way it was the day I parked it. Done in the hopes the code will be useful to someone.
-It really does have everything in it, Have fun. The original was
-a mIRC script.
+COMPLETE and ORIGINAL StrangeScript just the way it was the
+day I parked it. Done in the hopes the code will be useful
+to someone. It really does have everything in it, Have fun.
+The original was a mIRC script.
 
 Transend AdiIrc (new)
 Transend AdiIrc - Has it's own repo now.
