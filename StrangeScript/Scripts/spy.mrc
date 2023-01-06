@@ -1,74 +1,120 @@
 alias spy {
   if ($1 == ON) {
     if ($2 == human) {
-        sockopen -n SpyHuman localhost 6667
-        return
+      sockopen -n SpyHuman localhost 6667
+      return
     }
     if ($2 == ircgo) {
-        sockopen -n SpyIRCGo irc.IRCGo.org 6667
-        return
+      sockopen -n SpyIRCGo irc.IRCGo.org 6667
+      return
     }
     $report(Spy,$null,Input Error,$null,$null,$null,You need to do /SPY ON HUMAN or IRCGO).active
     return
   }
-  if ($1 == OFF) { 
-      sockclose *
-      return
-  }
-  if ($1 == WRITE) {
-    set %spy.value $2-
-    set %spy.trigger 1
+  if ($1 == OFF) {
+    sockclose *
     return
   }
-  if ($1 == SET) { }
-  if ($1 == SEND) { 
-      sockwrite -n $sockname privmsg %botchan :Send not configured
+  if ($1 == WRITE) {
+    set %say.value $2-
+    set %say.trigger 1
+    return
   }
-  $report(Spy,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, SEND).active
+  if ($1 == SET) {
+    if ($2 == bot.disp) {
+      if (%bot.disp == channel) { set %bot.disp message }
+      else { set %bot.disp channel }
+      return
+    }
+    if ($2 == work.chan) {
+        if ($3 == $null) { return }
+        set %work.chan $3
+        return
+    }
+    if ($2 == bot.nick) {
+        if ($3 == $null) { return }
+        set %bot.nick $3
+        return
+    }
+    if ($2 == bot.pass) {
+        if ($3 == $null) { return }
+        set %bot.pass $3
+        return
+    }
+    if ($2 == say.value) {
+        set %say.value $3-
+        if (%say.value == $null) { set %say.value - }
+        return
+    }
+    if ($2 == say.trigger) {
+      if (%say.trigger == 1) { set %say.trigger 0 }
+      else { set %say.trigger 1 }
+      return
+    }
+  }
+  if ($1 == SHOW) {
+    $report(Spy Show Menu,$null,$null,**********,************).active
+    $report(Spy Show Menu,$null,$null,$null,use /spy set value.below to alter).active
+    $report(Spy Show Menu,$null,$null,**********,************).active
+    $report(Spy Show Menu,$null,t,bot.disp,%bot.disp).active
+    $report(Spy Show Menu,$null,$null,work.chan,%work.chan).active
+    $report(Spy Show Menu,$null,$null,bot.nick,%bot.nick).active
+    $report(Spy Show Menu,$null,$null,bot.pass,%bot.pass).active
+    $report(Spy Show Menu,$null,$null,say.value,%say.value).active
+    $report(Spy Show Menu,$null,t,say.trigger,%say.trigger).active
+    $report(Spy Show Menu,$null,$null,xxx,no value).active
+    $report(Spy Show Menu,$null,$null,xxx,no value).active
+    $report(Spy Show Menu,$null,$null,**********,************).active
+    return
+  }
+  if ($1 == SEND) { sockwrite -n spy* privmsg %work.chan :Send not configured for some reason. Right Dana? }
+  sockwrite -n spy* privmsg %work.chan : $+ $report(Spy,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, SHOW, SEND)
+  return
 }
 on 1:SOCKOPEN:Spy*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
   if ($sockname == SpyHuman) {
-    sockwrite -n $sockname pass %botpass
-    sockwrite -n $sockname nick %botnick
-    sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) : $+ $remove(%botnick,`)
-    .timer 1 5 sockwrite -n $sockname identify %boss %botpass
-    .timer 1 6 sockwrite -n $sockname identify %botpass
-    .timer 1 10 sockwrite -n $sockname join #StrangeScript
+    sockwrite -n $sockname pass %bot.pass
+    sockwrite -n $sockname nick %bot.nick
+    sockwrite -n $sockname user $remove(%bot.nick,`) $remove(%bot.nick,`) $remove(%bot.nick,`) : $+ $remove(%bot.nick,`)
+    .timer 1 5 sockwrite -n $sockname identify $me %bot.pass
+    .timer 1 6 sockwrite -n $sockname identify %bot.pass
+    .timer 1 10 sockwrite -n $sockname join %work.chan
     privmsg $me $sockname is now open and set
   }
   if ($sockname == SpyIRCGo) {
-    sockwrite -n $sockname pass %botpass
-    sockwrite -n $sockname nick %botnick
-    sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) : $+ $remove(%botnick,`)
-    .timer 1 5 sockwrite -n $sockname identify %boss %botpass
-    .timer 1 6 sockwrite -n $sockname identify %botpass
-    .timer 1 10 sockwrite -n $sockname join #StrangeScript
+    sockwrite -n $sockname pass %bot.pass
+    sockwrite -n $sockname nick %bot.nick
+    sockwrite -n $sockname user $remove(%bot.nick,`) $remove(%bot.nick,`) $remove(%bot.nick,`) : $+ $remove(%bot.nick,`)
+    .timer 1 5 sockwrite -n $sockname identify $me %bot.pass
+    .timer 1 6 sockwrite -n $sockname identify %bot.pass
+    .timer 1 10 sockwrite -n $sockname join %work.chan
     privmsg $me $sockname is now open and set
   }
   if ($sockname == SpyDalNet) {
-    ;sockwrite -n $sockname pass %botpass
-    ;sockwrite -n $sockname nick %botnick
-    ;sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) : $+ $remove(%botnick,`)
-    ;sockwrite -n $sockname identify %botpass
-    ;sockwrite -n $sockname join #StrangeScript
+    sockwrite -n $sockname pass %bot.pass
+    sockwrite -n $sockname nick %bot.nick
+    sockwrite -n $sockname user $remove(%bot.nick,`) $remove(%bot.nick,`) $remove(%bot.nick,`) : $+ $remove(%bot.nick,`)
+    sockwrite -n $sockname identify %bot.pass
+    sockwrite -n $sockname join %work.chan
+    privmsg $me $sockname is now open and set
+  }
+  else {
+    ;sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`)
+    ;sockwrite -n $sockname nick $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`)
+    ;sockmark $sockname %botnick
+    ;sockwrite -n $sockname nickserv identify recess %botpass
+    ;.timer 1 3 sockwrite -n $sockname privmsg nickserv :identify recess %botpass
+    ;sockwrite -n $sockname join botchan
     ;privmsg $me $sockname is now open and set
   }
-  ;elseif ($sockname == SpyXPEACE) { sockwrite -n $sockname pass %irc.nick.pass. [ $+ [ $lower($remove($sockname,Spy)) ] ] $crlf user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) }
-  ;sockwrite -n $sockname user $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`)
-  ;sockwrite -n $sockname nick $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`) $remove(%botnick,`)
-  ;sockmark $sockname %botnick
-  ;sockwrite -n $sockname nickserv identify recess %botpass
-  ;.timer 1 3 sockwrite -n $sockname privmsg nickserv :identify recess %botpass
-  ;sockwrite -n $sockname join #StrangeScript
-  ;privmsg $me $sockname is now open and set
 }
 on 1:SOCKREAD:Spy*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: READ $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
-  if (%spy.trigger == 1) { 
-    sockwrite -n $sockname privmsg %botchan : $+ %spy.value
-    .timer 1 1 set %spy.value -
-    .timer 1 1 set %spy.trigger 0
+  if (%say.trigger == 1) {
+    sockwrite -n $sockname privmsg %work.chan : $+ %say.value
+    .timer 1 1 set %say.value -
+    .timer 1 1 set %say.trigger 0
   }
   :spyread
   sockread %spy.readline
@@ -107,12 +153,11 @@ on 1:SOCKREAD:Spy*:{
     }
     if ($chr(35) isin $remove($gettok(%spy.readline,3,32),:)) { privmsg $me $gettok(%server.spy. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) $remove($gettok(%spy.readline,3,32),:) $remove($gettok(%spy.readline,1,33),:) $+ : $remove($gettok(%spy.readline,4-,32),:) }
     else {
-      privmsg $me $gettok(%server.spy. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) Privmsg $remove($gettok(%spy.readline,1,33),:) Whispered to $remove($gettok(%spy.readline,3,32),:) $+ : $remove($gettok(%spy.readline,4-,32),:) 
-      ;privmsg $me $gettok(%server.spy. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) Privmsg $remove($gettok(%spy.readline,1,33),:) Whispered to $remove($gettok(%spy.readline,3,32),:) $+ : $remove($gettok(%spy.readline,4-,32),:) 
+      privmsg $me $gettok(%server.spy. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) Privmsg $remove($gettok(%spy.readline,1,33),:) Whispered to $remove($gettok(%spy.readline,3,32),:) $+ : $remove($gettok(%spy.readline,4-,32),:)
+      ;privmsg $me $gettok(%server.spy. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) Privmsg $remove($gettok(%spy.readline,1,33),:) Whispered to $remove($gettok(%spy.readline,3,32),:) $+ : $remove($gettok(%spy.readline,4-,32),:)
     }
     goto spyread
   }
-  ;if (*reaky* iswm %spy.readline) { goto bossout }
   :bossout
   ;privmsg $me $sockname %spy.readline
   goto spyread
@@ -125,4 +170,9 @@ on 1:SOCKCLOSE:Spy*:{
   if ($sockname == SpyHuman) { .timer 1 1 sockopen SpyHuman localhost 6667 | privmsg $me $report(ServerSpy,ON,Human) }
   if ($sockname == SpyIRCgo) { .timer 1 1 sockopen SpyIRCgo irc.ircgo.org 6667 | privmsg $me $report(ServerSpy,ON,IRCgo) }
   if ($sockname == SpyCHAT) { .timer 1 1 sockopen SpyCHAT irc.chatnet.org 6667 | privmsg $me $report(ServerSpy,ON,CHAT) }
+}
+
+/bot.write.method {
+  if (%bot.write.method == channel) { return sockwrite -n spy* privmsg %work.chan : $+ }
+  if (%bot.write.method == message) { return sockwrite -n spy* privmsg $me : $+ }
 }
