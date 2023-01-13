@@ -90,7 +90,7 @@ alias bot {
     return
   }
   if ($1 == PART) {
-    if ($2 != $null) { sockwrite -n Bot* part $2 }
+    if ($2 != $null) { sockwrite -n Bot* part $2 $3- }
     return
   }
   $report(Bot,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, JOIN, PART, SHOW, SEND).active
