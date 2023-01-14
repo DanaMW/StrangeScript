@@ -110,6 +110,7 @@ on *:KICK:#: {
   ;if ($nick isowner $chan(#)) { HALT }
 }
 on ^*:ACTION:*:#: {
+  $report($sysp Action:  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr $+  $chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-).adctive
   echo $color(action) -t # $sysp Action:  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr $+  $iif($chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-)
   IF (status !isin $window($active)) { echo $color(action) -st # $output Action:  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr $+  $iif($chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-) }
   halt

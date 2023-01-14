@@ -73,7 +73,7 @@ alias bot {
   if ($1 == SHOW) {
     $report(Bot Menu,$null,$null,**********,************).active
     $report(Bot Menu,$null,$null,$null,use /Bot set value.below to alter).active
-    $report(Bot Menu,$null,$null,**********,************).active
+    $report(Bot Menu,$null,$null,************,*****************).active
     $report(Bot Menu,$null,$null,Current Network,$network).active
     $report(Bot Menu,$null,$null,bot.disp,%bot.disp).active
     $report(Bot Menu,$null,$null,work.chan, %work.chan. [ $+ [ $network ] ] ).active
@@ -84,7 +84,7 @@ alias bot {
     $report(Bot Menu,$null,t,say.trigger,%say.trigger).active
     $report(Bot Menu,$null,$null,xxx,no value).active
     $report(Bot Menu,$null,$null,xxx,no value).active
-    $report(Bot Menu,$null,$null,**********,************).active
+    $report(Bot Menu,$null,$null,************,*****************).active
     return
   }
   if ($1 == SEND) {
