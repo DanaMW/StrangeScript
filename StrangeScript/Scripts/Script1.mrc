@@ -80,11 +80,11 @@ on ^*:NICK: {
   haltdef
   set %tmp.nick 1
   while (%tmp.nick <= $comchan($newnick,0)) {
-    echo -t $comchan($newnick,%tmp.nick) $sys $report(Nick,$nick,$comchan($newnick,%tmp.nick),Will now be known as,$newnick)
+    echo -t $comchan($newnick,%tmp.nick) $sys $report(Nick,$comchan($newnick,%tmp.nick),$nick,Will now be known as,$newnick)
     inc %tmp.nick
     if (%tmp.nick > $comchan($newnick,0))  { break }
   }
-  IF (status !isin $window($active)) { $report(Nick,$nick,$null,Will now be known as,$newnick).status }
+  IF (status !isin $window($active)) { $report(Nick,$null,$nick,Will now be known as,$newnick).status }
   if ($nick == $me) { keywrite $network boss $me }
   unset %temp.nick
   halt
@@ -95,7 +95,7 @@ on *:PONG: {
 on *:PING: {
   if ($key(StrangeScript,pingpong.show) == ON) { $report(Server,$1,PING,with message,$2-).status }
 }
-on *:KICK:#: {
+on ^*:KICK:#: {
   haltdef
   $report(Kick,$chan,$nick,$knick,$1-).chan
   if (status !isin $window($active)) { $report(Kick,$chan,$nick,$knick,$1-).status }
@@ -110,14 +110,27 @@ on *:KICK:#: {
   ;if ($nick isowner $chan(#)) { HALT }
 }
 on ^*:ACTION:*:#: {
-  $report($sysp Action:  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr $+  $chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-).adctive
-  echo $color(action) -t # $sysp Action:  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr $+  $iif($chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-)
-  IF (status !isin $window($active)) { echo $color(action) -st # $output Action:  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr $+  $iif($chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-) }
+  haltdef
+  if ( $chr(35) isin $1- ) {
+    $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).action
+    if (status !isin $window($active)) { $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).actions }
+  }
+  else {
+    $report( 13Action:,00 $nick,$null,$null,$null,$2-).action
+    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$2-).actions }
+  }
   halt
 }
 on ^*:ACTION:*:?: {
-  echo $color(action) -t $nick $sysp Action: 14 $+ $lll $+ $white $nick 14 $+ $rrr $+  $iif($chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-)
-  IF (status !isin $window($active)) { echo $color(action) -t $nick Action: 14 $+ $lll $+ $white $nick 14 $+ $rrr $+  $iif($chr(40) $+ $chr(35) $+ * $+ $chr(41) iswm $1,$2-,$1-) }
+  haltdef
+  if ( $chr(35) isin $1- ) {
+    $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).action
+    if (status !isin $window($active)) { $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).actions }
+  }
+  else {
+    $report( 13Action:,00 $nick,$null,$null,$null,$null,$2-).action
+    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$null,$2-).actions }
+  }
   halt
 }
 RAW 421:*: {
@@ -216,7 +229,7 @@ on ^*:NOTICE:*:*: {
   }
   halt
 }
-on *:INVITE:#: {
+on ^*:INVITE:#: {
   haltdef
   if ($nick == ChanServ) {
     join $chan %key. [ $+ [ $chan ] ]
@@ -232,7 +245,7 @@ on *:INVITE:#: {
 raw 421:*: {
   haltdef
   $report(Server,421,Error,Sorry,the command,$2,is an,$3-,to me.).active
-  IF (status !isin $window($active)) { $report(Server,$null,Error,Sorry,the command,$2,is an,$3-,to me.).status }
+  IF (status !isin $window($active)) { $report(Server,421,Error,Sorry,the command,$2,is an,$3-,to me.).status }
   halt
 }
 raw 352:*: {
@@ -386,7 +399,7 @@ raw knock:*: {
   echo -t $1 $sys $report(Knock,$1,$nick,just knocked and got message,%last.knock.reason).status
   IF (status !isin $window($active)) { $report(Knock,$1,$nick,just knocked and got message,%last.knock.reason).status }
 }
-ctcp *:*:*: {
+ctcp ^*:*:*: {
   haltdef
   if ($chr(43)  isin $1-) { halt }
   if ($chr(47) $+ con isin $2-) { halt }
@@ -447,7 +460,7 @@ ctcp *:*:*: {
   IF (status !isin $window($active)) { $report(Ctcp,$nick,Received,$upper($1),$strip($2-)).status }
   halt
 }
-on *:CTCPREPLY:*: {
+on ^*:CTCPREPLY:*: {
   haltdef
   if ($1 == PING) && ($2 != $null) {
     set %temp.ping.calc $calc(($ticks - $remove($3,$chr(1))) / 1000)
@@ -537,32 +550,32 @@ on ^*:DEOP:#: {
   deop.protect
   halt
 }
-on *:VOICE:#: {
+on ^*:VOICE:#: {
   haltdef
   $report(Voice,$nick,$chan,$vnick,$1-).chan
   IF (status !isin $window($active)) { $report(Voice,$nick,$chan,$vnick,$1-).status }
   halt
 }
-on *:DEVOICE:#: {
+on ^*:DEVOICE:#: {
   haltdef
   $report(DeVoice,$nick,$chan,$vnick,$1-).chan
   IF (status !isin $window($active)) { $report(DeVoice,$nick,$chan,$vnick,$1-).status }
   halt
 }
-on *:HELP:#: {
+on ^*:HELP:#: {
   haltdef
   $report(HelpOp,$nick,$chan,$opnick,$1-).chan
   IF (status !isin $window($active)) { $report(HelpOp,$nick,$chan,$opnick,$1-).status }
   halt
 }
-on *:DEHELP:#: {
+on ^*:DEHELP:#: {
   haltdef
   $report(DeHelpOp,$nick,$chan,$opnick,$1-).chan
   IF (status !isin $window($active)) { $report(DeHelpOp,$nick,$chan,$opnick,$1-).status }
   deop.protect
   halt
 }
-on *:SERVERMODE:#: {
+on ^*:SERVERMODE:#: {
   haltdef
   .echo -t # $sys $report(ServerMode,$nick,$chan,$null,$1-)
   IF (status !isin $window($active)) { $report(ServerMode,$nick,$chan,$null,$1-).status }
@@ -585,9 +598,11 @@ on ^*1:JOIN:#: {
   if ($nick == $me) { chanserv op # $me }
   .echo -t # $sys $report(Join,$chan,$nick,$address)
   IF (status !isin $window($active)) { $report(Join,$chan,$nick,$address).status }
+  halt
 }
 on ^*:PART:#: {
   haltdef
   echo -t # $sys $report(Part,$chan,$nick,$address,$1-)
-  $report(Part,$chan,$nick,$fulladdress,$1-).status
+  IF (status !isin $window($active)) { $report(Part,$chan,$nick,$fulladdress,$1-).status }
+  halt
 }

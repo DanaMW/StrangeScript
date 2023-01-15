@@ -42,6 +42,8 @@ chain {
     else { var %tmp.rbuild = %tmp.rbuild $+ $sep $+ ( $+ $white $5- $sep $+ ) $+ $chr(186) $+  }
   }
   if ($prop == active) { return echo -at $sys $net $+ %tmp.rbuild }
+  if ($prop == action) { return echo -at $sysp %tmp.rbuild }
+  if ($prop == actions) { return echo -st $sysp %tmp.rbuild }
   if ($prop == status) { return echo -st $sys %tmp.rbuild }
   if ($prop == chan) { return echo -t # $sys %tmp.rbuild }
   if ($prop == text) { return echo -t # $output %tmp.rbuild }
