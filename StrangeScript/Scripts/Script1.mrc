@@ -111,25 +111,25 @@ on ^*:KICK:#: {
 }
 on ^*:ACTION:*:#: {
   haltdef
-  if ( $chr(35) isin $1- ) {
+  if ( $chr(35) isin $1 ) {
     $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).action
     if (status !isin $window($active)) { $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).actions }
   }
   else {
-    $report( 13Action:,00 $nick,$null,$null,$null,$2-).action
-    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$2-).actions }
+    $report( 13Action:,00 $nick,$null,$null,$null,$1-).action
+    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$1-).actions }
   }
   halt
 }
 on ^*:ACTION:*:?: {
   haltdef
-  if ( $chr(35) isin $1- ) {
+  if ( $chr(35) isin $1 ) {
     $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).action
     if (status !isin $window($active)) { $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).actions }
   }
   else {
-    $report( 13Action:,00 $nick,$null,$null,$null,$null,$2-).action
-    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$null,$2-).actions }
+    $report( 13Action:,00 $nick,$null,$null,$null,$null,$1-).action
+    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$null,$1-).actions }
   }
   halt
 }
