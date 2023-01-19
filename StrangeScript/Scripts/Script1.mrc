@@ -112,24 +112,24 @@ on ^*:KICK:#: {
 on ^*:ACTION:*:#: {
   haltdef
   if ( $chr(35) isin $1 ) {
-    $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).action
-    if (status !isin $window($active)) { $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).actions }
+    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
+    if (status !isin $window($active)) { echo $color(action) -st $sys $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
   }
   else {
-    $report( 13Action:,00 $nick,$null,$null,$null,$1-).action
-    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$1-).actions }
+    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
+    if (status !isin $window($active)) { echo $color(action) -st $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
   }
   halt
 }
 on ^*:ACTION:*:?: {
   haltdef
   if ( $chr(35) isin $1 ) {
-    $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).action
-    if (status !isin $window($active)) { $report( 13Action:,00 $nick 13 $chr(91) $+ 00 $1 $+ 13 $chr(93) 00 $+ $2-).actions }
+    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
+    if (status !isin $window($active)) { echo $color(action) -st $sys $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
   }
   else {
-    $report( 13Action:,00 $nick,$null,$null,$null,$null,$1-).action
-    if (status !isin $window($active)) { $report( 13Action:,00 $nick,$null,$null,$null,$1-).actions }
+    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
+    IF (status !isin $window($active)) { echo $color(action) -st $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
   }
   halt
 }
@@ -220,12 +220,12 @@ on ^*:NOTICE:*:*: {
     if (*IDENTIFY* iswm $1-) { /idchan }
   }
   if ($chan == $null) {
-    echo $color(notice) -at $sys $net $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
-    IF (status !isin $window($active)) { echo $color(notice) -st $sys $net $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
+    echo $color(notice) -at $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
+    IF (status !isin $window($active)) { echo $color(notice) -st $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
   }
   if ($chan != $null) {
-    echo $color(notice) -at $sys $net $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1-
-    IF (status !isin $window($active)) { echo $color(notice) -st $sys $net $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1- }
+    echo $color(notice) -at $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1-
+    IF (status !isin $window($active)) { echo $color(notice) -st $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1- }
   }
   halt
 }
@@ -294,14 +294,14 @@ raw 372:*:{ if ($3 == $null) { halt } | $report(MOTD,372,$null,$null,$null,$3-).
 raw 375:*:{ if ($3 == $null) { halt } | $report(MOTD,375,$null,$null,$null,$3-).active | halt }
 raw 376:*:{ if ($3 == $null) { halt } | $report(MOTD,376,$null,$null,$null,$3-).active | halt }
 ;Notify-Watch info
-raw 603:*:{ $report(603,Watch Info,603,$null,$2-).active | halt }
-raw 605:*:{ $report(605,Watch Info,605,$null,$2-).active | halt }
-raw 606:*:{ $report(606,Watch Info,606,$null,$2-).active | halt }
-raw 607:*:{ $report(607,Watch Info,607,$null,$2-).active | halt }
-raw 318:*:{ $report(318,Watch Info,318,$null,$2-).active | halt }
-raw 319:*:{ $report(319,Watch Info,319,$null,$2-).active | halt }
-raw 307:*:{ $report(307,Watch Info,307,$null,$2-).active | halt }
-raw 312:*:{ $report(312,Watch Info,312,$null,$2-).active | halt }
+raw 603:*:{ $report(603,Watch Info,$null,$null,$2-).active | halt }
+raw 605:*:{ $report(605,Watch Info,$null,$null,$2-).active | halt }
+raw 606:*:{ $report(606,Watch Info,$null,$null,$2-).active | halt }
+raw 607:*:{ $report(607,Watch Info,$null,$null,$2-).active | halt }
+raw 318:*:{ $report(318,Watch Info,$null,$null,$2-).active | halt }
+raw 319:*:{ $report(319,Watch Info,$null,$null,$2-).active | halt }
+raw 307:*:{ $report(307,Watch Info,$null,$null,$2-).active | halt }
+raw 312:*:{ $report(312,Watch Info,$null,$null,$2-).active | halt }
 ;Server Information
 raw 1:*:{ $report(1,Server Info,$null,$3-).active | halt }
 raw 2:*:{ $report(2,Server Info,$null,$3-).active | halt }
@@ -516,13 +516,25 @@ on 1:DISCONNECT:{
 on ^*:MODE:#: {
   haltdef
   .echo -t # $sys $report(Mode,$nick,$chan,$null,$1-)
-  IF (status !isin $window($active)) { $report(Mode,$nick,$chan,$null,$1-).status }
+  if (status !isin $window($active)) { $report(Mode,$nick,$chan,$null,$1-).status }
   halt
 }
 on ^*:USERMODE:#: {
   haltdef
   .echo -t # $sys $report(UserMode,$nick,$chan,$null,$1-)
   IF (status !isin $window($active)) { $report(UserMode,$nick,$chan,$null,$1-).status }
+  halt
+}
+on ^*:ADMIN:#: {
+  haltdef
+  $report(Admin,$nick,$chan,$opnick,$1-).chan
+  IF (status !isin $window($active)) { $report(Admin,$nick,$chan,$opnick,$1-).status }
+  halt
+}
+on ^*:DEADMIN:#: {
+  haltdef
+  $report(DeAdmin,$nick,$chan,$opnick,$1-).chan
+  IF (status !isin $window($active)) { $report(DeAdmin,$nick,$chan,$opnick,$1-).status }
   halt
 }
 on ^*:OWNER:#: {
@@ -533,7 +545,7 @@ on ^*:OWNER:#: {
 }
 on ^*:DEOWNER:#: {
   haltdef
-  $report(DeOwnerp,$nick,$chan,$opnick,$1-).chan
+  $report(DeOwner,$nick,$chan,$opnick,$1-).chan
   IF (status !isin $window($active)) { $report(DeOwner,$nick,$chan,$opnick,$1-).status }
   halt
 }
@@ -578,10 +590,15 @@ on ^*:DEHELP:#: {
 on ^*:SERVERMODE:#: {
   haltdef
   .echo -t # $sys $report(ServerMode,$nick,$chan,$null,$1-)
-  IF (status !isin $window($active)) { $report(ServerMode,$nick,$chan,$null,$1-).status }
+  if (status !isin $window($active)) { $report(ServerMode,$nick,$chan,$null,$1-).status }
   halt
 }
-on *:SERVEROP:#: { $report(SERVEROP,$1-).status }
+on ^*:SERVEROP:#: {
+  haltdef
+  $report(SERVEROP,$nick,$null,Just op'ed,$opnick).active
+  if (status !isin $window($active)) { $report(SERVEROP,$nick,$null,Just op'ed,$opnick).status }
+  halt
+}
 on ^*:RAWMODE:#: {
   haltdef
   $report(RawMode,$nick,$chan,$2,$1-).chan

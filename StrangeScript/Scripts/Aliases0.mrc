@@ -2,6 +2,7 @@
 /ver return 10S04trange10S04cript10[v157.45.01.14.202310]
 /myver say $fullver
 /mytopic topic # $fullver
+brag say This system gets to pick from a collection of $findfile($songdir,*.*,0) Songs
 /key {
   ;1=network/value 2=key
   set %tmp.fold Text\ScriptInfo.ini
@@ -244,11 +245,11 @@ Key.reads {
 }
 /notice {
   if ($1 == $null) { $report(StrangeScript,Notice,Error,$null,Nothing to do here. No channel or user destination or message).active | halt }
-  if ($chr(35) !isin $1) {
+  if ( $chr(35) !isin $1 ) {
     set %tmp.n #
     set %tmp.m $1-
   }
-  if ($chr(35) isin $1) {
+  if ( $chr(35) isin $1 ) {
     set %tmp.n $1
     set %tmp.m $2-
   }

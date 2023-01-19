@@ -170,3 +170,6 @@ raw 315:*: {
   }
 }
 #sswho end
+alias center.server {
+
+}
