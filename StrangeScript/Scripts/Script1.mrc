@@ -4,6 +4,10 @@
 ;    IF (status !isin $window($active)) { $report(Raw,ALL,$numeric,$nick,$chan,$1-).status }
 ;   halt
 ;}
+on  *:OPTIONS: {
+    $report(Reload,$null,$null,The config file has been reloaded).active
+    if (status !isin $window($active)) { $report(Reload,$null,$null,The config file has been reloaded).status }
+}
 raw 366:*: {
   haltdef
   if ($me ison $2) && (%speed. [ $+ [ $2 ] ] != $null) {
@@ -29,7 +33,7 @@ on ^*:TEXT:*:#: {
 on *:ERROR:*: {
   haltdef
   $report(Received Error,$nick,$chan,From server,reported as follows,$1-).active
-  IF (status !isin $window($active)) { $report(Received Error,$nick,$chan,From server,reported as follows,$1-).status }
+  if (status !isin $window($active)) { $report(Received Error,$nick,$chan,From server,reported as follows,$1-).status }
   halt
 }
 on ^*:QUIT: {

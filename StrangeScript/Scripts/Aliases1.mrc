@@ -177,21 +177,21 @@ chain {
   }
   ; Nick Ident
   if ($key($network,$me) != $null) {
-    $report(StrangeScript,Auto-Identify,$null,$key($network,auto.ident),You are being Auto-Identified using,$key($network,$me)).active
-    if (status !isin $window($active)) { $report(StrangeScript,Auto-Identify,$null,$key($network,auto.ident),You are being Auto-Identified using,$key($network,$me)).status }
+    $report(Auto-Identify,$null,$key($network,auto.ident),You are being Auto-Identified using,$key($network,$me)).active
+    if (status !isin $window($active)) { $report(Auto-Identify,$null,$key($network,auto.ident),You are being Auto-Identified using,$key($network,$me)).status }
     .timerANIdent $+ $network 1 2 /nickserv IDENTIFY $key($network,$me)
   }
   ; Chan Ident
   if ($network == IRCgo) || ($network != Rizon) || ($network == HumanNet) {
-    $report(StrangeScript,Auto-Identify,$null,$network,Skipping room identify on this network.).active
-    IF (status !isin $window($active)) { $report(StrangeScript,Auto-Identify,$null,$network,Skipping room identify on this network.).active }
+    $report(Auto-Identify,$null,$network,Skipping room identify on this network.).active
+    IF (status !isin $window($active)) { $report(Auto-Identify,$null,$network,Skipping room identify on this network.).status }
+    unset %tmp.idc
+    .timerFAI $+ $network 1 2 /upme
     return
   }
   set %tmp.idc 1
   while (%tmp.idc <=  $gettok($key($network,auto.join.rooms),0,44)) {
-    if ($network != freenode) && ($network != Libera.Chat) && ($network != Libera) {
-      .timerACIdent $+ $network $+ $gettok($key($network,auto.join.rooms),%tmp.idc,44) 1 %tmp.idc /chanserv identify $gettok($key($network,auto.join.rooms),%tmp.idc,44) $key($network,$gettok($key($network,auto.join.rooms),%tmp.idc,44) $+ -pass)
-    }
+    .timerACIdent $+ $network $+ $gettok($key($network,auto.join.rooms),%tmp.idc,44) 1 %tmp.idc chanserv identify $gettok($key($network,auto.join.rooms),%tmp.idc,44) $key($network,$gettok($key($network,auto.join.rooms),%tmp.idc,44) $+ -pass)
     inc %tmp.idc
     if (%tmp.idc > $gettok($key($network,auto.join.rooms),0,44)) { break }
   }
@@ -201,13 +201,13 @@ chain {
 }
 /idchan {
   if ($network == IRCgo) || ($network != Rizon) || ($network == HumanNet) {
-    $report(StrangeScript,Auto-Identify,$null,$network,Skipping room identify on this network.).active
-    IF (status !isin $window($active)) { $report(StrangeScript,Auto-Identify,$null,$network,Skipping room identify on this network.).active }
+    $report(Auto-Identify,$null,$network,Skipping room identify on this network.).active
+    IF (status !isin $window($active)) { $report(Auto-Identify,$null,$network,Skipping room identify on this network.).status }
     return
   }
   set %tmp.idc 1
-  while (%tmp.idc <= $channel(0)) {
-    if ($network != freenode) && ($network != Libera.Chat) { /chanserv identify $channel(%tmp.idc) $key($network,$channel(%tmp.idc) $+ -pass) }
+  while ( %tmp.idc <= $channel(0) ) {
+    chanserv identify $channel(%tmp.idc) $key($network,$channel(%tmp.idc) $+ -pass)
     inc %tmp.idc
     if (%tmp.idc > $channel(0)) { break }
   }

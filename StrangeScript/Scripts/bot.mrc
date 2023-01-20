@@ -32,21 +32,25 @@ alias bot {
     if ($2 == work.chan) {
       if ($3 == $null) { return }
       set %work.chan. [ $+ [ $network ] ] $3
+      $report(SET,$null,Option,$null,$null,$null,work.chan).active
       return
     }
     if ($2 == play.chan) {
       if ($3 == $null) { return }
       set %play.chan. [ $+ [ $network ] ] $3
+      $report(SET,$null,Option,$null,$null,$null,play.chan).active
       return
     }
     if ($2 == bot.nick) {
       if ($3 == $null) { return }
       set %bot.nick. [ $+ [ $network ] ] $3
+      $report(SET,$null,Option,$null,$null,$null,bot.nick).active      
       return
     }
     if ($2 == bot.pass) {
       if ($3 == $null) { return }
       set %bot.pass. [ $+ [ $network ] ] $3
+      $report(SET,$null,Option,$null,$null,$null,bot.pass).active
       return
     }
     if ($2 == say.value) {
