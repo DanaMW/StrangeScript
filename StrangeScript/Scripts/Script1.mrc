@@ -4,10 +4,7 @@
 ;    IF (status !isin $window($active)) { $report(Raw,ALL,$numeric,$nick,$chan,$1-).status }
 ;   halt
 ;}
-on  *:OPTIONS: {
-    $report(Reload,$null,$null,The config file has been reloaded).active
-    if (status !isin $window($active)) { $report(Reload,$null,$null,The config file has been reloaded).status }
-}
+on  *:OPTIONS: { $report(Reload,$null,$null,The config files have been reloaded).active }
 raw 366:*: {
   haltdef
   if ($me ison $2) && (%speed. [ $+ [ $2 ] ] != $null) {
