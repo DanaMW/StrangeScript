@@ -1,8 +1,15 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v157.46.01.20.202310]
+/ver return 10S04trange10S04cript10[v157.47.01.22.202310]
 /myver say $fullver
 /mytopic topic # $fullver
 /brag say This system gets to pick from a local collection of $findfile($songdir,*.*,0) Songs
+/cls {
+  if ($1 == $null) { clear # }
+  else {
+    if ($chr(35) !isin $1) { return }
+    clear $1
+  }
+}
 /key {
   ;1=network/value 2=key
   set %tmp.fold Text\ScriptInfo.ini

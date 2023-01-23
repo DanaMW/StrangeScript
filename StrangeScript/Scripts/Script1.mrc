@@ -571,6 +571,7 @@ on ^*:VOICE:#: {
 }
 on ^*:DEVOICE:#: {
   haltdef
+  if ( $vnick == $me ) { .timer 1 5 mode # +v $me }
   $report(DeVoice,$nick,$chan,$vnick,$1-).chan
   IF (status !isin $window($active)) { $report(DeVoice,$nick,$chan,$vnick,$1-).status }
   halt
