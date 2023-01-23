@@ -113,24 +113,24 @@ on ^*:KICK:#: {
 on ^*:ACTION:*:#: {
   haltdef
   if ( $chr(35) isin $1 ) {
-    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
-    if (status !isin $window($active)) { echo $color(action) -st $sys $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
+    echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
+    if (status !isin $window($active)) { echo $color(action) -st $sys $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
   }
   else {
-    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
-    if (status !isin $window($active)) { echo $color(action) -st $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
+    echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
+    if (status !isin $window($active)) { echo $color(action) -st $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
   }
   halt
 }
 on ^*:ACTION:*:?: {
   haltdef
   if ( $chr(35) isin $1 ) {
-    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
-    if (status !isin $window($active)) { echo $color(action) -st $sys $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
+    echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
+    if (status !isin $window($active)) { echo $color(action) -st $sys $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
   }
   else {
-    echo $color(action) -at $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
-    IF (status !isin $window($active)) { echo $color(action) -st $sysp $+ $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
+    echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
+    IF (status !isin $window($active)) { echo $color(action) -st $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
   }
   halt
 }
@@ -221,12 +221,12 @@ on ^*:NOTICE:*:*: {
     if (*IDENTIFY* iswm $1-) { /idchan }
   }
   if ($chan == $null) {
-    echo $color(notice) -at $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
-    IF (status !isin $window($active)) { echo $color(notice) -st $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
+    echo $color(notice) -at $sys $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
+    IF (status !isin $window($active)) { echo $color(notice) -st $sys $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
   }
   if ($chan != $null) {
-    echo $color(notice) -at $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1-
-    IF (status !isin $window($active)) { echo $color(notice) -st $sys $+ $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1- }
+    echo $color(notice) -at $sys $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1-
+    IF (status !isin $window($active)) { echo $color(notice) -st $sys $report(NOTICE) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $1- }
   }
   halt
 }
