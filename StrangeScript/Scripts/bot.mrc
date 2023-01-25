@@ -19,17 +19,12 @@ alias bot {
     sockclose *
     return
   }
-  if ($1 == WRITE) {
-    set %say.value $2-
-    set %say.trigger 1
-    return
-  }
   if ($1 == SET) {
     if ($2 == bot.disp) {
       if ($3 != $null) {
         if ($3 == CHANNEL) || ($3 == MESSAGE) || ($3 == WINDOW) { set %bot.disp $3 | return }
         $report(Bot,Set,bot.disp,Error,Use:/bot set bot.disp CHANNEL/MESSAGE/WINDOW).active
-        return      
+        return
       }
       return
     }
@@ -48,7 +43,7 @@ alias bot {
     if ($2 == bot.nick) {
       if ($3 == $null) { return }
       set %bot.nick. [ $+ [ $network ] ] $3
-      $report(SET,Option,$null,$null,bot.nick,%bot.nick. [ $+ [ $network ] ]).active      
+      $report(SET,Option,$null,$null,bot.nick,%bot.nick. [ $+ [ $network ] ]).active
       return
     }
     if ($2 == bot.pass) {
@@ -123,27 +118,54 @@ alias bot {
     else { sockwrite -n Bot* part $2 $cr join $2 }
     return
   }
+  if ($1 == SAY) {
+    if ($2 == $null) {
+      sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] :Nothing to say. Ending.
+      return
+    }
+    else {
+      sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] : $+ $2-
+      return
+    }
+  }
   if ($1 == WRITE) {
-    if ($2 == $null) { 
-    sockwrite -n Bot* privmsg %work.chan [ $+ [ $network ] ] :Nothing sent to write. Ending. }
+    if ($2 == $null) {
+      sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] :Nothing sent to write. Ending.
+      return
+    }
+    else {
+      sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] : $+ $2-
+      return
+    }
+    $report(Bot,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, JOIN, PART, CYCLE, SHOW, SEND).active
     return
   }
-  else {
-    sockwrite -n Bot* $2-
-    return  
-  }
-  $report(Bot,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, JOIN, PART, CYCLE, SHOW, SEND).active
-  return
 }
 alias bot.disp {
-  if ($1 == $null) || ($1 == CHANNEL) { 
+  if ($1 == $null) || ($1 == CHANNEL) {
     set %bot.disp CHANNEL
-    $report(SET,Option,$null,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
+    $report(SET,Option,$null,bot.disp,%bot.disp).active
+    return
   }
-  if ($2 == 
-  if (%bot.disp == CHANNEL) { return sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] : $+  }
-  if (%bot.disp == MESSAGE) { return sockwrite -n Bot* privmsg $me : $+  }
-  if (%bot.disp == WINDOW) { return sockwrite -n Bot* privmsg %tmp.window : $+  }
+  if ($1 == MESSAGE) {
+    if ($1 != $null) {
+      set %bot.disp MESSAGE
+      $report(SET,Option,$null,bot.disp,%bot.disp).active
+      return
+    }
+  }
+  if ($1 == WINDOW) {
+    if ($1 != $null) {
+      set %bot.disp WINDOW
+      $report(SET,Option,$null,bot.disp,%bot.disp).active
+      return
+    }
+  }
+}
+alias bdMethod {
+  if (%bot.disp == CHANNEL) { return sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] : $+ }
+  if (%bot.disp == MESSAGE) { return sockwrite -n Bot* privmsg $me : $+ }
+  if (%bot.disp == WINDOW) { return sockwrite -n Bot* privmsg %tmp.window : $+ }
 }
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
@@ -155,7 +177,7 @@ on 1:SOCKOPEN:Bot*:{
     .timer 1 5 sockwrite -n $sockname identify $me %bot.pass. [ $+ [ $network ] ]
     .timer 1 6 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n $sockname join %work.chan. [ $+ [ $network ] ]
-    $bot.disp sockname is now open and set
+    $bot.disp $sockname is now open and set
     return
   }
   if ($sockname == BotDalNet) {
@@ -165,7 +187,7 @@ on 1:SOCKOPEN:Bot*:{
     if (%bot.pass !=$null) { .timer 1 5 sockwrite -n $sockname identify %bot.pass. $+ $network }
     .timer 1 6 sockwrite -n $sockname join %work.chan. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n $sockname join %work.chan. [ $+ [ $network ] ]
-    $bot.disp sockname is now open and set
+    $bot.disp $sockname is now open and set
   }
   else {
     ;sockwrite -n $sockname user $remove(%bot.nick. [ $+ [ $network ] ],`) $remove(%bot.nick. [ $+ [ $network ] ],`) $remove(%bot.nick. [ $+ [ $network ] ],`) $remove(%bot.nick. [ $+ [ $network ] ],`)
@@ -215,7 +237,7 @@ on 1:SOCKREAD:Bot*:{
   if ($gettok(%Bot.readline,2,32) == MODE) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Mode $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,4-,32),:) on $remove($gettok(%Bot.readline,3,32),:) }
   if ($gettok(%Bot.readline,2,32) == PRIVMSG) {
     ;if *-bc cycle*
-    ;
+    ;`
     ;Ctcp Handling
     ;
     if ($left($remove($gettok(%Bot.readline,4-,32),:),1) == $chr(1)) {

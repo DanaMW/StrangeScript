@@ -285,11 +285,11 @@ chain {
   var %temp.away1 = $calc($gettok(%temp.away.variables,2,44) - $gettok($key($network,away.variables),2,44))
   .raw away
   .nick $gettok($key($network,away.variables),3,44)
-  ;echo -at $sys $report(Is Back) $report($null,$null,From:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44)) $report($null,$null,Was Gone:,$duration(%temp.away1))
+  echo -at $sys $report(Is Back) $report($null,$null,From:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44)) $report($null,$null,Was Gone:,$duration(%temp.away1))
   ;
   ; Switch above below for silence
   ;
-  ame $report(Is Back) $report($null,$null,From:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44)) $report($null,$null,Was Gone:,$duration(%temp.away1))
+  ;ame $report(Is Back) $report($null,$null,From:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44)) $report($null,$null,Was Gone:,$duration(%temp.away1))
   .timeraway. $+ $network OFF
   .keywrite $network away.iam OFF
   return
@@ -315,11 +315,11 @@ chain {
   if ($1- != $null) { keywrite StrangeScript away.message $hex.ini($1-) }
   keywrite $network away.variables $time $+ , $+ $ctime $+ , $+ $remove($me,$key(StrangeScript,away.nick.add))
   .nick $remove($me,$key(StrangeScript,away.nick.add)) $+ $key(StrangeScript,away.nick.add)
-  ;echo -at $sys $report(Went Away) $report($null,$null,Reason:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44))
+  echo -at $sys $report(Went Away) $report($null,$null,Reason:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44))
   ;
   ; Switch above below for silence
   ;
-  ame $report(Went Away) $report($null,$null,Reason:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44))
+  ;ame $report(Went Away) $report($null,$null,Reason:,$unhex.ini($key(StrangeScript,away.message))) $report($null,$null,Left:,$gettok($key($network,away.variables),1,44))
   .raw away : $+ $replace($unhex.ini($key(StrangeScript,away.message)),$chr(32),$chr(160))
   .timeraway. $+ $network 0 $key(StrangeScript,away.remind) /away REMIND
   keywrite $network away.iam ON

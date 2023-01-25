@@ -5,6 +5,8 @@
 ;   halt
 ;}
 on  *:OPTIONS: { $report(Reload,$null,$null,The config files have been reloaded).active }
+;RAW *:*: { $report(RAW TEST,$event,$numeric,$rawmsg).active }
+;MOTD
 raw 366:*: {
   haltdef
   if ($me ison $2) && (%speed. [ $+ [ $2 ] ] != $null) {
@@ -14,6 +16,174 @@ raw 366:*: {
   }
   return
 }
+raw 1:*:{ $report(Server Info,$null,$3-).active | halt }
+raw 2:*:{ $report(Server Info,$null,$3-).active | halt }
+raw 3:*:{ $report(Server Info,$null,$3-).active | halt }
+raw 4:*:{ $report(Server Info,$null,$3-).active | halt }
+raw 5:*:{ $report(Server Info,$null,$3-).active | halt }
+raw 8:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 372:*:{ if ($3 == $null) { halt } | $report(MOTD,$null,$null,$null,$3-).active | halt }
+raw 375:*:{ if ($3 == $null) { halt } | $report(MOTD,$null,$null,$null,$3-).active | halt }
+raw 376:*:{ if ($3 == $null) { halt } | $report(MOTD,$null,$null,$null,$3-).active | halt }
+;Notify-Watch info
+raw 603:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+raw 605:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+raw 606:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+raw 607:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+raw 318:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+raw 319:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+raw 307:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+raw 312:*:{ $report(Watch Info,$null,$null,$2-).active | halt }
+;Server Information
+;freenode whois info
+raw 317:*:{ $report(WhoIs,$2,$3-).active | halt }
+raw 330:*:{ $report(WhoIs,$3,is logged in as,$2).active | halt }
+raw 671:*:{ $report(StrangeScript,$null,$null,$2-).active | halt }
+raw 742:*:{ $report(StrangeScript,$1,$2,$3-).active | halt }
+raw 303:*:{ if ($key(StrangeScript,pingpong.show) == ON) { $report($null,Watch Info,$null,$2,is ONLINE).status } | halt }
+raw 328:*:{ echo -t $2 $sys $report(Channel URL,$2,Set By:,$1,$3-) | halt }
+raw 290:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 292:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 221:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 320:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 251:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 252:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 253:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 254:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 255:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 265:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 266:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 305:*:{ $report(Back,$1,$null,$2-).active | halt }
+raw 306:*:{ $report(Away,$1,$null,$2-).active | halt }
+raw 432:*:{ $report(Nick,$null,Failed,$2-).active | halt }
+raw 433:*:{ $report(Nick,$2,Failed,$3-).active | idnick | halt }
+raw 440:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 502:*:{ $report(Server Info,$null,$null,$2-).active | halt }
+raw 324:*:{ echo -t $2 $sys $report($1,$2,$3-) | halt }
+raw 329:*:{
+  if ($network == freenode) {
+    echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
+    halt
+  }
+  if ($network == Libera.Chat) {
+    echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
+    halt
+  }
+  else {
+    echo -t $2 $sys $report($null,Spawn Info,Room was spawned,$null,$convert.unix($calc($3 - 28800)))
+    halt
+  }
+}
+;
+raw 335:*:{ $report($1-).active | halt }
+raw 310:*:{ $report($2,$null,$null,$3 $4 $5,$6-).active | halt }
+raw 378:*:{ $report($2,$null,$null,$3 $4 $5,$6-).active | halt }
+raw 379:*:{ $report($2,$null,$null,$3 $4 $5,$6-).active | halt }
+raw 341:*:{ $report(Invite,Success,$2,has been invited to $3).active | halt }
+raw 443:*:{ $report(Invite,Failed,$2,Already on $3).active | halt }
+raw 518:*:{ $report(Invite,Failed,$2 $3,$4,$5,$6-).active | halt }
+raw 471:*:{ $report(Join,Failed,Cant join $2,Room Limit Exceded).active | halt }
+raw 473:*:{ $report(Join,Failed,Cant join $2,Invite Only).active | $report(Try to use ChanServ to auto invite you.).active | .timer 1 5 chanserv invite $2 $me | halt }
+raw 474:*:{ $report(Join,Failed,Cant join $2,Banned IP).active | halt }
+raw 475:*:{ $report(Join,Failed,Cant join $2,Wrong Member Key).active | halt }
+raw 477:*:{ $report(Join,Failed,Cant join $2,Need Registered Nick).active | halt }
+raw 404:*:{ $report(Server,Failed,$2,Can Not Send To Channel).active | halt }
+raw 412:*:{ $report(Server,Failed,$null,No Text To Send).active | halt }
+raw 441:*:{ $report(Server,Failed,$2,User Not On Channel).active | halt }
+raw 442:*:{ $report(Server,Failed,$2,Your Not On Channel).active | halt }
+raw 403:*:{ $report(Server,Failed,$2,No Such Channel).active | halt }
+raw 407:*:{ $report(Server,Failed,$null,Too Many Targets).active | halt }
+raw 381:*:{ $report(Server,Success,$null,$1-).active | halt }
+raw 352:*: {
+  $report(StrangeScript,$null,$null,$null,$1-).active
+  if (status !isin $window($active)) { $report(StrangeScript,$null,$null,$null,$1-).status }
+  inc %tempa
+  set %user $+ %tempa $strip($3)
+  set %host $+ %tempa $strip($4)
+  set %server $+ %tempa $strip($5)
+  set %handle $+ %tempa $strip($6-)
+  halt
+}
+raw 438:*: {
+  haltdef
+  set %temp.nick.change $2
+  $report(Nick Change,Time Wait,$null,Your nick will be auto changed in,$9, Seconds).status
+  .timerNick. $+ $network 1 $9 /nick %temp.nick.change
+  .timerNC. $+ $network 1 $9 $report(Nick Change,$null,$null,Auto-Changing your NickName to,%temp.nick.change).status
+}
+raw 401:*: {
+  haltdef
+  $report(Server,Error,No Such Nick,$2).active
+  if (status !isin $window($active)) { $report(Server,Error,No Such Nick,$2).status }
+  halt
+}
+RAW 421:*: {
+  haltdef
+  if ( *Lag-CK* iswm $2 ) {
+    var %lag.mrc.tmp = $null
+    var %tmp.lag = $calc($ticks - $gettok($2,2,160))
+    if ($len(%tmp.lag) < 3) { keywrite $network Lagmrc .0 $+ %tmp.lag secs }
+    elseif ($len(%tmp.lag) = 3) { keywrite $network Lagmrc . $+ %tmp.lag secs }
+    elseif ($len(%tmp.lag) = 4) { keywrite $network Lagmrc $left(%tmp.lag,1) $+ . $+ $right(%tmp.lag,-1) secs }
+    elseif ($len(%tmp.lag) = 5) { keywrite $network Lagmrc $left(%tmp.lag,1) $+ . $+ $right(%tmp.lag,-1) secs }
+    elseif ($len(%tmp.lag) > 5) { keywrite $network Lagmrc ERROR }
+    if (%lag.mrc.tmp != $null) { lag.warn $gettok(%Lag.mrc,1,46) }
+    mybar
+    halt
+  }
+  echo -at $sys $report(Server Error) $report($null,The command,$2) $report($null,is an,$3-)
+  if (status !isin $window($active)) { echo -st $sys $report(Server Error) $report($null,The command,$2) $report($null,is an,$3-) }
+  halt
+}
+raw 311:*: {
+  $report(IDENT,$null,$null,$null,$2-).active
+  if (status !isin $window($active)) { $report(IDENT,$null,$null,$null,$2-).status }
+  halt
+}
+raw 315:*: {
+  haltdef
+  $report($1-).active
+  $report($1-).status
+  updatenl
+  :sswholoop
+  $report(Info $+ %tempb,$null,$null,%handle [ $+ [ %tempb ] ] %user [ $+ [ %tempb ] ]  $+ @ $+ %host [ $+ [ %tempb ] ]).active
+  $report(Server,$null,$null,%server [ $+ [ %tempb ] ]).active
+  if (%tempb >= %tempa) {
+    $report($null,$null,Done).active
+    $report($chain).active
+    unset %handle* %user* %server* %host* %temp*
+    .disable #sswho
+    halt
+  }
+  else { inc %tempb | goto sswholoop }
+  aline @UserInfo $sys $highcol $+ Who Reply number $white $+ %tempb 
+  aline @UserInfo $sys $lowcol $+ Info: $highcol $+ %handle [ $+ [ %tempb ] ] %user [ $+ [ %tempb ] ]  $+ @ $+ %host [ $+ [ %tempb ] ]
+  aline @UserInfo $sys $lowcol $+ Server: $highcol $+ %server [ $+ [ %tempb ] ]
+  if (%tempb >= %tempa) {
+    aline @UserInfo $sys $bright $+ Done
+    aline @UserInfo $sys $+ $chain
+    unset %handle* %user* %server* %host* %temp*
+    .disable #sswho
+    halt
+  }
+  else { inc %tempb | goto sswholoop }
+  else {
+    $report(Who Reply,$null,number,%tempb).status
+    $report(Handle,$null,$null,%handle [ $+ [ %tempb ] ] %user [ $+ [ %tempb ] ]  $+ @ $+ %host [ $+ [ %tempb ] ] ).status
+    $report(Serve,$null,$null,%server [ $+ [ %tempb ] ] ).status
+    if (%tempb >= %tempa) {
+      $report(Done).status
+      $report($chain).status
+      unset %handle* %user* %server* %host* %temp*
+      .disable #sswho
+      halt
+    }
+    else {  inc %tempb | goto sswholoop }
+  }
+}
+;
+;
+;
 on *:INPUT:#: {
   if (/* !iswm $1) {
     haltdef
@@ -115,6 +285,7 @@ on ^*:ACTION:*:#: {
   if ( $chr(35) isin $1 ) {
     echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
     if (status !isin $window($active)) { echo $color(action) -st $sys $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
+    halt
   }
   else {
     echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
@@ -127,81 +298,13 @@ on ^*:ACTION:*:?: {
   if ( $chr(35) isin $1 ) {
     echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2-
     if (status !isin $window($active)) { echo $color(action) -st $sys $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick 10 $+ $chr(91) $+  $bright $+ $chan 10 $+ $chr(93)  $+ 14 $+ $rrr  $2- }
+    halt
   }
   else {
     echo $color(action) -at $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1-
     IF (status !isin $window($active)) { echo $color(action) -st $sysp $report( 13Action) $+ :  $+ 14 $+ $lll $+ $white $nick  $+ 14 $+ $rrr  $1- }
   }
   halt
-}
-RAW 421:*: {
-  haltdef
-  if (*Lag-CK* iswm $2) {
-    var %lag.mrc.tmp = $null
-    var %tmp.lag = $calc($ticks - $gettok($2,2,160))
-    if ($len(%tmp.lag) < 3) { keywrite $network Lagmrc .0 $+ %tmp.lag secs }
-    elseif ($len(%tmp.lag) = 3) { keywrite $network Lagmrc . $+ %tmp.lag secs }
-    elseif ($len(%tmp.lag) = 4) { keywrite $network Lagmrc $left(%tmp.lag,1) $+ . $+ $right(%tmp.lag,-1) secs }
-    elseif ($len(%tmp.lag) = 5) { keywrite $network Lagmrc $left(%tmp.lag,1) $+ . $+ $right(%tmp.lag,-1) secs }
-    elseif ($len(%tmp.lag) > 5) { keywrite $network Lagmrc ERROR }
-    if (%lag.mrc.tmp != $null) { lag.warn $gettok(%Lag.mrc,1,46) }
-    mybar
-    halt
-  }
-  $report(Server,421,Error,Sorry,the command,$2,is an,$3-,to me.).active
-  IF (status !isin $window($active)) { $report(Server,421,Error,Sorry,the command,$2,is an,$3-,to me.).status }
-}
-raw 352:*: {
-  inc %tempa
-  set %user $+ %tempa $strip($3)
-  set %host $+ %tempa $strip($4)
-  set %server $+ %tempa $strip($5)
-  set %handle $+ %tempa $strip($6-)
-}
-raw 311:*: {
-  $report(IDENT,311,$null,$null,$2-).active
-  IF (status !isin $window($active)) { $report(IDENT,311,$null,$null,$2-).status }
-  halt
-}
-raw 315:*: {
-  haltdef
-  $report(315,$1-).status
-  updatenl
-  :sswholoop
-  $report(Info $+ %tempb,$null,$null,%handle [ $+ [ %tempb ] ] %user [ $+ [ %tempb ] ]  $+ @ $+ %host [ $+ [ %tempb ] ]).active
-  $report(Server,$null,$null,%server [ $+ [ %tempb ] ]).active
-  if (%tempb >= %tempa) {
-    $report($null,$null,Done).active
-    $report($chain).active
-    unset %handle* %user* %server* %host* %temp*
-    .disable #sswho
-    halt
-  }
-  else { inc %tempb | goto sswholoop }
-  aline @UserInfo $sys $highcol $+ Who Reply number $white $+ %tempb 
-  aline @UserInfo $sys $lowcol $+ Info: $highcol $+ %handle [ $+ [ %tempb ] ] %user [ $+ [ %tempb ] ]  $+ @ $+ %host [ $+ [ %tempb ] ]
-  aline @UserInfo $sys $lowcol $+ Server: $highcol $+ %server [ $+ [ %tempb ] ]
-  if (%tempb >= %tempa) {
-    aline @UserInfo $sys $bright $+ Done
-    aline @UserInfo $sys $+ $chain
-    unset %handle* %user* %server* %host* %temp*
-    .disable #sswho
-    halt
-  }
-  else { inc %tempb | goto sswholoop }
-  else {
-    $report(Who Reply,$null,number,%tempb).status
-    $report(Handle,$null,$null,%handle [ $+ [ %tempb ] ] %user [ $+ [ %tempb ] ]  $+ @ $+ %host [ $+ [ %tempb ] ] ).status
-    $report(Serve,$null,$null,%server [ $+ [ %tempb ] ] ).status
-    if (%tempb >= %tempa) {
-      $report(Done).status
-      $report($chain).status
-      unset %handle* %user* %server* %host* %temp*
-      .disable #sswho
-      halt
-    }
-    else {  inc %tempb | goto sswholoop }
-  }
 }
 on ^*:SNOTICE:*:{
   haltdef
@@ -243,41 +346,6 @@ on ^*:INVITE:#: {
   if (status !isin $window($active)) { $report(Invite,$nick,$null,has just invited you to,$chan).status }
   halt
 }
-raw 421:*: {
-  haltdef
-  $report(Server,421,Error,Sorry,the command,$2,is an,$3-,to me.).active
-  IF (status !isin $window($active)) { $report(Server,421,Error,Sorry,the command,$2,is an,$3-,to me.).status }
-  halt
-}
-raw 352:*: {
-  $report(StrangeScript,352,$null,$null,$1-).active
-  IF (status !isin $window($active)) { $report(StrangeScript,352,$null,$null,$1-).status }
-  halt
-}
-raw 315:*: {
-  $report(StrangeScript,315,$null,$null,$1-).active
-  IF (status !isin $window($active)) { $report(StrangeScript,315,$null,$null,$1-).status }
-  ;haltdef
-  ;updatenl
-  ;%copdisplay $sys $bright $+ Done
-  ;%copdisplay $sys $+ $chain
-  ;unset %copdisplay
-  ;.disable #opscan
-  halt
-}
-raw 438:*: {
-  haltdef
-  set %temp.nick.change $2
-  $report(Nick Change,Time Wait,$null,Your nick will be auto changed in,$9, Seconds).status
-  .timerNick. $+ $network 1 $9 /nick %temp.nick.change
-  .timerNC. $+ $network 1 $9 $report(Nick Change,$null,$null,Auto-Changing your NickName to,%temp.nick.change).status
-}
-raw 401:*: {
-  haltdef
-  $report(Server,401,Error,No Such Nick,$2).active
-  unset %handle
-  halt
-}
 on ^*:NOTIFY: {
   if ($key(StrangeScript,script.sounds) == ON) { script.play invite.wav }
   $report(NotifyOn,$nick,$null,is now online,$null).active
@@ -289,90 +357,6 @@ on 1:UNOTIFY: {
   $report(NotifyOff,$nick,is now offline).active
   IF (status !isin $window($active)) { $report(NotifyOff,$nick,is now offline).status }
 }
-;RAW *:*: { $report(RAW TEST,$event,$numeric,$rawmsg).active }
-;MOTD
-raw 372:*:{ if ($3 == $null) { halt } | $report(MOTD,372,$null,$null,$null,$3-).active | halt }
-raw 375:*:{ if ($3 == $null) { halt } | $report(MOTD,375,$null,$null,$null,$3-).active | halt }
-raw 376:*:{ if ($3 == $null) { halt } | $report(MOTD,376,$null,$null,$null,$3-).active | halt }
-;Notify-Watch info
-raw 603:*:{ $report(603,Watch Info,$null,$null,$2-).active | halt }
-raw 605:*:{ $report(605,Watch Info,$null,$null,$2-).active | halt }
-raw 606:*:{ $report(606,Watch Info,$null,$null,$2-).active | halt }
-raw 607:*:{ $report(607,Watch Info,$null,$null,$2-).active | halt }
-raw 318:*:{ $report(318,Watch Info,$null,$null,$2-).active | halt }
-raw 319:*:{ $report(319,Watch Info,$null,$null,$2-).active | halt }
-raw 307:*:{ $report(307,Watch Info,$null,$null,$2-).active | halt }
-raw 312:*:{ $report(312,Watch Info,$null,$null,$2-).active | halt }
-;Server Information
-raw 1:*:{ $report(1,Server Info,$null,$3-).active | halt }
-raw 2:*:{ $report(2,Server Info,$null,$3-).active | halt }
-raw 3:*:{ $report(3,Server Info,$null,$3-).active | halt }
-raw 4:*:{ $report(4,Server Info,$null,$3-).active | halt }
-raw 5:*:{ $report(5,Server Info,$null,$3-).active | halt }
-;freenode whois info
-raw 317:*:{ $report(317,WhoIs,$2,$3-).active | halt }
-raw 330:*:{ $report(330,WhoIs,$3,is logged in as,$2).active | halt }
-raw 671:*:{ $report(671,StrangeScript,$null,$null,$2-).active | halt }
-raw 742:*:{ $report(742,StrangeScript,$1,$2,$3-).active | halt }
-raw 303:*:{
-  if ($key(StrangeScript,pingpong.show) == ON) { $report($null,Watch Info,$null,$2,is ONLINE).status }
-  halt
-}
-raw 328:*:{ echo -t $2 $sys $report(Channel URL,$2,Set By:,$1,$3-) | halt }
-
-raw 8:*:{ $report(8,Server Info,$null,$null,$2-).active | halt }
-raw 290:*:{ $report(290,Server Info,$null,$null,$2-).active | halt }
-raw 292:*:{ $report(292,Server Info,$null,$null,$2-).active | halt }
-raw 221:*:{ $report(221,Server Info,$null,$null,$2-).active | halt }
-raw 320:*:{ $report(320,Server Info,$null,$null,$2-).active | halt }
-raw 251:*:{ $report(251,Server Info,$null,$null,$2-).active | halt }
-raw 252:*:{ $report(252,Server Info,$null,$null,$2-).active | halt }
-raw 253:*:{ $report(253,Server Info,$null,$null,$2-).active | halt }
-raw 254:*:{ $report(254,Server Info,$null,$null,$2-).active | halt }
-raw 255:*:{ $report(255,Server Info,$null,$null,$2-).active | halt }
-raw 265:*:{ $report(265,Server Info,$null,$null,$2-).active | halt }
-raw 266:*:{ $report(266,Server Info,$null,$null,$2-).active | halt }
-raw 305:*:{ $report(305,Back,$1,$null,$2-).active | halt }
-raw 306:*:{ $report(306,Away,$1,$null,$2-).active | halt }
-raw 432:*:{ $report(432,Nick,$null,Failed,$2-).active | halt }
-raw 433:*:{ $report(433,Nick,$2,Failed,$3-).active | idnick | halt }
-raw 440:*:{ $report(440,Server Info,$null,$null,$2-).active | halt }
-raw 502:*:{ $report(502,Server Info,$null,$null,$2-).active | halt }
-raw 324:*:{ echo -t $2 $sys $report(324,$1,$2,$3-) | halt }
-raw 329:*:{
-  if ($network == freenode) {
-    echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
-    halt
-  }
-  if ($network == Libera.Chat) {
-    echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
-    halt
-  }
-  else {
-    echo -t $2 $sys $report($null,Spawn Info,Room was spawned,$null,$convert.unix($calc($3 - 28800)))
-    halt
-  }
-}
-;
-raw 335:*:{ $report(335,$1-).active | halt }
-raw 310:*:{ $report($2,$null,$null,$3 $4 $5,$6-).active | halt }
-raw 378:*:{ $report($2,$null,$null,$3 $4 $5,$6-).active | halt }
-raw 379:*:{ $report($2,$null,$null,$3 $4 $5,$6-).active | halt }
-raw 341:*:{ $report(Invite,Success,$2,has been invited to $3).active | halt }
-raw 443:*:{ $report(Invite,Failed,$2,Already on $3).active | halt }
-raw 518:*:{ $report(Invite,Failed,$2 $3,$4,$5,$6-).active | halt }
-raw 471:*:{ $report(Join,Failed,Cant join $2,Room Limit Exceded).active | halt }
-raw 473:*:{ $report(Join,Failed,Cant join $2,Invite Only).active | $report(Try to use ChanServ to auto invite you.).active | chanserv invite $2 $me | halt }
-raw 474:*:{ $report(Join,Failed,Cant join $2,Banned IP).active | halt }
-raw 475:*:{ $report(Join,Failed,Cant join $2,Wrong Member Key).active | halt }
-raw 477:*:{ $report(Join,Failed,Cant join $2,Need Registered Nick).active | halt }
-raw 404:*:{ $report(Server,Failed,$2,Can Not Send To Channel).active | halt }
-raw 412:*:{ $report(Server,Failed,$null,No Text To Send).active | halt }
-raw 441:*:{ $report(Server,Failed,$2,User Not On Channel).active | halt }
-raw 442:*:{ $report(Server,Failed,$2,Your Not On Channel).active | halt }
-raw 403:*:{ $report(Server,Failed,$2,No Such Channel).active | halt }
-raw 407:*:{ $report(Server,Failed,$null,Too Many Targets).active | halt }
-raw 381:*:{ $report(Server,Success,$null,$1-).active | halt }
 on 1:CLOSE:@RoomKeys:{ haltdef | unset %tmp.keys $report(CLOSE,$1-).status | halt }
 on 1:CONNECT:{
   $report(StrangeScript,Server Connect Event Triggered,$null,$null,$1-).status
@@ -571,7 +555,7 @@ on ^*:VOICE:#: {
 }
 on ^*:DEVOICE:#: {
   haltdef
-  if ( $vnick == $me ) { .timer 1 5 mode # +v $me }
+  if ( $vnick == $me ) { .timer 1 3 mode # +v $me }
   $report(DeVoice,$nick,$chan,$vnick,$1-).chan
   IF (status !isin $window($active)) { $report(DeVoice,$nick,$chan,$vnick,$1-).status }
   halt
