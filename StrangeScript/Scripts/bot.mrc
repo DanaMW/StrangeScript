@@ -137,9 +137,13 @@ alias bot {
       sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] : $+ $2-
       return
     }
-    $report(Bot,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, JOIN, PART, CYCLE, SHOW, SEND).active
+  }
+  if ($1 == QUIT) {
+    sockwrite -n Bot* privmsg quit :See ya
     return
   }
+  $report(Bot,$null,Options,$null,$null,$null,ON, OFF, WRITE, SET, JOIN, PART, CYCLE, SHOW, SEND).active
+  return
 }
 alias bot.disp {
   if ($1 == $null) || ($1 == CHANNEL) {
