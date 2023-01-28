@@ -8,7 +8,6 @@ The original (AdiIRC or mIRC) script - StrangeScript ©1999-2023 Dana L. Meli-Wi
 
 You will find me on:
 DalNet ( irc.dal.net ) in #StrangeScript,#Transend
-IRCgo ( irc.ircgo.org ) in #StrangeScript,#Transend
 Libera.Chat ( irc.Libera.Chat ) in #StrangeScript,#Transend
 
 What we have here is:
