@@ -4,7 +4,9 @@ Transend AdiIrc (new)
 
 ```
 
-The original (AdiIRC or mIRC) script - StrangeScript ©1999-2023 Dana L. Meli-Wischman. I put a bunch of time into this little thing. If you are going to rip out a piece of it which is perfectly okay with me at least drop me a star to let me know you were here, would you?
+The original (AdiIRC or mIRC) script - StrangeScript ©1999-2023 Dana L. Meli-Wischman. 
+I put a bunch of time into this little thing. If you are going to rip out a piece of it 
+which is perfectly okay with me at least drop me a star to let me know you were here.
 
 You will find me on:
 DalNet ( irc.dal.net ) in #StrangeScript,#Transend
