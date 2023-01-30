@@ -26,7 +26,7 @@ to someone. It really does have everything in it, Have fun.
 The original was a mIRC script.
 
 Transend AdiIrc (new)
-Transend AdiIrc - Has it's own repo now.
+Transend AdiIrc - Will have it's own repo.
 
 @author Dana L. Meli-Wischman
 
