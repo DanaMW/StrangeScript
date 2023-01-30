@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v157.49.01.25.202310]
+/ver return 10S04trange10S04cript10[v157.50.01.29.202310]
 /myver say $fullver
 /mytopic topic # $fullver
 /brag say This system gets to pick from a local collection of $findfile($songdir,*.*,0) Songs
@@ -38,7 +38,7 @@
   set %tmp.sq $$?="%tmp.ke3"
   if (%tmp.sq == $null) { return }
   keywrite %tmp.ke1 %tmp.ke2 %tmp.sq
-  $report(StrangeScript,%tmp.ke1,%tmp.ke2,Set to,$key(%tmp.ke1,%tmp.ke2)).active
+  $report(StrangeScript,%tmp.ke1,%tmp.ke2,Set to,$key(%tmp.ke1,%tmp.ke2) ).active
   unset %tmp.ke* %tmp.sq
   return
 }
