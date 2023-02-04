@@ -1,6 +1,5 @@
-# StrangeScript (original)
-# StrangeScript (current)
-Transend AdiIrc (new)
+# StrangeScript SS(old)
+# StrangeScript SS
 
 ```
 
@@ -14,21 +13,18 @@ Libera.Chat ( irc.Libera.Chat ) in #StrangeScript,#Transend
 
 What we have here is:
 
-StrangeScript (current)
+StrangeScript SS
 StrangeScript Current is a trimmed down everything working
 version of the original script converted to run on AdiIrc.
 I am slowly adding things into it from the old one to make
 it more complete.
 
-StrangeScript (original)
+StrangeScript SS(old)
 In strangeScript Original you have the script uploaded the
 COMPLETE and ORIGINAL StrangeScript just the way it was the
 day I parked it. Done in the hopes the code will be useful
 to someone. It really does have everything in it, Have fun.
 The original was a mIRC script.
-
-Transend AdiIrc (new)
-Transend AdiIrc - Will have it's own repo.
 
 @author Dana L. Meli-Wischman
 
