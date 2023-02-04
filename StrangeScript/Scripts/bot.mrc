@@ -174,11 +174,6 @@ alias bot.disp {
     }
   }
 }
-alias bdMethod {
-  if (%bot.disp == CHANNEL) { return sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] : $+ }
-  if (%bot.disp == MESSAGE) { return sockwrite -n Bot* privmsg $me : $+ }
-  if (%bot.disp == WINDOW) { return sockwrite -n Bot* privmsg %tmp.window : $+ }
-}
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
   $report(OPEN,Socket Name,$sockname).active
@@ -189,27 +184,28 @@ on 1:SOCKOPEN:Bot*:{
     .timer 1 5 sockwrite -n $sockname identify $me %bot.pass. [ $+ [ $network ] ]
     .timer 1 6 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n $sockname join %work.chan. [ $+ [ $network ] ]
-    $bot.disp $sockname is now open and set
+    $report($sockname is now open and set).active
     return
   }
   if ($sockname == BotDalNet) {
-    sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ]
-    sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
-    sockwrite -n $sockname user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
-    .timer 1 5 $sockname identify %bot.pass. [ $+ [ $network ] ]    
-    .timer 1 10 sockwrite -n $sockname join %work.chan. [ $+ [ $network ] ]
-    .timer 1 15 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
-    $bot.disp $sockname is now open and set
-    halt
+    sockwrite -n BotDalNet pass %bot.pass. [ $+ [ $network ] ]
+    sockwrite -n BotDalNet nick %bot.nick. [ $+ [ $network ] ]
+    sockwrite -n BotDalNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+    .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]    
+    .timer 1 10 sockwrite -n BotDalNet join %work.chan. [ $+ [ $network ] ]
+    ;.timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
+    $report($sockname is now open and set).active
+    return
   }
   else {
     sockwrite -n $sockname user $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
-    sockwrite -n $sockname nick $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
-    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
+    ;sockwrite -n $sockname nick $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
+    sockmark $sockname nick %bot.nick. [ $+ [ $network ] ]
     if ( %bot.pass != $null ) { sockwrite -n $sockname nickserv identify %bot.nick. [ $+ [ $network ] ] %bot.pass. [ $+ [ $network ] ] }
     .timer 1 3 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
     sockwrite -n $sockname join %work.chan. [ $+ [ $network ] ]
-    privmsg $me $sockname is now open and set
+    $report($sockname is now open and set).active
+    return
   }
   $report(Bot.ERROR,No network given,$null,$null,Usage: /bot on Dalnet/Human/Ircgo/etc).active
 }

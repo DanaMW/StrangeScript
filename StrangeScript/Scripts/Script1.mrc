@@ -4,7 +4,7 @@
 ;    IF (status !isin $window($active)) { $report(Raw,ALL,$numeric,$nick,$chan,$1-).status }
 ;   halt
 ;}
-on  *:OPTIONS: { $report(Reload,$null,$null,The config files have been reloaded).active }
+on  *:OPTIONS: { $report(Reload,$null,$null,A config file has been touched).active }
 ;RAW *:*: { $report(RAW TEST,$event,$numeric,$rawmsg).active }
 ;MOTD
 raw 366:*: {
