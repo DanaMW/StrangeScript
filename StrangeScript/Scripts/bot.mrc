@@ -230,8 +230,12 @@ on 1:SOCKREAD:Bot*:{
   if ($gettok(%Bot.readline,2,32) == 312) { privmsg $me Whois $remove($gettok(%Bot.readline,4-,32),:) | goto bossout }
   if ($gettok(%Bot.readline,2,32) == 307) { privmsg $me Whois $remove($gettok(%Bot.readline,4-,32),:) | goto bossout }
   if ($gettok(%Bot.readline,2,32) == 319) { privmsg $me Whois $remove($gettok(%Bot.readline,4-,32),:) | goto bossout }
-  if ($gettok(%Bot.readline,2,32) == PART) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Part $remove($gettok(%Bot.readline,1,33),:)  Left $remove($gettok(%Bot.readline,3,32),:) }
-  if ($gettok(%Bot.readline,2,32) == JOIN) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Join $remove($gettok(%Bot.readline,1,33),:) entered $remove($gettok(%Bot.readline,3,32),:) }
+  
+  ; if ($gettok(%Bot.readline,2,32) == PART) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Part $remove($gettok(%Bot.readline,1,33),:)  Left $remove($gettok(%Bot.readline,3,32),:) }
+   if ($gettok(%Bot.readline,2,32) == PART) { $report(%Bot.readline).active }
+  ; if ($gettok(%Bot.readline,2,32) == JOIN) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Join $remove($gettok(%Bot.readline,1,33),:) entered $remove($gettok(%Bot.readline,3,32),:) }
+  if ($gettok(%Bot.readline,2,32) == join) { $report(%Bot.readline).active }
+  
   if ($gettok(%Bot.readline,2,32) == NOTICE) {
     ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) $remove($gettok(%Bot.readline,1,33),:) $+ @ $+ $remove($gettok(%Bot.readline,3,32),:) $+ : Notice - $remove($gettok(%Bot.readline,4-,32),:)
     privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) $remove($gettok(%Bot.readline,1,33),:) $+ @ $+ $remove($gettok(%Bot.readline,3,32),:) $+ : Notice - $remove($gettok(%Bot.readline,4-,32),:)

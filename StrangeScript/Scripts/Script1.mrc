@@ -588,7 +588,7 @@ on ^*:SERVEROP:#: {
 on ^*:RAWMODE:#: {
   haltdef
   $report(RawMode,$nick,$chan,$2,$1-).chan
-  IF (status !isin $window($active)) { $report(RawMode,$nick,$chan,$2,$1-).status }
+  if (status !isin $window($active)) { $report(RawMode,$nick,$chan,$2,$1-).status }
   if ($nick == $server) { halt }
   if ($nick == System) { cycle | halt }
   if ($nick == $mode(1)) { halt }
@@ -600,7 +600,7 @@ on ^*1:JOIN:#: {
   if ($nick == $me) { .timerRS $+ # 1 15 roomset }
   if ($nick == $me) { chanserv op # $me }
   .echo -t # $sys $report(Join,$chan,$nick,$address)
-  IF (status !isin $window($active)) { $report(Join,$chan,$nick,$address).status }
+  if (status !isin $window($active)) { $report(Join,$chan,$nick,$address).status }
   halt
 }
 on ^*:PART:#: {
