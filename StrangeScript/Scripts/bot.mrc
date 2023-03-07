@@ -230,39 +230,59 @@ on 1:SOCKREAD:Bot*:{
   if ($gettok(%Bot.readline,2,32) == 312) { privmsg $me Whois $remove($gettok(%Bot.readline,4-,32),:) | goto bossout }
   if ($gettok(%Bot.readline,2,32) == 307) { privmsg $me Whois $remove($gettok(%Bot.readline,4-,32),:) | goto bossout }
   if ($gettok(%Bot.readline,2,32) == 319) { privmsg $me Whois $remove($gettok(%Bot.readline,4-,32),:) | goto bossout }
-  
+
   ; if ($gettok(%Bot.readline,2,32) == PART) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Part $remove($gettok(%Bot.readline,1,33),:)  Left $remove($gettok(%Bot.readline,3,32),:) }
-   if ($gettok(%Bot.readline,2,32) == PART) { $report(%Bot.readline).active }
+  if ($gettok(%Bot.readline,2,32) == PART) { $report($sockname,%Bot.readline).active }
   ; if ($gettok(%Bot.readline,2,32) == JOIN) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Join $remove($gettok(%Bot.readline,1,33),:) entered $remove($gettok(%Bot.readline,3,32),:) }
-  if ($gettok(%Bot.readline,2,32) == join) { $report(%Bot.readline).active }
-  
+  if ($gettok(%Bot.readline,2,32) == join) { $report($sockname,%Bot.readline).active }
+
   if ($gettok(%Bot.readline,2,32) == NOTICE) {
     ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) $remove($gettok(%Bot.readline,1,33),:) $+ @ $+ $remove($gettok(%Bot.readline,3,32),:) $+ : Notice - $remove($gettok(%Bot.readline,4-,32),:)
-    privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) $remove($gettok(%Bot.readline,1,33),:) $+ @ $+ $remove($gettok(%Bot.readline,3,32),:) $+ : Notice - $remove($gettok(%Bot.readline,4-,32),:)
+    $report($sockname,%Bot.readline).active 
   }
-  if ($gettok(%Bot.readline,2,32) == NICK) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) NickChange $remove($gettok(%Bot.readline,1,33),:) is now know as $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,4-,32),:) }
-  if ($gettok(%Bot.readline,2,32) == QUIT) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Quit $remove($gettok(%Bot.readline,1,33),:) $remove($gettok(%Bot.readline,3-,32),:) }
-  if ($gettok(%Bot.readline,2,32) == TOPIC) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Topic $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,4-,32),:) }
+  ;if ($gettok(%Bot.readline,2,32) == NICK) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) NickChange $remove($gettok(%Bot.readline,1,33),:) is now know as $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,4-,32),:) }
+  if ($gettok(%Bot.readline,2,32) == NICK) { $report($sockname,%Bot.readline).active }
+  ;if ($gettok(%Bot.readline,2,32) == QUIT) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Quit $remove($gettok(%Bot.readline,1,33),:) $remove($gettok(%Bot.readline,3-,32),:) }
+  if ($gettok(%Bot.readline,2,32) == QUIT) { $report($sockname,%Bot.readline).active }
+  ;if ($gettok(%Bot.readline,2,32) == TOPIC) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Topic $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,4-,32),:) }
+  if ($gettok(%Bot.readline,2,32) == TOPIC) { $report($sockname,%Bot.readline).active }
   if ($gettok(%Bot.readline,2,32) == KICK) {
-    privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Kick $remove($gettok(%Bot.readline,1,33),:) kicked $remove($gettok(%Bot.readline,4,32),:) from $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,5-,32),:)
-    if ($sock($sockname).mark == $remove($gettok(%Bot.readline,4,32),:)) { sockwrite -n $sockname join $remove($gettok(%Bot.readline,3,32),:) }
+    ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Kick $remove($gettok(%Bot.readline,1,33),:) kicked $remove($gettok(%Bot.readline,4,32),:) from $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,5-,32),:)
+    if ($sock($sockname).mark == $remove($gettok(%Bot.readline,4,32),:)) {
+      ;sockwrite -n $sockname join $remove($gettok(%Bot.readline,3,32),:)
+      $report($sockname,%Bot.readline).active
+    }
+    $report($sockname,%Bot.readline).active
   }
-  if ($gettok(%Bot.readline,2,32) == MODE) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Mode $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,4-,32),:) on $remove($gettok(%Bot.readline,3,32),:) }
+  ;if ($gettok(%Bot.readline,2,32) == MODE) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Mode $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,4-,32),:) on $remove($gettok(%Bot.readline,3,32),:) }
+  if ($gettok(%Bot.readline,2,32) == MODE) { $report($sockname,%Bot.readline).active }
   if ($gettok(%Bot.readline,2,32) == PRIVMSG) {
     ;if *-bc cycle*
     ;`
     ;Ctcp Handling
     ;
     if ($left($remove($gettok(%Bot.readline,4-,32),:),1) == $chr(1)) {
-      if (* $+ $chr(1) $+ ACTION* iswm $remove($gettok(%Bot.readline,4-,32),:)) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Action  $+ $color(action) $+ $remove($gettok(%Bot.readline,1,33),:)  $left($remove($gettok(%Bot.readline,4-,32),: $+ $chr(1) $+ ACTION),-1) | goto bossout }
-      else { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Ctcp $remove($gettok(%Bot.readline,1,33),:) $+ @ $+ $remove($gettok(%Bot.readline,3,32),:) $+ : $remove($remove($gettok(%Bot.readline,4-,32),:),$chr(1)) | goto bossout }
+      if (* $+ $chr(1) $+ ACTION* iswm $remove($gettok(%Bot.readline,4-,32),:)) {
+        ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Action  $+ $color(action) $+ $remove($gettok(%Bot.readline,1,33),:)  $left($remove($gettok(%Bot.readline,4-,32),: $+ $chr(1) $+ ACTION),-1)
+        $report($sockname,%Bot.readline).active
+        goto bossout
+      }
+      else {
+        ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Ctcp $remove($gettok(%Bot.readline,1,33),:) $+ @ $+ $remove($gettok(%Bot.readline,3,32),:) $+ : $remove($remove($gettok(%Bot.readline,4-,32),:),$chr(1))
+        $report($sockname,%Bot.readline).active
+        goto bossout
+      }
       goto Botread
     }
-    if ($chr(35) isin $remove($gettok(%Bot.readline,3,32),:)) { privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,1,33),:) $+ : $remove($gettok(%Bot.readline,4-,32),:) }
+    if ($chr(35) isin $remove($gettok(%Bot.readline,3,32),:)) {
+      ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,1,33),:) $+ : $remove($gettok(%Bot.readline,4-,32),:)
+      $report($sockname,%Bot.readline).active
+    }
     else {
       ;
       ;
-      privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Privmsg $remove($gettok(%Bot.readline,1,33),:) Whispered to $remove($gettok(%Bot.readline,3,32),:) $+ : $remove($gettok(%Bot.readline,4-,32),:)
+      ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Privmsg $remove($gettok(%Bot.readline,1,33),:) Whispered to $remove($gettok(%Bot.readline,3,32),:) $+ : $remove($gettok(%Bot.readline,4-,32),:)
+      $report($sockname,%Bot.readline).active
       ;
       ;
       ;privmsg $me $gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Privmsg $remove($gettok(%Bot.readline,1,33),:) Whispered to $remove($gettok(%Bot.readline,3,32),:) $+ : $remove($gettok(%Bot.readline,4-,32),:)
