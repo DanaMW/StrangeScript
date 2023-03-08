@@ -295,10 +295,10 @@ on 1:SOCKREAD:Bot*:{
 }
 on 1:SOCKCLOSE:Bot*:{
   unset %clone.server. [ $+ [ $sockname ] ]
-  privmsg $me $sockname just closed $sock($sockname).wserr $sock($sockname).wsmsg
-  if ($sockname == BotICQ) { s.timer 1 1 ockopen BotICQ irc.icq.com 6667 | privmsg $me $report(ServerBot,ON,ICQ) }
-  if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | privmsg $me $report(ServerBot,ON,DalNet) }
-  if ($sockname == BotHuman) { .timer 1 1 sockopen BotHuman localhost 6667 | privmsg $me $report(ServerBot,ON,Human) }
-  if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | privmsg $me $report(ServerBot,ON,IRCgo) }
-  if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | privmsg $me $report(ServerBot,ON,CHAT) }
+  $report($sockname just closed $sock($sockname).wserr $sock($sockname).wsmsg).active
+  ;if ($sockname == BotICQ) { s.timer 1 1 ockopen BotICQ irc.icq.com 6667 | privmsg $me $report(ServerBot,ON,ICQ) }
+  ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | privmsg $me $report(ServerBot,ON,DalNet) }
+  ;if ($sockname == BotHuman) { .timer 1 1 sockopen BotHuman localhost 6667 | privmsg $me $report(ServerBot,ON,Human) }
+  ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | privmsg $me $report(ServerBot,ON,IRCgo) }
+  ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | privmsg $me $report(ServerBot,ON,CHAT) }
 }
