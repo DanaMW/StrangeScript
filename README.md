@@ -8,8 +8,8 @@ I put a bunch of time into this little thing. If you are going to rip out a piec
 which is perfectly okay with me at least drop me a star to let me know you were here.
 
 You will find me on:
-DalNet ( irc.dal.net ) in #StrangeScript,#Transend
-Libera.Chat ( irc.Libera.Chat ) in #StrangeScript,#Transend
+DalNet ( irc.dal.net ) in #StrangeScript,#House-Of-Insults
+Libera.Chat ( irc.Libera.Chat ) in #StrangeScript,#House-Of-Insults
 
 What we have here is:
 
