@@ -15,7 +15,27 @@ alias bot {
     $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON HUMAN or IRCGO or DalNet).active
     return
   }
+  if ($1 == START) {
+    if ($2 == human) {
+      sockopen -n BotHuman localhost 6667
+      return
+    }
+    if ($2 == ircgo) {
+      sockopen -n BotIRCGo irc.IRCGo.org 6667
+      return
+    }
+    if ($2 == dalnet) {
+      sockopen -n BotDalNet irc.dal.net 6667
+      return
+    }
+    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON HUMAN or IRCGO or DalNet).active
+    return
+  }
   if ($1 == OFF) {
+    sockclose *
+    return
+  }
+  if ($1 == STOP) {
     sockclose *
     return
   }
@@ -210,7 +230,7 @@ on 1:SOCKOPEN:Bot*:{
   $report(Bot.ERROR,No network given,$null,$null,Usage: /bot on Dalnet/Human/Ircgo/etc).active
 }
 on 1:SOCKREAD:Bot*:{
-  if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: READ $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
+  if ($sockerr > 0) { sockclose $sockname | $report(Sock Error,READ,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg)active | return }
   if (%say.trigger == 1) {
     sockwrite -n $sockname privmsg %work.chan. [ $+ [ $network ] ] : $+ %say.value
     .timer 1 1 set %say.value -
@@ -296,9 +316,9 @@ on 1:SOCKREAD:Bot*:{
 on 1:SOCKCLOSE:Bot*:{
   unset %clone.server. [ $+ [ $sockname ] ]
   $report($sockname just closed $sock($sockname).wserr $sock($sockname).wsmsg).active
-  ;if ($sockname == BotICQ) { s.timer 1 1 ockopen BotICQ irc.icq.com 6667 | privmsg $me $report(ServerBot,ON,ICQ) }
-  ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | privmsg $me $report(ServerBot,ON,DalNet) }
-  ;if ($sockname == BotHuman) { .timer 1 1 sockopen BotHuman localhost 6667 | privmsg $me $report(ServerBot,ON,Human) }
-  ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | privmsg $me $report(ServerBot,ON,IRCgo) }
-  ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | privmsg $me $report(ServerBot,ON,CHAT) }
+  ;if ($sockname == BotICQ) { s.timer 1 1 ockopen BotICQ irc.icq.com 6667 | $report(ServerBot,ON,ICQ).active }
+  ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | $report(ServerBot,ON,DalNet).active }
+  ;if ($sockname == BotHuman) { .timer 1 1 sockopen BotHuman localhost 6667 | $report(ServerBot,ON,Human).active }
+  ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | $report(ServerBot,ON,IRCgo).active }
+  ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | $report(ServerBot,ON,CHAT).active }
 }

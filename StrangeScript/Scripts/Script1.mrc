@@ -500,6 +500,7 @@ on 1:DISCONNECT:{
 }
 on ^*:MODE:#: {
   haltdef
+  if ($nick == $me) { keywrite $network # $+ -modelock $1- }
   .echo -t # $sys $report(Mode,$nick,$chan,$null,$1-)
   if (status !isin $window($active)) { $report(Mode,$nick,$chan,$null,$1-).status }
   halt
