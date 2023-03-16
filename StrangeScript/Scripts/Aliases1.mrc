@@ -111,11 +111,17 @@ chain {
   if ($key($network,# $+ -autosetup)  == ON) {
     echo -t # $sys $report(StrangeScript,Room Auto Setup,$null,$null,Running Room Auto Setup)
     if ($key($network,# $+ -mode)  != $null) {
-      if ($channel(#).mode !=  $key($network,# $+ -mode)) { mode # $key($network,# $+ -mode) }
+      if ($channel(#).mode !=  $key($network,# $+ -mode)) {
+        echo -t # $sys $report(StrangeScript,Room Auto Setup,Error,Mode,Correcting)
+        mode # $key($network,# $+ -mode)
+      }
       else { echo -t # $sys $report(StrangeScript,Room Auto Setup,$null,$null,Mode Correct) }
     }
     if ($key($network,# $+ -topic)  != $null) {
-      if ($channel(#).topic != $unhex.ini($key($network,# $+ -topic))) { .raw topic # : $+ $unhex.ini($key($network,# $+ -topic)) }
+      if ($channel(#).topic != $unhex.ini($key($network,# $+ -topic))) {
+        echo -t # $sys $report(StrangeScript,Room Auto Setup,Error,Topic,Correcting)
+        .raw topic # : $+ $unhex.ini($key($network,# $+ -topic))
+      }
       else { echo -t # $sys $report(StrangeScript,Room Auto Setup,$null,$null,Topic Correct) }
     }
   }

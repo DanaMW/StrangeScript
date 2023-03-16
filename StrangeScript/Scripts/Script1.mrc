@@ -210,25 +210,25 @@ on ^*:QUIT: {
     inc %tmp.quit
     if (%tmp.quit > $comchan($nick,0)) { break }
   }
-  IF (status !isin $window($active)) { $report(Quit,$chan,$nick,$null,$1-).status }
+  $report(Quit,$chan,$nick,$null,$1-).status
   if ($nick == $me) && ($server != $null) { cycleall }
   halt
 }
 on *:BAN:#: {
   haltdef
   $report(Ban,$chan,$nick,$null,$1-).chan
-  IF (status !isin $window($active)) { $report(Ban,$chan,$nick,$1-).status }
+  $report(Ban,$chan,$nick,$1-).status
 }
 on *:UNBAN:#: {
   haltdef
   $report(UNBAN,$chan,$null,$nick,$1-).chan
-  IF (status !isin $window($active)) { $report(UNBAN,$chan,$null,$nick,$1-).status }
+  $report(UNBAN,$chan,$null,$nick,$1-).status
 }
 on ^*:TOPIC:#: {
   haltdef
   if ($1- == $null) { $report(TOPIC,$chan,$nick,$null,Topic has been cleared).chan }
   else { $report(TOPIC,$chan,$nick,Changed the topic to,$1-).chan }
-  IF (status !isin $window($active)) { $report(TOPIC,$chan,$nick,%tmp.tp1,%tmp.tp2).status }
+  $report(TOPIC,$chan,$nick,%tmp.tp1,%tmp.tp2).status
   if ($nick == $me) { keywrite $network # $+ -topic $hex.ini($1-) }
   if ($key($network,# $+ -topiclock) == $null) { keywrite $network # $+ -topiclock OFF }
   if ($key($network,# $+ -topiclock) == OFF) && ($nick(#,$me,o) != $null) {
@@ -242,7 +242,7 @@ on ^*:TOPIC:#: {
     ;old line.New line above if ($unhex.ini($key($network,# $+ -topic)) == $1-) { halt }
     .timerTOPLOCc. $+ $network 1 1 .raw topic # : $+ $unhex.ini($key($network,# $+ -topic))
     $report(Topic Lock,#,Active,Correcting topic).chan
-    IF (status !isin $window($active)) { $report(Topic Lock,#,Active,Correcting topic).status }
+    $report(Topic Lock,#,Active,Correcting topic).status
     halt
   }
   halt
@@ -255,7 +255,7 @@ on ^*:NICK: {
     inc %tmp.nick
     if (%tmp.nick > $comchan($newnick,0))  { break }
   }
-  IF (status !isin $window($active)) { $report(Nick,$null,$nick,Will now be known as,$newnick).status }
+  $report(Nick,$null,$nick,Will now be known as,$newnick).status
   if ($nick == $me) { keywrite $network boss $me }
   unset %temp.nick
   halt
@@ -269,7 +269,7 @@ on *:PING: {
 on ^*:KICK:#: {
   haltdef
   $report(Kick,$chan,$nick,$knick,$1-).chan
-  if (status !isin $window($active)) { $report(Kick,$chan,$nick,$knick,$1-).status }
+  $report(Kick,$chan,$nick,$knick,$1-).status
   if ($knick == $nick) { halt }
   if ($knick == $me) {
     if ($nick == ChanServ) { halt }
@@ -500,96 +500,96 @@ on 1:DISCONNECT:{
 }
 on ^*:MODE:#: {
   haltdef
-  if ($nick == $me) { keywrite $network # $+ -modelock $1- }
-  .echo -t # $sys $report(Mode,$nick,$chan,$null,$1-)
-  if (status !isin $window($active)) { $report(Mode,$nick,$chan,$null,$1-).status }
+  if ($nick == $me) { keywrite $network # $+ -mode $1- }
+  $report(Mode,$nick,$chan,$null,$1-).chan
+  $report(Mode,$nick,$chan,$null,$1-).status
   halt
 }
 on ^*:USERMODE:#: {
   haltdef
-  .echo -t # $sys $report(UserMode,$nick,$chan,$null,$1-)
-  IF (status !isin $window($active)) { $report(UserMode,$nick,$chan,$null,$1-).status }
+  $report(UserMode,$nick,$chan,$null,$1-).chan
+  $report(UserMode,$nick,$chan,$null,$1-).status
   halt
 }
 on ^*:ADMIN:#: {
   haltdef
   $report(Admin,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(Admin,$nick,$chan,$opnick,$1-).status }
+  $report(Admin,$nick,$chan,$opnick,$1-).status
   halt
 }
 on ^*:DEADMIN:#: {
   haltdef
   $report(DeAdmin,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(DeAdmin,$nick,$chan,$opnick,$1-).status }
+  $report(DeAdmin,$nick,$chan,$opnick,$1-).status
   halt
 }
 on ^*:OWNER:#: {
   haltdef
   $report(Owner,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(Owner,$nick,$chan,$opnick,$1-).status }
+  $report(Owner,$nick,$chan,$opnick,$1-).status
   halt
 }
 on ^*:DEOWNER:#: {
   haltdef
   $report(DeOwner,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(DeOwner,$nick,$chan,$opnick,$1-).status }
+  $report(DeOwner,$nick,$chan,$opnick,$1-).status
   halt
 }
 on ^*:OP:#: {
   haltdef
   $report(Op,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(Op,$nick,$chan,$opnick,$1-).status }
+  $report(Op,$nick,$chan,$opnick,$1-).status
   halt
 }
 on ^*:DEOP:#: {
   haltdef
   $report(DeOp,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(DeOp,$nick,$chan,$opnick,$1-).status }
+  $report(DeOp,$nick,$chan,$opnick,$1-).status
   deop.protect
   halt
 }
 on ^*:VOICE:#: {
   haltdef
   $report(Voice,$nick,$chan,$vnick,$1-).chan
-  IF (status !isin $window($active)) { $report(Voice,$nick,$chan,$vnick,$1-).status }
+  $report(Voice,$nick,$chan,$vnick,$1-).status
   halt
 }
 on ^*:DEVOICE:#: {
   haltdef
   if ( $vnick == $me ) { .timer 1 3 mode # +v $me }
   $report(DeVoice,$nick,$chan,$vnick,$1-).chan
-  IF (status !isin $window($active)) { $report(DeVoice,$nick,$chan,$vnick,$1-).status }
+  $report(DeVoice,$nick,$chan,$vnick,$1-).status
   halt
 }
 on ^*:HELP:#: {
   haltdef
   $report(HelpOp,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(HelpOp,$nick,$chan,$opnick,$1-).status }
+  $report(HelpOp,$nick,$chan,$opnick,$1-).status
   halt
 }
 on ^*:DEHELP:#: {
   haltdef
   $report(DeHelpOp,$nick,$chan,$opnick,$1-).chan
-  IF (status !isin $window($active)) { $report(DeHelpOp,$nick,$chan,$opnick,$1-).status }
+  $report(DeHelpOp,$nick,$chan,$opnick,$1-).status
   deop.protect
   halt
 }
 on ^*:SERVERMODE:#: {
   haltdef
-  .echo -t # $sys $report(ServerMode,$nick,$chan,$null,$1-)
-  if (status !isin $window($active)) { $report(ServerMode,$nick,$chan,$null,$1-).status }
+  $report(ServerMode,$nick,$chan,$null,$1-).chan
+  $report(ServerMode,$nick,$chan,$null,$1-).status
   halt
 }
 on ^*:SERVEROP:#: {
   haltdef
-  $report(SERVEROP,$nick,$null,Just op'ed,$opnick).active
-  if (status !isin $window($active)) { $report(SERVEROP,$nick,$null,Just op'ed,$opnick).status }
+  $report(SERVEROP,$nick,$null,Just op'ed,$opnick).chan
+  $report(SERVEROP,$nick,$null,Just op'ed,$opnick).status
   halt
 }
 on ^*:RAWMODE:#: {
   haltdef
   $report(RawMode,$nick,$chan,$2,$1-).chan
-  if (status !isin $window($active)) { $report(RawMode,$nick,$chan,$2,$1-).status }
+  $report(RawMode,$nick,$chan,$2,$1-).status
   if ($nick == $server) { halt }
   if ($nick == System) { cycle | halt }
   if ($nick == $mode(1)) { halt }
@@ -600,13 +600,13 @@ on ^*1:JOIN:#: {
   if ($nick == $me) { set %speed. $+ # $ticks }
   if ($nick == $me) { .timerRS $+ # 1 15 roomset }
   if ($nick == $me) { chanserv op # $me }
-  .echo -t # $sys $report(Join,$chan,$nick,$address)
-  if (status !isin $window($active)) { $report(Join,$chan,$nick,$address).status }
+  $report(Join,$chan,$nick,$address).chan
+  $report(Join,$chan,$nick,$address).status
   halt
 }
 on ^*:PART:#: {
   haltdef
-  echo -t # $sys $report(Part,$chan,$nick,$address,$1-)
-  IF (status !isin $window($active)) { $report(Part,$chan,$nick,$fulladdress,$1-).status }
+  $report(Part,$chan,$nick,$address,$1-).chan
+  $report(Part,$chan,$nick,$fulladdress,$1-).status
   halt
 }
