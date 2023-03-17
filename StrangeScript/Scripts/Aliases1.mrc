@@ -265,9 +265,12 @@ chain {
   return
 }
 /part {
-  if ($2 != $null) { .raw PART $1 : $+ $2- | halt }
+  if ($chr(35) isin $1) {
+    if ($2 != $null) { .raw PART $1 : $+ $2- | halt }
+    else { .raw part $1 : $+ $unhex.ini($key(StrangeScript,part.message)) | halt }
+  }
   else {
-    if ($1 != $null) { .raw part $1 : $+ $unhex.ini($key(StrangeScript,part.message)) | halt }
+    if ($1 != $null) { .raw part # : $+ $1 | halt }
     else { .raw part # : $+ $unhex.ini($key(StrangeScript,part.message)) | halt }
   }
   halt
