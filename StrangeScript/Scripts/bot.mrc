@@ -13,7 +13,7 @@ alias bot {
       return
     }
     if ($2 == libera) {
-      sockopen -n BotDalNet irc.libera.chat 6667
+      sockopen -n BotLibera irc.libera.chat 6667
       return
     }
     $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON HUMAN or IRCGO or DalNet or Libera Etc.).active
@@ -33,7 +33,7 @@ alias bot {
       return
     }
     if ($2 == libera) {
-      sockopen -n BotDalNet irc.libera.chat 6667
+      sockopen -n BotLibera irc.libera.chat 6667
       return
     }
     $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot START HUMAN or IRCGO or DalNet or Libera Etc.).active
@@ -83,19 +83,26 @@ alias bot {
       if ($3 == $null) { return }
       set %bot.pass. [ $+ [ $network ] ] $3
       $report(SET,Option,$null,$null,bot.pass, %bot.pass. [ $+ [ $network ] ] ).active
+      $report(Bot Action,Debug,say.value,Set to,%say.value).active
       return
     }
     if ($2 == say.value) {
       if (%say.value == $null) { set %say.value - }
       else {
         set %say.value $3-
-        $report(SET,Option,$null,$null,say.value,%say.value).active 
+        $report(Bot Action,Set,say.value,Set to,%say.value).active
       }
       return
     }
     if ($2 == say.trigger) {
-      if (%say.trigger == 1) {set %say.trigger 0}
-      else { set %say.trigger 1 }
+      if (%say.trigger == 1) {
+        set %say.trigger 0
+        $report(Bot Action,Set,say.trigger,Set to,%say.trigger).active
+      }
+      else {
+        set %say.trigger 1
+        $report(Bot Action,Set,say.trigger,Set to,%say.trigger).active
+      }
       return
     }
     $botsay(Bot SET,$null,$null,$null,use /Bot SET value.below).active
@@ -106,6 +113,7 @@ alias bot {
     $report(SET,$null,Option,$null,$null,$null,bot.pass).active
     $report(SET,$null,Option,$null,$null,$null,say.value).active
     $report(SET,$null,Option,$null,$null,$null,say.trigger).active
+    $report(SET,$null,Option,$null,$null,$null,bot.showall).active
     $report(Bot SET,$null,$null,$null,*******************).active
     return
   }
@@ -122,7 +130,7 @@ alias bot {
     $report(Bot Menu,$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
     $report(Bot Menu,$null,$null,say.value,%say.value).active
     $report(Bot Menu,$null,t,say.trigger,%say.trigger).active
-    $report(Bot Menu,$null,$null,xxx,no value).active
+    $report(Bot Menu,$null,$null,bot.showall,%bot.showall).active
     $report(Bot Menu,$null,$null,xxx,no value).active
     $report(Bot Menu,$null,$null,********************,********************).active
     return
@@ -140,7 +148,7 @@ alias bot {
   }
   if ($1 == NICK) {
     if ($2 == $null) { sockwrite -n Bot* msg %work.chan [ $+ [ $network ] ] :No nick given. Ending. |  return }
-    sockwrite -n Bot* nick : $+ $2
+    else { sockwrite -n Bot* nick : $+ $2 }
     return
   }
   if ($1 == PART) {
@@ -162,8 +170,41 @@ alias bot {
     if ($2 == $null) { sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] :Nothing sent to write. Ending. | return }
     else { sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] : $+ $2- | return }
   }
-  ;if ($1 == QUIT) { sockwrite -n Bot* | return }
-  $report(Bot,$null,Options,$null,$null,$null,ON/START, OFF/STOP, WRITE, SET, SEND, JOIN, PART, CYCLE, NICK, KICK, SHOW, SAY, SEND).active
+  if ($1 == DEBUG) {
+    if ($2 == ON) {
+      set %bot.showall ON
+      $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+    }
+    if ($2 == OFF) {
+      set %bot.showall OFF
+      $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+    }
+    if ($2 == $null) {
+      if (%bot.showall == ON) {
+        set %bot.showall OFF
+        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      }
+      else {
+        set %bot.showall ON
+        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      }
+      if (%bot.showall == OFF) {
+        set %bot.showall ON
+        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      }
+      else {
+        set %bot.showall OFF
+        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      }
+    }
+    return
+  }
+  if ($1 == AGAIN) {
+      sockwrite -n  user #sock(*).name $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+      return
+  }
+  if ($1 == QUIT) { $sockwrite -n $sock(*).name quit :This is good-bye | return }
+  $report(Bot,$null,Options,$null,$null,$null,ON/START, OFF/STOP, WRITE, SET, SEND, JOIN, PART, CYCLE, NICK, KICK, SHOW, SAY, SEND, DEBUG).active
   return
 }
 alias bot.disp {
@@ -201,11 +242,11 @@ alias botsay {
     if ($me == $1) { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ $white $eval($5-) $sep $+ ) $+ $chr(186) $+  }
     else { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ $white $5- $sep $+ ) $+ $chr(186) $+  }
   }
-    if (%bot.disp == CHANNEL) { return echo -t %work.chan. [ $+ [ $network ] ] $sys %tmp.zbuild }
-    if (%bot.disp == MESSAGE) { return echo -t %work.chan. [ $+ [ $network ] ] $sys %tmp.zbuild }
-    if (%bot.disp == WINDOW) { return echo -t %work.chan. [ $+ [ $network ] ] $sys %tmp.zbuild }
-    halt
-    return
+  if (%bot.disp == CHANNEL) { return echo -t %work.chan. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp == MESSAGE) { return echo -t %work.chan. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp == WINDOW) { return echo -t %work.chan. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  halt
+  return
 }
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
@@ -305,7 +346,7 @@ on 1:SOCKREAD:Bot*:{
     goto Botread
   }
   :bossout
-  ;privmsg $me $sockname %Bot.readline
+  if (%bot.showall == ON) { $report(Full Info:$null,$null,$bull,$null,%Bot.readline).active }
   goto Botread
 }
 on 1:SOCKCLOSE:Bot*:{
