@@ -12,7 +12,11 @@ alias bot {
       sockopen -n BotDalNet irc.dal.net 6667
       return
     }
-    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON HUMAN or IRCGO or DalNet Etc.).active
+    if ($2 == libera) {
+      sockopen -n BotDalNet irc.libera.chat 6667
+      return
+    }
+    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON HUMAN or IRCGO or DalNet or Libera Etc.).active
     return
   }
   if ($1 == START) {
@@ -28,7 +32,11 @@ alias bot {
       sockopen -n BotDalNet irc.dal.net 6667
       return
     }
-    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot START HUMAN or IRCGO or DalNet Etc.).active
+    if ($2 == libera) {
+      sockopen -n BotDalNet irc.libera.chat 6667
+      return
+    }
+    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot START HUMAN or IRCGO or DalNet or Libera Etc.).active
     return
   }
   if ($1 == OFF) {
@@ -90,7 +98,7 @@ alias bot {
       else { set %say.trigger 1 }
       return
     }
-    $report(Bot SET,$null,$null,$null,use /Bot SET value.below).active
+    $botsay(Bot SET,$null,$null,$null,use /Bot SET value.below).active
     $report(SET,$null,Option,$null,$null,$null,bot.disp).active
     $report(SET,$null,Option,$null,$null,$null,work.chan).active
     $report(SET,$null,Option,$null,$null,$null,play.chan).active
@@ -102,9 +110,10 @@ alias bot {
     return
   }
   if ($1 == SHOW) {
-    $report(Bot Menu,$null,$null,**********,************).active
-    $report(Bot Menu,$null,$null,$null,use /Bot set value.below to alter).active
-    $report(Bot Menu,$null,$null,************,*****************).active
+    $report(Bot Menu,$null,$null,********************,********************).active
+    $report(Bot Menu,$null,$null,$null,use /Bot SET value.below to alter).active
+    $report(Bot Menu,$null,$null,********************,********************).active
+    $report(Bot Menu,$null,Bot Status,$sock(bot*).status,$sock(bot*).name).active
     $report(Bot Menu,$null,$null,Current Network,$network).active
     $report(Bot Menu,$null,$null,bot.disp,%bot.disp).active
     $report(Bot Menu,$null,$null,work.chan, %work.chan. [ $+ [ $network ] ] ).active
@@ -115,7 +124,7 @@ alias bot {
     $report(Bot Menu,$null,t,say.trigger,%say.trigger).active
     $report(Bot Menu,$null,$null,xxx,no value).active
     $report(Bot Menu,$null,$null,xxx,no value).active
-    $report(Bot Menu,$null,$null,************,*****************).active
+    $report(Bot Menu,$null,$null,********************,********************).active
     return
   }
   if ($1 == SEND) {
@@ -131,7 +140,7 @@ alias bot {
   }
   if ($1 == NICK) {
     if ($2 == $null) { sockwrite -n Bot* msg %work.chan [ $+ [ $network ] ] :No nick given. Ending. |  return }
-    sockwrite -n Bot* nick $2
+    sockwrite -n Bot* nick : $+ $2
     return
   }
   if ($1 == PART) {
@@ -221,6 +230,7 @@ on 1:SOCKOPEN:Bot*:{
     $botsay(BotSay,$sockname is now open and set)
     return
   }
+  ; || ($sockname == BotLibera)
   else {
     sockwrite -n $sockname user $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
     ;sockwrite -n $sockname nick $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)

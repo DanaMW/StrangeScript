@@ -287,6 +287,9 @@ chain {
   halt
 }
 /quit {
+  ;
+  ; Fix this sad shit.
+  ;
   if ($1- != $null) { .raw quit $1- | return }
   elseif ($key(StrangeScript,quit.message) != $null) { .raw quit $unhex.ini($key(StrangeScript,quit.message)) | return }
   else {  .raw quit $ver | return }
