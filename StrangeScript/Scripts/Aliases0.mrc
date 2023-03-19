@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v157.63.03.17.202310]
+/ver return 10S04trange10S04cript10[v157.64.03.19.202310]
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
 /brag say This system gets to pick from a local collection of $findfile($songdir,*.*,0) Songs
@@ -295,13 +295,13 @@ Key.reads {
   if ($1 == $null) { $report(StrangeScript,CTCP,Error,$null,Nothing to do here. No channel or user destination or message).active | halt }
   if ($2 == PING) {
     $report(Sending a $upper(ping) to $1).active
-    raw -q privmsg $1 : $+ $chr(1) $+ PING $ctime $ticks $+ $chr(1)
+    .raw -q privmsg $1 : $+ $chr(1) $+ PING $ctime $ticks $+ $chr(1)
     halt
   }
   if ($2 != PING) {
     $report(Ctcp,$1,Sending,$upper($2),$3-).active
-    if ($3 == $null) { raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $+ $chr(1) }
-    if ($3 != $null) { raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $3- $+ $chr(1) }
+    if ($3 == $null) { .raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $+ $chr(1) }
+    if ($3 != $null) { .raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $3- $+ $chr(1) }
     halt
   }
 }
