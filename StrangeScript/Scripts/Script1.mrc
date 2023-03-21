@@ -70,6 +70,7 @@ raw 329:*:{
     halt
   }
   else {
+    ;echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
     echo -t $2 $sys $report($null,Spawn Info,Room was spawned,$null,$convert.unix($calc($3 - 28800)))
     halt
   }

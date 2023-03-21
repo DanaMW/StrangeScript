@@ -129,7 +129,7 @@ alias bot {
     $report(Bot Menu,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
     $report(Bot Menu,$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
     $report(Bot Menu,$null,$null,say.value,%say.value).active
-    $report(Bot Menu,$null,t,say.trigger,%say.trigger).active
+    $report(Bot Menu,$null,$null,say.trigger,%say.trigger).active
     $report(Bot Menu,$null,$null,bot.showall,%bot.showall).active
     $report(Bot Menu,$null,$null,xxx,no value).active
     $report(Bot Menu,$null,$null,********************,********************).active
@@ -174,34 +174,40 @@ alias bot {
     if ($2 == ON) {
       set %bot.showall ON
       $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      return
     }
     if ($2 == OFF) {
       set %bot.showall OFF
       $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      return
     }
     if ($2 == $null) {
       if (%bot.showall == ON) {
         set %bot.showall OFF
         $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        return
       }
       else {
         set %bot.showall ON
         $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        return
       }
       if (%bot.showall == OFF) {
         set %bot.showall ON
         $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        return
       }
       else {
         set %bot.showall OFF
         $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        return
       }
     }
     return
   }
   if ($1 == AGAIN) {
-      sockwrite -n  user #sock(*).name $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
-      return
+    sockwrite -n  $sock(*).name user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+    return
   }
   if ($1 == QUIT) { $sockwrite -n $sock(*).name quit :This is good-bye | return }
   $report(Bot,$null,Options,$null,$null,$null,ON/START, OFF/STOP, WRITE, SET, SEND, JOIN, PART, CYCLE, NICK, KICK, SHOW, SAY, SEND, DEBUG).active
@@ -267,7 +273,7 @@ on 1:SOCKOPEN:Bot*:{
     sockwrite -n BotDalNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
     .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]    
     .timer 1 10 sockwrite -n BotDalNet join %work.chan. [ $+ [ $network ] ]
-    ;.timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
     $botsay(BotSay,$sockname is now open and set)
     return
   }
