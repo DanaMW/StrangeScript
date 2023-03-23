@@ -229,7 +229,7 @@ on ^*:TOPIC:#: {
   haltdef
   if ($1- == $null) { $report(TOPIC,$chan,$nick,$null,Topic has been cleared).chan }
   else { $report(TOPIC,$chan,$nick,Changed the topic to,$1-).chan }
-  $report(TOPIC,$chan,$nick,%tmp.tp1,%tmp.tp2).status
+  $report(TOPIC,$chan,$nick,Changed the topic to,$1-).status
   if ($nick == $me) { keywrite $network # $+ -topic $hex.ini($1-) }
   if ($key($network,# $+ -topiclock) == $null) { keywrite $network # $+ -topiclock OFF }
   if ($key($network,# $+ -topiclock) == OFF) && ($nick(#,$me,o) != $null) {

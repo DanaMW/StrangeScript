@@ -287,24 +287,29 @@ chain {
   halt
 }
 /quit {
+  haltdef
   if ($1 == LIST) || ($1 == L) {
-    set %tmp.ql1 1
-    $report($null,****************************).active
-    while (%tmp.gl1 <= $server(0)) {
-      $report(Quit List,$null,$null,$null,$null,$server(%tmp.gl1).name ).active
-      if (status !isin $window($active)) { $report(Quit List,$null,$null,$null,$null,$server(%tmp.gl1) ).active
-      inc %tmp.gl1
-      if (%tmp.gl1 > $server(0) ) { break }
-    }
-    unset %tmp.gl1
-    halt
+    /quit.list
+    return
   }
-  ; Fix this sad shit.
-  ;
-  $report($null,****************************).active
+  if ($1- == VER) { .raw quit $ver | return }
   if ($1- != $null) { .raw quit $1- | return }
   elseif ($key(StrangeScript,quit.message) != $null) { .raw quit $unhex.ini($key(StrangeScript,quit.message)) | return }
   else {  .raw quit $ver | return }
+}
+/quit.list {
+  set %tmp.LQ1 1
+  $report($null,****************************).active
+  while (%tmp.LQ1 <= $server(0)) {
+    $report(Quit List,$null,$null,%tmp.LQ1,$server(%tmp.LQ1)).active
+    inc %tmp.LQ1
+    if (%tmp.LQ1 > $server(0)) { break }
+  }
+  unset %tmp.LQ1
+  $report($null,****************************).active
+  $report(Pick a Server,/quit 1,2,3,4).active
+  $report($null,$null,NOT YET WORKING DO NOT USE).active
+  return
 }
 /back {
   if ($away == $false) { if ($key($network,away.iam) == OFF) { $report(Back,Canceled,$null,You are not currently set away).active | return } }

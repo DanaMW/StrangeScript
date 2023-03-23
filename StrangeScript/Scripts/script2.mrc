@@ -22,7 +22,7 @@ alias say {
     halt
   }
   msg $active $1-
-  halt
+  return
 }
 alias Lagon { keywrite $network Lagchk ON | $report(StrangeScript,Auto Lag Check,$null,Set to,$key($network,lagchk)).status | Lgchk | return }
 alias Lagoff { keywrite $network Lagchk OFF | $report(StrangeScript,Auto Lag Check,$null,Set to,$key($network,lagchk)).status |  .timer850. $+ $network off | keywrite $network Lagmrc OFF | return }
@@ -171,5 +171,5 @@ raw 315:*: {
 }
 #sswho end
 alias center.server {
-
+  $report(Center Server,Empty Function,$null,$null,$null).active
 }

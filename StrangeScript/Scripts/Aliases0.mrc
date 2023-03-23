@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v157.64.03.19.202310]
+/ver return 10S04trange10S04cript10[v157.66.03.23.202310]
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
 /brag say This system gets to pick from a local collection of $findfile($songdir,*.*,0) Songs
@@ -278,7 +278,7 @@ Key.reads {
   .raw privmsg $active : $+ ACTION $1- $+ 
   echo $color(action) -t $active $sysp Action:  $+ %sc.me $+ $lll $+ $white $me  $+ %sc.me $+ $rrr $+  $1-
   if ($network == Dalnet) { echo $color(action) -t $active $sysp Action:  $+ %sc.me $+ $lll $+ $white $me  $+ %sc.me $+ $rrr $+  $1- }
-  halt
+  return
 }
 /ame {
   if ($1 == $null) { $report(StrangeScript,AME,Error,$null,No text to send was specified).active | halt }
