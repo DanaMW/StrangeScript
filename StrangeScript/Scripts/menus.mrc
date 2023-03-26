@@ -146,6 +146,93 @@ n43=Search:search
 n44=Close:close
 n45=
 
+[Nicklist]
+n0=Saved Nicks
+n1=.$chr(91) $key($network,saved.nick.1) $chr(93) $+ :
+n2=..Use:/nick $key($network,saved.nick.1)
+n3=..Display: $report($key($network,saved.nick.1),Password,$null,$null,$null,$null, $key($network,$key($network,saved.nick.1)) ).chan
+n4=..Edit: keyedit $network saved.nick.1 "Saved nick 1"
+n5=..Clear: keywrite $network saved.nick.1
+n6=.$chr(91) $key($network,saved.nick.2) $chr(93) $+ :
+n7=..Use:/nick $key($network,saved.nick.2)
+n8=..Display: $report($key($network,saved.nick.2),Password,$null,$null,$null,$null,$key($network,$key($network,saved.nick.2))).chan
+n9=..Edit: keyedit $network saved.nick.2 "Saved nick 2"
+n10=..Clear: keywrite $network saved.nick.2Nick Password
+n11=Nick Passwords
+n12=.$key($network,saved.nick.1) $chr(91) $key($network,$key($network,saved.nick.1)) $chr(93) $+ :
+n13=..Identify: { NickServ Identify $key($network,$me) }
+n14=..Edit: keyedit $network $key($network,saved.nick.1) "New Nick Password"
+n15=..Clear:{ keywrite $network $key($network,saved.nick.1) | $report(StrangeScript,$key($network,saved.nick.1),password,$null,Cleared).active }
+n16=.$key($network,saved.nick.2) $chr(91) $key($network,$key($network,saved.nick.2)) $chr(93) $+ :
+n17=..Identify: { NickServ Identify $key($network,saved.nick.2) }
+n18=..Edit: keyedit $network $key($network,saved.nick.2) "New Nick Password"
+n19=..Clear:{ keywrite $network $key($network,saved.nick.2) | $report(StrangeScript,$key($network,saved.nick.2),password,$null,Cleared).active }
+n20=Auto Nick Recover $chr(91) $key($network,recover.nick) $chr(93) $+ :
+n21=.On:{ keywrite $network recover.nick ON | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
+n22=.Off:{ keywrite $network recover.nick OFF | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
+n23=Do Nick Recover
+n24=.Recover Nick $chr(91) $key($network,saved.nick.1) $chr(93) $+ :/recover $key($network,saved.nick.1)
+n25=.Recover Nick $chr(91) $key($network,saved.nick.2) $chr(93) $+ :/recover $key($network,saved.nick.2)
+n26=-
+n27=MemoServ Menu
+n28=.Send Menu
+n29=..Send User:{ memoserv send $$?="Nick To Send To?" $$?="Message Your Sending" }
+n30=..Send Chan: memoserv send # $$?="Message To Send To This Channel"
+n31=..Send Sop:halt
+n32=.Read Menu:
+n33=..List All Memos:/memoserv list
+n34=..List A Memo:/memoserv list $$?="NUM Of Memo To List?"
+n35=..Read A Memo:/memoserv read $$?="NUM Of Memo To Read?"
+n36=..Delete A Memo:/memoserv del $$?="NUM Of Memo To Delete?"
+n37=..UnDelete A Memo:/memoserv undelete $$?="NUM Of Memo To UnDelete?"
+n38=..Purge Deleted:/MemoServ purge
+n39=-
+n40=Op's
+n41=+o: mode # +o $$1
+n42=-o: mode # -o $$1
+n43=.$iif(a isin $nickmode,Give Sop,):sop $$1 $2 $3 $4 $5
+n44=.$iif(a isin $nickmode,Take Sop,):desop $$1 $2 $3 $4 $5
+n45=.-
+n46=.$iif(o isin $nickmode,Give Op,):op $$1 $2 $3 $4 $5
+n47=.$iif(o isin $nickmode,Take Op,):deop $$1 $2 $3 $4 $5
+n48=.-
+n49=.$iif(h isin $nickmode,Give Hop,):halfop $$1 $2 $3 $4 $5
+n50=.$iif(h isin $nickmode,Take Hop,):dehalfop $$1 $2 $3 $4 $5
+n51=.-
+n52=.$iif(v isin $nickmode,Give Voice,):voice $$1 $2 $3 $4 $5
+n53=.$iif(v isin $nickmode,Take Voice,):devoice $$1 $2 $3 $4 $5
+n54=.-
+n55=.Kick:kick # $$1
+n56=.Ban:ban $$1
+n57=.Kick/Ban:ban -k $$1
+n58=Query:query $$1
+n59=Info
+n60=.Whois:whois $$1 $1
+n61=.Who:who $$1
+n62=.Whowas:whowas $$1
+n63=CTCP
+n64=.Version:.ctcp $$1 version
+n65=.Ping:.ctcp $$1 ping
+n66=.Time:.ctcp $$1 time
+n67=.Page:.ctcp $$1 page
+n68=Notify
+n69=.Add:notify $$1
+n70=.Remove:notify -r $$1
+n71=Ignore
+n72=.Ignore:ignore $$1
+n73=.Unignore:ignore -r $$1
+n74=Invite
+n75=.$submenu($invitemenu($1, $nick))
+n76=DCC
+n77=.Send:dcc send $$1
+n78=.Chat:dcc chat $$1
+n79=$iif($song,Now Playing):np $$1
+n80=$iif(!$isfile(slaps.txt),SLAP!):slap $$1
+n81=$iif($isfile(slaps.txt),SLAP!)
+n82=.Random:slap $nick
+n83=.$submenu($slapsmenu($1,$nick),25)
+n84=
+
 [Channel]
 n0=Bot Menu
 n1=.Remote Script Control
@@ -600,188 +687,113 @@ n449=..OFF:/ctcp.ignore OFF
 n450=StrangeScript Settings
 n451=.Quit Message $chr(91) $unhex.ini($key(StrangeScript,quit.message)) $chr(93) $+ :
 n452=..List: if ($unhex.ini($key(StrangeScript,quit.message)) != $null) { $report(StrangeScript,Quit Message,$null,$null,$unhex.ini($key(StrangeScript,quit.message))).active }
-n453=..Add: keywrite StrangeScript quit.message $$?="Add your Quit Message"
-n454=..Edit: keyedit StrangeScript quit.message "Edit your Quit Message"
-n455=..Clear: { keywrite StrangeScript quit.message }
-n456=.Part Message $chr(91) $unhex.ini($key(StrangeScript,part.message)) $chr(93) $+ :
-n457=..List: if ($unhex.ini($key(StrangeScript,part.message)) != $null) { $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,part.message))).active }
-n458=..Add: keywrite StrangeScript part.message $$?="Add your Part Message"
-n459=..Edit: keyedit StrangeScript part.message "Edit your Part Message"
-n460=..Clear: { keywrite StrangeScript part.message }
-n461=.Away Message $chr(91) $unhex.ini($key(StrangeScript,away.message)) $chr(93) $+ :
-n462=..List: if ($unhex.ini($key(StrangeScript,away.message)) != $null) { $report(StrangeScript,Away Message,$null,$null,$unhex.ini($key(StrangeScript,away.message))).active }
-n463=..Add: keywrite StrangeScript away.message $$?="Add your Away Message"
-n464=..Edit: keyedit StrangeScript away.message "Edit your Away Message"
-n465=..Clear: { keywrite StrangeScript away.message }
-n466=.Away Nick Add $chr(91) $key(StrangeScript,away.nick.add) $chr(93) $+ : 
-n467=..Edit: keyedit StrangeScript away.nick.add "Enter An Away Addition To You'r Nick"
-n468=..Clear: { keywrite StrangeScript away.nick.add }
-n469=.Away Remind time $chr(91) $key(StrangeScript,away.remind) $chr(93) $+ : 
-n470=..Edit: keyedit StrangeScript away.remind "Enter An Away Remind Time in Seconds"
-n471=..Clear: { keywrite StrangeScript away.remind }
-n472=.-
-n473=.Which.Window $chr(91) $key(StrangeScript,which.window) $chr(93) $+ :
-n474=..ACTIVE: keywrite StrangeScript which.window ACTIVE | $report(WhichWindow,SET,$null,$null,Active).active
-n475=..STATUS: keywrite StrangeScript which.window STATUS | $report(WhichWindow,SET,$null,$null,Status).active
-n476=..ON: keywrite StrangeScript which.window ON | $report(WhichWindow,SET,$null,$null,On).active
-n477=..OFF: keywrite StrangeScript which.window OFF | $report(WhichWindow,SET,$null,$null,Off).active
-n478=.PingPong Show $chr(91) $key(StrangeScript,pingpong.show) $chr(93) $+ :
-n479=..ON:/pingpong ON
-n480=..OFF:/pingpong OFF
-n481=.Script Sounds $chr(91) $key(StrangeScript,script.sounds) $chr(93) $+ :
-n482=..ON:/script.sounds ON
-n483=..OFF:/script.sounds OFF
-n484=.Key Write Show $chr(91) $key(StrangeScript,key.writes) $chr(93) $+ :
-n485=..ON:/key.writes ON
-n486=..OFF:/key.writes OFF
-n487=.Key Read Show $chr(91) $key(StrangeScript,key.reads) $chr(93) $+ :
-n488=..ON:/key.reads ON
-n489=..OFF:/key.reads OFF
-n490=.Default Modes $chr(91) $key(StrangeScript,mode.default) $chr(93) $+ :
-n491=..Edit:keyedit StrangeScript mode.default "Default Mode written to new channels"
-n492=..Clear:{ keywrite StrangeScript mode.default | $report(StrangeScript,Mode.default,Set to,$key(StrangeScript,mode.default)).active }
-n493=.Go FullScreen $chr(91) $key(StrangeScript,go.full) $chr(93) $+ :
-n494=..ON:{ keywrite StrangeScript go.full ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
-n495=..OFF:{ keywrite StrangeScript go.full OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
-n496=.Serv On Start $chr(91) $key(StrangeScript,serv.on.start) $chr(93) $+ :
-n497=..ON:{ keywrite StrangeScript serv.on.start ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
-n498=..OFF:{ keywrite StrangeScript serv.on.start OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
-n499=Main Color and Display Setup
-n500=.Bold Prompts $chr(91) $key(StrangeScript,sc.bold) $chr(93)
-n501=..ON:keywrite StrangeScript sc.bold ON
-n502=..OFF:keywrite StrangeScript sc.bold OFF
-n503=.Display Color Defaults
-n504=..Save Default Low Color $chr(91) %sc1 $chr(93) $+ :set %sc1 $$?="Please select from 00 - 15" | /setupshow  $+ %sc1 your color choice was this | halt
-n505=..Save Default High Color $chr(91) %sc2 $chr(93) $+ :set %sc2 $$?="Please select from 00 - 15" | /setupshow  $+ %sc2 your color choice was this | halt
-n506=..Save Default Bright Color $chr(91) %sc3 $chr(93) $+ :set %sc3 $$?="Please select from 00 - 15" | /setupshow  $+ %sc3 your color choice was this | halt
-n507=..Save Default Message Color $chr(91) %sc4 $chr(93) $+ :set %sc4 $$?="Please select from 00 - 15" | /setupshow  $+ %sc4 your color choice was this | halt
-n508=..Save Default Seperator $chr(91) %sc.seperater $chr(93) $+ :set %sc.seperater $$?="Please select from 00 - 15" | setupshow  $+ %sc.seperater your color choice was this | halt.NickList Color Defaults
-n509=-
-n510=Info
-n511=.Modes:mode #
-n512=.Topic:topic #
-n513=.Who:who #
-n514=.Names:names #
-n515=Moderate
-n516=.Channel Editor:channel #
-n517=.$iif(m isincs $chan(#).mode,$style(1)) Moderated:mode # $+($iif(m !isincs $chan(#).mode,+,-),m)
-n518=.$iif(i isincs $chan(#).mode,$style(1)) Invite Only:mode # $+($iif(i !isincs $chan(#).mode,+,-),i)
-n519=.$iif(p isincs $chan(#).mode,$style(1)) Private:mode # $+($iif(p !isincs $chan(#).mode,+,-),p)
-n520=.$iif(s isincs $chan(#).mode,$style(1)) Secret:mode # $+($iif(s !isincs $chan(#).mode,+,-),s)
-n521=.$iif(t isincs $chan(#).mode,$style(1)) Only Ops Set Topic:mode # $+($iif(t !isincs $chan(#).mode,+,-),t)
-n522=.$iif(n isincs $chan(#).mode,$style(1)) Disable External Messages:mode # $+($iif(n !isincs $chan(#).mode,+,-),n)
-n523=.$iif(l isincs $chan(#).mode,$style(1)) Channel Limit ( $+ $chan(#).limit $+ ):var %l = $??(Set Limit, Set Limit, $chan(#).limit) | mode # $iif(%l > 0,+l %l,-l) 
-n524=.$iif(k isincs $chan(#).mode,$style(1)) Channel Password:var %k = $??(Channel Password, Channel Password, $chan(#).key) | mode # $iif(%k != $chan(#).key,+k %k,-k %k)
-n525=.Topic:topic # $??(Change Topic, Topic, $chan(#).topic)
-n526=System Info
-n527=.System:sysinfo
-n528=.Operating System:osinfo
-n529=.Processor(s):cpuinfo
-n530=.Memory:meminfo
-n531=.Graphics:gfxinfo
-n532=.Harddisks:diskinfo
-n533=.Audio:audioinfo
-n534=.Bandwidth:bw
-n535=.Uptime:uptime
-n536=$iif($song,Now Playing):np
-n537=-
-n538=Encoding
-n539=.$submenu($encodingmenu($1),25)
-n540=$iif($isfile($qt($window($active).logfile)), View Log):logview $qt($window($active).logfile)
-n541=-
-n542=Clear
-n543=.Clear:clear
-n544=.ClearAll:clearall
-n545=Cycle
-n546=.Cycle:cycle 
-n547=.CycleAll:cycleall
-n548=Search:search
-n549=Close:close
-n550=
-
-[Nicklist]
-n0=Saved Nicks
-n1=.$chr(91) $key($network,saved.nick.1) $chr(93) $+ :
-n2=..Use:/nick $key($network,saved.nick.1)
-n3=..Display: $report($key($network,saved.nick.1),Password,$null,$null,$null,$null, $key($network,$key($network,saved.nick.1)) ).chan
-n4=..Edit: keyedit $network saved.nick.1 "Saved nick 1"
-n5=..Clear: keywrite $network saved.nick.1
-n6=.$chr(91) $key($network,saved.nick.2) $chr(93) $+ :
-n7=..Use:/nick $key($network,saved.nick.2)
-n8=..Display: $report($key($network,saved.nick.2),Password,$null,$null,$null,$null,$key($network,$key($network,saved.nick.2))).chan
-n9=..Edit: keyedit $network saved.nick.2 "Saved nick 2"
-n10=..Clear: keywrite $network saved.nick.2Nick Password
-n11=Nick Passwords
-n12=.$key($network,saved.nick.1) $chr(91) $key($network,$key($network,saved.nick.1)) $chr(93) $+ :
-n13=..Identify: { NickServ Identify $key($network,$me) }
-n14=..Edit: keyedit $network $key($network,saved.nick.1) "New Nick Password"
-n15=..Clear:{ keywrite $network $key($network,saved.nick.1) | $report(StrangeScript,$key($network,saved.nick.1),password,$null,Cleared).active }
-n16=.$key($network,saved.nick.2) $chr(91) $key($network,$key($network,saved.nick.2)) $chr(93) $+ :
-n17=..Identify: { NickServ Identify $key($network,saved.nick.2) }
-n18=..Edit: keyedit $network $key($network,saved.nick.2) "New Nick Password"
-n19=..Clear:{ keywrite $network $key($network,saved.nick.2) | $report(StrangeScript,$key($network,saved.nick.2),password,$null,Cleared).active }
-n20=Auto Nick Recover $chr(91) $key($network,recover.nick) $chr(93) $+ :
-n21=.On:{ keywrite $network recover.nick ON | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
-n22=.Off:{ keywrite $network recover.nick OFF | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
-n23=Do Nick Recover
-n24=.Recover Nick $chr(91) $key($network,saved.nick.1) $chr(93) $+ :/recover $key($network,saved.nick.1)
-n25=.Recover Nick $chr(91) $key($network,saved.nick.2) $chr(93) $+ :/recover $key($network,saved.nick.2)
-n26=-
-n27=MemoServ Menu
-n28=.Send Menu
-n29=..Send User:{ memoserv send $$?="Nick To Send To?" $$?="Message Your Sending" }
-n30=..Send Chan: memoserv send # $$?="Message To Send To This Channel"
-n31=..Send Sop:halt
-n32=.Read Menu:
-n33=..List All Memos:/memoserv list
-n34=..List A Memo:/memoserv list $$?="NUM Of Memo To List?"
-n35=..Read A Memo:/memoserv read $$?="NUM Of Memo To Read?"
-n36=..Delete A Memo:/memoserv del $$?="NUM Of Memo To Delete?"
-n37=..UnDelete A Memo:/memoserv undelete $$?="NUM Of Memo To UnDelete?"
-n38=..Purge Deleted:/MemoServ purge
-n39=-
-n40=Op's
-n41=+o: mode # +o $$1
-n42=-o: mode # -o $$1
-n43=.$iif(a isin $nickmode,Give Sop,):sop $$1 $2 $3 $4 $5
-n44=.$iif(a isin $nickmode,Take Sop,):desop $$1 $2 $3 $4 $5
-n45=.-
-n46=.$iif(o isin $nickmode,Give Op,):op $$1 $2 $3 $4 $5
-n47=.$iif(o isin $nickmode,Take Op,):deop $$1 $2 $3 $4 $5
-n48=.-
-n49=.$iif(h isin $nickmode,Give Hop,):halfop $$1 $2 $3 $4 $5
-n50=.$iif(h isin $nickmode,Take Hop,):dehalfop $$1 $2 $3 $4 $5
-n51=.-
-n52=.$iif(v isin $nickmode,Give Voice,):voice $$1 $2 $3 $4 $5
-n53=.$iif(v isin $nickmode,Take Voice,):devoice $$1 $2 $3 $4 $5
-n54=.-
-n55=.Kick:kick # $$1
-n56=.Ban:ban $$1
-n57=.Kick/Ban:ban -k $$1
-n58=Query:query $$1
-n59=Info
-n60=.Whois:whois $$1 $1
-n61=.Who:who $$1
-n62=.Whowas:whowas $$1
-n63=CTCP
-n64=.Version:.ctcp $$1 version
-n65=.Ping:.ctcp $$1 ping
-n66=.Time:.ctcp $$1 time
-n67=.Page:.ctcp $$1 page
-n68=Notify
-n69=.Add:notify $$1
-n70=.Remove:notify -r $$1
-n71=Ignore
-n72=.Ignore:ignore $$1
-n73=.Unignore:ignore -r $$1
-n74=Invite
-n75=.$submenu($invitemenu($1, $nick))
-n76=DCC
-n77=.Send:dcc send $$1
-n78=.Chat:dcc chat $$1
-n79=$iif($song,Now Playing):np $$1
-n80=$iif(!$isfile(slaps.txt),SLAP!):slap $$1
-n81=$iif($isfile(slaps.txt),SLAP!)
-n82=.Random:slap $nick
-n83=.$submenu($slapsmenu($1,$nick),25)
-n84=
+n453=..Add:{
+n454=  set %tmp.qm1 $$?="Add your Quit Message"
+n455=  keywrite StrangeScript quit.message $hex.ini(%tmp.qm1)
+n456=  $report(StrangeScript,Quit Message,$null,$null,$unhex.ini($key(StrangeScript,quit.message))).active
+n457=  unset %tmp.qm1
+n458=}
+n459=..Clear: { keywrite StrangeScript quit.message }
+n460=.Part Message $chr(91) $unhex.ini($key(StrangeScript,part.message)) $chr(93) $+ :
+n461=..List: if ($unhex.ini($key(StrangeScript,part.message)) != $null) { $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,part.message))).active }
+n462=..Add:{
+n463=  set %tmp.pm1 $$?="Add your Part Message"
+n464=  keywrite StrangeScript part.message $hex.ini(%tmp.pm1)
+n465=  $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,part.message))).active
+n466=  unset %tmp.pm1
+n467=}
+n468=..Clear: { keywrite StrangeScript part.message }
+n469=.Away Message $chr(91) $unhex.ini($key(StrangeScript,away.message)) $chr(93) $+ :
+n470=..List: if ($unhex.ini($key(StrangeScript,away.message)) != $null) { $report(StrangeScript,Away Message,$null,$null,$unhex.ini($key(StrangeScript,away.message))).active }
+n471=..Add:{
+n472=  set %tmp.am1 $$?="Add your Away Message"
+n473=  keywrite StrangeScript away.message $hex.ini(%tmp.am1)
+n474=  $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,away.message))).active
+n475=  unset %tmp.am1
+n476=}
+n477=..Clear: { keywrite StrangeScript away.message }
+n478=.Away Nick Add $chr(91) $key(StrangeScript,away.nick.add) $chr(93) $+ : 
+n479=..Edit: keyedit StrangeScript away.nick.add "Enter An Away Addition To You'r Nick"
+n480=..Clear: { keywrite StrangeScript away.nick.add }
+n481=.Away Remind time $chr(91) $key(StrangeScript,away.remind) $chr(93) $+ : 
+n482=..Edit: keyedit StrangeScript away.remind "Enter An Away Remind Time in Seconds"
+n483=..Clear: { keywrite StrangeScript away.remind }
+n484=.-
+n485=.Which.Window $chr(91) $key(StrangeScript,which.window) $chr(93) $+ :
+n486=..ACTIVE: keywrite StrangeScript which.window ACTIVE | $report(WhichWindow,SET,$null,$null,Active).active
+n487=..STATUS: keywrite StrangeScript which.window STATUS | $report(WhichWindow,SET,$null,$null,Status).active
+n488=..ON: keywrite StrangeScript which.window ON | $report(WhichWindow,SET,$null,$null,On).active
+n489=..OFF: keywrite StrangeScript which.window OFF | $report(WhichWindow,SET,$null,$null,Off).active
+n490=.PingPong Show $chr(91) $key(StrangeScript,pingpong.show) $chr(93) $+ :
+n491=..ON:/pingpong ON
+n492=..OFF:/pingpong OFF
+n493=.Script Sounds $chr(91) $key(StrangeScript,script.sounds) $chr(93) $+ :
+n494=..ON:/script.sounds ON
+n495=..OFF:/script.sounds OFF
+n496=.Key Write Show $chr(91) $key(StrangeScript,key.writes) $chr(93) $+ :
+n497=..ON:/key.writes ON
+n498=..OFF:/key.writes OFF
+n499=.Key Read Show $chr(91) $key(StrangeScript,key.reads) $chr(93) $+ :
+n500=..ON:/key.reads ON
+n501=..OFF:/key.reads OFF
+n502=.Default Modes $chr(91) $key(StrangeScript,mode.default) $chr(93) $+ :
+n503=..Edit:keyedit StrangeScript mode.default "Default Mode written to new channels"
+n504=..Clear:{ keywrite StrangeScript mode.default | $report(StrangeScript,Mode.default,Set to,$key(StrangeScript,mode.default)).active }
+n505=.Go FullScreen $chr(91) $key(StrangeScript,go.full) $chr(93) $+ :
+n506=..ON:{ keywrite StrangeScript go.full ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
+n507=..OFF:{ keywrite StrangeScript go.full OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
+n508=.Serv On Start $chr(91) $key(StrangeScript,serv.on.start) $chr(93) $+ :
+n509=..ON:{ keywrite StrangeScript serv.on.start ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
+n510=..OFF:{ keywrite StrangeScript serv.on.start OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
+n511=Main Color and Display Setup
+n512=.Bold Prompts $chr(91) $key(StrangeScript,sc.bold) $chr(93)
+n513=..ON:keywrite StrangeScript sc.bold ON
+n514=..OFF:keywrite StrangeScript sc.bold OFF
+n515=.Display Color Defaults
+n516=..Save Default Low Color $chr(91) %sc1 $chr(93) $+ :set %sc1 $$?="Please select from 00 - 15" | /setupshow  $+ %sc1 your color choice was this | halt
+n517=..Save Default High Color $chr(91) %sc2 $chr(93) $+ :set %sc2 $$?="Please select from 00 - 15" | /setupshow  $+ %sc2 your color choice was this | halt
+n518=..Save Default Bright Color $chr(91) %sc3 $chr(93) $+ :set %sc3 $$?="Please select from 00 - 15" | /setupshow  $+ %sc3 your color choice was this | halt
+n519=..Save Default Message Color $chr(91) %sc4 $chr(93) $+ :set %sc4 $$?="Please select from 00 - 15" | /setupshow  $+ %sc4 your color choice was this | halt
+n520=..Save Default Seperator $chr(91) %sc.seperater $chr(93) $+ :set %sc.seperater $$?="Please select from 00 - 15" | setupshow  $+ %sc.seperater your color choice was this | halt.NickList Color Defaults
+n521=-
+n522=Info
+n523=.Modes:mode #
+n524=.Topic:topic #
+n525=.Who:who #
+n526=.Names:names #
+n527=Moderate
+n528=.Channel Editor:channel #
+n529=.$iif(m isincs $chan(#).mode,$style(1)) Moderated:mode # $+($iif(m !isincs $chan(#).mode,+,-),m)
+n530=.$iif(i isincs $chan(#).mode,$style(1)) Invite Only:mode # $+($iif(i !isincs $chan(#).mode,+,-),i)
+n531=.$iif(p isincs $chan(#).mode,$style(1)) Private:mode # $+($iif(p !isincs $chan(#).mode,+,-),p)
+n532=.$iif(s isincs $chan(#).mode,$style(1)) Secret:mode # $+($iif(s !isincs $chan(#).mode,+,-),s)
+n533=.$iif(t isincs $chan(#).mode,$style(1)) Only Ops Set Topic:mode # $+($iif(t !isincs $chan(#).mode,+,-),t)
+n534=.$iif(n isincs $chan(#).mode,$style(1)) Disable External Messages:mode # $+($iif(n !isincs $chan(#).mode,+,-),n)
+n535=.$iif(l isincs $chan(#).mode,$style(1)) Channel Limit ( $+ $chan(#).limit $+ ):var %l = $??(Set Limit, Set Limit, $chan(#).limit) | mode # $iif(%l > 0,+l %l,-l) 
+n536=.$iif(k isincs $chan(#).mode,$style(1)) Channel Password:var %k = $??(Channel Password, Channel Password, $chan(#).key) | mode # $iif(%k != $chan(#).key,+k %k,-k %k)
+n537=.Topic:topic # $??(Change Topic, Topic, $chan(#).topic)
+n538=System Info
+n539=.System:sysinfo
+n540=.Operating System:osinfo
+n541=.Processor(s):cpuinfo
+n542=.Memory:meminfo
+n543=.Graphics:gfxinfo
+n544=.Harddisks:diskinfo
+n545=.Audio:audioinfo
+n546=.Bandwidth:bw
+n547=.Uptime:uptime
+n548=$iif($song,Now Playing):np
+n549=-
+n550=Encoding
+n551=.$submenu($encodingmenu($1),25)
+n552=$iif($isfile($qt($window($active).logfile)), View Log):logview $qt($window($active).logfile)
+n553=-
+n554=Clear
+n555=.Clear:clear
+n556=.ClearAll:clearall
+n557=Cycle
+n558=.Cycle:cycle 
+n559=.CycleAll:cycleall
+n560=Search:search
+n561=Close:close
+n562=

@@ -13,7 +13,14 @@
 /doda /col ?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿?¿
 /send /dcc send $snick(#,1)
 /chat /dcc chat $1
-/ping { if ($1 == $null) { .ctcp # ping } | else { .ctcp $$1 ping } }
+/ping {
+  if ($1 == $null) {
+    .ctcp # ping
+  }
+  else {
+    .ctcp $$1 ping
+  }
+}
 /sounddir return Sounds\
 /songdir return D:\Music
 /textdir return Text\

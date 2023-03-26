@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v157.66.03.23.202310]
+/ver return 10S04trange10S04cript10[v157.67.03.25.202310]
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
 /brag say This system gets to pick from a local collection of $findfile($songdir,*.*,0) Songs
@@ -161,7 +161,6 @@ Key.reads {
 /i /invite $$1 #$$2
 /send /dcc send $1 $2
 /chat /dcc chat $1
-/ping /ctcp $$1 ping
 /cmode /mode # $1-
 /umode /mode $$me $1-
 /kickban /ban -k # $$1 $2-
