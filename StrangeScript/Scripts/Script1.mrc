@@ -600,7 +600,11 @@ on ^*1:JOIN:#: {
   haltdef
   if ($nick == $me) { set %speed. $+ # $ticks }
   if ($nick == $me) { .timerRS $+ # 1 15 roomset }
-  if ($nick == $me) { chanserv op # $me }
+  if ($nick == $me) { 
+    chanserv op # $me
+    sockwrite -n Bot* mode # +o $me
+  }
+  if ($nick == %bot.nick. [ $+ [ $network ] ] ) { mode # +o %bot.nick. [ $+ [ $network ] ] }
   $report(Join,$chan,$nick,$address).chan
   $report(Join,$chan,$nick,$address).status
   halt
