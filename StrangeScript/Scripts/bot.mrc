@@ -1,18 +1,22 @@
 alias bot {
   if ($1 == ON) {
     if ($2 == human) {
+      bot.check
       sockopen -n BotHuman localhost 6667
       return
     }
     if ($2 == ircgo) {
+      bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
       return
     }
     if ($2 == dalnet) {
+      bot.check
       sockopen -n BotDalNet irc.dal.net 6667
       return
     }
     if ($2 == libera) {
+      bot.check
       sockopen -n BotLibera irc.libera.chat 6667
       return
     }
@@ -21,18 +25,22 @@ alias bot {
   }
   if ($1 == START) {
     if ($2 == human) {
+      bot.check
       sockopen -n BotHuman localhost 6667
       return
     }
     if ($2 == ircgo) {
+      bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
       return
     }
     if ($2 == dalnet) {
+      bot.check
       sockopen -n BotDalNet irc.dal.net 6667
       return
     }
     if ($2 == libera) {
+      bot.check
       sockopen -n BotLibera irc.libera.chat 6667
       return
     }
@@ -256,7 +264,9 @@ alias botsay {
 }
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
+  bot.check
   $botsay(BotSay,OPEN,Socket Name,$sockname)
+  set %Bot.active 1
   if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
   if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] $$?="Password for that nick if you know it:" }
   if ($sockname == BotHuman) || ($sockname == BotIRCGo) {
@@ -365,4 +375,11 @@ on 1:SOCKCLOSE:Bot*:{
   ;if ($sockname == BotHuman) { .timer 1 1 sockopen BotHuman localhost 6667 | $report(ServerBot,ON,Human).active }
   ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | $report(ServerBot,ON,IRCgo).active }
   ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | $report(ServerBot,ON,CHAT).active }
+}
+alias bot.check {
+  if (if ($sock(*) != $null)) {
+    $report($null,$null,Bot Error,$null,$null,The bot is already running on $remove($sock(*).name,Bot)).active |
+    halt
+  }
+  else { return $null }
 }

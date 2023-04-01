@@ -306,7 +306,7 @@ alias mp3.random {
 alias feed.line {
   set %Transend.feed.num $calc($round($inmp3.length,0) / 100)
   if ($dialog(mp3p) != $null) { did -o mp3p 4 1 $chr(91) $+ $str($chr(160),$calc(50 - $calc($round($inmp3.pos,0) / %Transend.feed.num / 2))) $+ $str($chr(145),$calc($round($inmp3.pos,0) / %Transend.feed.num / 2)) $+ ] $round($calc($round($inmp3.pos,0) / %Transend.feed.num),0) $+ % [ $+ $str($chr(145),$calc($round($inmp3.pos,0) / %Transend.feed.num / 2)) $+ $str($chr(160),$calc(50 - $calc($round($inmp3.pos,0) / %Transend.feed.num / 2))) $+ $chr(93) }
-  set %mybar.temp $round($calc($round($inmp3.pos,0) / %Transend.feed.num),0) $+ %
+  set %mybar.temp $round($calc($round($inmp3.pos,0) / %Transend.feed.num),0) $+ % 
   return
 }
 alias mp3.bump {
