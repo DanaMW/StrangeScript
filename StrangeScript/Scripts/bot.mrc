@@ -53,10 +53,18 @@ alias bot {
   }
   if ($1 == OFF) {
     sockclose *
+    unset %clone.server. [ $+ [ $sockname ] ]
+    set %Bot.active 0
+    $report(Bot,OFF,$null,$null,$null,You selected off. It's off.).active
+    $report(Bot,OFF,$null,Bot.active,%Bot.active,$null).active
     return
   }
   if ($1 == STOP) {
     sockclose *
+    unset %clone.server. [ $+ [ $sockname ] ]
+    set %Bot.active 0
+    $report(Bot,OFF,$null,$null,$null,You selected off. It's off.).active
+    $report(Bot,OFF,$null,Bot.active,%Bot.active,$null).active
     return
   }
   if ($1 == ID) {
@@ -268,7 +276,6 @@ alias botsay {
 }
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
-  bot.check
   $botsay(BotSay,OPEN,Socket Name,$sockname)
   set %Bot.active 1
   if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
@@ -373,7 +380,8 @@ on 1:SOCKREAD:Bot*:{
 }
 on 1:SOCKCLOSE:Bot*:{
   unset %clone.server. [ $+ [ $sockname ] ]
-  $report($sockname just closed $sock($sockname).wserr $sock($sockname).wsmsg).active
+  set %Bot.active 0
+  $report($sockname just closed $sock(*).name $sock($sockname).wserr $sock($sockname).wsmsg).active
   ;if ($sockname == BotICQ) { s.timer 1 1 ockopen BotICQ irc.icq.com 6667 | $report(ServerBot,ON,ICQ).active }
   ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | $report(ServerBot,ON,DalNet).active }
   ;if ($sockname == BotHuman) { .timer 1 1 sockopen BotHuman localhost 6667 | $report(ServerBot,ON,Human).active }
@@ -381,9 +389,9 @@ on 1:SOCKCLOSE:Bot*:{
   ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | $report(ServerBot,ON,CHAT).active }
 }
 alias bot.check {
-  if (if ($sock(*) != $null)) {
-    $report($null,$null,Bot Error,$null,$null,The bot is already running on $remove($sock(*).name,Bot)).active |
+  if (%Bot.active == 1) {
+    $report($null,$null,Bot Error,$null,$null,The bot is already running on $remove($sock(*).name,Bot)).active
     halt
   }
-  else { return $null }
+  else { return }
 }
