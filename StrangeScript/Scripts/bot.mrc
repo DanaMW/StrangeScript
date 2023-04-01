@@ -1,21 +1,23 @@
 alias bot {
   if ($1 == ON) {
-    if ($2 == human) {
+    set %bot.onp2 $2
+    if (%bot.onp2 == $null) { set %bot.onp2 $network }
+    if (%bot.onp2 == human) {
       bot.check
       sockopen -n BotHuman localhost 6667
       return
     }
-    if ($2 == ircgo) {
+    if (%bot.onp2 == ircgo) {
       bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
       return
     }
-    if ($2 == dalnet) {
+    if (%bot.onp2 == dalnet) {
       bot.check
       sockopen -n BotDalNet irc.dal.net 6667
       return
     }
-    if ($2 == libera) {
+    if (%bot.onp2 == libera) {
       bot.check
       sockopen -n BotLibera irc.libera.chat 6667
       return
@@ -24,22 +26,24 @@ alias bot {
     return
   }
   if ($1 == START) {
-    if ($2 == human) {
+    set %bot.stp2 $2
+    if (%bot.stp2 == $null) { set %bot.stp2 $network }
+    if (%bot.stp2 == human) {
       bot.check
       sockopen -n BotHuman localhost 6667
       return
     }
-    if ($2 == ircgo) {
+    if (%bot.stp2 == ircgo) {
       bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
       return
     }
-    if ($2 == dalnet) {
+    if (%bot.stp2 == dalnet) {
       bot.check
       sockopen -n BotDalNet irc.dal.net 6667
       return
     }
-    if ($2 == libera) {
+    if (%bot.stp2 == libera) {
       bot.check
       sockopen -n BotLibera irc.libera.chat 6667
       return
