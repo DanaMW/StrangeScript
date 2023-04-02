@@ -225,6 +225,12 @@ alias bot {
     }
     return
   }
+  if ($1 == STATUS) {
+  cls
+  $report(Bot Status,*************************).active
+  $report(Bot Status,$null,Name:,$null,$sock(*).name).active
+  return
+  }
   if ($1 == AGAIN) {
     sockwrite -n  $sock(*).name user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
     return
