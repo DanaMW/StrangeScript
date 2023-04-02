@@ -156,7 +156,7 @@ alias bot {
     return
   }
   if ($1 == SEND) {
-    sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] :Send not configured for some reason. Right Dana?
+    sockwrite -n Bot* privmsg %work.chan. [ $+ [ $network ] ] :Send not configured for some reason. Right $me ?
     return
   }
   if ($1 == KICK) {
@@ -226,17 +226,18 @@ alias bot {
     return
   }
   if ($1 == STATUS) {
-  cls
-  $report(Bot Status,*************************).active
-  $report(Bot Status,$null,Name:,$null,$sock(*).name).active
-  return
+    ;cls
+    if (%Bot.active == 1) { set %tmp.stats1 On The Line }
+    $report(Bot Status,Your Bot Is ,%tmp.stats1,On Server,$remove($sock(*).name,Bot)).active
+    unset %tmp.stats1
+    return
   }
   if ($1 == AGAIN) {
     sockwrite -n  $sock(*).name user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
     return
   }
   if ($1 == QUIT) { $sockwrite -n $sock(*).name quit :This is good-bye | return }
-  $report(Bot,$null,Options,$null,$null,$null,ON/START, OFF/STOP, WRITE, SET, SEND, JOIN, PART, CYCLE, NICK, KICK, SHOW, SAY, SEND, DEBUG).active
+  $report(Bot,$null,Options,$null,$null,$null,AGAIN, CYCLE, DEBUG, ID, JOIN, KICK, NICK, ON/START, OFF/STOP, PART, QUIT, SAY, SEND, SET, STATUS, SHOW, WRITE).active
   return
 }
 alias bot.disp {

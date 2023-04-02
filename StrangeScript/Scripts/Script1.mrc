@@ -182,14 +182,17 @@ raw 315:*: {
     else {  inc %tempb | goto sswholoop }
   }
 }
-;
-;
-;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 on *:INPUT:#: {
   if (/* !iswm $1) {
     haltdef
     .raw privmsg #  : $+ $1-
     $report($nick,$null,$null,$null,$1-).text
+    if ($nick == $me) {
+      set %tmp.txt1 $1-
+      if (%tmp.txt1 == op me) { sockwrite -n Bot* mode $chan +o $me }
+      unset %tmp.txt1
+    }
     halt
   }
 }
