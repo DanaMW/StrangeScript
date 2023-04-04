@@ -71,7 +71,11 @@ alias join.servers {
   }
   return
 }
-alias quitall { /aquit $unhex.ini($key(StrangeScript,quit.message)) | return }
+alias quitall { 
+  if ($1 != $null) { aquit $1- }
+  else { aquit $unhex.ini($key(StrangeScript,quit.message)) }
+  return
+}
 alias deop.protect {
   if ($key($network,deop.protect) == OFF) { halt }
   ;
