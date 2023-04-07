@@ -4,22 +4,26 @@ alias bot {
     if (%bot.onp2 == $null) { set %bot.onp2 $network }
     if (%bot.onp2 == human) {
       bot.check
-      sockopen -n BotHuman localhost 6667
+      sockopen -n BotHuman irc.human.net 6667
+      $report(Bot,ON,$null,Human,irc.human.net,6667).active
       return
     }
     if (%bot.onp2 == ircgo) {
       bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
+      $report(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
       return
     }
     if (%bot.onp2 == dalnet) {
       bot.check
       sockopen -n BotDalNet irc.dal.net 6667
+      $report(Bot,ON,$null,DalNet,irc.dal.net,6667).active
       return
     }
     if (%bot.onp2 == libera) {
       bot.check
       sockopen -n BotLibera irc.libera.chat 6667
+      $report(Bot,ON,$null,Libera,irc.libera.chat,6667).active
       return
     }
     $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON HUMAN or IRCGO or DalNet or Libera Etc.).active
@@ -31,21 +35,25 @@ alias bot {
     if (%bot.stp2 == human) {
       bot.check
       sockopen -n BotHuman localhost 6667
+      $report(Bot,ON,$null,Human,irc.human.net,6667).active
       return
     }
     if (%bot.stp2 == ircgo) {
       bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
+      $report(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
       return
     }
     if (%bot.stp2 == dalnet) {
       bot.check
       sockopen -n BotDalNet irc.dal.net 6667
+      $report(Bot,ON,$null,DalNet,irc.dal.net,6667).active
       return
     }
     if (%bot.stp2 == libera) {
       bot.check
       sockopen -n BotLibera irc.libera.chat 6667
+      $report(Bot,ON,$null,Libera,irc.libera.chat,6667).active
       return
     }
     $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot START HUMAN or IRCGO or DalNet or Libera Etc.).active
