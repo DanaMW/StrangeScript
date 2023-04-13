@@ -290,7 +290,7 @@ alias botsay {
   return
 }
 on 1:SOCKOPEN:Bot*:{
-  if ($sockerr > 0) { sockclose $sockname | privmsg $me Sock Error: OPEN $sockname $sock($sockname).wserr $sock($sockname).wsmsg | return }
+  if ($sockerr > 0) { sockclose $sockname | $report(Sock Error,OPEN,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg).active | return }
   $botsay(BotSay,OPEN,Socket Name,$sockname)
   set %Bot.active 1
   if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
@@ -350,7 +350,7 @@ on 1:SOCKREAD:Bot*:{
   if ($sockbr == 0) { return }
   if ($gettok(%Bot.readline,1,32) == PING) {
     sockwrite -n $sockname PONG $gettok(%Bot.readline,2,32)
-    ;privmsg $me sent pong to $remove($gettok(%Bot.readline,2,32),:)
+    ;$report(Pong,Sent Pong,to,$remove($gettok(%Bot.readline,2,32),:)).active
     set %clone.server. [ $+ [ $sockname ] ] $remove($gettok(%Bot.readline,2,32),:)
   }
   if ($remove($left(%Bot.readline,$calc($pos(%Bot.readline,$chr(33),1) -1)),$chr(58)) == $me) && ($remove($gettok(%Bot.readline,4,32),:,$chr(1)) == PING)  { sockwrite -n $sockname NOTICE $me : $+ $chr(1) $+ PING $gettok(%Bot.readline,5-6,32) $+ $chr(1) }
