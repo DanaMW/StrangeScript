@@ -1,6 +1,10 @@
 ```
 
-The original AdiIRC/mIRC script. StrangeScript ©1999-2023 Dana L. Meli-Wischman. I put a bunch of time into this little thing. If you are going to rip out a piece of it and add it to your script at least give me credit, in your script, which is the right thing to do. Thank you.
+The original AdiIRC/mIRC script. StrangeScript ©1999-2023
+Dana L. Meli-Wischman. I put a bunch of time into this
+little thing. If you are going to rip out a piece of it and
+add it to your script at least give me credit, in your
+script, which is the right thing to do. Thank you.
 
 ```
 
