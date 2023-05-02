@@ -65,7 +65,7 @@ raw 329:*:{
     echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
     halt
   }
-  if ($network == Libera.Chat) {
+  if ($network == Libera.Chat) || ($network == Libera){
     echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
     halt
   }

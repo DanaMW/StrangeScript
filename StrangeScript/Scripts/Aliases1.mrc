@@ -378,7 +378,7 @@ chain {
 /convert.unix { return $asctime($1, dddd mmm/dd/yyyy hh:mm tt) }
 /regchan {
   if ($network == Freenode) { chanserv register # }
-  if ($network == Libera.Chat) { chanserv register # }
+  if ($network == Libera.Chat) || ($network == Libera) { chanserv register # }
   if ($network == Human) || ($network == ircgo) { chanserv register # }
   else { chanserv register # $key($network,# $+ -pass)  # }
 }

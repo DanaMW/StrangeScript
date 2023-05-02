@@ -1,7 +1,12 @@
 alias bot {
   if ($1 == ON) {
     set %bot.onp2 $2
-    if (%bot.onp2 == $null) { set %bot.onp2 $network }
+    if (%bot.onp2 == $null) {
+      set %bot.onp2 $network
+      if ($network == libera.chat) { 
+          set %bot.onp2 libera
+        }
+      }
     if (%bot.onp2 == human) {
       bot.check
       sockopen -n BotHuman irc.human.net 6667
