@@ -604,7 +604,10 @@ on ^*1:JOIN:#: {
   haltdef
   if ($nick == $me) { set %speed. $+ # $ticks }
   if ($nick == $me) { .timerRS $+ # 1 15 roomset }
-  if ($nick == $me) { 
+  if ($nick == $me) {
+    if ($chan == #transcend) {
+      keywrite $network #transcend $+ -mode +mntp
+    } 
     chanserv op # $me
     if ($sock(*) != $null) { sockwrite -n Bot* mode # +o $me }
   }

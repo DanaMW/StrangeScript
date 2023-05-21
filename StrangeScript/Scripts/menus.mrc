@@ -237,6 +237,13 @@ n86=.Random:slap $nick
 n87=.$submenu($slapsmenu($1,$nick),25)
 n88=
 
+[ChannelLink]
+n0=Join $1:join $$1
+n1=Show Users:names $$1
+n2=Show Topic:topic $$1
+n3=Show Mode:mode $$1
+n4=
+
 [Channel]
 n0=Bot Menu
 n1=.Remote Script Control
@@ -507,300 +514,301 @@ n265=.Mode Lock $chr(91) $key($network,# $+ -modelock) $chr(93) $+ :
 n266=..Toggle ON:{ keywrite $network # $+ -modelock ON | $report(StrangeScript,#,Mode Lock,Set to,ON).active }
 n267=..Toggle OFF:{ keywrite $network # $+ -modelock OFF | $report(StrangeScript,#,Mode Lock,Set to,OFF).active }
 n268=.Mode $chr(91) $Key($network,# $+ -mode) $chr(93) $+ :
-n269=..See Mode:{ $report(StrangeScript,#,Mode,Set to,$Key($network,# $+ -mode)).active }
-n270=.Topic Stuff
-n271=..Edit Current Topic:channel
-n272=..-
-n273=..Misc. Topics
-n274=...Arrow Topic:.topic # 2--12--6--5--4--7--8--9--11>12 $chan(#).topic 11<9--8--7--4--5--6--12--2--
-n275=...Box Topic:.topic # 8,1°°9,1°°12,1°°13,1°°4,1°°7,1°°8,1 $chan(#).topic 7°°4°°13°°12°°9°°8°°
-n276=...Button Topic:.topic # 7>4>5> 15,14<1>15<1>15<1>4[9 $chan(#).topic 4]15,14<1>15<1>15<1> 5<4<7<9
-n277=...Caution Topic:.topic # 1,8/8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8 $chan(#).topic 8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8/
-n278=...Diamonds Topic:.topic # 2‹›‹›12‹›‹›13‹›‹›6‹›‹›5‹›‹›4‹›‹›7‹›‹›8‹›‹›9‹›‹›3‹›‹›11 $chan(#).topic 3‹›‹›9‹›‹›8‹›‹›7‹›‹›4‹›‹›5‹›‹›6‹›‹›13‹›‹›12‹›‹›2‹›‹›
-n279=...Flowery Topic:.topic # 13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11 $chan(#).topic 6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº
-n280=...Heartbeat Topic:.topic # 9,1~^v^v^v^v^v^v^v^v^v^~ $chan(#).topic ~^v^v^v^v^v^v^v^v^v^~
-n281=...Meter Topic:.topic # 4,1 $chan(#).topic 14,14.15,15.0,0.15,15.14,14.9,1 IIIIIIIIIIIIIIIIIIII8,1IIIIIIIIII4,1IIIIIIIIII 14,14.15,15.0,0.15,15.14,14.
-n282=...Party Topic:.topic # 4¡!¹'¹!7¡!¹'¹!8¡!¹'¹!9¡!¹'¹!12¡!¹'¹!13¡!¹'¹!4 $chan(#).topic 13!¹'¹!¡12!¹'¹!¡9!¹'¹!¡8!¹'¹!¡7!¹'¹!¡4!¹'¹!¡
-n283=...Pointer Topic:.topic # 13(¯`·.¸¸.->12(¯`·.¸¸.->9 $chan(#).topic 12<-.¸¸.·´¯)13<-.¸¸.·´¯)
-n284=...Rose Topic:.topic # 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«-4 $chan(#).topic 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«-
-n285=...Southwestern Topic:.topic # 10,10-5,10!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!10,10-5,10 $chan(#).topic 10,10-5,10!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!10,10-
-n286=...Sparkle Topic:.topic # 13*©*12*´¯`*.¸11¸.*´¯`* $chan(#).topic 11*´¯`*.¸12¸.*´¯`*13*©*
-n287=...Square Wave Topic:.topic # 8,7–•¬–•¬–•¬–•¬–•¬–•¬–•¬–•¬1,7 $chan(#).topic 8,7–•¬–•¬–•¬–•¬–•¬–•¬–•¬–•¬
-n288=...Tri-Peak Topic:.topic # 13_,.-11*13~11^13~11*13-.,_,.-11*13~11^13~11*13-.,_ $chan(#).topic _,.-11*13~11^13~11*13-.,_,.-11*13~11^13~11*13-.,_
-n289=...Triangle Topic:.topic # 7,1»4»5»14,14 15/1\ 15/1\ 15/1\ 4,1[9 $chan(#).topic 4]14,14 15/1\ 15/1\ 15/1\ 5,1«4«7«
-n290=...Wave Topic:.topic # 12¸.·´¯`·.¸13¸.·´¯`·.¸4¸.·´¯`·.¸7¸.·´¯`·.¸8¸.·´¯`·.¸9 $chan(#).topic 8¸.·´¯`·.¸7¸.·´¯`·.¸4¸.·´¯`·.¸13¸.·´¯`·.¸12¸.·´¯`·.¸
-n291=...Wing Topic:.topic # 12¯`°²º¤©º°¨¨°º©©º°¨¨°º©=[4 $chan(#).topic 12]=©º°¨¨°º©©º°¨¨°º©¤º²°`¯
-n292=..Wavey Topics
-n293=...Red Wavey Topic:.topic # 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $chan(#).topic 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
-n294=...Purple Wavey Topic:.topic # 13,0æ0,13æ6,13æ13,6æ1,6æ6,1æ13,1 $chan(#).topic 6,1æ1,6æ13,6æ6,13æ0,13æ13,0æ
-n295=...Blue Wavey Topic:.topic # 12,0æ0,12æ2,12æ12,2æ1,2æ2,1æ12,1 $chan(#).topic 2,1æ1,2æ12,2æ2,12æ0,12æ12,0æ
-n296=...Light Blue Wavey Topic:.topic # 11,0æ0,11æ10,11æ11,10æ1,10æ10,1æ10,1 $chan(#).topic 10,1æ1,10æ11,10æ10,11æ0,11æ11,0æ
-n297=...Green Wavey Topic:.topic # 9,0æ0,9æ3,9æ9,3æ1,3æ3,1æ9,1 $chan(#).topic 3,1æ1,3æ9,3æ3,9æ0,9æ9,0æ
-n298=...Orange Wavey Topic:.topic # 8,0æ0,8æ7,8æ8,7æ1,7æ7,1æ7,1 $chan(#).topic 7,1æ1,7æ8,7æ7,8æ0,8æ8,0æ
-n299=..Flame Topics
-n300=...Red Flame Topic:.topic # 4,0`%0,4%,5,4`%4,5%,1,5`%5,1%,4,1 $chan(#).topic 5,1`%1,5%,4,5`%5,4%,0,4`%4,0%,
-n301=...Purple Flame Topic:.topic # 13,0`%0,13%,6,13`%13,6%,1,6`%6,1%,13,1 $chan(#).topic 6,1`%1,6%,13,6`%6,13%,0,13`%13,0%,
-n302=...Blue Flame Topic:.topic # 12,0`%0,12%,2,12`%12,2%,1,2`%2,1%,12,1 $chan(#).topic 2,1`%1,2%,12,2`%2,12%,0,12`%12,0%,
-n303=...Light Blue Flame Topic:.topic # 11,0`%0,11%,10,11`%11,10%,1,10`%10,1%,10,1 $chan(#).topic 10,1`%1,10%,11,10`%10,11%,0,11`%11,0%,
-n304=...Green Flame Topic:.topic # 9,0`%0,9%,3,9`%9,3%,1,3`%3,1%,9,1 $chan(#).topic 3,1`%1,3%,9,3`%3,9%,0,9`%9,0%,
-n305=...Orange Flame Topic:.topic # 8,0`%0,8%,7,8`%8,7%,1,7`%7,1%,7,1 $chan(#).topic 7,1`%1,7%,8,7`%7,8%,0,8`%8,0%,
-n306=..Pulse Topics
-n307=...Red Pulse Topic:.topic # 4,0~^v0,4^v5,4^v4,5^v1,5^v5,1^v~4,1 $chan(#).topic 5,1~v^1,5v^4,5v^5,4v^0,4v^4,0v^~
-n308=...Purple Pulse Topic:.topic # 13,0~^v0,13^v6,13^v13,6^v1,6^v6,1^v~13,1 $chan(#).topic 6,1~v^1,6v^13,6v^6,13v^0,13v^13,0v^~
-n309=...Blue Pulse Topic:.topic # 12,0~^v0,12^v2,12^v12,2^v1,2^v2,1^v~12,1 $chan(#).topic 2,1~v^1,2v^12,2v^2,12v^0,12v^12,0v^~
-n310=...Light Blue Pulse Topic:.topic # 11,0~^v0,11^v10,11^v11,10^v1,10^v10,1^v~10,1 $chan(#).topic 10,1~v^1,10v^11,10v^10,11v^0,11v^11,0v^~
-n311=...Green Pulse Topic:.topic # 9,0~^v0,9^v3,9^v9,3^v1,3^v3,1^v~9,1 $chan(#).topic 3,1~v^1,3v^9,3v^3,9v^0,9v^9,0v^~
-n312=...Orange Pulse Topic:.topic # 8,0~^v0,8^v7,8^v8,7^v1,7^v7,1^v~7,1 $chan(#).topic 7,1~v^1,7v^8,7v^7,8v^0,8v^8,0v^~
-n313=..3D Box Topics
-n314=...Grey Box Topic:.topic # 15,15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 0<14>15  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 15  $+ $chr(32) $+  0<14>15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 
-n315=...Dark Grey Box Topic:.topic # 14,14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 15<1>14  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 14  $+ $chr(32) $+  15<1>14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 
-n316=...Red Box Topic:.topic # 4,4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 0<5>4  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 4  $+ $chr(32) $+  0<5>4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 
-n317=...Purple Box Topic:.topic # 13,13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 0<6>13  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 13  $+ $chr(32) $+  0<6>13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 
-n318=...Blue Box Topic:.topic # 12,12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 0<2>12  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 12  $+ $chr(32) $+  0<2>12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 
-n319=...Light Blue Box Topic:.topic # 11,11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 0<10>11  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 11  $+ $chr(32) $+  0<10>11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 
-n320=...Green Box Topic:.topic # 9,9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 0<3>9  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 9  $+ $chr(32) $+  0<3>9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 
-n321=..Edit:keyedit $network # $+ -mode "Desired channel mode" 
-n322=..Clear:{ keywrite $network # $+ -mode | $report(StrangeScript,#,Mode,Set to,$key($network,# $+ mode)).active }
-n323=-
-n324=Chanserv Menu
-n325=.Register #:regchan $network #
-n326=.Recover #:msg ChanServ RECOVER #
-n327=.Help:
-n328=..Help Overview:/ChanServ HELP
-n329=..Enter Help:/ChanServ help ##?="Enter the exact help you want"
-n330=.-
-n331=.Set #:
-n332=..Email:
-n333=...Set:/ChanServ SET # EMAIL $$?="Email  to use here?"
-n334=...Show:/ChanServ INFO #
-n335=..EntryMsg:
-n336=...Set:/Chanserv SET # ENTRYMSG $$?="Enter your chosen entry message"
-n337=...Clear:/Chanserv SET # ENTRYMSG
-n338=..Guard:
-n339=...ON:/ChanServ SET # GUARD ON
-n340=...OFF:/ChanServ SET # GUARD OFF
-n341=..KeepTopic:
-n342=...ON:/ChanServ SET # KEEPTOPIC ON
-n343=...OFF:/ChanServ SET # KEEPTOPIC OFF
-n344=..MLock:/ChanServ SET # MLOCK $$?="Modes to set LOCKED"
-n345=..NoSync:
-n346=...ON:/ChanServ SET # NOSYNC ON
-n347=...OFF:/ChanServ SET # NOSYNC OFF
-n348=..Private:
-n349=...ON:/ChanServ SET # PRIVATE ON
-n350=...OFF:/ChanServ SET # PRIVATE OFF
-n351=..Property:
-n352=...Set:/ChanServ SET # PROPERTY $$?="Property NAME" $$?="Property VALUE"
-n353=...Clear:/ChanServ SET # PROPERTY $$?="Property NAME to clear"
-n354=..Restricted:
-n355=...ON:/ChanServ SET # RESTRICTED ON
-n356=...OFF:/ChanServ SET # RESTRICTED OFF
-n357=..Secure:
-n358=...ON:/ChanServ SET # SECURE ON
-n359=...OFF:/ChanServ SET # SECURE OFF
-n360=..TopicLock:
-n361=...ON:/ChanServ SET # TOPICLOCK ON
-n362=...OFF:/ChanServ SET # TOPICLOCK OFF
-n363=..URL:
-n364=...Set:/ChanServ SET # URL $$?="URL to set for this room"
-n365=...Clear:/ChanServ SET # URL
-n366=..Verbose:
-n367=...ON:/ChanServ SET # VERBOSE ON
-n368=...OPS:/ChanServ SET # VERBOSE OPS
-n369=...OFF:/ChanServ SET # VERBOSE OFF
-n370=.-
-n371=.Op/DeOp:
-n372=..Op:/ChanServ OP # $$?="Nick to OP"
-n373=..DeOp:/ChanServ OP # $$?="Nick to DEOP"
-n374=..Voice:/ChanServ OP # $$?="Nick to VOICE"
-n375=..DeVoice:/ChanServ OP # $$?="Nick to DEVOICE"
-n376=.Topic:
-n377=..Set:/ChanServ TOPIC # $$?="Topic to set"
-n378=..Clear:/ChanServ TOPIC #
-n379=.Info:msg ChanServ INFO #
-n380=.Status:
-n381=..Status of $me:/ChanServ STATUS
-n382=..Status of #:/ChanServ STATUS #
-n383=MemoServ Menu:
-n384=.List All:/MemoServ LIST
-n385=.Send Menu
-n386=..Send User:{ /memoserv send $$?="Nick To Send To?" $$?="Message Your Sending" }
-n387=..Send Chan:/memoserv send # $$?="Message To Send To This Channel"
-n388=..Send Sop:halt
-n389=.Read Menu:
-n390=..List All Memos:/memoserv list
-n391=..List A Memo:/memoserv list $$?="NUM Of Memo To List?"
-n392=..Read A Memo:/memoserv read $$?="NUM Of Memo To Read?"
-n393=..Delete A Memo:/memoserv del $$?="NUM Of Memo To Delete?"
-n394=..UnDelete A Memo:/memoserv undelete $$?="NUM Of Memo To UnDelete?"
-n395=..Purge Deleted:/MemoServ purge
-n396=.Help:
-n397=..Help Overview:/MemoServ HELP
-n398=..Enter Which Help:/MemoServ  HELP $$?="Enter the exact help you want"
-n399=-
-n400=Main $network Settings
-n401=.Auto Identify $chr(91) $key($network,auto.ident) $chr(93) $+ :
-n402=...Toggle ON:{ keywrite $network auto.ident ON | $report(StrangeScript,Auto Identify,$null,$null,Toggled to,$key($network,auto.ident)).active }
-n403=...Toggle OFF:{ keywrite $network auto.ident OFF | $report(StrangeScript,Auto Identify,$null,$null,Toggled to,$key($network,auto.ident)).active }
-n404=.DeOp Protect $chr(91) $key($network,deop.protect) $chr(93) $+ :
-n405=..Toggle ON:{ keywrite $network deop.protect ON | $report(StrangeScript,DeOp Protect,$null,$null,Toggled to,$key($network,deop.protect)).active }
-n406=..Toggle OFF:{ keywrite $network deop.protect OFF | $report(StrangeScript,DeOp Protect,$null,$null,Toggled to,$key($network,deop.protect)).active }
-n407=.AutoJoin Setup
-n408=..Auto Join: $chr(91) $key($network,auto.join) $chr(93) $+ :
-n409=...Toggle ON:{ keywrite $network auto.join ON | $report(StrangeScript,Auto Join,$null,$null,Toggled to,$key($network,auto.join)).active }
-n410=...Toggle OFF:{ keywrite $network auto.join OFF | $report(StrangeScript,Auto Join,$null,$null,Toggled to,$key($network,auto.join)).active }
-n411=..AutoJoin Rooms
-n412=...1 $chr(91) $gettok($key($network,auto.join.rooms),1,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),1,44)
-n413=...2 $chr(91) $gettok($key($network,auto.join.rooms),2,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),2,44)
-n414=...3 $chr(91) $gettok($key($network,auto.join.rooms),3,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),3,44)
-n415=...4 $chr(91) $gettok($key($network,auto.join.rooms),4,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),4,44)
-n416=..Create AutoJoin: make.auto.join
-n417=..Delete AutoJoin: keywrite $network auto.join.rooms
-n418=..Run AutoJoin:.raw join $key($network,auto.join.rooms).ircMode $chr(91) $key($network,ircMode) $chr(93) $+ :halt
-n419=.Saved Nicks
-n420=..$chr(91) $key($network,saved.nick.1) $chr(93) $+ :
-n421=...Use:/nick $key($network,saved.nick.1)
-n422=...Edit: keyedit $network saved.nick.1 "Saved nick 1"
-n423=...Clear: keywrite $network saved.nick.1
-n424=..$chr(91) $key($network,saved.nick.2) $chr(93) $+ :
-n425=...Use:/nick $key($network,saved.nick.2)
-n426=...Edit: keyedit $network saved.nick.2 "Saved nick 2"
-n427=...Clear: keywrite $network saved.nick.2Nick Password
-n428=.Nick Passwords
-n429=..$key($network,saved.nick.1) $chr(91) $key($network,$key($network,saved.nick.1)) $chr(93) $+ :
-n430=...Identify: { NickServ Identify $key($network,saved.nick.1) }
-n431=...Edit: keyedit $network $key($network,saved.nick.1) "New Nick Password"
-n432=...Clear:{ keywrite $network $key($network,saved.nick.1) | $report(StrangeScript,$key($network,saved.nick.1),password,$null,Cleared).active }
-n433=..$key($network,saved.nick.2) $chr(91) $key($network,$key($network,saved.nick.2)) $chr(93) $+ :
-n434=...Identify: { NickServ Identify $key($network,saved.nick.2) }
-n435=...Edit: keyedit $network $key($network,saved.nick.2) "New Nick Password"
-n436=...Clear:{ keywrite $network $key($network,saved.nick.2) | $report(StrangeScript,$key($network,saved.nick.2),password,$null,Cleared).active }
-n437=.Auto Nick Recover $chr(91) $key($network,recover.nick) $chr(93) $+ :
-n438=..On:{ keywrite $network recover.nick ON | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
-n439=..Off:{ keywrite $network recover.nick OFF | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
-n440=.Do Nick Recover
-n441=..Recover Nick $chr(91) $key($network,saved.nick.1) $chr(93) $+ :/recover $key($network,saved.nick.1)
-n442=..Recover Nick $chr(91) $key($network,saved.nick.2) $chr(93) $+ :/recover $key($network,saved.nick.2)
-n443=.Boss $chr(91) $key($network,boss) $chr(93) $+ :
-n444=..Not editable:halt
-n445=.Lag Check Settings
-n446=..Toggle LagCheck $chr(91) $key($network,Lagchk) $chr(93) $+ :
-n447=...ON:Lagon
-n448=...OFF:Lagoff
-n449=..LagSet Secs $chr(91) $key($network,Lagmrcsecs) $chr(93) $+ :LagSet.Secs
-n450=.CTCP Ignore $chr(91) $key($network,ctcp.ignore) $chr(93) $+ :
-n451=..ON:/ctcp.ignore ON
-n452=..OFF:/ctcp.ignore OFF
-n453=StrangeScript Settings
-n454=.Quit Message $chr(91) $unhex.ini($key(StrangeScript,quit.message)) $chr(93) $+ :
-n455=..List: if ($unhex.ini($key(StrangeScript,quit.message)) != $null) { $report(StrangeScript,Quit Message,$null,$null,$unhex.ini($key(StrangeScript,quit.message))).active }
-n456=..Add:{
-n457=  set %tmp.qm1 $$?="Add your Quit Message"
-n458=  keywrite StrangeScript quit.message $hex.ini(%tmp.qm1)
-n459=  $report(StrangeScript,Quit Message,$null,$null,$unhex.ini($key(StrangeScript,quit.message))).active
-n460=  unset %tmp.qm1
-n461=}
-n462=..Clear: { keywrite StrangeScript quit.message }
-n463=.Part Message $chr(91) $unhex.ini($key(StrangeScript,part.message)) $chr(93) $+ :
-n464=..List: if ($unhex.ini($key(StrangeScript,part.message)) != $null) { $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,part.message))).active }
-n465=..Add:{
-n466=  set %tmp.pm1 $$?="Add your Part Message"
-n467=  keywrite StrangeScript part.message $hex.ini(%tmp.pm1)
-n468=  $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,part.message))).active
-n469=  unset %tmp.pm1
-n470=}
-n471=..Clear: { keywrite StrangeScript part.message }
-n472=.Away Message $chr(91) $unhex.ini($key(StrangeScript,away.message)) $chr(93) $+ :
-n473=..List: if ($unhex.ini($key(StrangeScript,away.message)) != $null) { $report(StrangeScript,Away Message,$null,$null,$unhex.ini($key(StrangeScript,away.message))).active }
-n474=..Add:{
-n475=  set %tmp.am1 $$?="Add your Away Message"
-n476=  keywrite StrangeScript away.message $hex.ini(%tmp.am1)
-n477=  $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,away.message))).active
-n478=  unset %tmp.am1
-n479=}
-n480=..Clear: { keywrite StrangeScript away.message }
-n481=.Away Nick Add $chr(91) $key(StrangeScript,away.nick.add) $chr(93) $+ : 
-n482=..Edit: keyedit StrangeScript away.nick.add "Enter An Away Addition To You'r Nick"
-n483=..Clear: { keywrite StrangeScript away.nick.add }
-n484=.Away Remind time $chr(91) $key(StrangeScript,away.remind) $chr(93) $+ : 
-n485=..Edit: keyedit StrangeScript away.remind "Enter An Away Remind Time in Seconds"
-n486=..Clear: { keywrite StrangeScript away.remind }
-n487=.-
-n488=.Which.Window $chr(91) $key(StrangeScript,which.window) $chr(93) $+ :
-n489=..ACTIVE: keywrite StrangeScript which.window ACTIVE | $report(WhichWindow,SET,$null,$null,Active).active
-n490=..STATUS: keywrite StrangeScript which.window STATUS | $report(WhichWindow,SET,$null,$null,Status).active
-n491=..ON: keywrite StrangeScript which.window ON | $report(WhichWindow,SET,$null,$null,On).active
-n492=..OFF: keywrite StrangeScript which.window OFF | $report(WhichWindow,SET,$null,$null,Off).active
-n493=.PingPong Show $chr(91) $key(StrangeScript,pingpong.show) $chr(93) $+ :
-n494=..ON:/pingpong ON
-n495=..OFF:/pingpong OFF
-n496=.Script Sounds $chr(91) $key(StrangeScript,script.sounds) $chr(93) $+ :
-n497=..ON:/script.sounds ON
-n498=..OFF:/script.sounds OFF
-n499=.Key Write Show $chr(91) $key(StrangeScript,key.writes) $chr(93) $+ :
-n500=..ON:/key.writes ON
-n501=..OFF:/key.writes OFF
-n502=.Key Read Show $chr(91) $key(StrangeScript,key.reads) $chr(93) $+ :
-n503=..ON:/key.reads ON
-n504=..OFF:/key.reads OFF
-n505=.Default Modes $chr(91) $key(StrangeScript,mode.default) $chr(93) $+ :
-n506=..Edit:keyedit StrangeScript mode.default "Default Mode written to new channels"
-n507=..Clear:{ keywrite StrangeScript mode.default | $report(StrangeScript,Mode.default,Set to,$key(StrangeScript,mode.default)).active }
-n508=.Go FullScreen $chr(91) $key(StrangeScript,go.full) $chr(93) $+ :
-n509=..ON:{ keywrite StrangeScript go.full ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
-n510=..OFF:{ keywrite StrangeScript go.full OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
-n511=.Serv On Start $chr(91) $key(StrangeScript,serv.on.start) $chr(93) $+ :
-n512=..ON:{ keywrite StrangeScript serv.on.start ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
-n513=..OFF:{ keywrite StrangeScript serv.on.start OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
-n514=Main Color and Display Setup
-n515=.Bold Prompts $chr(91) $key(StrangeScript,sc.bold) $chr(93)
-n516=..ON:keywrite StrangeScript sc.bold ON
-n517=..OFF:keywrite StrangeScript sc.bold OFF
-n518=.Display Color Defaults
-n519=..Save Default Low Color $chr(91) %sc1 $chr(93) $+ :set %sc1 $$?="Please select from 00 - 15" | /setupshow  $+ %sc1 your color choice was this | halt
-n520=..Save Default High Color $chr(91) %sc2 $chr(93) $+ :set %sc2 $$?="Please select from 00 - 15" | /setupshow  $+ %sc2 your color choice was this | halt
-n521=..Save Default Bright Color $chr(91) %sc3 $chr(93) $+ :set %sc3 $$?="Please select from 00 - 15" | /setupshow  $+ %sc3 your color choice was this | halt
-n522=..Save Default Message Color $chr(91) %sc4 $chr(93) $+ :set %sc4 $$?="Please select from 00 - 15" | /setupshow  $+ %sc4 your color choice was this | halt
-n523=..Save Default Seperator $chr(91) %sc.seperater $chr(93) $+ :set %sc.seperater $$?="Please select from 00 - 15" | setupshow  $+ %sc.seperater your color choice was this | halt.NickList Color Defaults
-n524=-
-n525=Info
-n526=.Modes:mode #
-n527=.Topic:topic #
-n528=.Who:who #
-n529=.Names:names #
-n530=Moderate
-n531=.Channel Editor:channel #
-n532=.$iif(m isincs $chan(#).mode,$style(1)) Moderated:mode # $+($iif(m !isincs $chan(#).mode,+,-),m)
-n533=.$iif(i isincs $chan(#).mode,$style(1)) Invite Only:mode # $+($iif(i !isincs $chan(#).mode,+,-),i)
-n534=.$iif(p isincs $chan(#).mode,$style(1)) Private:mode # $+($iif(p !isincs $chan(#).mode,+,-),p)
-n535=.$iif(s isincs $chan(#).mode,$style(1)) Secret:mode # $+($iif(s !isincs $chan(#).mode,+,-),s)
-n536=.$iif(t isincs $chan(#).mode,$style(1)) Only Ops Set Topic:mode # $+($iif(t !isincs $chan(#).mode,+,-),t)
-n537=.$iif(n isincs $chan(#).mode,$style(1)) Disable External Messages:mode # $+($iif(n !isincs $chan(#).mode,+,-),n)
-n538=.$iif(l isincs $chan(#).mode,$style(1)) Channel Limit ( $+ $chan(#).limit $+ ):var %l = $??(Set Limit, Set Limit, $chan(#).limit) | mode # $iif(%l > 0,+l %l,-l) 
-n539=.$iif(k isincs $chan(#).mode,$style(1)) Channel Password:var %k = $??(Channel Password, Channel Password, $chan(#).key) | mode # $iif(%k != $chan(#).key,+k %k,-k %k)
-n540=.Topic:topic # $??(Change Topic, Topic, $chan(#).topic)
-n541=System Info
-n542=.System:sysinfo
-n543=.Operating System:osinfo
-n544=.Processor(s):cpuinfo
-n545=.Memory:meminfo
-n546=.Graphics:gfxinfo
-n547=.Harddisks:diskinfo
-n548=.Audio:audioinfo
-n549=.Bandwidth:bw
-n550=.Uptime:uptime
-n551=$iif($song,Now Playing):np
-n552=-
-n553=Encoding
-n554=.$submenu($encodingmenu($1),25)
-n555=$iif($isfile($qt($window($active).logfile)), View Log):logview $qt($window($active).logfile)
-n556=-
-n557=Clear
-n558=.Clear:clear
-n559=.ClearAll:clearall
-n560=Cycle
-n561=.Cycle:cycle 
-n562=.CycleAll:cycleall
-n563=Search:search
-n564=Close:close
-n565=
+n269=..Say Mode:{ $report(StrangeScript,#,Mode,Set to,$Key($network,# $+ -mode)).active }
+n270=..Set Mode:{ keywrite $network # $+ -mode $$?="New Modes Here +/-abcde" }
+n271=.Topic Stuff
+n272=..Edit Current Topic:channel
+n273=..-
+n274=..Misc. Topics
+n275=...Arrow Topic:.topic # 2--12--6--5--4--7--8--9--11>12 $chan(#).topic 11<9--8--7--4--5--6--12--2--
+n276=...Box Topic:.topic # 8,1°°9,1°°12,1°°13,1°°4,1°°7,1°°8,1 $chan(#).topic 7°°4°°13°°12°°9°°8°°
+n277=...Button Topic:.topic # 7>4>5> 15,14<1>15<1>15<1>4[9 $chan(#).topic 4]15,14<1>15<1>15<1> 5<4<7<9
+n278=...Caution Topic:.topic # 1,8/8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8 $chan(#).topic 8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8/8,1/1,8/
+n279=...Diamonds Topic:.topic # 2‹›‹›12‹›‹›13‹›‹›6‹›‹›5‹›‹›4‹›‹›7‹›‹›8‹›‹›9‹›‹›3‹›‹›11 $chan(#).topic 3‹›‹›9‹›‹›8‹›‹›7‹›‹›4‹›‹›5‹›‹›6‹›‹›13‹›‹›12‹›‹›2‹›‹›
+n280=...Flowery Topic:.topic # 13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11 $chan(#).topic 6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº11^6ºvº11^13ºvº
+n281=...Heartbeat Topic:.topic # 9,1~^v^v^v^v^v^v^v^v^v^~ $chan(#).topic ~^v^v^v^v^v^v^v^v^v^~
+n282=...Meter Topic:.topic # 4,1 $chan(#).topic 14,14.15,15.0,0.15,15.14,14.9,1 IIIIIIIIIIIIIIIIIIII8,1IIIIIIIIII4,1IIIIIIIIII 14,14.15,15.0,0.15,15.14,14.
+n283=...Party Topic:.topic # 4¡!¹'¹!7¡!¹'¹!8¡!¹'¹!9¡!¹'¹!12¡!¹'¹!13¡!¹'¹!4 $chan(#).topic 13!¹'¹!¡12!¹'¹!¡9!¹'¹!¡8!¹'¹!¡7!¹'¹!¡4!¹'¹!¡
+n284=...Pointer Topic:.topic # 13(¯`·.¸¸.->12(¯`·.¸¸.->9 $chan(#).topic 12<-.¸¸.·´¯)13<-.¸¸.·´¯)
+n285=...Rose Topic:.topic # 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«-4 $chan(#).topic 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«- 9-»4@9«-
+n286=...Southwestern Topic:.topic # 10,10-5,10!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!10,10-5,10 $chan(#).topic 10,10-5,10!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!!i!i!10,10-
+n287=...Sparkle Topic:.topic # 13*©*12*´¯`*.¸11¸.*´¯`* $chan(#).topic 11*´¯`*.¸12¸.*´¯`*13*©*
+n288=...Square Wave Topic:.topic # 8,7–•¬–•¬–•¬–•¬–•¬–•¬–•¬–•¬1,7 $chan(#).topic 8,7–•¬–•¬–•¬–•¬–•¬–•¬–•¬–•¬
+n289=...Tri-Peak Topic:.topic # 13_,.-11*13~11^13~11*13-.,_,.-11*13~11^13~11*13-.,_ $chan(#).topic _,.-11*13~11^13~11*13-.,_,.-11*13~11^13~11*13-.,_
+n290=...Triangle Topic:.topic # 7,1»4»5»14,14 15/1\ 15/1\ 15/1\ 4,1[9 $chan(#).topic 4]14,14 15/1\ 15/1\ 15/1\ 5,1«4«7«
+n291=...Wave Topic:.topic # 12¸.·´¯`·.¸13¸.·´¯`·.¸4¸.·´¯`·.¸7¸.·´¯`·.¸8¸.·´¯`·.¸9 $chan(#).topic 8¸.·´¯`·.¸7¸.·´¯`·.¸4¸.·´¯`·.¸13¸.·´¯`·.¸12¸.·´¯`·.¸
+n292=...Wing Topic:.topic # 12¯`°²º¤©º°¨¨°º©©º°¨¨°º©=[4 $chan(#).topic 12]=©º°¨¨°º©©º°¨¨°º©¤º²°`¯
+n293=..Wavey Topics
+n294=...Red Wavey Topic:.topic # 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $chan(#).topic 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
+n295=...Purple Wavey Topic:.topic # 13,0æ0,13æ6,13æ13,6æ1,6æ6,1æ13,1 $chan(#).topic 6,1æ1,6æ13,6æ6,13æ0,13æ13,0æ
+n296=...Blue Wavey Topic:.topic # 12,0æ0,12æ2,12æ12,2æ1,2æ2,1æ12,1 $chan(#).topic 2,1æ1,2æ12,2æ2,12æ0,12æ12,0æ
+n297=...Light Blue Wavey Topic:.topic # 11,0æ0,11æ10,11æ11,10æ1,10æ10,1æ10,1 $chan(#).topic 10,1æ1,10æ11,10æ10,11æ0,11æ11,0æ
+n298=...Green Wavey Topic:.topic # 9,0æ0,9æ3,9æ9,3æ1,3æ3,1æ9,1 $chan(#).topic 3,1æ1,3æ9,3æ3,9æ0,9æ9,0æ
+n299=...Orange Wavey Topic:.topic # 8,0æ0,8æ7,8æ8,7æ1,7æ7,1æ7,1 $chan(#).topic 7,1æ1,7æ8,7æ7,8æ0,8æ8,0æ
+n300=..Flame Topics
+n301=...Red Flame Topic:.topic # 4,0`%0,4%,5,4`%4,5%,1,5`%5,1%,4,1 $chan(#).topic 5,1`%1,5%,4,5`%5,4%,0,4`%4,0%,
+n302=...Purple Flame Topic:.topic # 13,0`%0,13%,6,13`%13,6%,1,6`%6,1%,13,1 $chan(#).topic 6,1`%1,6%,13,6`%6,13%,0,13`%13,0%,
+n303=...Blue Flame Topic:.topic # 12,0`%0,12%,2,12`%12,2%,1,2`%2,1%,12,1 $chan(#).topic 2,1`%1,2%,12,2`%2,12%,0,12`%12,0%,
+n304=...Light Blue Flame Topic:.topic # 11,0`%0,11%,10,11`%11,10%,1,10`%10,1%,10,1 $chan(#).topic 10,1`%1,10%,11,10`%10,11%,0,11`%11,0%,
+n305=...Green Flame Topic:.topic # 9,0`%0,9%,3,9`%9,3%,1,3`%3,1%,9,1 $chan(#).topic 3,1`%1,3%,9,3`%3,9%,0,9`%9,0%,
+n306=...Orange Flame Topic:.topic # 8,0`%0,8%,7,8`%8,7%,1,7`%7,1%,7,1 $chan(#).topic 7,1`%1,7%,8,7`%7,8%,0,8`%8,0%,
+n307=..Pulse Topics
+n308=...Red Pulse Topic:.topic # 4,0~^v0,4^v5,4^v4,5^v1,5^v5,1^v~4,1 $chan(#).topic 5,1~v^1,5v^4,5v^5,4v^0,4v^4,0v^~
+n309=...Purple Pulse Topic:.topic # 13,0~^v0,13^v6,13^v13,6^v1,6^v6,1^v~13,1 $chan(#).topic 6,1~v^1,6v^13,6v^6,13v^0,13v^13,0v^~
+n310=...Blue Pulse Topic:.topic # 12,0~^v0,12^v2,12^v12,2^v1,2^v2,1^v~12,1 $chan(#).topic 2,1~v^1,2v^12,2v^2,12v^0,12v^12,0v^~
+n311=...Light Blue Pulse Topic:.topic # 11,0~^v0,11^v10,11^v11,10^v1,10^v10,1^v~10,1 $chan(#).topic 10,1~v^1,10v^11,10v^10,11v^0,11v^11,0v^~
+n312=...Green Pulse Topic:.topic # 9,0~^v0,9^v3,9^v9,3^v1,3^v3,1^v~9,1 $chan(#).topic 3,1~v^1,3v^9,3v^3,9v^0,9v^9,0v^~
+n313=...Orange Pulse Topic:.topic # 8,0~^v0,8^v7,8^v8,7^v1,7^v7,1^v~7,1 $chan(#).topic 7,1~v^1,7v^8,7v^7,8v^0,8v^8,0v^~
+n314=..3D Box Topics
+n315=...Grey Box Topic:.topic # 15,15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 0<14>15  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 15  $+ $chr(32) $+  0<14>15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 0<14>15 $+ $chr(32) $+ 
+n316=...Dark Grey Box Topic:.topic # 14,14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 15<1>14  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 14  $+ $chr(32) $+  15<1>14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 15<1>14 $+ $chr(32) $+ 
+n317=...Red Box Topic:.topic # 4,4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 0<5>4  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 4  $+ $chr(32) $+  0<5>4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 0<5>4 $+ $chr(32) $+ 
+n318=...Purple Box Topic:.topic # 13,13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 0<6>13  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 13  $+ $chr(32) $+  0<6>13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 0<6>13 $+ $chr(32) $+ 
+n319=...Blue Box Topic:.topic # 12,12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 0<2>12  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 12  $+ $chr(32) $+  0<2>12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 0<2>12 $+ $chr(32) $+ 
+n320=...Light Blue Box Topic:.topic # 11,11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 0<10>11  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 11  $+ $chr(32) $+  0<10>11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 0<10>11 $+ $chr(32) $+ 
+n321=...Green Box Topic:.topic # 9,9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 0<3>9  $+ $chr(32) $+  1 $+ $chan(#).topic $+ 9  $+ $chr(32) $+  0<3>9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 0<3>9 $+ $chr(32) $+ 
+n322=..Edit:keyedit $network # $+ -mode "Desired channel mode" 
+n323=..Clear:{ keywrite $network # $+ -mode | $report(StrangeScript,#,Mode,Set to,$key($network,# $+ mode)).active }
+n324=-
+n325=Chanserv Menu
+n326=.Register #:regchan $network #
+n327=.Recover #:msg ChanServ RECOVER #
+n328=.Help:
+n329=..Help Overview:/ChanServ HELP
+n330=..Enter Help:/ChanServ help ##?="Enter the exact help you want"
+n331=.-
+n332=.Set #:
+n333=..Email:
+n334=...Set:/ChanServ SET # EMAIL $$?="Email  to use here?"
+n335=...Show:/ChanServ INFO #
+n336=..EntryMsg:
+n337=...Set:/Chanserv SET # ENTRYMSG $$?="Enter your chosen entry message"
+n338=...Clear:/Chanserv SET # ENTRYMSG
+n339=..Guard:
+n340=...ON:/ChanServ SET # GUARD ON
+n341=...OFF:/ChanServ SET # GUARD OFF
+n342=..KeepTopic:
+n343=...ON:/ChanServ SET # KEEPTOPIC ON
+n344=...OFF:/ChanServ SET # KEEPTOPIC OFF
+n345=..MLock:/ChanServ SET # MLOCK $$?="Modes to set LOCKED"
+n346=..NoSync:
+n347=...ON:/ChanServ SET # NOSYNC ON
+n348=...OFF:/ChanServ SET # NOSYNC OFF
+n349=..Private:
+n350=...ON:/ChanServ SET # PRIVATE ON
+n351=...OFF:/ChanServ SET # PRIVATE OFF
+n352=..Property:
+n353=...Set:/ChanServ SET # PROPERTY $$?="Property NAME" $$?="Property VALUE"
+n354=...Clear:/ChanServ SET # PROPERTY $$?="Property NAME to clear"
+n355=..Restricted:
+n356=...ON:/ChanServ SET # RESTRICTED ON
+n357=...OFF:/ChanServ SET # RESTRICTED OFF
+n358=..Secure:
+n359=...ON:/ChanServ SET # SECURE ON
+n360=...OFF:/ChanServ SET # SECURE OFF
+n361=..TopicLock:
+n362=...ON:/ChanServ SET # TOPICLOCK ON
+n363=...OFF:/ChanServ SET # TOPICLOCK OFF
+n364=..URL:
+n365=...Set:/ChanServ SET # URL $$?="URL to set for this room"
+n366=...Clear:/ChanServ SET # URL
+n367=..Verbose:
+n368=...ON:/ChanServ SET # VERBOSE ON
+n369=...OPS:/ChanServ SET # VERBOSE OPS
+n370=...OFF:/ChanServ SET # VERBOSE OFF
+n371=.-
+n372=.Op/DeOp:
+n373=..Op:/ChanServ OP # $$?="Nick to OP"
+n374=..DeOp:/ChanServ OP # $$?="Nick to DEOP"
+n375=..Voice:/ChanServ OP # $$?="Nick to VOICE"
+n376=..DeVoice:/ChanServ OP # $$?="Nick to DEVOICE"
+n377=.Topic:
+n378=..Set:/ChanServ TOPIC # $$?="Topic to set"
+n379=..Clear:/ChanServ TOPIC #
+n380=.Info:msg ChanServ INFO #
+n381=.Status:
+n382=..Status of $me:/ChanServ STATUS
+n383=..Status of #:/ChanServ STATUS #
+n384=MemoServ Menu:
+n385=.List All:/MemoServ LIST
+n386=.Send Menu
+n387=..Send User:{ /memoserv send $$?="Nick To Send To?" $$?="Message Your Sending" }
+n388=..Send Chan:/memoserv send # $$?="Message To Send To This Channel"
+n389=..Send Sop:halt
+n390=.Read Menu:
+n391=..List All Memos:/memoserv list
+n392=..List A Memo:/memoserv list $$?="NUM Of Memo To List?"
+n393=..Read A Memo:/memoserv read $$?="NUM Of Memo To Read?"
+n394=..Delete A Memo:/memoserv del $$?="NUM Of Memo To Delete?"
+n395=..UnDelete A Memo:/memoserv undelete $$?="NUM Of Memo To UnDelete?"
+n396=..Purge Deleted:/MemoServ purge
+n397=.Help:
+n398=..Help Overview:/MemoServ HELP
+n399=..Enter Which Help:/MemoServ  HELP $$?="Enter the exact help you want"
+n400=-
+n401=Main $network Settings
+n402=.Auto Identify $chr(91) $key($network,auto.ident) $chr(93) $+ :
+n403=...Toggle ON:{ keywrite $network auto.ident ON | $report(StrangeScript,Auto Identify,$null,$null,Toggled to,$key($network,auto.ident)).active }
+n404=...Toggle OFF:{ keywrite $network auto.ident OFF | $report(StrangeScript,Auto Identify,$null,$null,Toggled to,$key($network,auto.ident)).active }
+n405=.DeOp Protect $chr(91) $key($network,deop.protect) $chr(93) $+ :
+n406=..Toggle ON:{ keywrite $network deop.protect ON | $report(StrangeScript,DeOp Protect,$null,$null,Toggled to,$key($network,deop.protect)).active }
+n407=..Toggle OFF:{ keywrite $network deop.protect OFF | $report(StrangeScript,DeOp Protect,$null,$null,Toggled to,$key($network,deop.protect)).active }
+n408=.AutoJoin Setup
+n409=..Auto Join: $chr(91) $key($network,auto.join) $chr(93) $+ :
+n410=...Toggle ON:{ keywrite $network auto.join ON | $report(StrangeScript,Auto Join,$null,$null,Toggled to,$key($network,auto.join)).active }
+n411=...Toggle OFF:{ keywrite $network auto.join OFF | $report(StrangeScript,Auto Join,$null,$null,Toggled to,$key($network,auto.join)).active }
+n412=..AutoJoin Rooms
+n413=...1 $chr(91) $gettok($key($network,auto.join.rooms),1,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),1,44)
+n414=...2 $chr(91) $gettok($key($network,auto.join.rooms),2,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),2,44)
+n415=...3 $chr(91) $gettok($key($network,auto.join.rooms),3,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),3,44)
+n416=...4 $chr(91) $gettok($key($network,auto.join.rooms),4,44) $chr(93) $+ :join $gettok($key($network,auto.join.rooms),4,44)
+n417=..Create AutoJoin: make.auto.join
+n418=..Delete AutoJoin: keywrite $network auto.join.rooms
+n419=..Run AutoJoin:.raw join $key($network,auto.join.rooms).ircMode $chr(91) $key($network,ircMode) $chr(93) $+ :halt
+n420=.Saved Nicks
+n421=..$chr(91) $key($network,saved.nick.1) $chr(93) $+ :
+n422=...Use:/nick $key($network,saved.nick.1)
+n423=...Edit: keyedit $network saved.nick.1 "Saved nick 1"
+n424=...Clear: keywrite $network saved.nick.1
+n425=..$chr(91) $key($network,saved.nick.2) $chr(93) $+ :
+n426=...Use:/nick $key($network,saved.nick.2)
+n427=...Edit: keyedit $network saved.nick.2 "Saved nick 2"
+n428=...Clear: keywrite $network saved.nick.2Nick Password
+n429=.Nick Passwords
+n430=..$key($network,saved.nick.1) $chr(91) $key($network,$key($network,saved.nick.1)) $chr(93) $+ :
+n431=...Identify: { NickServ Identify $key($network,saved.nick.1) }
+n432=...Edit: keyedit $network $key($network,saved.nick.1) "New Nick Password"
+n433=...Clear:{ keywrite $network $key($network,saved.nick.1) | $report(StrangeScript,$key($network,saved.nick.1),password,$null,Cleared).active }
+n434=..$key($network,saved.nick.2) $chr(91) $key($network,$key($network,saved.nick.2)) $chr(93) $+ :
+n435=...Identify: { NickServ Identify $key($network,saved.nick.2) }
+n436=...Edit: keyedit $network $key($network,saved.nick.2) "New Nick Password"
+n437=...Clear:{ keywrite $network $key($network,saved.nick.2) | $report(StrangeScript,$key($network,saved.nick.2),password,$null,Cleared).active }
+n438=.Auto Nick Recover $chr(91) $key($network,recover.nick) $chr(93) $+ :
+n439=..On:{ keywrite $network recover.nick ON | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
+n440=..Off:{ keywrite $network recover.nick OFF | $report(StrangeScript,Auto Nick Recover,$null,$null,Toggled to,$key($network,recover.nick)).active }
+n441=.Do Nick Recover
+n442=..Recover Nick $chr(91) $key($network,saved.nick.1) $chr(93) $+ :/recover $key($network,saved.nick.1)
+n443=..Recover Nick $chr(91) $key($network,saved.nick.2) $chr(93) $+ :/recover $key($network,saved.nick.2)
+n444=.Boss $chr(91) $key($network,boss) $chr(93) $+ :
+n445=..Not editable:halt
+n446=.Lag Check Settings
+n447=..Toggle LagCheck $chr(91) $key($network,Lagchk) $chr(93) $+ :
+n448=...ON:Lagon
+n449=...OFF:Lagoff
+n450=..LagSet Secs $chr(91) $key($network,Lagmrcsecs) $chr(93) $+ :LagSet.Secs
+n451=.CTCP Ignore $chr(91) $key($network,ctcp.ignore) $chr(93) $+ :
+n452=..ON:/ctcp.ignore ON
+n453=..OFF:/ctcp.ignore OFF
+n454=StrangeScript Settings
+n455=.Quit Message $chr(91) $unhex.ini($key(StrangeScript,quit.message)) $chr(93) $+ :
+n456=..List: if ($unhex.ini($key(StrangeScript,quit.message)) != $null) { $report(StrangeScript,Quit Message,$null,$null,$unhex.ini($key(StrangeScript,quit.message))).active }
+n457=..Add:{
+n458=  set %tmp.qm1 $$?="Add your Quit Message"
+n459=  keywrite StrangeScript quit.message $hex.ini(%tmp.qm1)
+n460=  $report(StrangeScript,Quit Message,$null,$null,$unhex.ini($key(StrangeScript,quit.message))).active
+n461=  unset %tmp.qm1
+n462=}
+n463=..Clear: { keywrite StrangeScript quit.message }
+n464=.Part Message $chr(91) $unhex.ini($key(StrangeScript,part.message)) $chr(93) $+ :
+n465=..List: if ($unhex.ini($key(StrangeScript,part.message)) != $null) { $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,part.message))).active }
+n466=..Add:{
+n467=  set %tmp.pm1 $$?="Add your Part Message"
+n468=  keywrite StrangeScript part.message $hex.ini(%tmp.pm1)
+n469=  $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,part.message))).active
+n470=  unset %tmp.pm1
+n471=}
+n472=..Clear: { keywrite StrangeScript part.message }
+n473=.Away Message $chr(91) $unhex.ini($key(StrangeScript,away.message)) $chr(93) $+ :
+n474=..List: if ($unhex.ini($key(StrangeScript,away.message)) != $null) { $report(StrangeScript,Away Message,$null,$null,$unhex.ini($key(StrangeScript,away.message))).active }
+n475=..Add:{
+n476=  set %tmp.am1 $$?="Add your Away Message"
+n477=  keywrite StrangeScript away.message $hex.ini(%tmp.am1)
+n478=  $report(StrangeScript,Part Message,$null,$null,$unhex.ini($key(StrangeScript,away.message))).active
+n479=  unset %tmp.am1
+n480=}
+n481=..Clear: { keywrite StrangeScript away.message }
+n482=.Away Nick Add $chr(91) $key(StrangeScript,away.nick.add) $chr(93) $+ : 
+n483=..Edit: keyedit StrangeScript away.nick.add "Enter An Away Addition To You'r Nick"
+n484=..Clear: { keywrite StrangeScript away.nick.add }
+n485=.Away Remind time $chr(91) $key(StrangeScript,away.remind) $chr(93) $+ : 
+n486=..Edit: keyedit StrangeScript away.remind "Enter An Away Remind Time in Seconds"
+n487=..Clear: { keywrite StrangeScript away.remind }
+n488=.-
+n489=.Which.Window $chr(91) $key(StrangeScript,which.window) $chr(93) $+ :
+n490=..ACTIVE: keywrite StrangeScript which.window ACTIVE | $report(WhichWindow,SET,$null,$null,Active).active
+n491=..STATUS: keywrite StrangeScript which.window STATUS | $report(WhichWindow,SET,$null,$null,Status).active
+n492=..ON: keywrite StrangeScript which.window ON | $report(WhichWindow,SET,$null,$null,On).active
+n493=..OFF: keywrite StrangeScript which.window OFF | $report(WhichWindow,SET,$null,$null,Off).active
+n494=.PingPong Show $chr(91) $key(StrangeScript,pingpong.show) $chr(93) $+ :
+n495=..ON:/pingpong ON
+n496=..OFF:/pingpong OFF
+n497=.Script Sounds $chr(91) $key(StrangeScript,script.sounds) $chr(93) $+ :
+n498=..ON:/script.sounds ON
+n499=..OFF:/script.sounds OFF
+n500=.Key Write Show $chr(91) $key(StrangeScript,key.writes) $chr(93) $+ :
+n501=..ON:/key.writes ON
+n502=..OFF:/key.writes OFF
+n503=.Key Read Show $chr(91) $key(StrangeScript,key.reads) $chr(93) $+ :
+n504=..ON:/key.reads ON
+n505=..OFF:/key.reads OFF
+n506=.Default Modes $chr(91) $key(StrangeScript,mode.default) $chr(93) $+ :
+n507=..Edit:keyedit StrangeScript mode.default "Default Mode written to new channels"
+n508=..Clear:{ keywrite StrangeScript mode.default | $report(StrangeScript,Mode.default,Set to,$key(StrangeScript,mode.default)).active }
+n509=.Go FullScreen $chr(91) $key(StrangeScript,go.full) $chr(93) $+ :
+n510=..ON:{ keywrite StrangeScript go.full ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
+n511=..OFF:{ keywrite StrangeScript go.full OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,go.full)).active }
+n512=.Serv On Start $chr(91) $key(StrangeScript,serv.on.start) $chr(93) $+ :
+n513=..ON:{ keywrite StrangeScript serv.on.start ON | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
+n514=..OFF:{ keywrite StrangeScript serv.on.start OFF | $report(StrangeScript,Go FullScreen,Set to,$key(StrangeScript,serv.on.start)).active }
+n515=Main Color and Display Setup
+n516=.Bold Prompts $chr(91) $key(StrangeScript,sc.bold) $chr(93)
+n517=..ON:keywrite StrangeScript sc.bold ON
+n518=..OFF:keywrite StrangeScript sc.bold OFF
+n519=.Display Color Defaults
+n520=..Save Default Low Color $chr(91) %sc1 $chr(93) $+ :set %sc1 $$?="Please select from 00 - 15" | /setupshow  $+ %sc1 your color choice was this | halt
+n521=..Save Default High Color $chr(91) %sc2 $chr(93) $+ :set %sc2 $$?="Please select from 00 - 15" | /setupshow  $+ %sc2 your color choice was this | halt
+n522=..Save Default Bright Color $chr(91) %sc3 $chr(93) $+ :set %sc3 $$?="Please select from 00 - 15" | /setupshow  $+ %sc3 your color choice was this | halt
+n523=..Save Default Message Color $chr(91) %sc4 $chr(93) $+ :set %sc4 $$?="Please select from 00 - 15" | /setupshow  $+ %sc4 your color choice was this | halt
+n524=..Save Default Seperator $chr(91) %sc.seperater $chr(93) $+ :set %sc.seperater $$?="Please select from 00 - 15" | setupshow  $+ %sc.seperater your color choice was this | halt.NickList Color Defaults
+n525=-
+n526=Info
+n527=.Modes:mode #
+n528=.Topic:topic #
+n529=.Who:who #
+n530=.Names:names #
+n531=Moderate
+n532=.Channel Editor:channel #
+n533=.$iif(m isincs $chan(#).mode,$style(1)) Moderated:mode # $+($iif(m !isincs $chan(#).mode,+,-),m)
+n534=.$iif(i isincs $chan(#).mode,$style(1)) Invite Only:mode # $+($iif(i !isincs $chan(#).mode,+,-),i)
+n535=.$iif(p isincs $chan(#).mode,$style(1)) Private:mode # $+($iif(p !isincs $chan(#).mode,+,-),p)
+n536=.$iif(s isincs $chan(#).mode,$style(1)) Secret:mode # $+($iif(s !isincs $chan(#).mode,+,-),s)
+n537=.$iif(t isincs $chan(#).mode,$style(1)) Only Ops Set Topic:mode # $+($iif(t !isincs $chan(#).mode,+,-),t)
+n538=.$iif(n isincs $chan(#).mode,$style(1)) Disable External Messages:mode # $+($iif(n !isincs $chan(#).mode,+,-),n)
+n539=.$iif(l isincs $chan(#).mode,$style(1)) Channel Limit ( $+ $chan(#).limit $+ ):var %l = $??(Set Limit, Set Limit, $chan(#).limit) | mode # $iif(%l > 0,+l %l,-l) 
+n540=.$iif(k isincs $chan(#).mode,$style(1)) Channel Password:var %k = $??(Channel Password, Channel Password, $chan(#).key) | mode # $iif(%k != $chan(#).key,+k %k,-k %k)
+n541=.Topic:topic # $??(Change Topic, Topic, $chan(#).topic)
+n542=System Info
+n543=.System:sysinfo
+n544=.Operating System:osinfo
+n545=.Processor(s):cpuinfo
+n546=.Memory:meminfo
+n547=.Graphics:gfxinfo
+n548=.Harddisks:diskinfo
+n549=.Audio:audioinfo
+n550=.Bandwidth:bw
+n551=.Uptime:uptime
+n552=$iif($song,Now Playing):np
+n553=-
+n554=Encoding
+n555=.$submenu($encodingmenu($1),25)
+n556=$iif($isfile($qt($window($active).logfile)), View Log):logview $qt($window($active).logfile)
+n557=-
+n558=Clear
+n559=.Clear:clear
+n560=.ClearAll:clearall
+n561=Cycle
+n562=.Cycle:cycle 
+n563=.CycleAll:cycleall
+n564=Search:search
+n565=Close:close
+n566=
