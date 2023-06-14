@@ -177,3 +177,4 @@ raw 315:*: {
 alias center.server {
   $report(Center Server,Empty Function,$null,$null,$null).active
 }
+alias ircd { $iif($isid,return,echo -at) $iif($servervars(_ircdversion) != $null, $servervars(_ircdversion),0) }
