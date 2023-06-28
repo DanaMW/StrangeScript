@@ -1,16 +1,13 @@
 alias bot {
   if ($1 == ON) {
     set %bot.onp2 $2
-    if (%bot.onp2 == $null) {
-      set %bot.onp2 $network
-      if ($network == libera.chat) { 
-          set %bot.onp2 libera
-        }
-      }
-    if (%bot.onp2 == human) {
+    if (%bot.onp2 == $null) { set %bot.onp2 $network }
+    if ($network == libera.chat) { set %bot.onp2 libera }
+    if ($network == localNet) { set %bot.onp2 Local }
+    if (%bot.onp2 == local) {
       bot.check
-      sockopen -n BotHuman irc.human.net 6667
-      $report(Bot,ON,$null,Human,irc.human.net,6667).active
+      sockopen -n BotLocal irc.localdomain.net 6667
+      $report(Bot,ON,$null,Local,irc.localdomain.net,6667).active
       return
     }
     if (%bot.onp2 == ircgo) {
@@ -31,16 +28,16 @@ alias bot {
       $report(Bot,ON,$null,Libera,irc.libera.chat,6667).active
       return
     }
-    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON HUMAN or IRCGO or DalNet or Libera Etc.).active
+    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera Etc.).active
     return
   }
   if ($1 == START) {
     set %bot.stp2 $2
     if (%bot.stp2 == $null) { set %bot.stp2 $network }
-    if (%bot.stp2 == human) {
+    if (%bot.stp2 == Local) {
       bot.check
-      sockopen -n BotHuman localhost 6667
-      $report(Bot,ON,$null,Human,irc.human.net,6667).active
+      sockopen -n BotLocal localhost 6667
+      $report(Bot,ON,$null,Local,irc.Local.net,6667).active
       return
     }
     if (%bot.stp2 == ircgo) {
@@ -61,7 +58,7 @@ alias bot {
       $report(Bot,ON,$null,Libera,irc.libera.chat,6667).active
       return
     }
-    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot START HUMAN or IRCGO or DalNet or Libera Etc.).active
+    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot START Local or IRCGO or DalNet or Libera Etc.).active
     return
   }
   if ($1 == OFF) {
@@ -300,7 +297,7 @@ on 1:SOCKOPEN:Bot*:{
   set %Bot.active 1
   if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
   if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] $$?="Password for that nick if you know it:" }
-  if ($sockname == BotHuman) || ($sockname == BotIRCGo) {
+  if ($sockname == BotLocal) || ($sockname == BotIRCGo) {
     if ( %bot.pass. [ $+ [ $network ] ] != $null ) { sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ] }
     sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
     sockwrite -n $sockname user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
@@ -341,7 +338,7 @@ on 1:SOCKOPEN:Bot*:{
     $botsay(BotSay,$sockname is now open and set)
     return
   }
-  $botsay(BotSay,Bot.ERROR,No network given,$null,$null,Usage: /bot <on/start> <Dalnet/Human/Ircgo/Libera/etc>)
+  $botsay(BotSay,Bot.ERROR,No network given,$null,$null,Usage: /bot <on/start> <Dalnet/Local/Ircgo/Libera/etc>)
 }
 on 1:SOCKREAD:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | $report(Sock Error,READ,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg)active | return }
@@ -404,7 +401,7 @@ on 1:SOCKCLOSE:Bot*:{
   $report($sockname just closed $sock(*).name $sock($sockname).wserr $sock($sockname).wsmsg).active
   ;if ($sockname == BotICQ) { s.timer 1 1 ockopen BotICQ irc.icq.com 6667 | $report(ServerBot,ON,ICQ).active }
   ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | $report(ServerBot,ON,DalNet).active }
-  ;if ($sockname == BotHuman) { .timer 1 1 sockopen BotHuman localhost 6667 | $report(ServerBot,ON,Human).active }
+  ;if ($sockname == BotLocal) { .timer 1 1 sockopen BotLocal localhost 6667 | $report(ServerBot,ON,Local).active }
   ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | $report(ServerBot,ON,IRCgo).active }
   ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | $report(ServerBot,ON,CHAT).active }
 }
