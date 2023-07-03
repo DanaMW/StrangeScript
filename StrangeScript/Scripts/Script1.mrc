@@ -605,11 +605,9 @@ on ^*1:JOIN:#: {
   if ($nick == $me) { set %speed. $+ # $ticks }
   if ($nick == $me) { .timerRS $+ # 1 15 roomset }
   if ($nick == $me) {
-    if ($chan == #transcend) {
-      keywrite $network #transcend $+ -mode +mntp
-    } 
-    chanserv op # $me
-    if ($sock(*) != $null) { sockwrite -n Bot* mode # +o $me }
+    if ($chan == #transcend) { .timer 1 1 keywrite $network #transcend $+ -mode +mntp } 
+    .timer 1 1 chanserv op # $me
+    if ($sock(*) != $null) { timer 1 1 sockwrite -n Bot* mode # +o $me }
   }
   if ($nick == %bot.nick. [ $+ [ $network ] ] ) { mode # +o %bot.nick. [ $+ [ $network ] ] }
   $report(Join,$chan,$nick,$address).chan
