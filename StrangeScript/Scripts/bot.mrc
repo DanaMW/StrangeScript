@@ -314,7 +314,7 @@ on 1:SOCKOPEN:Bot*:{
     sockwrite -n BotDalNet nick %bot.nick. [ $+ [ $network ] ]
     sockwrite -n BotDalNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
     .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]    
-    .timer 1 10 sockwrite -n BotDalNet join %bot.work. [ $+ [ $network ] ]
+    .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             1 10 sockwrite -n BotDalNet join %bot.work. [ $+ [ $network ] ]
     .timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
     $botsay(BotSay,$sockname is now open and set)
     return
@@ -401,7 +401,7 @@ on 1:SOCKCLOSE:Bot*:{
   unset %clone.server. [ $+ [ $sockname ] ]
   set %Bot.active 0
   $report($sockname just closed $sock(*).name $sock($sockname).wserr $sock($sockname).wsmsg).active
-  ;if ($sockname == BotICQ) { s.timer 1 1 ockopen BotICQ irc.icq.com 6667 | $report(ServerBot,ON,ICQ).active }
+  ;if ($sockname == BotICQ) { .timer 1 1 ockopen BotICQ irc.icq.com 6667 | $report(ServerBot,ON,ICQ).active }
   ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | $report(ServerBot,ON,DalNet).active }
   ;if ($sockname == BotLocal) { .timer 1 1 sockopen BotLocal localhost 6667 | $report(ServerBot,ON,Local).active }
   ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | $report(ServerBot,ON,IRCgo).active }
