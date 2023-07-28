@@ -113,26 +113,19 @@ alias bot {
       if ($3 == $null) { return }
       set %bot.pass. [ $+ [ $network ] ] $3
       $report(SET,Option,$null,$null,bot.pass, %bot.pass. [ $+ [ $network ] ] ).active
-      $report(Bot Action,Debug,bot.value,Set to,%bot.value).active
       return
     }
     if ($2 == bot.value) {
       if (%bot.value == $null) { set %bot.value - }
-      else {
-        set %bot.value $3-
-        $report(Bot Action,Set,bot.value,Set to,%bot.value).active
-      }
+      if ($3 == $null) { return }
+      else { set %bot.value $3- }
+      $report(Bot Action,Set,bot.value,Set to,%bot.value).active
       return
     }
     if ($2 == bot.trigger) {
-      if (%bot.trigger == 1) {
-        set %bot.trigger 0
-        $report(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
-      }
-      else {
-        set %bot.trigger 1
-        $report(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
-      }
+      if (%bot.trigger == 1) { set %bot.trigger 0 }
+      else { set %bot.trigger 1 }
+      $report(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
       return
     }
     $botsay(Bot SET,$null,$null,$null,use /Bot SET value.below).active
@@ -174,7 +167,7 @@ alias bot {
   if ($1 == KICK) {
     return
   }
-  if ($1 == JOIN) { 
+  if ($1 == JOIN) {
     if ($2 != $null) { sockwrite -n Bot* join $2 }
     return
   }
@@ -192,7 +185,7 @@ alias bot {
     else { sockwrite -n Bot* part $2 $cr join $2 }
     return
   }
-  if ($1 == SAY) { 
+  if ($1 == SAY) {
     if ($chr(35) isin $2) { sockwrite -n Bot* privmsg $2 : $+ $3- | return }
     if ($2 == $null) { sockwrite -n Bot* privmsg %bot.work. [ $+ [ $network ] ] :Nothing to say. Ending. | return }
     else { sockwrite -n Bot* privmsg %bot.work. [ $+ [ $network ] ] : $+ $2- | return }
@@ -250,6 +243,7 @@ alias bot {
   }
   if ($1 == QUIT) { $sockwrite -n $sock(*).name quit :This is good-bye | return }
   $report(Bot,$null,Options,$null,$null,$null,AGAIN, CYCLE, DEBUG, ID, JOIN, KICK, NICK, ON/START, OFF/STOP, PART, QUIT, SAY, SEND, SET, STATUS, SHOW, WRITE).active
+  $report(Bot,$null,Options,$null,$null,$null,Try /BOT SHOW to get a look at the settings values and /BOT SET to figure out how to change them.).active
   return
 }
 alias bot.disp {
@@ -313,13 +307,13 @@ on 1:SOCKOPEN:Bot*:{
     sockwrite -n BotDalNet pass %bot.pass. [ $+ [ $network ] ]
     sockwrite -n BotDalNet nick %bot.nick. [ $+ [ $network ] ]
     sockwrite -n BotDalNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
-    .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]    
+    .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
     .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             1 10 sockwrite -n BotDalNet join %bot.work. [ $+ [ $network ] ]
     .timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
     $botsay(BotSay,$sockname is now open and set)
     return
   }
-  ; 
+  ;
   if ($sockname == BotLibera) {
     if ( %bot.pass. [ $+ [ $network ] ] != $null ) { sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ] }
     sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
