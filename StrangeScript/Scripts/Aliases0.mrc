@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v157.82.07.19.202310]
+/ver return 10S04trange10S04cript10[v157.83.06.11.202310]
 /shortver return 10S04trange10S04cript
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
@@ -100,13 +100,18 @@ script.sounds {
 }
 /script.play {
   if ($key(StrangeScript,script.sounds) != ON) { return }
+  ;
+  ;if ($key(StrangeScript,script.sounds) == OFF) { Do Something }
+  ;
   if ($right($1-,3) == wav) {
     if ($inwave != $true) { splay -w $1- }
   }
   if ($right($1-,3) == mp3) || ($right($1-,3) == wma) {
     if ($insong != $true) { splay -p $1- }
   }
+  ;
   ;$report(Playing a *. $+ $upper($right($1,3)) sound file).status
+  ;
   return
 }
 /setupshow { $report(System Setting,$null,SET,$null,$1-).active | script.play Notify.wav }
