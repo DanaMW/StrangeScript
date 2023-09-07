@@ -241,7 +241,7 @@ alias bot {
     sockwrite -n  $sock(*).name user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
     return
   }
-  if ($1 == QUIT) { $sockwrite -n $sock(*).name quit :This is good-bye | return }
+  if ($1 == QUIT) { sockwrite -n $sock(*).name quit :Goodbye | return }
   $report(Bot,$null,Options,$null,$null,$null,AGAIN, CYCLE, DEBUG, ID, JOIN, KICK, NICK, ON/START, OFF/STOP, PART, QUIT, SAY, SEND, SET, STATUS, SHOW, WRITE).active
   $report(Bot,$null,Options,$null,$null,$null,Try /BOT SHOW to get a look at the settings values and /BOT SET to figure out how to change them.).active
   return
