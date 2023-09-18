@@ -408,30 +408,25 @@ alias bot.check {
   }
   else { return }
 }
-;
-; Below is the beginning of the channel commands for the bots. I call them the showoff ones.
-;
+
 on *:TEXT:*:#: {
-  ; Shorten the command to just !command (take bot out)  
-  If ($nick == $me) && ($1 == !bot) {
-    if ($2 == say) {
-      if ($chr(35) isin $3) { sockwrite -n Bot* privmsg $3 : $+ $4- }
-      else { sockwrite -n Bot* privmsg # : $+ $3- }
+  If ($nick == $me) {
+    if ($1 == !bot) {
+      if ($2 == say) {
+        if ($chr(35) isin $3) { sockwrite -n Bot* privmsg $3 : $+ $4- }
+        else { sockwrite -n Bot* privmsg # : $+ $3- }
+      }
+      if ($2 == cycle) {
+        if ($chr(35) isin $3) { sockwrite -n Bot* part $3 | sockwrite -n Bot* join $3 }
+        else { sockwrite -n Bot* part # | sockwrite -n Bot* join # }
+      }
+      if ($2 == kick) {
+        if ($chr(35) isin $3) { sockwrite -n Bot* kick $3 : $+ $4 }
+        else { sockwrite -n Bot* kick # $3 }
+      }
+      if ($2 == quit) {
+        sockclose *
+      }
     }
-    return
-  }
-  if ($2 == cycle) {
-      if ($chr(35) isin $3) { sockwrite -n Bot* part $3 | sockwrite -n Bot* join $3 }
-      else { sockwrite -n Bot* part # | sockwrite -n Bot* join # }
-    }
-    return
-  }
-  if ($2 == kick) {
-      return
-      ; fix me now
-      if ($chr(35) isin $3) { sockwrite -n Bot* kick # $3 }
-      else { sockwrite -n Bot* kick $3 $4 }
-    }
-    return
   }
 }

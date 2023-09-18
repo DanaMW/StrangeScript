@@ -66,14 +66,13 @@ raw 329:*:{
     halt
   }
   if ($network == Libera.Chat) || ($network == Libera){
-    echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
-    halt
-  }
-  else {
-    ;echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
-    echo -t $2 $sys $report($null,Spawn Info,Room was spawned,$null,$convert.unix($calc($3 - 28800)))
-    halt
-  }
+  echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
+  halt
+}
+else {
+  ;echo -t $2 $sys $report($null,Creation Info,Room was created,$null,$convert.unix($3))
+  echo -t $2 $sys $report($null,Spawn Info,Room was spawned,$null,$convert.unix($calc($3 - 28800)))
+  halt
 }
 ;
 raw 335:*:{ $report($1-).active | halt }
