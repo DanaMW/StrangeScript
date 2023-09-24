@@ -428,5 +428,8 @@ on *:TEXT:*:#: {
         sockclose *
       }
     }
+    if ($2 == aj) {
+        .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+    }
   }
 }
