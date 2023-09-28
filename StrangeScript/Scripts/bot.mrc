@@ -413,6 +413,7 @@ on *:TEXT:*:#: {
   If ($nick == $me) {
     if ($1 == !bot) {
       if ($2 == say) {
+        if ($3 == $null) { return }
         if ($chr(35) isin $3) { sockwrite -n Bot* privmsg $3 : $+ $4- }
         else { sockwrite -n Bot* privmsg # : $+ $3- }
       }
@@ -421,6 +422,7 @@ on *:TEXT:*:#: {
         else { sockwrite -n Bot* part # | sockwrite -n Bot* join # }
       }
       if ($2 == kick) {
+        if ($3 == $null) { return }
         if ($chr(35) isin $3) { sockwrite -n Bot* kick $3 : $+ $4 }
         else { sockwrite -n Bot* kick # $3 }
       }
@@ -430,6 +432,13 @@ on *:TEXT:*:#: {
     }
     if ($2 == aj) {
         .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+    }
+    if ($2 == nick) {
+      if ($3 == $null) { return }
+      sockwrite -n Bot* nick : $+ $4
+    }
+    if ($2 == ident) {
+      ;.timer 1 1 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
     }
   }
 }
