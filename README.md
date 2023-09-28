@@ -12,7 +12,7 @@ script, which is the right thing to do. Thank you.
 
 ```
 StrangeScript SS(old)
-In strangeScript Original you have the script uploaded the
+In StrangeScript Original you have the script uploaded the
 COMPLETE and ORIGINAL StrangeScript just the way it was the
 day I parked it. Done in the hopes the code will be useful
 to someone. It really does have everything in it, Have fun.
