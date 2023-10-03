@@ -452,5 +452,25 @@ on *:TEXT:*:#: {
       sockwrite -n Bot* privmsg # :Do !bot and Say Cycle Kick Join Part Quit AJ (AutoJoin) Nick Ident or Help
       sockwrite -n Bot* privmsg # :Or use /bot commands
     }
+    if ($2 == show) {
+      $report($chain).active
+      ;$report(Bot Menu,$null,$null,********************,********************).active
+      $report(Bot Menu,$null,$null,$null,use /Bot SET value.below to alter).active
+      $report(Bot Menu,$null,$null,********************,********************).active
+      $report(Bot Menu,$null,Bot Status,$sock(bot*).status,$sock(bot*).name).active
+      $report(Bot Menu,$null,$null,Current Network,$network).active
+      $report(Bot Menu,$null,$null,bot.disp,%bot.disp).active
+      $report(Bot Menu,$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
+      $report(Bot Menu,$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
+      $report(Bot Menu,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
+      $report(Bot Menu,$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
+      $report(Bot Menu,$null,$null,bot.value,%bot.value).active
+      $report(Bot Menu,$null,$null,bot.trigger,%bot.trigger).active
+      $report(Bot Menu,$null,$null,bot.showall,%bot.showall).active
+      $report(Bot Menu,$null,$null,xxx,no value).active
+      ;$report(Bot Menu,$null,$null,********************,********************).active
+      $report($chain).active
+      return
+    }
   }
 }
