@@ -426,6 +426,14 @@ on *:TEXT:*:#: {
         if ($chr(35) isin $3) { sockwrite -n Bot* kick $3 : $+ $4 }
         else { sockwrite -n Bot* kick # $3 }
       }
+      if ($2 == join) {
+        if ($chr(35) isin $3) { sockwrite -n Bot* join $3 }
+        else { sockwrite -n Bot* join # }
+      }
+      if ($2 == part) {
+        if ($chr(35) isin $3) { sockwrite -n Bot* part $3 }
+        else { sockwrite -n Bot* part # }
+      }
       if ($2 == quit) {
         sockclose *
       }
