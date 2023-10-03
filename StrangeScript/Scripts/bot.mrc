@@ -418,8 +418,8 @@ on *:TEXT:*:#: {
         else { sockwrite -n Bot* privmsg # : $+ $3- }
       }
       if ($2 == cycle) {
-        if ($chr(35) isin $3) { sockwrite -n Bot* part $3 | sockwrite -n Bot* join $3 }
-        else { sockwrite -n Bot* part # | sockwrite -n Bot* join # }
+        if ($chr(35) isin $3) { sockwrite -n Bot* part $3 :-<[ Fast ]>- | sockwrite -n Bot* join $3 }
+        else { sockwrite -n Bot* part # :-<[ Fast ]>- | sockwrite -n Bot* join # }
       }
       if ($2 == kick) {
         if ($3 == $null) { return }
@@ -447,6 +447,10 @@ on *:TEXT:*:#: {
     }
     if ($2 == ident) {
       ;.timer 1 1 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
+    }
+    if ($2 == help) {
+      sockwrite -n Bot* privmsg # :Do !bot and Say Cycle Kick Join Part Quit AJ (AutoJoin) Nick Ident or Help
+      sockwrite -n Bot* privmsg # :Or use /bot commands
     }
   }
 }
