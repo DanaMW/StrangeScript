@@ -435,10 +435,13 @@ on *:TEXT:*:#: {
         else { sockwrite -n Bot* part # }
       }
       if ($2 == quit) {
-        sockclose *
+        sockclose *                                                                                                                                                                                                                                                                                                                                                  
+      }
+      if ($2 == off) {
+        sockclose *                                                                                                                                                                                                                                                                                                                                                  
       }
     }
-    if ($2 == aj) {
+    if ($2 == aj) { 
         .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
     }
     if ($2 == nick) {
@@ -449,7 +452,7 @@ on *:TEXT:*:#: {
       ;.timer 1 1 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
     }
     if ($2 == help) {
-      sockwrite -n Bot* privmsg # :Do !bot and Say Cycle Kick Join Part Quit AJ (AutoJoin) Nick Ident or Help
+      sockwrite -n Bot* privmsg # :Do !bot and Say Cycle Kick Join Part Quit Off AJ (AutoJoin) Nick Ident Show or Help
       sockwrite -n Bot* privmsg # :Or use /bot commands
     }
     if ($2 == show) {
