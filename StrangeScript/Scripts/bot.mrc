@@ -410,7 +410,7 @@ alias bot.check {
 }
 
 on *:TEXT:*:#: {
-  If ($nick == $me) {
+  If ($nick == $me) && (%bot.nick. [ $+ [ $network ] ] ison $chan) {
     if ($1 == !bot) {
       if ($2 == say) {
         if ($3 == $null) { return }
