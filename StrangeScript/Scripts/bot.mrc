@@ -442,7 +442,11 @@ on *:TEXT:*:#: {
       }
     }
     if ($2 == aj) { 
-        .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+      .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+    }
+    if ($2 == hide) { 
+      .timerbhide $+ $network 1 2 sockwrite -n Bot* part $key($network,auto.join.rooms)
+      .timerchide $+ $network 1 9 sockwrite -n Bot* join #Transcend
     }
     if ($2 == nick) {
       if ($3 == $null) { return }
