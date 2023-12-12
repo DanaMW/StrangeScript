@@ -389,6 +389,11 @@ raw knock:*: {
   IF (status !isin $window($active)) { $report(Knock,$1,$nick,just knocked and got message,%last.knock.reason).status }
 }
 ctcp ^*:*:*: {
+  ;if ($nick == $me) {
+  ;  $report(Ctcp,$nick,Received,$upper($1),$strip($2-)).active
+  ;  IF (status !isin $window($active)) { $report(Ctcp,$nick,Received,$upper($1),$strip($2-)).status }
+  ;  halt
+  ;}
   haltdef
   if ($chr(43)  isin $1-) { halt }
   if ($chr(47) $+ con isin $2-) { halt }

@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v157.95.11.05.202310]
+/ver return 10S04trange10S04cript10[v157.98.12.12.202310]
 /shortver return 10S04trange10S04cript
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
@@ -37,14 +37,16 @@
   return
 }
 /keyedit {
-  set %tmp.ke1 $1
-  set %tmp.ke2 $2
-  set %tmp.ke3 $3-
-  set %tmp.sq $$?="%tmp.ke3"
-  if (%tmp.sq == $null) { return }
-  keywrite %tmp.ke1 %tmp.ke2 %tmp.sq
-  $report(StrangeScript,%tmp.ke1,%tmp.ke2,Set to,$key(%tmp.ke1,%tmp.ke2) ).active
-  unset %tmp.ke* %tmp.sq
+  set %temp.ke1 $1
+  if (%temp.ke1 == $null) { $report(StrangeScript,Bad KeyEdit,KE1).active | return }
+  set %temp.ke2 $2
+  if (%temp.ke2 == $null) { $report(StrangeScript,Bad KeyEdit,KE2).active | return }
+  set %temp.ke3 $3-
+  set %temp.sq $$?="%temp.ke3"
+  if (%temp.sq == $null) { $report(StrangeScript,Bad KeyEdit,SQ).active | return }
+  keywrite %temp.ke1 %temp.ke2 %temp.sq
+  $report(StrangeScript,%temp.ke1,%temp.ke2,Set to,$key(%temp.ke1,%temp.ke2) ).active
+  unset %temp.ke* %temp.sq
   return
 }
 /keyhexedit {
@@ -297,18 +299,19 @@ Key.reads {
   return
 }
 /ctcp {
-  if ($1 == $null) { $report(StrangeScript,CTCP,Error,$null,Nothing to do here. No channel or user destination or message).active | halt }
+  if ($1 == $null) { $report(StrangeScript,CTCP,Error,$null,Nothing to do here. No channel or user destination or message).active | return }
   if ($2 == PING) {
     $report(Sending a $upper(ping) to $1).active
     .raw -q privmsg $1 : $+ $chr(1) $+ PING $ctime $ticks $+ $chr(1)
-    halt
+    return
   }
   if ($2 != PING) {
     $report(Ctcp,$1,Sending,$upper($2),$3-).active
-    if ($3 == $null) { .raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $+ $chr(1) }
-    if ($3 != $null) { .raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $3- $+ $chr(1) }
-    halt
+    if ($3 == $null) { .raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $+ $chr(1) | return }
+    if ($3 != $null) { .raw -q privmsg $1 : $+ $chr(1) $+ $upper($2) $3- $+ $chr(1) | return }
+    return
   }
+  return
 }
 /cycle {
   if ($key($network,cycle.counter) >= 2) { return }
