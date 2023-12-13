@@ -13,7 +13,7 @@ Then I can help you. Other than that good luck ripper. I can
 try, but I am not going to like it.
 ```
 
-## StrangeScript SS(old)
+## [StrangeScript](https://github.com/DanaMW/StrangeScript/tree/master/SSORG) SS(old)
 
 ```
 StrangeScript SS(old)
@@ -24,7 +24,7 @@ to someone. It really does have everything in it, Have fun.
 The original was a mIRC script. (Browse me)
 ```
 
-## StrangeScript SS ←[Enter]
+## [StrangeScript](https://github.com/DanaMW/StrangeScript/tree/master/StrangeScript) SS ←[Enter]
 
 ```
 StrangeScript SS
