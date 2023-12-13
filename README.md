@@ -1,6 +1,6 @@
 # Welcome To StrangeScript Information
 
-```text
+```
 The original AdiIRC/mIRC script. StrangeScript ©1999-2023
 Dana L. Meli-Wischman. I put a bunch of time into this
 little thing. If you are going to rip out a piece of it and
@@ -15,27 +15,27 @@ try, but I am not going to like it.
 
 ## StrangeScript SS(old)
 
-```text
+```
 StrangeScript SS(old)
 In StrangeScript Original you have the script uploaded the
 COMPLETE and ORIGINAL StrangeScript just the way it was the
 day I parked it. Done in the hopes the code will be useful
 to someone. It really does have everything in it, Have fun.
-The original was a mIRC script.
+The original was a mIRC script. (Browse me)
 ```
 
-## StrangeScript SS
+## StrangeScript SS ←[Enter]
 
-```text
+```
 StrangeScript SS
 StrangeScript Current is a trimmed down everything working
 version of the original script converted to run on AdiIrc.
 I am slowly adding things into it from the old one to make
-it more complete.
+it more complete.(Use me)
 
 ```
 
-```text
+```
 @author Dana L. Meli-Wischman
 
 ```
