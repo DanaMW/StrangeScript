@@ -1,5 +1,5 @@
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;:::;::::::::
-;;;;;;;;;;;;(c) 2001-2023 Dana L. Meli-Wischman for StrangeScript and TranSend with mIRC and AdiIrc;;;;;;;;;;;;;;;
+;;;;;;;;;;;;(c) 2001-2024 Dana L. Meli-Wischman for StrangeScript and Transcend with mIRC and AdiIrc;;;;;;;;;;;;;;;
 ;If you use this code I want my name in it or you're a cock sucking worthless fuck that shouldn't live past today.;
 :::::::::::::::::::::::::::::::::::::::::::::::::::Have a nice day.::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -8,29 +8,29 @@ alias showoff {
   msg # I get to pick one of $findfile($songdir,*.*,0) Songs
 }
 alias mp3.prep {
-  set %Transend.version Transend Player
-  set %Transend.build 6.00
-  set %Transend.title %Transend.version %Transend.build by Dana M-W
-  if (%Transend.crossfade == $null) { set %Transend.crossfade 0 }
+  set %Transcend.version Transcend Player
+  set %Transcend.build 6.01
+  set %Transcend.title %Transcend.version %Transcend.build by Dana L. M-W.
+  if (%Transcend.crossfade == $null) { set %Transcend.crossfade 0 }
   return
 }
 alias mp3 {
   mp3.prep
-  if (%Transend.showinfo == $null) { set %Transend.showinfo ON }
-  if ($1 == /?) || ($1 == /help) || ($1 == -h) || ($1 == -HELP) { echo -at $report(%Transend.title,$null,$null,Available commands are) $report($null,$null,$null,$null,/MP3) $report($null,$null,$null,$null,/MP3 INFO) $report($null,$null,$null,$null,/MP3 STOP) $report($null,$null,$null,$null,/MP3 RAND) $report($null,$null,$null,$null,/MP3 HELP) | halt }
+  if (%Transcend.showinfo == $null) { set %Transcend.showinfo ON }
+  if ($1 == /?) || ($1 == /help) || ($1 == -h) || ($1 == -HELP) { echo -at $report(%Transcend.title,$null,$null,Available commands are) $report($null,$null,$null,$null,/MP3) $report($null,$null,$null,$null,/MP3 INFO) $report($null,$null,$null,$null,/MP3 STOP) $report($null,$null,$null,$null,/MP3 RAND) $report($null,$null,$null,$null,/MP3 HELP) | halt }
   if ($1 == INFO) { InfoX.MP3 | halt }
   if ($1 == STOP) {
     splay -p stop
     .timerSMPsh off
-    set %Transend.mode Spool
+    set %Transcend.mode Spool
     set %mybar.temp ""
-    set %Transend.lastdir ""
+    set %Transcend.lastdir ""
     if ($dialog(mp3p).x != $null) {
       did -o mp3p 5 1 Current Play: None
       did -o mp3p 4 1 Click here to pick one of $findfile($songdir,*.*,0) Songs
     }
     .timerCKEDIT 1 0 check.edit
-    $report(%Transend.version %Transend.build,$null,%Transend.mode,Stopped).active
+    $report(%Transcend.version %Transcend.build,$null,%Transcend.mode,Stopped).active
     halt
   }
   if ($1 == RAND) || ($1 == RANDOM) { mp3.random | splay seek $calc($inmp3.length - 50) | CurPlay | return }
@@ -38,7 +38,7 @@ alias mp3 {
   else { .dialog -mderv mp3p mp3play }
 }
 dialog mp3play {
-  title " $+ %Transend.title $+ "
+  title " $+ %Transcend.title $+ "
   icon StrangeScript.ani
   size -1 -1 210 100
   option dbu
@@ -70,12 +70,12 @@ dialog mp3play {
 }
 on *:dialog:mp3p:init:0: {
   var %rtmp = 1
-  while (%rtmp <= $var(%Transend.play*,0)) {
-    did -o mp3p 3 %rtmp $nopath(%Transend.play [ $+ [ %rtmp ] ] )
+  while (%rtmp <= $var(%Transcend.play*,0)) {
+    did -o mp3p 3 %rtmp $nopath(%Transcend.play [ $+ [ %rtmp ] ] )
     inc %rtmp
-    if (%rtmp > $var(%Transend.play*,0)) { break }
+    if (%rtmp > $var(%Transcend.play*,0)) { break }
   }
-  did -o mp3p 3 1 $nopath(%Transend.play1)
+  did -o mp3p 3 1 $nopath(%Transcend.play1)
   check.edit
   did -f mp3p 3 1
   did -b mp3p 19
@@ -101,6 +101,7 @@ on *:dialog:mp3p:init:0: {
 ;
 ;}
 on *:dialog:mp3p:sclick:*: {
+  if ($did == 1) { .timer 1 0 dialog -x mp3p }
   if ($did == 4) { .timer 1 0 Pick.MP3 }
   if ($did == 6) { Send.MP3 }
   if ($did == 7) { splay pause | did -b mp3p 7 | did -e mp3p 8 }
@@ -108,9 +109,9 @@ on *:dialog:mp3p:sclick:*: {
   if ($did == 9) {
     splay -p stop
     .timerSMPsh off
-    set %Transend.mode Spool
+    set %Transcend.mode Spool
     set %mybar.temp ""
-    set %Transend.lastdir ""
+    set %Transcend.lastdir ""
     did -o mp3p 5 1 Current Play: None
     did -ot mp3p 4 1 Click here to pick one of $findfile($songdir,*.mp3,0) Songs
     .timerCKEDIT 1 0 check.edit
@@ -137,36 +138,36 @@ on *:dialog:mp3p:sclick:*: {
 }
 alias MP3Title {
   ;
-  MP3Title.send %Transend.title
+  MP3Title.send %Transcend.title
   return
   ;
   if ($dialog(mp3p).x == $null) { return }
-  set %Transend.tmp 1
-  set %Transend.tmp1 35
-  while (%Transend.tmp1 > 0) {
-    .timerb $+ %Transend.tmp -m 1 $calc(50 * %Transend.tmp)  MP3Title.send $left(%Transend.title,%Transend.tmp1)
-    dec %Transend.tmp1
-    inc %Transend.tmp
-    if (%Transend.tmp1 <= 0) { break }
+  set %Transcend.tmp 1
+  set %Transcend.tmp1 35
+  while (%Transcend.tmp1 > 0) {
+    .timerb $+ %Transcend.tmp -m 1 $calc(50 * %Transcend.tmp)  MP3Title.send $left(%Transcend.title,%Transcend.tmp1)
+    dec %Transcend.tmp1
+    inc %Transcend.tmp
+    if (%Transcend.tmp1 <= 0) { break }
   }
-  set %Transend.tmp1 1
-  while (%Transend.tmp1 <= $len(%Transend.title)) {
-    .timera $+ %Transend.tmp -m 1 $calc(50 * %Transend.tmp) MP3Title.send $left(%Transend.title,%Transend.tmp1)
-    inc %Transend.tmp
-    inc %Transend.tmp1
-    if (%Transend.tmp1 > $len(%Transend.title)) { break }
+  set %Transcend.tmp1 1
+  while (%Transcend.tmp1 <= $len(%Transcend.title)) {
+    .timera $+ %Transcend.tmp -m 1 $calc(50 * %Transcend.tmp) MP3Title.send $left(%Transcend.title,%Transcend.tmp1)
+    inc %Transcend.tmp
+    inc %Transcend.tmp1
+    if (%Transcend.tmp1 > $len(%Transcend.title)) { break }
   }
-  .timera $+ $calc(%Transend.tmp +1) -m 1 $calc(50 * %Transend.tmp) MP3Title.send %Transend.title
-  unset %Transend.tmp*
+  .timera $+ $calc(%Transcend.tmp +1) -m 1 $calc(50 * %Transcend.tmp) MP3Title.send %Transcend.title
+  unset %Transcend.tmp*
   return
 }
 alias MP3Title.send { if ($dialog(mp3p).x != $null) { dialog -t mp3p $1- } }
 alias CurPlay {
   if ($dialog(mp3p) != $null) {
     if ( $inmp3 == $false) { did -o mp3p 5 1 Current Play: None }
-    if ( $len($inmp3.pos) == 4 ) { did -o mp3p 5 1 Current Play: $nopath(%Transend.current) $chr(91) $+ $round($calc($left($inmp3.pos,1) / 60),2) of $round($calc($left($inmp3.length,3) / 60),2) $+ $chr(93) }
-    if ( $len($inmp3.pos) == 5 ) { did -o mp3p 5 1 Current Play: $nopath(%Transend.current) $chr(91) $+ $round($calc($left($inmp3.pos,2) / 60),2) of $round($calc($left($inmp3.length,3) / 60),2) $+ $chr(93) }
-    if ( $len($inmp3.pos) >= 6 ) { did -o mp3p 5 1 Current Play: $nopath(%Transend.current) $chr(91) $+ $round($calc($left($inmp3.pos,3) / 60),2) of $round($calc($left($inmp3.length,3) / 60),2) $+ $chr(93) }
+    if ( $len($inmp3.pos) == 4 ) { did -o mp3p 5 1 Current Play: $nopath(%Transcend.current) $chr(91) $+ $round($calc($left($inmp3.pos,1) / 60),2) of $round($calc($left($inmp3.length,3) / 60),2) $+ $chr(93) }
+    if ( $len($inmp3.pos) == 5 ) { did -o mp3p 5 1 Current Play: $nopath(%Transcend.current) $chr(91) $+ $round($calc($left($inmp3.pos,2) / 60),2) of $round($calc($left($inmp3.length,3) / 60),2) $+ $chr(93) }
+    if ( $len($inmp3.pos) >= 6 ) { did -o mp3p 5 1 Current Play: $nopath(%Transcend.current) $chr(91) $+ $round($calc($left($inmp3.pos,3) / 60),2) of $round($calc($left($inmp3.length,3) / 60),2) $+ $chr(93) }
     ;added
     if ($vol(master).mute == $true) { vol -vu1 | did -o mp3p 10 1 Muted }
     if ($vol(master).mute == $false) { vol -vu2 | did -o mp3p 10 1 $str($chr(146),$round($calc($vol(master) / 65535 * 100),0)) $round($calc($vol(master) / 65535 * 100),0) $+ % }
@@ -178,82 +179,82 @@ alias CurPlay {
   return
 }
 alias Rename.MP3 {
-  if ($inmp3.fname == %Transend.play1) { halt }
-  if (%Transend.play1 == $null) { halt }
-  if (%Transend.play1 !=== %Transend.edit) {
-    .rename " $+ %Transend.play1 $+ " " $+ %Transend.edit $+ "
-    set %Transend.play1 %Transend.edit
-    if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transend.play1) }
+  if ($inmp3.fname == %Transcend.play1) { halt }
+  if (%Transcend.play1 == $null) { halt }
+  if (%Transcend.play1 !=== %Transcend.edit) {
+    .rename " $+ %Transcend.play1 $+ " " $+ %Transcend.edit $+ "
+    set %Transcend.play1 %Transcend.edit
+    if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transcend.play1) }
   }
 }
 alias Pick.MP3 {
   ;dialog -x mp3p
-  set %Transend.mode Spool
-  set %Transend.XXX.ptmp %Transend.play1
-  unset %Transend.play*
+  set %Transcend.mode Spool
+  set %Transcend.XXX.ptmp %Transcend.play1
+  unset %Transcend.play*
   did -r mp3p 3 1
-  if (%Transend.lastdir != $null) { set %Transend.pick $msfile(%Transend.lastdir $+ *.*,You may choose multiple media files by holding control,Spool) }
-  else { set %Transend.pick $msfile($songdir $+ \*.*,You may choose multiple media files by holding control,Spool) }
-  if (%Transend.pick == -1) { set %Transend.play1 Error to many songs selected | .timer 1 6 repair.mp3 %Transend.XXX.ptmp | mp3 }
-  if (%Transend.pick == 0) {
-    set %Transend.pick 1
-    set %Transend.play1 %Transend.XXX.ptmp
-    set %Transend.edit %Transend.play1
-    if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transend.play1) }
+  if (%Transcend.lastdir != $null) { set %Transcend.pick $msfile(%Transcend.lastdir $+ *.*,You may choose multiple media files by holding control,Spool) }
+  else { set %Transcend.pick $msfile($songdir $+ \*.*,You may choose multiple media files by holding control,Spool) }
+  if (%Transcend.pick == -1) { set %Transcend.play1 Error to many songs selected | .timer 1 6 repair.mp3 %Transcend.XXX.ptmp | mp3 }
+  if (%Transcend.pick == 0) {
+    set %Transcend.pick 1
+    set %Transcend.play1 %Transcend.XXX.ptmp
+    set %Transcend.edit %Transcend.play1
+    if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transcend.play1) }
     mp3
     halt
   }
-  if (%Transend.pick > 0) {
+  if (%Transcend.pick > 0) {
     var %stmp = 1
-    while (%stmp <= %Transend.pick) {
-      if ($msfile(%stmp) != $null) { set %Transend.play [ $+ [ %stmp ] ] $msfile(%stmp) }
-      if ($dialog(mp3p).x != $null) { did -o mp3p 3 %stmp $nopath(%Transend.play [ $+ [ %stmp ] ] ) }
+    while (%stmp <= %Transcend.pick) {
+      if ($msfile(%stmp) != $null) { set %Transcend.play [ $+ [ %stmp ] ] $msfile(%stmp) }
+      if ($dialog(mp3p).x != $null) { did -o mp3p 3 %stmp $nopath(%Transcend.play [ $+ [ %stmp ] ] ) }
       inc %stmp
-      if (%stmp > %Transend.pick) { break }
+      if (%stmp > %Transcend.pick) { break }
     }
-    did -o mp3p 3 1 $nopath(%Transend.play1)
-    set %Transend.edit %Transend.play1
-    set %Transend.lastdir $nofile(%Transend.play1)
+    did -o mp3p 3 1 $nopath(%Transcend.play1)
+    set %Transcend.edit %Transcend.play1
+    set %Transcend.lastdir $nofile(%Transcend.play1)
     mp3
   }
 }
 alias repair.mp3 {
-  set %Transend.pick 1
-  set %Transend.play1 $1-
-  if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transend.play1) }
+  set %Transcend.pick 1
+  set %Transcend.play1 $1-
+  if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transcend.play1) }
 }
 alias Info.MP3 {
   if ($server != $null) {
-    if (%Transend.mode == Random) {
-      if (%Transend.showinfo == ON) { scid -a amsg $report(%Transend.version %Transend.build,%Transend.mode,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4))) }
-      if (%Transend.showinfo == EXTRA) { scid -a amsg $report(%Transend.version %Transend.build,%Transend.mode,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4)),$null,$bytes($calc($file(%Transend.play1).size / 1024),m3) meg,-,$mp3(%Transend.play1).bitrate bit,-,$mp3(%Transend.play1).mode,-,$duration($left($mp3(%Transend.play1).length,3))) }
-      if (%Transend.showinfo == LOCAL) { $report(%Transend.version %Transend.build,%Transend.mode,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4)),$null,$bytes($calc($file(%Transend.play1).size / 1024),m3) meg,-,$mp3(%Transend.play1).bitrate bit,-,$mp3(%Transend.play1).mode,-,$duration($left($mp3(%Transend.play1).length,3))).active }
-      if (%Transend.showinfo == OFF) || (%Transend.showinfo == $null) { return }
+    if (%Transcend.mode == Random) {
+      if (%Transcend.showinfo == ON) { scid -a amsg $report(%Transcend.version %Transcend.build,%Transcend.mode,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4))) }
+      if (%Transcend.showinfo == EXTRA) { scid -a amsg $report(%Transcend.version %Transcend.build,%Transcend.mode,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4)),$null,$bytes($calc($file(%Transcend.play1).size / 1024),m3) meg,-,$mp3(%Transcend.play1).bitrate bit,-,$mp3(%Transcend.play1).mode,-,$duration($left($mp3(%Transcend.play1).length,3))) }
+      if (%Transcend.showinfo == LOCAL) { $report(%Transcend.version %Transcend.build,%Transcend.mode,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4)),$null,$bytes($calc($file(%Transcend.play1).size / 1024),m3) meg,-,$mp3(%Transcend.play1).bitrate bit,-,$mp3(%Transcend.play1).mode,-,$duration($left($mp3(%Transcend.play1).length,3))).active }
+      if (%Transcend.showinfo == OFF) || (%Transcend.showinfo == $null) { return }
     }
     else {
-      if ($var(%Transend.play*,0) == 1) { var %MP.tmp = %Transend.mode }
-      if ($var(%Transend.play*,0) > 1) { var %MP.tmp = %Transend.mode 1 of $var(%Transend.play*,0) }
-      if (%Transend.showinfo == ON) { scid -a amsg $report(%Transend.version %Transend.build,%MP.tmp,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4))) }
-      if (%Transend.showinfo == EXTRA) { scid -a amsg $report(%Transend.version %Transend.build,%MP.tmp,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4)),$null,$bytes($calc($file(%Transend.play1).size / 1024),m3) meg,-,$mp3(%Transend.play1).bitrate bit,-,$mp3(%Transend.play1).mode,-,$duration($left($mp3(%Transend.play1).length,3))) }
-      if (%Transend.showinfo == LOCAL) { $report(%Transend.version %Transend.build,%MP.tmp,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4)),$null,$bytes($calc($file(%Transend.play1).size / 1024),m3) meg,-,$mp3(%Transend.play1).bitrate bit,-,$mp3(%Transend.play1).mode,-,$duration($left($mp3(%Transend.play1).length,3))).active }
-      if (/mp == OFF) || (%Transend.showinfo == $null) { return }
+      if ($var(%Transcend.play*,0) == 1) { var %MP.tmp = %Transcend.mode }
+      if ($var(%Transcend.play*,0) > 1) { var %MP.tmp = %Transcend.mode 1 of $var(%Transcend.play*,0) }
+      if (%Transcend.showinfo == ON) { scid -a amsg $report(%Transcend.version %Transcend.build,%MP.tmp,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4))) }
+      if (%Transcend.showinfo == EXTRA) { scid -a amsg $report(%Transcend.version %Transcend.build,%MP.tmp,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4)),$null,$bytes($calc($file(%Transcend.play1).size / 1024),m3) meg,-,$mp3(%Transcend.play1).bitrate bit,-,$mp3(%Transcend.play1).mode,-,$duration($left($mp3(%Transcend.play1).length,3))) }
+      if (%Transcend.showinfo == LOCAL) { $report(%Transcend.version %Transcend.build,%MP.tmp,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4)),$null,$bytes($calc($file(%Transcend.play1).size / 1024),m3) meg,-,$mp3(%Transcend.play1).bitrate bit,-,$mp3(%Transcend.play1).mode,-,$duration($left($mp3(%Transcend.play1).length,3))).active }
+      if (/mp == OFF) || (%Transcend.showinfo == $null) { return }
     }
   }
   return
 }
 alias InfoX.MP3 {
-  if ($server != $null) { amsg $report(%Transend.version %Transend.build,%Transend.mode,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4)),$null,$bytes($calc($file(%Transend.play1).size / 1024),m3) meg,-,$mp3(%Transend.play1).bitrate bit,-,$mp3(%Transend.play1).mode,-,$duration($left($mp3(%Transend.play1).length,3))) | return }
-  else { $report(%Transend.version %Transend.build,%Transend.mode,$lower($right(%Transend.play1,3)),$nopath($left(%Transend.play1,-4)),$null,$bytes($calc($file(%Transend.play1).size / 1024),m3) meg,-,$mp3(%Transend.play1).bitrate bit,-,$mp3(%Transend.play1).mode,-,$duration($left($mp3(%Transend.play1).length,3))).active | return }
+  if ($server != $null) { amsg $report(%Transcend.version %Transcend.build,%Transcend.mode,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4)),$null,$bytes($calc($file(%Transcend.play1).size / 1024),m3) meg,-,$mp3(%Transcend.play1).bitrate bit,-,$mp3(%Transcend.play1).mode,-,$duration($left($mp3(%Transcend.play1).length,3))) | return }
+  else { $report(%Transcend.version %Transcend.build,%Transcend.mode,$lower($right(%Transcend.play1,3)),$nopath($left(%Transcend.play1,-4)),$null,$bytes($calc($file(%Transcend.play1).size / 1024),m3) meg,-,$mp3(%Transcend.play1).bitrate bit,-,$mp3(%Transcend.play1).mode,-,$duration($left($mp3(%Transcend.play1).length,3))).active | return }
 }
 alias Send.MP3 {
   mp3.prep
-  if ($chr(32) $+ $chr(32) isin %Transend.play1) || ($chr(160) $+ $chr(160) isin %Transend.play1) { $report(SMP,Error,$null,The file your trying to play has a double space in its name somewhere.).active | $report(SMP,Error,$null,mIRC can not play files in that shape as mirc strips the extra spaces.).active | $report(SMP,Error,$null,Try manually renaming by taking out all spaces,).active | $report(SMP,Error,$null,then putting 1 back in each place so the file will work in the player.).active | .timer 1 0 MP3 STOP | halt }
-  set %tmp %Transend.play1
-  set %Transend.current %Transend.play1
-  if (*.mp3 iswm %Transend.play1) { splay -p " $+ %Transend.play1 $+ " }
-  else { run " $+ %Transend.play1 $+ " | .timer 1 0 MP3 STOP }
+  if ($chr(32) $+ $chr(32) isin %Transcend.play1) || ($chr(160) $+ $chr(160) isin %Transcend.play1) { $report(SMP,Error,$null,The file your trying to play has a double space in its name somewhere.).active | $report(SMP,Error,$null,mIRC can not play files in that shape as mirc strips the extra spaces.).active | $report(SMP,Error,$null,Try manually renaming by taking out all spaces,).active | $report(SMP,Error,$null,then putting 1 back in each place so the file will work in the player.).active | .timer 1 0 MP3 STOP | halt }
+  set %tmp %Transcend.play1
+  set %Transcend.current %Transcend.play1
+  if (*.mp3 iswm %Transcend.play1) { splay -p " $+ %Transcend.play1 $+ " }
+  else { run " $+ %Transcend.play1 $+ " | .timer 1 0 MP3 STOP }
   ;
-  if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transend.play1) }
+  if ($dialog(mp3p).x != $null) { did -o mp3p 3 1 $nopath(%Transcend.play1) }
   ;
   Info.MP3
   .timerSMPsh -mo 0 400 curPlay
@@ -261,68 +262,68 @@ alias Send.MP3 {
   MP3Title
   halt
 }
-on *:dialog:mp3p:edit:*: { if ($did == 3) { set %Transend.edit $remove(%Transend.play1,$nopath(%Transend.play1)) $+ $did(3).text } }
+on *:dialog:mp3p:edit:*: { if ($did == 3) { set %Transcend.edit $remove(%Transcend.play1,$nopath(%Transcend.play1)) $+ $did(3).text } }
 on *:MP3END:{
   .timerSMPsh off
   mp3.prep
   if ($dialog(mp3p) != $null) { did -o mp3p 4 1 Click here to pick one of $findfile($songdir,*.mp3,0) Songs }
   if ($dialog(mp3p) != $null) { did -o mp3p 5 1 Current Play: None }
   set %mybar.temp ""
-  if (%Transend.play1 != $null) && (%Transend.play1 == %Transend.current) {
-    if ($var(%Transend.play*,0) > 1) {
+  if (%Transcend.play1 != $null) && (%Transcend.play1 == %Transcend.current) {
+    if ($var(%Transcend.play*,0) > 1) {
       var %ptmp = 1
-      while (%ptmp <= $var(%Transend.play*,0)) {
-        set %Transend.play [ $+ [ %ptmp ] ] %Transend.play [ $+ [ $calc(%ptmp +1) ] ]
-        unset %Transend.play [ $+ [ $calc(%ptmp +1) ] ]
+      while (%ptmp <= $var(%Transcend.play*,0)) {
+        set %Transcend.play [ $+ [ %ptmp ] ] %Transcend.play [ $+ [ $calc(%ptmp +1) ] ]
+        unset %Transcend.play [ $+ [ $calc(%ptmp +1) ] ]
         if ($dialog(mp3p).x != $null) {
-          ;if (%Transend.play [ $+ [ %ptmp ] ] == 1) { did -o mp3p 3 }
-          did -o mp3p 3 %ptmp $nopath(%Transend.play [ $+ [ %ptmp ] ] )
+          ;if (%Transcend.play [ $+ [ %ptmp ] ] == 1) { did -o mp3p 3 }
+          did -o mp3p 3 %ptmp $nopath(%Transcend.play [ $+ [ %ptmp ] ] )
           did -d mp3p 3 $calc(%ptmp +1)
         }
         inc %ptmp
-        if (%ptmp > $var(%Transend.play*,0)) { break }
+        if (%ptmp > $var(%Transcend.play*,0)) { break }
       }
     }
   }
-  if (%Transend.play1 != $null) && (%Transend.play1 != %Transend.current) { check.edit | Send.MP3 }
+  if (%Transcend.play1 != $null) && (%Transcend.play1 != %Transcend.current) { check.edit | Send.MP3 }
   check.edit
-  if (%Transend.mode == Random) { mp3.random }
+  if (%Transcend.mode == Random) { mp3.random }
 }
 alias check.edit {
-  if ($insong.fname == %Transend.play1) { if ($dialog(mp3p) != $null) { did -b mp3p 20 | did -b mp3p 18 } }
+  if ($insong.fname == %Transcend.play1) { if ($dialog(mp3p) != $null) { did -b mp3p 20 | did -b mp3p 18 } }
   else { if ($dialog(mp3p) != $null) { did -e mp3p 20 | did -e mp3p 18 } }
   return
 }
 alias mp3.random {
   if ($dialog(mp3p) != $null) { did -r mp3p 3 1 }
-  set %Transend.mode Random
-  set %Transend.play1 $findfile($songdir,*.mp3,$rand(1,$findfile($songdir,*.mp3,0,1)),1)
-  set %Transend.edit %Transend.play1
-  if ($dialog(mp3p) != $null) { did -o mp3p 3 1 $nopath(%Transend.play1) }
+  set %Transcend.mode Random
+  set %Transcend.play1 $findfile($songdir,*.mp3,$rand(1,$findfile($songdir,*.mp3,0,2))),2))
+  set %Transcend.edit %Transcend.play1
+  if ($dialog(mp3p) != $null) { did -o mp3p 3 1 $nopath(%Transcend.play1) }
   check.edit
   if ($inmp3 == $true) { return }
   if ($inmp3 == $false) { Send.MP3 }
 }
 alias feed.line {
-  set %Transend.feed.num $calc($round($inmp3.length,0) / 100)
-  if ($dialog(mp3p) != $null) { did -o mp3p 4 1 $chr(91) $+ $str($chr(160),$calc(50 - $calc($round($inmp3.pos,0) / %Transend.feed.num / 2))) $+ $str($chr(145),$calc($round($inmp3.pos,0) / %Transend.feed.num / 2)) $+ ] $round($calc($round($inmp3.pos,0) / %Transend.feed.num),0) $+ % [ $+ $str($chr(145),$calc($round($inmp3.pos,0) / %Transend.feed.num / 2)) $+ $str($chr(160),$calc(50 - $calc($round($inmp3.pos,0) / %Transend.feed.num / 2))) $+ $chr(93) }
-  set %mybar.temp $round($calc($round($inmp3.pos,0) / %Transend.feed.num),0) $+ % 
+  set %Transcend.feed.num $calc($round($inmp3.length,0) / 100)
+  if ($dialog(mp3p) != $null) { did -o mp3p 4 1 $chr(91) $+ $str($chr(160),$calc(50 - $calc($round($inmp3.pos,0) / %Transcend.feed.num / 2))) $+ $str($chr(145),$calc($round($inmp3.pos,0) / %Transcend.feed.num / 2)) $+ ] $round($calc($round($inmp3.pos,0) / %Transcend.feed.num),0) $+ % [ $+ $str($chr(145),$calc($round($inmp3.pos,0) / %Transcend.feed.num / 2)) $+ $str($chr(160),$calc(50 - $calc($round($inmp3.pos,0) / %Transcend.feed.num / 2))) $+ $chr(93) }
+  set %mybar.temp $round($calc($round($inmp3.pos,0) / %Transcend.feed.num),0) $+ % 
   return
 }
 alias mp3.bump {
-  if ($insong.fname == %Transend.play1) { return }
+  if ($insong.fname == %Transcend.play1) { return }
   did -r mp3p 3 1
   var %ptmp = 1
-  while (%ptmp < $var(%Transend.play*,0)) {
-    set %Transend.play [ $+ [ %ptmp ] ] %Transend.play [ $+ [ $calc(%ptmp +1) ] ]
-    unset %Transend.play [ $+ [ $calc(%ptmp +1) ] ]
+  while (%ptmp < $var(%Transcend.play*,0)) {
+    set %Transcend.play [ $+ [ %ptmp ] ] %Transcend.play [ $+ [ $calc(%ptmp +1) ] ]
+    unset %Transcend.play [ $+ [ $calc(%ptmp +1) ] ]
     if ($dialog(mp3p).x != $null) {
-      did -o mp3p 3 %ptmp $nopath(%Transend.play [ $+ [ %ptmp ] ] )
+      did -o mp3p 3 %ptmp $nopath(%Transcend.play [ $+ [ %ptmp ] ] )
       did -d mp3p 3 $calc(%ptmp +1)
     }
     inc %ptmp
-    if (%ptmp == $var(%Transend.play*,0)) { break }
+    if (%ptmp == $var(%Transcend.play*,0)) { break }
   }
-  did -o mp3p 3 1 $nopath(%Transend.play1)
-  set %Transend.edit %Transend.play1
+  did -o mp3p 3 1 $nopath(%Transcend.play1)
+  set %Transcend.edit %Transcend.play1
 }
