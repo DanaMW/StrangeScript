@@ -180,6 +180,10 @@ alias bot {
     if ($2 != $null) { sockwrite -n Bot* part $2 $3- }
     return
   }
+  if ($1 == AJ) {
+    .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+    return
+  }
   if ($1 == CYCLE) {
     if ($2 == $null) { sockwrite -n Bot* part %bot.work. [ $+ [ $network ] ] $cr join %bot.work. [ $+ [ $network ] ] }
     else { sockwrite -n Bot* part $2 $cr join $2 }
@@ -268,7 +272,7 @@ alias bot.disp {
   }
 }
 alias botsay {
-  if ($1- == $null) { $botsay(BotSay,Bot Say,Error,$null,$null,No Text Sent to Report) | halt }
+  if ($1- == $null) { $botsay(BotSay,Bot Say,Error,$null,$null,No Text Sent to Report) | return }
   else { var %tmp.zbuild = %tmp.zbuild $sep $+ $chr(186) }
   if ($1 != $null) {
     if ($1 == $me) { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ 4 $1 $sep $+ ) $+ $chr(186) }
@@ -284,7 +288,6 @@ alias botsay {
   if (%bot.disp == CHANNEL) { return echo -t %bot.work [ $+ [ $network ] ] $sys %tmp.zbuild }
   if (%bot.disp == MESSAGE) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
   if (%bot.disp == WINDOW) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
-  halt
   return
 }
 on 1:SOCKOPEN:Bot*:{
@@ -404,14 +407,16 @@ on 1:SOCKCLOSE:Bot*:{
 alias bot.check {
   if (%Bot.active == 1) {
     $report($null,$null,Bot Error,$null,$null,The bot is already running on $remove($sock(*).name,Bot)).active
-    halt
+    return
   }
   else { return }
 }
 
 on *:TEXT:*:#: {
   If ($nick == $me) && (%bot.nick. [ $+ [ $network ] ] ison $chan) {
+    $report(channel hit).chan   
     if ($1 == !bot) {
+
       if ($2 == say) {
         if ($3 == $null) { return }
         if ($chr(35) isin $3) { sockwrite -n Bot* privmsg $3 : $+ $4- }
@@ -435,49 +440,51 @@ on *:TEXT:*:#: {
         else { sockwrite -n Bot* part # }
       }
       if ($2 == quit) {
-        sockclose *                                                                                                                                                                                                                                                                                                                                                  
+        sockclose *
       }
       if ($2 == off) {
-        sockclose *                                                                                                                                                                                                                                                                                                                                                  
+        sockclose *
+      }
+      if ($2 == aj) {
+        .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+        return
+      }
+      if ($2 == hide) {
+        .timerbhide $+ $network 1 2 sockwrite -n Bot* part $key($network,auto.join.rooms)
+        .timerchide $+ $network 1 9 sockwrite -n Bot* join #Transcend
+      }
+      if ($2 == nick) {
+        if ($3 == $null) { return }
+        sockwrite -n Bot* nick : $+ $4
+      }
+      if ($2 == ident) {
+        ;.timer 1 1 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
+      }
+      if ($2 == help) {
+        sockwrite -n Bot* privmsg # :Do !bot and Say Cycle Kick Join Part Quit Off AJ (AutoJoin) Nick Ident Show or Help
+        sockwrite -n Bot* privmsg # :Or use /bot commands
+      }
+      if ($2 == show) {
+        $report($chain).active
+        ;$report(Bot Menu,$null,$null,********************,********************).active
+        $report(Bot Menu,$null,$null,$null,use /Bot SET value.below to alter).active
+        $report(Bot Menu,$null,$null,********************,********************).active
+        $report(Bot Menu,$null,Bot Status,$sock(bot*).status,$sock(bot*).name).active
+        $report(Bot Menu,$null,$null,Current Network,$network).active
+        $report(Bot Menu,$null,$null,bot.disp,%bot.disp).active
+        $report(Bot Menu,$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
+        $report(Bot Menu,$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
+        $report(Bot Menu,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
+        $report(Bot Menu,$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
+        $report(Bot Menu,$null,$null,bot.value,%bot.value).active
+        $report(Bot Menu,$null,$null,bot.trigger,%bot.trigger).active
+        $report(Bot Menu,$null,$null,bot.showall,%bot.showall).active
+        $report(Bot Menu,$null,$null,xxx,no value).active
+        ;$report(Bot Menu,$null,$null,********************,********************).active
+        $report($chain).active
+        return
       }
     }
-    if ($2 == aj) { 
-      .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
-    }
-    if ($2 == hide) { 
-      .timerbhide $+ $network 1 2 sockwrite -n Bot* part $key($network,auto.join.rooms)
-      .timerchide $+ $network 1 9 sockwrite -n Bot* join #Transcend
-    }
-    if ($2 == nick) {
-      if ($3 == $null) { return }
-      sockwrite -n Bot* nick : $+ $4
-    }
-    if ($2 == ident) {
-      ;.timer 1 1 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
-    }
-    if ($2 == help) {
-      sockwrite -n Bot* privmsg # :Do !bot and Say Cycle Kick Join Part Quit Off AJ (AutoJoin) Nick Ident Show or Help
-      sockwrite -n Bot* privmsg # :Or use /bot commands
-    }
-    if ($2 == show) {
-      $report($chain).active
-      ;$report(Bot Menu,$null,$null,********************,********************).active
-      $report(Bot Menu,$null,$null,$null,use /Bot SET value.below to alter).active
-      $report(Bot Menu,$null,$null,********************,********************).active
-      $report(Bot Menu,$null,Bot Status,$sock(bot*).status,$sock(bot*).name).active
-      $report(Bot Menu,$null,$null,Current Network,$network).active
-      $report(Bot Menu,$null,$null,bot.disp,%bot.disp).active
-      $report(Bot Menu,$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
-      $report(Bot Menu,$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
-      $report(Bot Menu,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
-      $report(Bot Menu,$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
-      $report(Bot Menu,$null,$null,bot.value,%bot.value).active
-      $report(Bot Menu,$null,$null,bot.trigger,%bot.trigger).active
-      $report(Bot Menu,$null,$null,bot.showall,%bot.showall).active
-      $report(Bot Menu,$null,$null,xxx,no value).active
-      ;$report(Bot Menu,$null,$null,********************,********************).active
-      $report($chain).active
-      return
-    }
+    
   }
 }
