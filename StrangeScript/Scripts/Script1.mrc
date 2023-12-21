@@ -616,7 +616,7 @@ on ^*1:JOIN:#: {
       .timerTRSND $+ $network 1 1 keywrite $network #transcend $+ -mode +mntp
     }
     .timer 1 1 chanserv op # $me
-    if ($sock(*) != $null) { timer 1 1 sockwrite -n Bot* mode # +o $me }
+    if ($sock(*) != $null) { .timer 1 1 sockwrite -n Bot* mode # +o $me }
   }
   if ($nick == %bot.nick. [ $+ [ $network ] ] ) { mode # +o %bot.nick. [ $+ [ $network ] ] }
   $report(Join,$chan,$nick,$address).chan
