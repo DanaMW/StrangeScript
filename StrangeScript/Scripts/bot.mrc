@@ -128,7 +128,7 @@ alias bot {
     .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
   }
   if ($1 == CYCLE) {
-    if ($2 == $null) { sockwrite -n Bot* part %bot.work. [ $+ [ $network ] ] $cr join %bot.work. [ $+ [ $network ] ] }
+    if ($2 == $null) { sockwrite -n Bot* part # $cr join # }
     else { sockwrite -n Bot* part $2 $cr join $2 }
     return
   }
@@ -185,10 +185,20 @@ alias bot {
     return
   }
   if ($1 == AGAIN) {
+    ; This is a debug thing. If you think your bot is not ident'ing right, this is the USER method. Use it to send it AGAIN.
     sockwrite -n  $sock(*).name user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
     return
   }
-  if ($1 == QUIT) { sockwrite -n $sock(*).name quit :Goodbye | return }
+  if ($1 == QUIT) {
+    if ($2 == $null) {
+      sockwrite -n $sock(*).name quit :Goodbye
+      return
+    }
+    else {
+      sockwrite -n $sock(*).name quit : $+ $2-
+      return
+    }
+  }
   $botsay(Bot,$null,Options,$null,$null,$null,AGAIN, CYCLE, DEBUG, ID, AJ, JOIN, KICK, NICK, ON/START, OFF/STOP, PART, QUIT, SAY, SEND, SET, STATUS, SHOW, WRITE).active
   $botsay(Bot,$null,Options,$null,$null,$null,Try /BOT SHOW to get a look at the settings values and /BOT SET to figure out how to change them.).active
   return
