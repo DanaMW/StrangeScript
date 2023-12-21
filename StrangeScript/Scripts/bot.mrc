@@ -1,5 +1,5 @@
 alias bot {
-  if ($1 == ON) {
+  if ($1 == ON) || ($1 == START) {
     set %bot.onp2 $2
     if (%bot.onp2 == $null) { set %bot.onp2 $network }
     if ($network == libera.chat) { set %bot.onp2 libera }
@@ -31,45 +31,7 @@ alias bot {
     $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera Etc.).active
     return
   }
-  if ($1 == START) {
-    set %bot.stp2 $2
-    if (%bot.stp2 == $null) { set %bot.stp2 $network }
-    if (%bot.stp2 == Local) {
-      bot.check
-      sockopen -n BotLocal localhost 6667
-      $report(Bot,ON,$null,Local,irc.Local.net,6667).active
-      return
-    }
-    if (%bot.stp2 == ircgo) {
-      bot.check
-      sockopen -n BotIRCGo irc.IRCGo.org 6667
-      $report(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
-      return
-    }
-    if (%bot.stp2 == dalnet) {
-      bot.check
-      sockopen -n BotDalNet irc.dal.net 6667
-      $report(Bot,ON,$null,DalNet,irc.dal.net,6667).active
-      return
-    }
-    if (%bot.stp2 == libera) {
-      bot.check
-      sockopen -n BotLibera irc.libera.chat 6667
-      $report(Bot,ON,$null,Libera,irc.libera.chat,6667).active
-      return
-    }
-    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot START Local or IRCGO or DalNet or Libera Etc.).active
-    return
-  }
-  if ($1 == OFF) {
-    sockclose *
-    unset %clone.server. [ $+ [ $sockname ] ]
-    set %Bot.active 0
-    $report(Bot,OFF,$null,$null,$null,You selected off. It's off.).active
-    $report(Bot,OFF,$null,Bot.active,%Bot.active,$null).active
-    return
-  }
-  if ($1 == STOP) {
+  if ($1 == OFF) || ($1 == STOP) {
     sockclose *
     unset %clone.server. [ $+ [ $sockname ] ]
     set %Bot.active 0
@@ -128,16 +90,7 @@ alias bot {
       $report(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
       return
     }
-    $botsay(Bot SET,$null,$null,$null,use /Bot SET value.below).active
-    $report(SET,$null,Option,$null,$null,$null,bot.disp).active
-    $report(SET,$null,Option,$null,$null,$null,bot.work).active
-    $report(SET,$null,Option,$null,$null,$null,bot.play).active
-    $report(SET,$null,Option,$null,$null,$null,bot.nick).active
-    $report(SET,$null,Option,$null,$null,$null,bot.pass).active
-    $report(SET,$null,Option,$null,$null,$null,bot.value).active
-    $report(SET,$null,Option,$null,$null,$null,bot.trigger).active
-    $report(SET,$null,Option,$null,$null,$null,bot.showall).active
-    $report(Bot SET,$null,$null,$null,*******************).active
+    botvar
     return
   }
   if ($1 == SHOW) {
@@ -440,10 +393,11 @@ alias !bot {
       ;.timer 1 1 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
     }
     if ($3 == help) {
-      sockwrite -n Bot* privmsg # :Do !bot and Say Cycle Kick Join Part Quit Off AJ (AutoJoin) Nick Ident Show or Help
-      sockwrite -n Bot* privmsg # :Or use /bot commands
+      sockwrite -n Bot* privmsg # :Do /bot Say Cycle Kick Join Part Quit Off AJ (AutoJoin) Nick Ident Show or Help
+      sockwrite -n Bot* privmsg # :Or use /bot SET commands
     }
     if ($3 == show) {
+      if ($4 == all) { botvar }
       bothelp
       return
     }
@@ -467,7 +421,21 @@ alias bothelp {
   $report(Bot Menu,$null,$null,bot.trigger,%bot.trigger).active
   $report(Bot Menu,$null,$null,bot.showall,%bot.showall).active
   $report(Bot Menu,$null,$null,xxx,no value).active
-  ;$report(Bot Menu,$null,$null,********************,********************).active
+  $report(Bot Menu,$null,$null,********************,********************).active
+  $report(Bot Menu,$null,$null,$null,do /Bot SET to see a list.).active
   $report($chain).active
+  return
+}
+alias botvar {
+  $botsay($null,$null,$null,$null,use /Bot SET value.below).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.disp).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.work).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.play).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.nick).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.pass).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.value).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.trigger).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.showall).active
+  $botsay($null,$null,,$null,$null,Use /BOT SHOW for full menu).active
   return
 }
