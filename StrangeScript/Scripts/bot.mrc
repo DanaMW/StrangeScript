@@ -7,36 +7,36 @@ alias bot {
     if (%bot.onp2 == local) {
       bot.check
       sockopen -n BotLocal irc.localdomain.net 6667
-      $report(Bot,ON,$null,Local,irc.localdomain.net,6667).active
+      $botsay(Bot,ON,$null,Local,irc.localdomain.net,6667).active
       return
     }
     if (%bot.onp2 == ircgo) {
       bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
-      $report(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
+      $botsay(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
       return
     }
     if (%bot.onp2 == dalnet) {
       bot.check
       sockopen -n BotDalNet irc.dal.net 6667
-      $report(Bot,ON,$null,DalNet,irc.dal.net,6667).active
+      $botsay(Bot,ON,$null,DalNet,irc.dal.net,6667).active
       return
     }
     if (%bot.onp2 == libera) {
       bot.check
       sockopen -n BotLibera irc.libera.chat 6667
-      $report(Bot,ON,$null,Libera,irc.libera.chat,6667).active
+      $botsay(Bot,ON,$null,Libera,irc.libera.chat,6667).active
       return
     }
-    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera Etc.).active
+    $botsay(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera Etc.).active
     return
   }
   if ($1 == OFF) || ($1 == STOP) {
     sockclose *
     unset %clone.server. [ $+ [ $sockname ] ]
     set %Bot.active 0
-    $report(Bot,OFF,$null,$null,$null,You selected off. It's off.).active
-    $report(Bot,OFF,$null,Bot.active,%Bot.active,$null).active
+    $botsay(Bot,OFF,$null,$null,$null,You selected off. It's off.).active
+    $botsay(Bot,OFF,$null,Bot.active,%Bot.active,$null).active
     return
   }
   if ($1 == ID) {
@@ -48,7 +48,7 @@ alias bot {
     if ($2 == bot.disp) {
       if ($3 != $null) {
         if ($3 == CHANNEL) || ($3 == MESSAGE) || ($3 == WINDOW) { set %bot.disp $3 | return }
-        $report(Bot,Set,bot.disp,Error,Use:/bot set bot.disp CHANNEL/MESSAGE/WINDOW).active
+        $botsay(Bot,Set,bot.disp,Error,Use:/bot set bot.disp CHANNEL/MESSAGE/WINDOW).active
         return
       }
       return
@@ -56,44 +56,44 @@ alias bot {
     if ($2 == bot.work) {
       if ($3 == $null) { return }
       set %bot.work. [ $+ [ $network ] ] $3
-      $report(SET,Option,$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
+      $botsay(SET,Option,$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
       return
     }
     if ($2 == bot.play) {
       if ($3 == $null) { return }
       set %bot.play. [ $+ [ $network ] ] $3
-      $report(SET,Option,$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
+      $botsay(SET,Option,$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
       return
     }
     if ($2 == bot.nick) {
       if ($3 == $null) { return }
       set %bot.nick. [ $+ [ $network ] ] $3
-      $report(SET,Option,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
+      $botsay(SET,Option,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
       return
     }
     if ($2 == bot.pass) {
       if ($3 == $null) { return }
       set %bot.pass. [ $+ [ $network ] ] $3
-      $report(SET,Option,$null,$null,bot.pass, %bot.pass. [ $+ [ $network ] ] ).active
+      $botsay(SET,Option,$null,$null,bot.pass, %bot.pass. [ $+ [ $network ] ] ).active
       return
     }
     if ($2 == bot.value) {
       if (%bot.value == $null) { set %bot.value - }
       if ($3 == $null) { return }
       else { set %bot.value $3- }
-      $report(Bot Action,Set,bot.value,Set to,%bot.value).active
+      $botsay(Bot Action,Set,bot.value,Set to,%bot.value).active
       return
     }
     if ($2 == bot.trigger) {
       if (%bot.trigger == 1) { set %bot.trigger 0 }
       else { set %bot.trigger 1 }
-      $report(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
+      $botsay(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
       return
     }
     if ($2 == bot.showall) {
       if (%bot.showall == ON) { set %bot.showall OFF }
       else { set %bot.showall ON }
-      $report(Bot Action,Set,bot.showall,Set to,%bot.showall).active
+      $botsay(Bot Action,Set,bot.showall,Set to,%bot.showall).active
       return
     }
     botvar
@@ -145,33 +145,33 @@ alias bot {
   if ($1 == DEBUG) {
     if ($2 == ON) {
       set %bot.showall ON
-      $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
       return
     }
     if ($2 == OFF) {
       set %bot.showall OFF
-      $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+      $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
       return
     }
     if ($2 == $null) {
       if (%bot.showall == ON) {
         set %bot.showall OFF
-        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
         return
       }
       else {
         set %bot.showall ON
-        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
         return
       }
       if (%bot.showall == OFF) {
         set %bot.showall ON
-        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
         return
       }
       else {
         set %bot.showall OFF
-        $report(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
+        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall).active
         return
       }
     }
@@ -180,7 +180,7 @@ alias bot {
   if ($1 == STATUS) {
     ;cls
     if (%Bot.active == 1) { set %tmp.stats1 On The Line }
-    $report(Bot Status,Your Bot Is ,%tmp.stats1,On Server,$remove($sock(*).name,Bot)).active
+    $botsay(Bot Status,Your Bot Is ,%tmp.stats1,On Server,$remove($sock(*).name,Bot)).active
     unset %tmp.stats1
     return
   }
@@ -189,8 +189,8 @@ alias bot {
     return
   }
   if ($1 == QUIT) { sockwrite -n $sock(*).name quit :Goodbye | return }
-  $report(Bot,$null,Options,$null,$null,$null,AGAIN, CYCLE, DEBUG, ID, JOIN, KICK, NICK, ON/START, OFF/STOP, PART, QUIT, SAY, SEND, SET, STATUS, SHOW, WRITE).active
-  $report(Bot,$null,Options,$null,$null,$null,Try /BOT SHOW to get a look at the settings values and /BOT SET to figure out how to change them.).active
+  $botsay(Bot,$null,Options,$null,$null,$null,AGAIN, CYCLE, DEBUG, ID, AJ, JOIN, KICK, NICK, ON/START, OFF/STOP, PART, QUIT, SAY, SEND, SET, STATUS, SHOW, WRITE).active
+  $botsay(Bot,$null,Options,$null,$null,$null,Try /BOT SHOW to get a look at the settings values and /BOT SET to figure out how to change them.).active
   return
 }
 alias bot.disp {
@@ -234,7 +234,7 @@ alias botsay {
   return
 }
 on 1:SOCKOPEN:Bot*:{
-  if ($sockerr > 0) { sockclose $sockname | $report(Sock Error,OPEN,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg).active | return }
+  if ($sockerr > 0) { sockclose $sockname | $botsay(Sock Error,OPEN,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg).active | return }
   $botsay(BotSay,OPEN,Socket Name,$sockname)
   set %Bot.active 1
   if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
@@ -283,7 +283,7 @@ on 1:SOCKOPEN:Bot*:{
   $botsay(BotSay,Bot.ERROR,No network given,$null,$null,Usage: /bot <on/start> <Dalnet/Local/Ircgo/Libera/etc>)
 }
 on 1:SOCKREAD:Bot*:{
-  if ($sockerr > 0) { sockclose $sockname | $report(Sock Error,READ,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg)active | return }
+  if ($sockerr > 0) { sockclose $sockname | $botsay(Sock Error,READ,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg)active | return }
   if (%bot.trigger == 1) {
     sockwrite -n $sockname privmsg %bot.work. [ $+ [ $network ] ] : $+ %bot.value
     .timer 1 1 set %bot.value -
@@ -294,7 +294,7 @@ on 1:SOCKREAD:Bot*:{
   if ($sockbr == 0) { return }
   if ($gettok(%Bot.readline,1,32) == PING) {
     sockwrite -n $sockname PONG $gettok(%Bot.readline,2,32)
-    ;$report(Pong,Sent Pong,to,$remove($gettok(%Bot.readline,2,32),:)).active
+    if (%bot.showall == ON) { $botsay(Pong,Sent Pong,to,$remove($gettok(%Bot.readline,2,32),:)).active }
     set %clone.server. [ $+ [ $sockname ] ] $remove($gettok(%Bot.readline,2,32),:)
   }
   if ($remove($left(%Bot.readline,$calc($pos(%Bot.readline,$chr(33),1) -1)),$chr(58)) == $me) && ($remove($gettok(%Bot.readline,4,32),:,$chr(1)) == PING)  { sockwrite -n $sockname NOTICE $me : $+ $chr(1) $+ PING $gettok(%Bot.readline,5-6,32) $+ $chr(1) }
@@ -334,48 +334,48 @@ on 1:SOCKREAD:Bot*:{
     goto Botread
   }
   :bossout
-  if (%bot.showall == ON) { $report(Full Info:,$null,$null,$null,$null,%Bot.readline).active }
+  if (%bot.showall == ON) { $botsay(Full Info:,$null,$null,$null,$null,%Bot.readline).active }
   goto Botread
 }
 on 1:SOCKCLOSE:Bot*:{
   unset %clone.server. [ $+ [ $sockname ] ]
   set %Bot.active 0
-  $report($sockname just closed $sock(*).name $sock($sockname).wserr $sock($sockname).wsmsg).active
-  ;if ($sockname == BotICQ) { .timer 1 1 ockopen BotICQ irc.icq.com 6667 | $report(ServerBot,ON,ICQ).active }
-  ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | $report(ServerBot,ON,DalNet).active }
-  ;if ($sockname == BotLocal) { .timer 1 1 sockopen BotLocal localhost 6667 | $report(ServerBot,ON,Local).active }
-  ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | $report(ServerBot,ON,IRCgo).active }
-  ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | $report(ServerBot,ON,CHAT).active }
+  $botsay($sockname just closed $sock(*).name $sock($sockname).wserr $sock($sockname).wsmsg).active
+  ;if ($sockname == BotICQ) { .timer 1 1 ockopen BotICQ irc.icq.com 6667 | $botsay(ServerBot,ON,ICQ).active }
+  ;if ($sockname == BotDalNet) { .timer 1 1 sockopen BotDalNet irc.dal.net 6667 | $botsay(ServerBot,ON,DalNet).active }
+  ;if ($sockname == BotLocal) { .timer 1 1 sockopen BotLocal localhost 6667 | $botsay(ServerBot,ON,Local).active }
+  ;if ($sockname == BotIRCgo) { .timer 1 1 sockopen BotIRCgo irc.ircgo.org 6667 | $botsay(ServerBot,ON,IRCgo).active }
+  ;if ($sockname == BotCHAT) { .timer 1 1 sockopen BotCHAT irc.chatnet.org 6667 | $botsay(ServerBot,ON,CHAT).active }
 }
 alias bot.check {
   if (%Bot.active == 1) {
-    $report(Bot Check,$null,$null,$null,The bot is running on $remove($sock(*).name,Bot)).active
+    $botsay(Bot Check,$null,$null,$null,The bot is running on $remove($sock(*).name,Bot)).active
     halt
   }
   else { return }
 }
 alias bothelp {
-  $report($chain).active
-  ;$report(Bot Menu,$null,$null,********************,********************).active
-  $report(Bot Menu,$null,$null,$null,use /Bot SET value.below to alter).active
-  $report(Bot Menu,$null,$null,********************,********************).active
-  $report(Bot Menu,$null,Bot Status,$sock(bot*).status,$sock(bot*).name).active
-  $report(Bot Menu,$null,$null,Current Network,$network).active
-  $report(Bot Menu,$null,$null,bot.disp,%bot.disp).active
-  $report(Bot Menu,$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
-  $report(Bot Menu,$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
-  $report(Bot Menu,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
-  $report(Bot Menu,$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
-  $report(Bot Menu,$null,$null,bot.value,%bot.value).active
-  $report(Bot Menu,$null,$null,bot.trigger,%bot.trigger).active
-  $report(Bot Menu,$null,$null,bot.showall,%bot.showall).active
-  $report(Bot Menu,$null,$null,xxx,no value).active
-  $report(Bot Menu,$null,$null,********************,********************).active
-  $report(Bot Menu,$null,$null,$null,do /Bot SET to see a list.).active
-  $report($chain).active
+  $botsay($chain).active
+  $botsay($chain(3),$null,$null,$null,use /Bot SET value.below to alter).active
+  $botsay($chain(3),$null,$null,********************,********************).active
+  $botsay($chain(3),$null,Bot Status,$sock(bot*).status,$sock(bot*).name).active 
+  $botsay($chain(3),$null,$null,Current Network,$network).active
+  $botsay($chain(3),$null,$null,bot.disp,%bot.disp).active
+  $botsay($chain(3),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
+  $botsay($chain(3),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
+  $botsay($chain(3),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
+  $botsay($chain(3),$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
+  $botsay($chain(3),$null,$null,bot.value,%bot.value).active
+  $botsay($chain(3),$null,$null,bot.trigger,%bot.trigger).active
+  $botsay($chain(3),$null,$null,bot.showall,%bot.showall).active
+  $botsay($chain(3),$null,$null,xxx,no value).active
+  $botsay($chain(3),$null,$null,********************,********************).active
+  $botsay($chain(3),$null,$null,$null,do /Bot SET to see a list.).active
+  $botsay($chain).active
   return
 }
 alias botvar {
+  $botsay($chain(30)).active
   $botsay($null,$null,$null,$null,use /Bot SET value.below).active
   $botsay(SET,$null,Option,$null,$null,$null,bot.disp).active
   $botsay(SET,$null,Option,$null,$null,$null,bot.work).active
@@ -386,5 +386,6 @@ alias botvar {
   $botsay(SET,$null,Option,$null,$null,$null,bot.trigger).active
   $botsay(SET,$null,Option,$null,$null,$null,bot.showall).active
   $botsay($null,$null,,$null,$null,Use /BOT SHOW for full menu).active
+  $botsay($chain(30)).active
   return
 }
