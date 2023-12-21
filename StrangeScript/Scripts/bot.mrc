@@ -90,10 +90,17 @@ alias bot {
       $report(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
       return
     }
+    if ($2 == bot.showall) {
+      if (%bot.showall == ON) { set %bot.showall OFF }
+      else { set %bot.showall ON }
+      $report(Bot Action,Set,bot.showall,Set to,%bot.showall).active
+      return
+    }
     botvar
     return
   }
   if ($1 == SHOW) {
+    if ($2 == ALL) { botvar }
     bothelp
     return
   }
@@ -327,7 +334,7 @@ on 1:SOCKREAD:Bot*:{
     goto Botread
   }
   :bossout
-  if (%bot.showall == ON) { $report(Full Info:$null,$null,$bull,$null,%Bot.readline).active }
+  if (%bot.showall == ON) { $report(Full Info:,$null,$null,$null,$null,%Bot.readline).active }
   goto Botread
 }
 on 1:SOCKCLOSE:Bot*:{
@@ -342,68 +349,10 @@ on 1:SOCKCLOSE:Bot*:{
 }
 alias bot.check {
   if (%Bot.active == 1) {
-    $report($null,$null,Bot Error,$null,$null,The bot is already running on $remove($sock(*).name,Bot)).active
+    $report(Bot Check,$null,$null,$null,The bot is running on $remove($sock(*).name,Bot)).active
     halt
   }
   else { return }
-}
-alias !bot {
-  set %tt1 $1-
-  If ($nick == $me) && (%bot.nick. [ $+ [ $network ] ] ison $chan) {
-    if ($3 == say) {
-      if ($4 == $null) { return }
-      if ($chr(35) isin $4) { sockwrite -n Bot* privmsg $4 : $+ $5- }
-      else { sockwrite -n Bot* privmsg # : $+ $4- }
-    }
-    if ($3 == cycle) {
-      if ($chr(35) isin $4) { sockwrite -n Bot* part $4 :-<[ Fast ]>- | sockwrite -n Bot* join $4 }
-      else { sockwrite -n Bot* part # :-<[ Fast ]>- | sockwrite -n Bot* join # }
-    }
-    if ($3 == kick) {
-      if ($4 == $null) { return }
-      if ($chr(35) isin $4) { sockwrite -n Bot* kick $4 : $+ $5 }
-      else { sockwrite -n Bot* kick # $4 }
-    }
-    if ($3 == join) {
-      if ($chr(35) isin $4) { sockwrite -n Bot* join $4 }
-      else { sockwrite -n Bot* join # }
-    }
-    if ($3 == part) {
-      if ($chr(35) isin $4) { sockwrite -n Bot* part $4 }
-      else { sockwrite -n Bot* part # }
-    }
-    if ($3 == quit) {
-      sockclose *
-    }
-    if ($3 == off) {
-      sockclose *
-    }
-    if ($3 == aj) {
-      .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
-    }
-    if ($3 == hide) {
-      .timerbhide $+ $network 1 2 sockwrite -n Bot* part $key($network,auto.join.rooms)
-      .timerchide $+ $network 1 9 sockwrite -n Bot* join #Transcend
-    }
-    if ($3 == nick) {
-      if ($4 == $null) { return }
-      sockwrite -n Bot* nick : $+ $5
-    }
-    if ($3 == ident) {
-      ;.timer 1 1 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
-    }
-    if ($3 == help) {
-      sockwrite -n Bot* privmsg # :Do /bot Say Cycle Kick Join Part Quit Off AJ (AutoJoin) Nick Ident Show or Help
-      sockwrite -n Bot* privmsg # :Or use /bot SET commands
-    }
-    if ($3 == show) {
-      if ($4 == all) { botvar }
-      bothelp
-      return
-    }
-  }
-  unset %tt1
-  halt
 }
 alias bothelp {
   $report($chain).active
