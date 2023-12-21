@@ -185,7 +185,8 @@ raw 315:*: {
 on *:INPUT:#: {
   if (/* !iswm $1) {
     haltdef
-    .raw privmsg #  : $+ $1-
+    .raw privmsg # : $+ $1-
+    ;msg $active $1-
     $report($nick,$null,$null,$null,$1-).text
     if ($nick == $me) {
       set %tmp.txt1 $1-
@@ -197,7 +198,9 @@ on *:INPUT:#: {
 }
 on ^*:TEXT:*:#: {
   haltdef
-  if ($nick != $me) { $report($nick,$null,$null,$null,$1-).chan }
+  if ($nick != $me) {
+    $report($nick,$null,$null,$null,$1-).chan
+  }
   halt
 }
 on *:ERROR:*: {
@@ -611,7 +614,7 @@ on ^*1:JOIN:#: {
   if ($nick == $me) {
     if ($chan == #transcend) {
       .timerTRSND $+ $network 1 1 keywrite $network #transcend $+ -mode +mntp
-    } 
+    }
     .timer 1 1 chanserv op # $me
     if ($sock(*) != $null) { timer 1 1 sockwrite -n Bot* mode # +o $me }
   }

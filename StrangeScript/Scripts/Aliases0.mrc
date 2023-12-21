@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v158.01.12.19.202310]
+/ver return 10S04trange10S04cript10[v158.02.12.20.202310]
 /shortver return 10S04trange10S04cript
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
@@ -27,7 +27,7 @@
   set %tmp.fold Text\ScriptInfo.ini
   if ($3 != $null) {
     .writeini %tmp.fold $1 $2 $3-
-    if ($key(StrangeScript,key.writes) == ON) { $report(StrangeScript,keywrite,$1,$2,$3-).active } 
+    if ($key(StrangeScript,key.writes) == ON) { $report(StrangeScript,keywrite,$1,$2,$3-).active }
   }
   else {
     .writeini %tmp.fold $1 $2 ""
@@ -316,12 +316,12 @@ Key.reads {
 /cycle {
   if ($key($network,cycle.counter) >= 2) { return }
   keywrite $network cycle.counter $calc($key($network,cycle.counter) + 1)
-  if ($1 == $null) { .raw part # $cr join # $key(#,ownerkey) }       
+  if ($1 == $null) { .raw part # $cr join # $key(#,ownerkey) }
   if ($1 != $null) { .raw part $1 $cr join $1 $key($1,ownerkey)
   }
   .timerCYC1a. $+ $network 1 5 keywrite $network cycle.counter 0
   .timerCYC1b. $+ $network 1 5 echo -t # $sys $report(StrangeScript,Cycle Counter,$null,$null,Reset to,,0)
-}  
+}
 /hex.out {
   set %hex.word %null
   set %hex.word $replace($1-,$chr(32),$chr(95))
