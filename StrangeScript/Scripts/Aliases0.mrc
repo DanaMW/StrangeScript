@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v158.03.12.21.202310]
+/ver return 10S04trange10S04cript10[v158.04.12.23.202310]
 /shortver return 10S04trange10S04cript
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
@@ -283,8 +283,8 @@ Key.reads {
   if ($1 == $null) { $report(StrangeScript,ME,Error,$null,Nothing to do here. No channel or user destination or message).active | halt }
   if (=* iswm $active) { describe $active $1- | halt }
   .raw privmsg $active : $+ ACTION $1- $+ 
-  echo $color(action) -t $active $sysp Action:  $+ %sc.me $+ $lll $+ $white $me  $+ %sc.me $+ $rrr $+  $1-
   if ($network == Dalnet) { echo $color(action) -t $active $sysp Action:  $+ %sc.me $+ $lll $+ $white $me  $+ %sc.me $+ $rrr $+  $1- }
+  else { echo $color(action) -t $active $sysp Action:  $+ %sc.me $+ $lll $+ $white $me  $+ %sc.me $+ $rrr $+  $1- }
   return
 }
 /ame {

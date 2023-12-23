@@ -81,19 +81,25 @@ alias bot {
       if (%bot.value == $null) { set %bot.value - }
       if ($3 == $null) { return }
       else { set %bot.value $3- }
-      $botsay(Bot Action,Set,bot.value,Set to,%bot.value).active
+      $botsay(Bot Action,Set,bot.value,is set to,%bot.value).active
       return
     }
     if ($2 == bot.trigger) {
       if (%bot.trigger == 1) { set %bot.trigger 0 }
       else { set %bot.trigger 1 }
-      $botsay(Bot Action,Set,bot.trigger,Set to,%bot.trigger).active
+      $botsay(Bot Action,Set,bot.trigger,is set to,%bot.trigger).active
       return
     }
     if ($2 == bot.showall) {
       if (%bot.showall == ON) { set %bot.showall OFF }
       else { set %bot.showall ON }
-      $botsay(Bot Action,Set,bot.showall,Set to,%bot.showall).active
+      $botsay(Bot Action,Set,bot.showall,is set to,%bot.showall).active
+      return
+    }
+    if ($2 == bot.defense) {
+      if (%bot.defense. [ $+ [ $network ] ] == ON) { set %bot.defense. [ $+ [ $network ] ] OFF }
+      else { set %bot.defense. $+ $network ON }
+      $botsay(Bot Action,Set,bot.defense,is set to, %bot.defense. [ $+ [ $network ] ] ).active
       return
     }
     botvar
@@ -126,6 +132,7 @@ alias bot {
   }
   if ($1 == AJ) {
     .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+    return
   }
   if ($1 == CYCLE) {
     if ($2 == $null) { sockwrite -n Bot* part # $cr join # }
@@ -321,7 +328,9 @@ on 1:SOCKREAD:Bot*:{
   if ($gettok(%Bot.readline,2,32) == TOPIC) { $botsay(BotSay,$gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Topic $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,4-,32),:)) }
   if ($gettok(%Bot.readline,2,32) == KICK) {
     $botsay(BotSay,$gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Kick $remove($gettok(%Bot.readline,1,33),:) kicked $remove($gettok(%Bot.readline,4,32),:) from $remove($gettok(%Bot.readline,3,32),:) $remove($gettok(%Bot.readline,5-,32),:))
-    if ($sock($sockname).mark == $remove($gettok(%Bot.readline,4,32),:)) { sockwrite -n $sockname join $remove($gettok(%Bot.readline,3,32),:) }
+    sockwrite -n $sockname join $remove($gettok(%Bot.readline,3,32),:) 
+    ;if ( $remove($gettok(%Bot.readline,4,32),:) == %bot.name. [ $+ [ $network ] ] ) { sockwrite -n bot* join $remove($gettok(%Bot.readline,3,32),:) }
+    ;if ($sock($sockname).mark == $remove($gettok(%Bot.readline,4,32),:)) { sockwrite -n Bot* join $remove($gettok(%Bot.readline,3,32),:) }
   }
   if ($gettok(%Bot.readline,2,32) == MODE) { $botsay(BotSay,$gettok(%server.Bot. [ $+ [ $remove($sockname,Bot) ] ] ,1,44) Mode $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,4-,32),:) on $remove($gettok(%Bot.readline,3,32),:)) }
   if ($gettok(%Bot.readline,2,32) == PRIVMSG) {
@@ -368,7 +377,7 @@ alias bothelp {
   $botsay($chain).active
   $botsay($chain(3),$null,$null,$null,use /Bot SET value.below to alter).active
   $botsay($chain(3),$null,$null,********************,********************).active
-  $botsay($chain(3),$null,Bot Status,$sock(bot*).status,$sock(bot*).name).active 
+  $botsay($chain(3),$null,Bot Status,$sock($sockname).status,$sock($sockname).name).active 
   $botsay($chain(3),$null,$null,Current Network,$network).active
   $botsay($chain(3),$null,$null,bot.disp,%bot.disp).active
   $botsay($chain(3),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
@@ -378,6 +387,7 @@ alias bothelp {
   $botsay($chain(3),$null,$null,bot.value,%bot.value).active
   $botsay($chain(3),$null,$null,bot.trigger,%bot.trigger).active
   $botsay($chain(3),$null,$null,bot.showall,%bot.showall).active
+  $botsay($chain(3),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active  
   $botsay($chain(3),$null,$null,xxx,no value).active
   $botsay($chain(3),$null,$null,********************,********************).active
   $botsay($chain(3),$null,$null,$null,do /Bot SET to see a list.).active
@@ -395,6 +405,7 @@ alias botvar {
   $botsay(SET,$null,Option,$null,$null,$null,bot.value).active
   $botsay(SET,$null,Option,$null,$null,$null,bot.trigger).active
   $botsay(SET,$null,Option,$null,$null,$null,bot.showall).active
+  $botsay(SET,$null,Option,$null,$null,$null,bot.defense).active
   $botsay($null,$null,,$null,$null,Use /BOT SHOW for full menu).active
   $botsay($chain(30)).active
   return
