@@ -376,7 +376,7 @@ on 1:CONNECT:{
   .timerrf $+ $network 1 1 $report($fullver).active
   if ($key($network,Lagchk) == ON)  { .timerlc $+ $network 1 1 lagon }
   if ($key($network,auto.join) == ON)  { .timeraj $+ $network 1 5 auto.join }
-  .bot off
+  ;.bot off
   halt
 }
 raw knock:*: {
