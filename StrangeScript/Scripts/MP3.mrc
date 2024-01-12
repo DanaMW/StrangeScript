@@ -9,7 +9,7 @@ alias showoff {
 }
 alias mp3.prep {
   set %Transcend.version Transcend Player
-  set %Transcend.build 6.01
+  set %Transcend.build 6.02
   set %Transcend.title %Transcend.version %Transcend.build by Dana L. M-W.
   if (%Transcend.crossfade == $null) { set %Transcend.crossfade 0 }
   return
@@ -101,7 +101,7 @@ on *:dialog:mp3p:init:0: {
 ;
 ;}
 on *:dialog:mp3p:sclick:*: {
-  if ($did == 1) { .timer 1 0 dialog -x mp3p }
+  if ($did == 1) { dialog -x mp3p }
   if ($did == 4) { .timer 1 0 Pick.MP3 }
   if ($did == 6) { Send.MP3 }
   if ($did == 7) { splay pause | did -b mp3p 7 | did -e mp3p 8 }
@@ -177,6 +177,8 @@ alias CurPlay {
   }
   feed.line
   return
+}
+alias Close.MP3 {
 }
 alias Rename.MP3 {
   if ($inmp3.fname == %Transcend.play1) { halt }

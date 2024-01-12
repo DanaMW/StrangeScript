@@ -375,22 +375,22 @@ alias bot.check {
 }
 alias bothelp {
   $botsay($chain).active
-  $botsay($chain(3),$null,$null,$null,use /Bot SET value.below to alter).active
-  $botsay($chain(3),$null,$null,********************,********************).active
-  $botsay($chain(3),$null,Bot Status,$sock($sockname).status,$sock($sockname).name).active 
-  $botsay($chain(3),$null,$null,Current Network,$network).active
-  $botsay($chain(3),$null,$null,bot.disp,%bot.disp).active
-  $botsay($chain(3),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
-  $botsay($chain(3),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
-  $botsay($chain(3),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
-  $botsay($chain(3),$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
-  $botsay($chain(3),$null,$null,bot.value,%bot.value).active
-  $botsay($chain(3),$null,$null,bot.trigger,%bot.trigger).active
-  $botsay($chain(3),$null,$null,bot.showall,%bot.showall).active
-  $botsay($chain(3),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active  
-  $botsay($chain(3),$null,$null,xxx,no value).active
-  $botsay($chain(3),$null,$null,********************,********************).active
-  $botsay($chain(3),$null,$null,$null,do /Bot SET to see a list.).active
+  $botsay($chain(2),$null,$null,$null,use /Bot SET value.below to alter).active
+  $botsay($chain(2),$null,$null,********************,********************).active
+  $botsay($chain(2),$null,Bot Status,$sock($sockname).status,$sock($sockname).name).active 
+  $botsay($chain(2),$null,$null,Current Network,$network).active
+  $botsay($chain(2),$null,$null,bot.disp,%bot.disp).active
+  $botsay($chain(2),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
+  $botsay($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
+  $botsay($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
+  $botsay($chain(2),$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
+  $botsay($chain(2),$null,$null,bot.value,%bot.value).active
+  $botsay($chain(2),$null,$null,bot.trigger,%bot.trigger).active
+  $botsay($chain(2),$null,$null,bot.showall,%bot.showall).active
+  $botsay($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active  
+  $botsay($chain(2),$null,$null,xxx,no value).active
+  $botsay($chain(2),$null,$null,********************,********************).active
+  $botsay($chain(2),$null,$null,$null,do /Bot SET to see a list.).active
   $botsay($chain).active
   return
 }

@@ -1,5 +1,5 @@
 /fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
-/ver return 10S04trange10S04cript10[v158.05.01.03.202410]
+/ver return 10S04trange10S04cript10[v158.07.01.12.202410]
 /shortver return 10S04trange10S04cript
 /myver say $fullver
 /mytopic topic #StrangeScript 4,0æ0,4æ5,4æ4,5æ1,5æ5,1æ4,1 $fullver 5,1æ1,5æ4,5æ5,4æ0,4æ4,0æ
@@ -164,7 +164,6 @@ Key.reads {
 /n /names #$$1
 /w /whois $$1
 /k /kick # $$1 $2-
-/q /query $$1-
 /s /server $$1-
 /i /invite $$1 #$$2
 /send /dcc send $1 $2
@@ -402,3 +401,18 @@ Key.reads {
   ;}
 }
 /year { var %a 0 | while (%a <= 9) { msg $chan $+($1,%a) $+ . $date | inc %a } }
+/q {
+  if ($1 == 1) { quote.text $2- }
+  if ($1 == 2) { quote.clip $2- }
+  else { quote.text }
+}
+/quote.text {
+  if ($1 != $null) { say $report($null,$null,$chr(126) $+ $token(%quote.text,3,46) $+ $chr(126)) 1 $1- }
+  elseif (%quote.text != $null) { say $report($null,$null,$chr(126) $+ $token(%quote.text,3,46) $+ $chr(126)) 1 $$?="Text after quote:" }
+  else { $report($null,Error,$null,quote.text Failed,Buffer Empty).active }
+}
+/quote.clip {
+  if ($1 != $null) { say $report($null,$null,$chr(126) $+ $cb $+ $chr(126)) 1 $1- }
+  elseif ($cb != $null) { say $report($null,$null,$chr(126) $+ $cb $+ $chr(126)) 1 $$?="Text after quote:" }
+  else { $report($null,Error,$null,quote.clip failed,Bu/ffer Empty).active }
+}

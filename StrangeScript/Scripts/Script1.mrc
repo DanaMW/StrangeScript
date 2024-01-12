@@ -200,6 +200,7 @@ on ^*:TEXT:*:#: {
   haltdef
   if ($nick != $me) {
     $report($nick,$null,$null,$null,$1-).chan
+    set %quote.text $chan $+ . $+ $nick $+ . $+ $1-
   }
   halt
 }
@@ -512,7 +513,7 @@ on 1:DISCONNECT:{
 }
 on ^*:MODE:#: {
   haltdef
-  if ($nick == $me) { keywrite $network # $+ -mode $1- }
+  if ($nick == $me) && ($key($network,# $+ -modelock) != ON) { keywrite $network # $+ -mode $1- }
   $report(Mode,$nick,$chan,$null,$1-).chan
   If (status !isin $window($active)) { $report(Mode,$nick,$chan,$null,$1-).status }
   halt
