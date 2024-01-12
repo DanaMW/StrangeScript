@@ -1,4 +1,4 @@
-/fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2023 Dana L. Meli-Wischman)
+/fullver return $report($ver,$null,$null,$null,04 $+ $chr(169) $+ 1999-2024 Dana L. Meli-Wischman)
 /ver return 10S04trange10S04cript10[v158.07.01.12.202410]
 /shortver return 10S04trange10S04cript
 /myver say $fullver
