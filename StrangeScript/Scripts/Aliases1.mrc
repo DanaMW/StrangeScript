@@ -30,10 +30,18 @@
   /disconnect
   /quit
 }
-;chain return 04 $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
-chain {
-  if ($1 != $null) { return $lowcol $+  $+ $str(¤,$1) $+  }
-  else { return $lowcol $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ }
+;oldchain return 04 $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
+/chain {
+  if (%chain == $null) { set %chain 50 }
+  if ($1 == default) {
+    if ($2 != $null) { set %chain $2 }
+    else { set %chain 50 }
+  $report(StrangeScript,Chain,Set To,$null,%chain).active
+  if (status !isin $window($active)) { $report(StrangeScript,Chain,Set To,$null,%chain).status }
+  return
+}
+if ($1 != $null) { return $lowcol $+  $+ $str(¤,$1) $+  }
+else { return $lowcol $+  $+ $str(¤,%chain) $+  }
 }
 /report {
   if ($1- == $null) { $report(StrangeScript,Error,$null,$null,No Text Sent to Report).active | halt }
