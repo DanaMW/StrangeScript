@@ -404,7 +404,7 @@ Key.reads {
 /q {
   if ($1 == 1) { quote.text $2- }
   if ($1 == 2) { quote.clip $2- }
-  else { quote.text }
+  else { quote.text $2- }
 }
 /quote.text {
   if ($1 != $null) { say $report($null,$null,$chr(126) $+ $token(%quote.text,3,46) $+ $chr(126)) 1 $1- | halt }
