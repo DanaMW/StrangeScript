@@ -176,7 +176,7 @@ else { return $lowcol $+  $+ $str(¤,%chain) $+  }
   return
 }
 /idnick {
-  .timer 1 1 /recover $key($network,saved.nick.1)
+  .timerIDN 1 1 /recover $key($network,saved.nick.1)
   return
 }
 /auto.join {

@@ -407,12 +407,12 @@ Key.reads {
   else { quote.text }
 }
 /quote.text {
-  if ($1 != $null) { say $report($null,$null,$chr(126) $+ $token(%quote.text,3,46) $+ $chr(126)) 1 $1- }
-  elseif (%quote.text != $null) { say $report($null,$null,$chr(126) $+ $token(%quote.text,3,46) $+ $chr(126)) 1 $$?="Text after quote:" }
-  else { $report($null,Error,$null,quote.text Failed,Buffer Empty).active }
+  if ($1 != $null) { say $report($null,$null,$chr(126) $+ $token(%quote.text,3,46) $+ $chr(126)) 1 $1- | return }
+  elseif (%quote.text != $null) { say $report($null,$null,$chr(126) $+ $token(%quote.text,3,46) $+ $chr(126)) 1 $$?="Text after quote:" | return }
+  else { $report($null,Error,$null,quote.text Failed,Buffer Empty).active | return }
 }
 /quote.clip {
-  if ($1 != $null) { say $report($null,$null,$chr(126) $+ $cb $+ $chr(126)) 1 $1- }
-  elseif ($cb != $null) { say $report($null,$null,$chr(126) $+ $cb $+ $chr(126)) 1 $$?="Text after quote:" }
-  else { $report($null,Error,$null,quote.clip failed,Bu/ffer Empty).active }
+  if ($1 != $null) { say $report($null,$null,$chr(126) $+ $cb $+ $chr(126)) 1 $1- | return }
+  elseif ($cb != $null) { say $report($null,$null,$chr(126) $+ $cb $+ $chr(126)) 1 $$?="Text after quote:" | return }
+  else { $report($null,Error,$null,quote.clip failed,Bu/ffer Empty).active | return }
 }

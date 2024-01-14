@@ -325,7 +325,7 @@ on ^*:NOTICE:*:*: {
   haltdef
   if ($nick == NickServ) {
     if (*IDENTIFY* iswm $1-) { .timerai $+ $network 1 2 /auto.ident }
-    if (*40* iswm $1-) { /auto.ident }
+    if (*40* iswm $1-) { .timerai $+ $network 1 2 /auto.ident }
   }
   if ($nick == ChanServ) {
     if (*IDENTIFY* iswm $1-) { /idchan }
