@@ -127,7 +127,8 @@ alias bot {
     return
   }
   if ($1 == PART) {
-    if ($2 != $null) { sockwrite -n Bot* part $2 $3- }
+    if ($2 == $null) { sockwrite -n Bot* part # }
+    if ($2 != $null) && ($3 != $null) { sockwrite -n Bot* part $2 $3- }
     return
   }
   if ($1 == AJ) {
