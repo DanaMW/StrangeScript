@@ -118,6 +118,7 @@ alias bot {
     return
   }
   if ($1 == JOIN) {
+    if ($2 == $null) { sockwrite -n Bot* join # }
     if ($2 != $null) { sockwrite -n Bot* join $2 }
     return
   }
@@ -137,7 +138,7 @@ alias bot {
   }
   if ($1 == CYCLE) {
     if ($2 == $null) { sockwrite -n Bot* part # $cr join # }
-    else { sockwrite -n Bot* part $2 $cr join $2 }
+    else { sockwrite -n Bot* part $2 :Cycling $cr join $2 }
     return
   }
   if ($1 == SAY) {
