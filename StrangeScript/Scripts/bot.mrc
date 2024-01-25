@@ -111,7 +111,7 @@ alias bot {
     return
   }
   if ($1 == SEND) {
-    sockwrite -n Bot* privmsg %bot.work. [ $+ [ $network ] ] :Send not configured for some reason. Right $me ?
+    sockwrite -n Bot* privmsg %bot.work. [ $+ [ $network ] ] :Send not configured for some reason. Right $me $+ ?
     return
   }
   if ($1 == KICK) {
@@ -129,6 +129,7 @@ alias bot {
   }
   if ($1 == PART) {
     if ($2 == $null) { sockwrite -n Bot* part # }
+    if ($2 != $null) && ($3 == $null) { sockwrite -n Bot* part $2 }
     if ($2 != $null) && ($3 != $null) { sockwrite -n Bot* part $2 $3- }
     return
   }
@@ -187,7 +188,6 @@ alias bot {
     return
   }
   if ($1 == STATUS) {
-    ;cls
     if (%Bot.active == 1) { set %tmp.stats1 On The Line }
     $botsay(Bot Status,Your Bot Is ,%tmp.stats1,On Server,$remove($sock(*).name,Bot)).active
     unset %tmp.stats1
