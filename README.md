@@ -15,7 +15,7 @@ COMPLETE and ORIGINAL StrangeScript just the way it was the
 day I parked it. Now I have decided to work on it and fix
 all the things I haven't done in 10 years. Here we go.
 This script is mIRC only.
-I stashed the Adirc copy up there.
+I stashed the AdiIRC copy up there.
 ```
 
 ```
