@@ -15,7 +15,8 @@ In StrangeScript you have the script uploaded the
 COMPLETE and ORIGINAL StrangeScript just the way it was the
 day I parked it. Now I have decided to work on it and fix
 all the things I haven't done in 10 years. Here we go.
-This script is mIRC only. I stashed the Adirc copy here[https://github.com/DanaMW/StrangeScript/blob/master/StrangeScript(AdiIrc).zip]
+This script is mIRC only.
+I stashed the Adirc copy up there.
 ```
 
 ```
