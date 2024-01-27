@@ -10,7 +10,6 @@ If you would like my help I am on DalNet
 ```
 
 ```
-
 In StrangeScript you have the script uploaded the
 COMPLETE and ORIGINAL StrangeScript just the way it was the
 day I parked it. Now I have decided to work on it and fix
