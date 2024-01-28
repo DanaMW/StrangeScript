@@ -1,5 +1,6 @@
 echo Coping Files for Update
-REM goto skip
+goto skip
+REM THIS IS OUTDATED and just included for the file list.
 copy D:\SS\system\ALIAS0.INI D:\StrangeScript\system\ALIAS0.INI
 copy D:\SS\system\ALIAS1.INI D:\StrangeScript\system\ALIAS1.INI
 copy D:\SS\system\ALIAS2.INI D:\StrangeScript\system\ALIAS2.INI

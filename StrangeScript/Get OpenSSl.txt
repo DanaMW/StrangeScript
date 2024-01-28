@@ -1,0 +1,1 @@
+Get OpenSSl and put it in this folder to use it's abilities in StrangeScript
