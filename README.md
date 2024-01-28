@@ -19,4 +19,7 @@ I stashed the AdiIRC copy up there.
 ```
 
 ```
+To update just grab the SYSTEM folder in StrangeScript.
+```
+
 @author Dana L. Meli-Wischman
