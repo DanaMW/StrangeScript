@@ -135,7 +135,7 @@ alias bot {
     return
   }
   if ($1 == AJ) {
-    .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key($network,auto.join.rooms)
+    .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key(settings,autojoin)
     return
   }
   if ($1 == CYCLE) {
