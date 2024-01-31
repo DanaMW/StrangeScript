@@ -48,7 +48,7 @@ alias bot {
   if ($1 == SET) {
     if ($2 == bot.disp) {
       if ($3 != $null) {
-        if ($3 == CHANNEL) || ($3 == MESSAGE) || ($3 == WINDOW) { set %bot.disp $3 | return }
+        if ($3 == CHANNEL) || ($3 == MESSAGE) || ($3 == WINDOW) { set %bot.disp. [ $+ [ $network ] ] $3 | return }
         $botsay(Bot,Set,bot.disp,Error,Use:/bot set bot.disp CHANNEL/MESSAGE/WINDOW).active
         return
       }
@@ -215,21 +215,21 @@ alias bot {
 }
 alias bot.disp {
   if ($1 == $null) || ($1 == CHANNEL) {
-    set %bot.disp CHANNEL
-    $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp)
+    set %bot.disp. [ $+ [ $network ] ] CHANNEL
+    $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ] )
     return
   }
   if ($1 == MESSAGE) {
     if ($1 != $null) {
-      set %bot.disp MESSAGE
-      $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp)
+      set %bot.disp. [ $+ [ $network ] ] MESSAGE
+      $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
       return
     }
   }
   if ($1 == WINDOW) {
     if ($1 != $null) {
-      set %bot.disp WINDOW
-      $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp)
+      set %bot.disp. [ $+ [ $network ] ] WINDOW
+      $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
       return
     }
   }
@@ -248,9 +248,9 @@ alias botsay {
     if ($me == $1) { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ $white $eval($5-) $sep $+ ) $+ $chr(186) $+  }
     else { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ $white $5- $sep $+ ) $+ $chr(186) $+  }
   }
-  if (%bot.disp == CHANNEL) { return echo -t %bot.work [ $+ [ $network ] ] $sys %tmp.zbuild }
-  if (%bot.disp == MESSAGE) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
-  if (%bot.disp == WINDOW) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == CHANNEL) { return echo -t %bot.work [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == MESSAGE) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == WINDOW) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
   return
 }
 on 1:SOCKOPEN:Bot*:{
@@ -394,7 +394,7 @@ alias bothelp {
   $botsay($chain(2),$null,$null,********************,********************).active
   $botsay($chain(2),$null,Bot Status,$sock($sockname).status,$sock($sockname).name).active 
   $botsay($chain(2),$null,$null,Current Network,$network).active
-  $botsay($chain(2),$null,$null,bot.disp,%bot.disp).active
+  $botsay($chain(2),$null,$null,bot.disp,%bot.disp. [ $+ [ $network ] ] ).active
   $botsay($chain(2),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
   $botsay($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
   $botsay($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
