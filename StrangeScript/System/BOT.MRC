@@ -1,5 +1,5 @@
 alias bot {
-  if (%bot.disp == $null) { set %bot.disp CHANNEL }
+  botstart
   if ($1 == ON) || ($1 == START) {
     set %bot.onp2 $2
     if (%bot.onp2 == $null) { set %bot.onp2 $network }
@@ -86,9 +86,9 @@ alias bot {
       return
     }
     if ($2 == bot.trigger) {
-      if (%bot.trigger == 1) { set %bot.trigger 0 }
-      else { set %bot.trigger 1 }
-      $botsay(Bot Action,Set,bot.trigger,is set to,%bot.trigger).active
+      if (%bot.trigger. [ $+ [ $network ] ] == 1) { set %bot.trigger. [ $+ [ $network ] ] 0 }
+      else { set %bot.trigger. [ $+ [ $network ] ] 1 }
+      $botsay(Bot Action,Set,bot.trigger,is set to,%bot.trigger. [ $+ [ $network ] ]).active
       return
     }
     if ($2 == bot.showall) {
@@ -304,10 +304,10 @@ on 1:SOCKOPEN:Bot*:{
 }
 on 1:SOCKREAD:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | $botsay(Sock Error,READ,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg)active | return }
-  if (%bot.trigger == 1) {
+  if (%bot.trigger. [ $+ [ $network ] ] == 1) {
     sockwrite -n $sockname privmsg %bot.work. [ $+ [ $network ] ] : $+ %bot.value
     .timer 1 1 set %bot.value -
-    .timer 1 1 set %bot.trigger 0
+    .timer 1 1 set %bot.trigger. [ $+ [ $network ] ] 0
   }
   :Botread
   sockread %Bot.readline
@@ -376,6 +376,18 @@ alias bot.check {
   }
   else { return }
 }
+alias botstart {
+  if (%bot.disp. [ $+ [ $network ] ] == $null) { set %bot.disp. [ $+ [ $network ] ] CHANNEL }
+  if (%bot.work. [ $+ [ $network ] ] == $null) { set %bot.work. [ $+ [ $network ] ] #SrangeScript }
+  if (%bot.play. [ $+ [ $network ] ] == $null) { set %bot.play. [ $+ [ $network ] ] #SrangeScript }
+  if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] Guest00001 }
+  if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] DefaultPass }
+  if (%bot.value. [ $+ [ $network ] ] == $null) { set %bot.value. [ $+ [ $network ] ] Some default text }
+  if (%bot.trigger. [ $+ [ $network ] ] == $null) { set %bot.trigger. [ $+ [ $network ] ] 0 }
+  if (%bot.showall. [ $+ [ $network ] ] == $null) { set %bot.showall. [ $+ [ $network ] ] OFF }
+  if (%bot.defense. [ $+ [ $network ] ] == $null) { set %bot.defense. [ $+ [ $network ] ] OFF }
+  return
+}
 alias bothelp {
   $botsay($chain).active
   $botsay($chain(2),$null,$null,$null,use /Bot SET value.below to alter).active
@@ -387,9 +399,9 @@ alias bothelp {
   $botsay($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
   $botsay($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
   $botsay($chain(2),$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.value,%bot.value).active
-  $botsay($chain(2),$null,$null,bot.trigger,%bot.trigger).active
-  $botsay($chain(2),$null,$null,bot.showall,%bot.showall).active
+  $botsay($chain(2),$null,$null,bot.value,%bot.value. [ $+ [ $network ] ] ).active
+  $botsay($chain(2),$null,$null,bot.trigger,%bot.trigger. [ $+ [ $network ] ] ).active
+  $botsay($chain(2),$null,$null,bot.showall,%bot.showall. [ $+ [ $network ] ] ).active
   $botsay($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active  
   $botsay($chain(2),$null,$null,xxx,no value).active
   $botsay($chain(2),$null,$null,********************,********************).active
