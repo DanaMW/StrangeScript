@@ -4,7 +4,7 @@ alias bot {
     set %bot.onp2 $2
     if (%bot.onp2 == $null) { set %bot.onp2 $network }
     if ($network == libera.chat) { set %bot.onp2 libera }
-    if ($network == localNet) { set %bot.onp2 Local }
+    if ($network == localNet) { set %bot.onp2 local }
     if (%bot.onp2 == local) {
       bot.check
       sockopen -n BotLocal irc.localdomain.net 6667
@@ -29,7 +29,13 @@ alias bot {
       $botsay(Bot,ON,$null,Libera,irc.libera.chat,6667).active
       return
     }
-    $botsay(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera Etc.).active
+    if (%bot.onp2 == undernet) {
+      bot.check
+      sockopen -n BotUnderNet us.undernet.org 6667
+      $botsay(Bot,ON,$null,UnderNet,us.undernet.org,6667).active
+      return
+    }
+    $botsay(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera or UnderNet Etc.).active
     return
   }
   if ($1 == OFF) || ($1 == STOP) {
@@ -135,7 +141,7 @@ alias bot {
     return
   }
   if ($1 == AJ) {
-    .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key(settings,autojoin)
+    .timerbaj $+ $network 1 2 sockwrite -n Bot* join $key(settings,autojoinspeed)
     return
   }
   if ($1 == CYCLE) {
@@ -274,12 +280,11 @@ on 1:SOCKOPEN:Bot*:{
     sockwrite -n BotDalNet nick %bot.nick. [ $+ [ $network ] ]
     sockwrite -n BotDalNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
     .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
-    .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             1 10 sockwrite -n BotDalNet join %bot.work. [ $+ [ $network ] ]
+    .timer 1 10 sockwrite -n BotDalNet join %bot.work. [ $+ [ $network ] ]
     .timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
     $botsay(BotSay,$sockname is now open and set)
     return
   }
-  ;
   if ($sockname == BotLibera) {
     if ( %bot.pass. [ $+ [ $network ] ] != $null ) { sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ] }
     sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
@@ -287,6 +292,16 @@ on 1:SOCKOPEN:Bot*:{
     .timer 1 5 sockwrite -n $sockname identify $me %bot.pass. [ $+ [ $network ] ]
     .timer 1 6 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
+    $botsay(BotSay,$sockname is now open and set)
+    return
+  }
+  if ($sockname == BotUnderNet) {
+    ;sockwrite -n BotUnderNet pass %bot.pass. [ $+ [ $network ] ]
+    sockwrite -n BotUnderNet nick %bot.nick. [ $+ [ $network ] ]
+    sockwrite -n BotUnderNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+    ;.timer 1 5 sockwrite -n BotUnderNet identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 10 sockwrite -n BotUnderNet join %bot.work. [ $+ [ $network ] ]
+    .timer 1 15 sockwrite -n BotUnderNet identify %bot.pass. [ $+ [ $network ] ]
     $botsay(BotSay,$sockname is now open and set)
     return
   }
@@ -378,8 +393,8 @@ alias bot.check {
 }
 alias botstart {
   if (%bot.disp. [ $+ [ $network ] ] == $null) { set %bot.disp. [ $+ [ $network ] ] CHANNEL }
-  if (%bot.work. [ $+ [ $network ] ] == $null) { set %bot.work. [ $+ [ $network ] ] #SrangeScript }
-  if (%bot.play. [ $+ [ $network ] ] == $null) { set %bot.play. [ $+ [ $network ] ] #SrangeScript }
+  if (%bot.work. [ $+ [ $network ] ] == $null) { set %bot.work. [ $+ [ $network ] ] #StrangeScript }
+  if (%bot.play. [ $+ [ $network ] ] == $null) { set %bot.play. [ $+ [ $network ] ] #StrangeScript }
   if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] Guest00001 }
   if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] DefaultPass }
   if (%bot.value. [ $+ [ $network ] ] == $null) { set %bot.value. [ $+ [ $network ] ] Some default text }
