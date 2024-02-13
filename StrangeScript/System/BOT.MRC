@@ -54,8 +54,21 @@ alias bot {
   if ($1 == SET) {
     if ($2 == bot.disp) {
       if ($3 != $null) {
-        if ($3 == CHANNEL) || ($3 == MESSAGE) || ($3 == WINDOW) { set %bot.disp. [ $+ [ $network ] ] $3 | return }
+        if ($3 == CHANNEL) || ($3 == MESSAGE) || ($3 == WINDOW) || ($3 == STATUS) || ($3 == OFF) { set %bot.disp. [ $+ [ $network ] ] $3 | return }
         $botsay(Bot,Set,bot.disp,Error,Use:/bot set bot.disp CHANNEL/MESSAGE/WINDOW).active
+        return
+      }
+      if ($3 == $null) {
+        $botsay($chain(40)).active
+        $botsay(The bot setting where bot will display activity).active
+        $botsay(of all the channels it is on. Or not if it OFF.).active
+        $botsay($chain(20)).active
+        $botsay(BOT SET bot.disp  <OFF>).active
+        $botsay(BOT SET bot.disp  <CHANNEL>).active
+        $botsay(BOT SET bot.disp  <STATUS>).active
+        $botsay(BOT SET bot.disp  <@WINDOWname>).active
+        $botsay(BOT SET bot.disp  <MESSAGEname>).active
+        $botsay($chain(40)).active
         return
       }
       return
@@ -241,6 +254,9 @@ alias bot.disp {
   }
 }
 alias botsay {
+  ;
+  ; I am going to work on the changes for the placement of the bot reports and add two new ones OFF STATUS
+  ;
   if ($1- == $null) { $botsay(BotSay,Bot Say,Error,$null,$null,No Text Sent to Report) | return }
   else { var %tmp.zbuild = %tmp.zbuild $sep $+ $chr(186) }
   if ($1 != $null) {
