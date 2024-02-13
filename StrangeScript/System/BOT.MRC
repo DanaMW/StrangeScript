@@ -248,18 +248,24 @@ alias bot.disp {
     return
   }
   if ($1 == CHANNEL) {
+    $botsay(Channel not working yet)
+    return
     set %bot.disp. [ $+ [ $network ] ] $1
     $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
     bot.disp.extra $1
     return
   }
   if ($1 == MESSAGE) {
+    $botsay(Message not working yet)
+    return
     set %bot.disp. [ $+ [ $network ] ] $1
     $botsay(BotSay,SET,Option,$null,bot.disp,MESSAGE %bot.disp. [ $+ [ $network ] ])
     bot.disp.extra $1
     return
   }
   if ($1 == WINDOW) {
+    $botsay(Window not working yet)
+    return
     set %bot.disp. [ $+ [ $network ] ] $1
     $botsay(BotSay,SET,Option,$null,bot.disp,WINDOW %bot.disp. [ $+ [ $network ] ])
     bot.disp.extra $1
@@ -272,9 +278,6 @@ alias bot.display.extra {
   if ($1 == WINDOW) {}
 }
 alias botsay {
-  ;
-  ; I am going to work on the changes for the placement of the bot reports and add two new ones OFF STATUS
-  ;
   if ($1- == $null) { $report(BotSay,Bot Say,Error,$null,$null,No Text Sent to Report) | return }
   else { var %tmp.zbuild = %tmp.zbuild $sep $+ $chr(186) }
   if ($1 != $null) {
