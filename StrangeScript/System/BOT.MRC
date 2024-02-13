@@ -54,9 +54,31 @@ alias bot {
   if ($1 == SET) {
     if ($2 == bot.disp) {
       if ($3 != $null) {
-        if ($3 == CHANNEL) || ($3 == MESSAGE) || ($3 == WINDOW) || ($3 == STATUS) || ($3 == OFF) { set %bot.disp. [ $+ [ $network ] ] $3 | return }
-        $botsay(Bot,Set,bot.disp,Error,Use:/bot set bot.disp CHANNEL/MESSAGE/WINDOW).active
-        return
+        if ($3 == CHANNEL) {
+          set %bot.work. [ $+ [ $network ] ] $3
+          $botsay(bot.disp is set to CHANNEL).active
+          return
+        }
+        if ($3 == MESSAGE) {
+          set %bot.work. [ $+ [ $network ] ] $3
+          $botsay(bot.disp is set to MESSAGE).active
+          return
+        }
+        if ($3 == WINDOW) {
+          set %bot.work. [ $+ [ $network ] ] $3
+          $botsay(bot.disp is set to WINDOW).active
+          return
+        }
+        if ($3 == STATUS) {
+          set %bot.work. [ $+ [ $network ] ] $3
+          $botsay(bot.disp is set to STATUS).active
+          return
+        }
+        if ($3 == OFF) { 
+          set %bot.work. [ $+ [ $network ] ] $3
+          $botsay(bot.disp is set to OFF).active
+          return
+        }
       }
       if ($3 == $null) {
         $botsay($chain(40)).active
