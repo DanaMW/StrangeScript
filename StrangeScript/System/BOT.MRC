@@ -47,47 +47,22 @@ alias bot {
     return
   }
   if ($1 == ID) {
-    .timer 1 2 sockwrite -n bot* identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 2 sockwri33te -n bot* identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 4 sockwrite -n bot* join %bot.work. [ $+ [ $network ] ]
     return
   }
   if ($1 == SET) {
     if ($2 == bot.disp) {
-      if ($3 != $null) {
-        if ($3 == CHANNEL) {
-          set %bot.work. [ $+ [ $network ] ] $3
-          $botsay(bot.disp is set to CHANNEL).active
-          return
-        }
-        if ($3 == MESSAGE) {
-          set %bot.work. [ $+ [ $network ] ] $3
-          $botsay(bot.disp is set to MESSAGE).active
-          return
-        }
-        if ($3 == WINDOW) {
-          set %bot.work. [ $+ [ $network ] ] $3
-          $botsay(bot.disp is set to WINDOW).active
-          return
-        }
-        if ($3 == STATUS) {
-          set %bot.work. [ $+ [ $network ] ] $3
-          $botsay(bot.disp is set to STATUS).active
-          return
-        }
-        if ($3 == OFF) { 
-          set %bot.work. [ $+ [ $network ] ] $3
-          $botsay(bot.disp is set to OFF).active
-          return
-        }
-      }
+      if ($3 != $null) { bot.disp }
       if ($3 == $null) {
         $botsay($chain(40)).active
         $botsay(The bot setting where bot will display activity).active
         $botsay(of all the channels it is on. Or not if it OFF.).active
         $botsay($chain(20)).active
         $botsay(BOT SET bot.disp  <OFF>).active
-        $botsay(BOT SET bot.disp  <CHANNEL>).active
+        $botsay(BOT SET bot.disp  <ACTIVE>).active
         $botsay(BOT SET bot.disp  <STATUS>).active
+        $botsay(BOT SET bot.disp  <CHANNELname>).active
         $botsay(BOT SET bot.disp  <@WINDOWname>).active
         $botsay(BOT SET bot.disp  <MESSAGEname>).active
         $botsay($chain(40)).active
@@ -255,31 +230,52 @@ alias bot {
   return
 }
 alias bot.disp {
-  if ($1 == $null) || ($1 == CHANNEL) {
-    set %bot.disp. [ $+ [ $network ] ] CHANNEL
-    $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ] )
+  if ($1 == $null) { set %bot.disp. [ $+ [ $network ] ] STATUS }
+  if ($1 == REPORT) { $report(Bot Setting,bot.disp,is set to,%bot.disp. [ $+ [ $network ] ]).active | return }
+  if ($1 == OFF) { 
+    set %bot.disp. [ $+ [ $network ] ] $1
+    $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
+    return
+  }
+  if ($1 == ACTIVE) { 
+    set %bot.disp. [ $+ [ $network ] ] $1
+    $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
+    return
+  }
+  if ($1 == STATUS) {
+    set %bot.disp. [ $+ [ $network ] ] $1
+    $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
+    return
+  }
+  if ($1 == CHANNEL) {
+    set %bot.disp. [ $+ [ $network ] ] $1
+    $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
+    bot.disp.extra $1
     return
   }
   if ($1 == MESSAGE) {
-    if ($1 != $null) {
-      set %bot.disp. [ $+ [ $network ] ] MESSAGE
-      $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
-      return
-    }
+    set %bot.disp. [ $+ [ $network ] ] $1
+    $botsay(BotSay,SET,Option,$null,bot.disp,MESSAGE %bot.disp. [ $+ [ $network ] ])
+    bot.disp.extra $1
+    return
   }
   if ($1 == WINDOW) {
-    if ($1 != $null) {
-      set %bot.disp. [ $+ [ $network ] ] WINDOW
-      $botsay(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ])
-      return
-    }
+    set %bot.disp. [ $+ [ $network ] ] $1
+    $botsay(BotSay,SET,Option,$null,bot.disp,WINDOW %bot.disp. [ $+ [ $network ] ])
+    bot.disp.extra $1
+    return
   }
+}
+alias bot.display.extra {
+  if ($1 == CHANNEL) {}
+  if ($1 == MESSAGE) {}
+  if ($1 == WINDOW) {}
 }
 alias botsay {
   ;
   ; I am going to work on the changes for the placement of the bot reports and add two new ones OFF STATUS
   ;
-  if ($1- == $null) { $botsay(BotSay,Bot Say,Error,$null,$null,No Text Sent to Report) | return }
+  if ($1- == $null) { $report(BotSay,Bot Say,Error,$null,$null,No Text Sent to Report) | return }
   else { var %tmp.zbuild = %tmp.zbuild $sep $+ $chr(186) }
   if ($1 != $null) {
     if ($1 == $me) { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ 4 $1 $sep $+ ) $+ $chr(186) }
@@ -292,9 +288,13 @@ alias botsay {
     if ($me == $1) { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ $white $eval($5-) $sep $+ ) $+ $chr(186) $+  }
     else { var %tmp.zbuild = %tmp.zbuild $+ $sep $+ ( $+ $white $5- $sep $+ ) $+ $chr(186) $+  }
   }
-  if (%bot.disp. [ $+ [ $network ] ] == CHANNEL) { return echo -t %bot.work [ $+ [ $network ] ] $sys %tmp.zbuild }
-  if (%bot.disp. [ $+ [ $network ] ] == MESSAGE) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
-  if (%bot.disp. [ $+ [ $network ] ] == WINDOW) { return echo -t %bot.work. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == OFF) { return }
+  if (%bot.disp. [ $+ [ $network ] ] == ACTIVE) { return echo -at %bot.work [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == STATUS) { return echo -st %bot.work [ $+ [ $network ] ] $sys %tmp.zbuild }
+  ;
+  if (%bot.disp. [ $+ [ $network ] ] == CHANNEL) { return echo -t %bot.work.channel. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == MESSAGE) { return echo -mt %bot.work.message. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == WINDOW) { return echo -t %bot.work.window. [ $+ [ $network ] ] $sys %tmp.zbuild }
   return
 }
 on 1:SOCKOPEN:Bot*:{
