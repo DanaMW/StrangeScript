@@ -263,7 +263,6 @@ alias bot.disp {
     $report(BotSay,SET,Option,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ $network ] ]).active
     return
   }
-
   if ($1 == WINDOW) {
     if ($2 == $null) {
       $report(BOT SET ERROR,Information entered incorrectly).active
