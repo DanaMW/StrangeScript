@@ -8,34 +8,34 @@ alias bot {
     if (%bot.onp2 == local) {
       bot.check
       sockopen -n BotLocal irc.localdomain.net 6667
-      $botsay(Bot,ON,$null,Local,irc.localdomain.net,6667).active
+      $report(Bot,ON,$null,Local,irc.localdomain.net,6667).active
       return
     }
     if (%bot.onp2 == ircgo) {
       bot.check
       sockopen -n BotIRCGo irc.IRCGo.org 6667
-      $botsay(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
+      $report(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
       return
     }
     if (%bot.onp2 == dalnet) {
       bot.check
       sockopen -n BotDalNet irc.dal.net 6667
-      $botsay(Bot,ON,$null,DalNet,irc.dal.net,6667).active
+      $report(Bot,ON,$null,DalNet,irc.dal.net,6667).active
       return
     }
     if (%bot.onp2 == libera) {
       bot.check
       sockopen -n BotLibera irc.libera.chat 6667
-      $botsay(Bot,ON,$null,Libera,irc.libera.chat,6667).active
+      $report(Bot,ON,$null,Libera,irc.libera.chat,6667).active
       return
     }
     if (%bot.onp2 == undernet) {
       bot.check
       sockopen -n BotUnderNet us.undernet.org 6667
-      $botsay(Bot,ON,$null,UnderNet,us.undernet.org,6667).active
+      $report(Bot,ON,$null,UnderNet,us.undernet.org,6667).active
       return
     }
-    $botsay(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera or UnderNet Etc.).active
+    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or Libera or UnderNet Etc.).active
     return
   }
   if ($1 == OFF) || ($1 == STOP) {
@@ -305,7 +305,7 @@ alias botsay {
 }
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | $botsay(Sock Error,OPEN,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg).active | return }
-  $botsay(BotSay,OPEN,Socket Name,$sockname)
+  $report(Socket,OPEN,Socket Name,$sockname)
   set %Bot.active 1
   ;if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
   ;if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] $$?="Password for that nick if you know it:" }
@@ -430,7 +430,7 @@ on 1:SOCKCLOSE:Bot*:{
 }
 alias bot.check {
   if (%Bot.active == 1) {
-    $botsay(Bot Check,$null,$null,$null,The bot is running on $remove($sock(*).name,Bot)).active
+    $report(Bot Check,$null,$null,$null,The bot is running on $remove($sock(*).name,Bot)).active
     halt
   }
   else { return }
@@ -448,54 +448,54 @@ alias botstart {
   return
 }
 alias bothelp {
-  $botsay($chain).active
-  $botsay($chain(2),$null,$null,$null,use /Bot SET value.below to alter).active
-  $botsay($chain(2),$null,$null,********************,********************).active
-  $botsay($chain(2),$null,Bot Status,$sock($sockname).status,$sock($sockname).name).active 
-  $botsay($chain(2),$null,$null,Current Network,$network).active
-  $botsay($chain(2),$null,$null,bot.disp,%bot.disp. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.value,%bot.value. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.trigger,%bot.trigger. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.showall,%bot.showall. [ $+ [ $network ] ] ).active
-  $botsay($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active  
-  $botsay($chain(2),$null,$null,xxx,no value).active
-  $botsay($chain(2),$null,$null,********************,********************).active
-  $botsay($chain(2),$null,$null,$null,do /Bot SET to see a list.).active
-  $botsay($chain).active
+  $report($chain(50)).active
+  $report($chain(2),$null,$null,$null,use /Bot SET value.below to alter).active
+  $report($chain(2),$null,$null,********************,********************).active
+  $report($chain(2),$null,Bot Status,$sock($sockname).status,$sock($sockname).name).active 
+  $report($chain(2),$null,$null,Current Network,$network).active
+  $report($chain(2),$null,$null,bot.disp,%bot.disp. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.value,%bot.value. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.trigger,%bot.trigger. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.showall,%bot.showall. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active  
+  $report($chain(2),$null,$null,xxx,no value).active
+  $report($chain(2),$null,$null,********************,********************).active
+  $report($chain(2),$null,$null,$null,do /Bot SET to see a list.).active
+  $report($chain(50)).active
   return
 }
 alias botvar {
-  $botsay($chain(30)).active
-  $botsay($null,$null,$null,$null,use /Bot SET value.below).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.disp).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.work).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.play).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.nick).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.pass).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.value).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.trigger).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.showall).active
-  $botsay(SET,$null,Option,$null,$null,$null,bot.defense).active
-  $botsay($null,$null,,$null,$null,Use /BOT SHOW for full menu).active
-  $botsay($chain(30)).active
+  $report($chain(34)).active
+  $report($chain(2),$null,$null,$null,use /Bot SET value.below).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.disp).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.work).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.play).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.nick).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.pass).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.value).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.trigger).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.showall).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.defense).active
+  $report($chain(2),$null,$null,,$null,$null,Use /BOT SHOW for full menu).active
+  $report($chain(34)).active
   return
 }
 alias bot.disp.info {
-  $botsay($chain(40)).active
-  $botsay(The bot setting where bot will display activity).active
-  $botsay(of all the channels it is on. Or not if it OFF.).active
-  $botsay($chain(20)).active
-  $botsay(BOT SET bot.disp  <OFF>).active
-  $botsay(BOT SET bot.disp  <ACTIVE>).active
-  $botsay(BOT SET bot.disp  <STATUS>).active
-  $botsay(BOT SET bot.disp  <CHANNEL #name>).active
-  $botsay(BOT SET bot.disp  <WINDOW @name>).active
-  $botsay(BOT SET bot.disp  <MESSAGE name>).active
-  $botsay($chain(40)).active
+  $report($chain(40)).active
+  $report(The bot setting where bot will display activity).active
+  $report(of all the channels it is on. Or not if it OFF.).active
+  $report($chain(20)).active
+  $report(BOT SET bot.disp  <OFF>).active
+  $report(BOT SET bot.disp  <ACTIVE>).active
+  $report(BOT SET bot.disp  <STATUS>).active
+  $report(BOT SET bot.disp  <CHANNEL #name>).active
+  $report(BOT SET bot.disp  <WINDOW @name>).active
+  $report(BOT SET bot.disp  <MESSAGE name>).active
+  $report($chain(40)).active
   return        
 }
