@@ -305,7 +305,7 @@ alias botsay {
 }
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) { sockclose $sockname | $botsay(Sock Error,OPEN,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg).active | return }
-  $report(Socket,OPEN,Socket Name,$sockname)
+  $report(Socket,OPEN,Socket Name,$sockname).active
   set %Bot.active 1
   ;if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
   ;if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] $$?="Password for that nick if you know it:" }
