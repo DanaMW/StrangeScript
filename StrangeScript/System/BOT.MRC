@@ -115,7 +115,10 @@ alias bot {
     return
   }
   if ($1 == SEND) {
-    sockwrite -n Bot [ $+ [ $network ] ] privmsg %bot.work. [ $+ [ $network ] ] :Send not configured for some reason. Right $me $+ ?
+    $report(BotSend,$null,Warning!,Sending raw command to bot:).active
+    $report(BotSend,$null,Command:,$null,-> $2- ->).active
+    return
+    sockwrite -n Bot [ $+ [ $network ] ] $2-
     return
   }
   if ($1 == KICK) {
@@ -193,9 +196,17 @@ alias bot {
     return
   }
   if ($1 == STATUS) {
-    if (%Bot.active. [ $+ [ $network ] ] == 1) { set %tmp.stats1 On The Line }
-    $botsay(Bot Status,Your Bot Is ,%tmp.stats1,On Server,$remove(Bot [ $+ [ $network ] ],Bot)).active
-    unset %tmp.stats1
+    var %tmp.botn1 1
+    var %tmp.botn2 $sock(bot*,0)
+    $report($chain(45)).active
+    $report(Bot Status,$null,Listing active servers).active
+    while (%tmp.botn1 <= %tmp.botn2) {
+      $report(Bot Status,On Server,%tmp.botn1,$sock(bot*,%tmp.botn1)).active
+      inc %tmp.botn1
+    }
+    $report($chain(45)).active
+    unset %tmp.botn1
+    unset %tmp.botn2
     return
   }
   if ($1 == AGAIN) {
@@ -483,7 +494,8 @@ alias botvar {
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.trigger).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.showall).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.defense).active
-  $report($chain(2),$null,$null,,$null,$null,Use /BOT SHOW for full menu).active
+  $report($chain(2),$null,$null,$null,$null,Use /BOT SET BOT.DISP for Options).active
+  $report($chain(2),$null,$null,$null,$null,Use /BOT SHOW for full menu).active
   $report($chain(34)).active
   return
 }
