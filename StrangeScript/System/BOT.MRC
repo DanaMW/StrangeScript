@@ -157,6 +157,18 @@ alias bot {
     sockwrite -n Bot [ $+ [ $network ] ] $2-
     return
   }
+  if ($1 == OP) {
+    if ($2- == $null) { sockwrite -n Bot [ $+ [ $network ] ] mode # +o $me | return }
+    if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] mode $2 +o $3 | return }
+    else { sockwrite -n Bot [ $+ [ $network ] ] mode # +o $2 }
+    return
+  }
+  if ($1 == DEOP) {
+    if ($2- == $null) { sockwrite -n Bot [ $+ [ $network ] ] mode # -o $me | return }
+    if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] mode $2 -o $3 | return }
+    else { sockwrite -n Bot [ $+ [ $network ] ] mode # -o $2 | return }
+    return
+  }
   if ($1 == KICK) {
     if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] kick $2  $3 : $+ $4- | return }
     else { sockwrite -n Bot [ $+ [ $network ] ] kick # $2  : $+ $3- }
