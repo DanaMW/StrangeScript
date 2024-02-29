@@ -443,7 +443,6 @@ on 1:SOCKREAD:Bot*:{
   if ($gettok(%Bot.readline,1,32) == PING) {
     sockwrite -n $sockname PONG $gettok(%Bot.readline,2,32)
     if (%bot.showall. [ $+ [ $network ] ] == ON) { $botsay(Pong,Sent Pong,to,$remove($gettok(%Bot.readline,2,32),:)).active }
-    set %clone.server. [ $+ [ $sockname ] ] $remove($gettok(%Bot.readline,2,32),:)
   }
   if ($remove($left(%Bot.readline,$calc($pos(%Bot.readline,$chr(33),1) -1)),$chr(58)) == $me) && ($remove($gettok(%Bot.readline,4,32),:,$chr(1)) == PING)  { sockwrite -n Bot [ $+ [ $network ] ] NOTICE $me : $+ $chr(1) $+ PING $gettok(%Bot.readline,5-6,32) $+ $chr(1) }
   if ($gettok(%Bot.readline,2,32) == 353) { $botsay(BotSay,$remove(Bot [ $+ [ $network ] ],Bot) Users $+ $gettok(%Bot.readline,6-,32)) | goto bossout }
@@ -466,7 +465,7 @@ on 1:SOCKREAD:Bot*:{
   if ($gettok(%Bot.readline,2,32) == MODE) { $botsay(BotSay,$gettok(%server.Bot. [ $+ [ $remove(Bot [ $+ [ $network ] ],Bot) ] ] ,1,44) Mode, $remove($gettok(%Bot.readline,1,33),:) set $remove($gettok(%Bot.readline,4-,32),:) on $remove($gettok(%Bot.readline,3,32),:)) }
   if ($gettok(%Bot.readline,2,32) == PRIVMSG) {
     ;if *-bc cycle*
-    ;`
+    ;
     ;Ctcp Handling
     ;
     if ($left($remove($gettok(%Bot.readline,4-,32),:),1) == $chr(1)) {
@@ -482,7 +481,7 @@ on 1:SOCKREAD:Bot*:{
     if ($chr(35) isin $remove($gettok(%Bot.readline,3,32),:)) { $botsay(BotSay,$null,$gettok(%server.Bot. [ $+ [ $remove(Bot [ $+ [ $network ] ],Bot) ] ] ,1,44) $remove($gettok(%Bot.readline,3,32),:),$remove($gettok(%Bot.readline,1,33),:),$remove($gettok(%Bot.readline,4-,32),:)) }
     ;
     ;
-    else { $botsay(BotSay,$gettok(%server.Bot. [ $+ [ $remove(Bot [ $+ [ $network ] ],Bot) ] ] ,1,44) Privmsg $remove($gettok(%Bot.readline,1,33),:) Whispered to $remove($gettok(%Bot.readline,3,32),:) $+ : $remove($gettok(%Bot.readline,4-,32),:)) }
+    else { $botsay(BotSay,$gettok(%server.Bot. [ $+ [ $remove(Bot [ $+ [ $network ] ],Bot) ] ] ,1,44)  privmsg $remove($gettok(%Bot.readline,1,33),:) Whispered to $remove($gettok(%Bot.readline,3,32),:) $+ : $remove($gettok(%Bot.readline,4-,32),:)) }
     ;
     ;
     goto Botread
