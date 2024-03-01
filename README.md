@@ -15,12 +15,17 @@ If you want to talk I am on DalNet.
 In StrangeScript I started with the COMPLETE and ORIGINAL
 StrangeScript just the way it was the day I parked it.
 Now I have decided to work on it and fix all the things
-I haven't done in 10 years. Here we go. This script is
+I haven't done it in 10 years. Here we go. This script is
 mIRC only. I stashed the AdiIRC copy up there.
 ```
 
 ```
-To UPDATE just grab the SYSTEM folder in StrangeScript.
+To UPDATE grab the SYSTEM folder in StrangeScript.
+```
+
+```
+To use the bot, do /bot OFF first. That resets the bot.
+You may use that at any time the bot needs resetting.
 ```
 
 @author Dana L. Meli-Wischman
