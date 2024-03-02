@@ -21,6 +21,8 @@ mIRC only. I stashed the AdiIRC copy up there.
 
 ```
 To UPDATE grab the SYSTEM folder in StrangeScript.
+Then just do /RELOAD, and answer NO. Do this with the
+script running. It won't hurt a thing.
 ```
 
 ```
