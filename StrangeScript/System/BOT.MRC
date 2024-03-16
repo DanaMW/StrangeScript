@@ -1,50 +1,61 @@
 alias bot {
   botstart
   if ($1 == ON) || ($1 == START) {
-    :fire
     if ($2 != $null) { set %bot.onp2. [ $+ [ $network ] ] $2 }
     if (%bot.onp2. [ $+ [ $network ] ] == $null) { set %bot.onp2. [ $+ [ $network ] ] $network }
-    if ($network == libera.chat) { set %bot.onp2. [ $+ [ $network ] ] libera.chat }
     if ($network == localNet) { set %bot.onp2. [ $+ [ $network ] ] local }
     if (%bot.onp2. [ $+ [ $network ] ] == local) {
       bot.check
       sockopen -n BotLocal irc.localdomain.net 6667
-      $report(Bot,ON,$null,Local,irc.localdomain.net,6667).active
-      return
-    }
-    if (%bot.onp2. [ $+ [ $network ] ] == ircgo) {
-      bot.check
-      sockopen -n BotIRCGo irc.IRCGo.org 6667
-      $report(Bot,ON,$null,IRCGo,irc.IRCGo.org,6667).active
+      botsetshow ON Local irc.localdomain.net 6667
       return
     }
     if (%bot.onp2. [ $+ [ $network ] ] == dalnet) {
       bot.check
       sockopen -n BotDalNet irc.dal.net 6667
-      $report(Bot,ON,$null,DalNet,irc.dal.net,6667).active
+      botsetshow ON DalNet irc.dal.net 6667
       return
     }
     if (%bot.onp2. [ $+ [ $network ] ] == libera.chat) {
       bot.check
       sockopen -n Botlibera.chat irc.libera.chat 6667
-      $report(Bot,ON,$null,libera.chat,irc.libera.chat,6667).active
+      botsetshow ON libera.chat irc.libera.chat 6667
       return
     }
     if (%bot.onp2. [ $+ [ $network ] ] == undernet) {
       bot.check
       sockopen -n BotUnderNet us.undernet.org 6667
-      $report(Bot,ON,$null,UnderNet,us.undernet.org,6667).active
+      botsetshow ON UnderNet us.undernet.org 6667
       return
     }
-    $report(Bot,$null,Input Error,$null,$null,$null,You need to do /Bot ON Local or IRCGO or DalNet or libera.chat or UnderNet Etc.).active
+    if (%bot.onp2. [ $+ [ $network ] ] == DeepNet) {
+      bot.check
+      sockopen -n BotDeepNet irc.deepnet.chat 6667
+      botsetshow ON DeepNet irc.DeepNet.chat 6667
+      return
+    }
+    if (%bot.onp2. [ $+ [ $network ] ] == ircgo) {
+      bot.check
+      sockopen -n BotIRCGo irc.IRCGo.org 6667
+      botsetshow ON IRCGo irc.IRCGo.org 6667
+      return
+    }
+    ;else {
+    ;  %bot.onp2. [ $+ [ $2 ] ] == $2
+    ;  bot.check
+    ;  sockopen -n Bot $+ $2  irc. $+ $2 6667
+    ;  $report(Bot,ON,$null,$2,irc. $+ $2,6667).active
+    ;  return
+    ;}
+    $report(Bot,$null,Input Error,$null,$null,$null,Just do 2/BOT ON or /BOT ON DeepNet or DalNet or Libera.Chat or UnderNet Etc.).active
     return
   }
   if ($1 == OFF) || ($1 == STOP) {
     sockclose Bot [ $+ [ $network ] ]
-    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c @botSay [ $+ [ $network ] ] }
     set %Bot.active. [ $+ [ $network ] ] 0
-    $report(Bot,OFF,$null,$null,$null,You selected off. It's off.).active
-    $report(Bot,OFF,$null,Bot.active,%bot.active. [ $+ [ $network ] ],$null).active
+    botsetshow OFF You selected off. It's off.
+    botsetshow bot.active is set to %bot.active. [ $+ [ $network ] ]
     return
   }
   if ($1 == ID) {
@@ -53,92 +64,81 @@ alias bot {
     return
   }
   if ($1 == SET) {
-    if ($2 == bot.disp) {
+    if ($2 == BOT.DISP) || ($2 == DISP) {
       if ($3 != $null) { bot.disp $3- }
       if ($3 == $null) { bot.disp.info | return }
       return
     }
-    if ($2 == bot.work) {
+    if ($2 == BOT.WORK) || ($2 == WORK) {
       if ($3 == $null) { return }
       set %bot.work. [ $+ [ $network ] ] $3
-      $botsay(SET,Option,$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
+      botsetshow WORK bot.work channel is now %bot.work. [ $+ [ $network ] ]
       return
     }
-    if ($2 == bot.play) {
+    if ($2 == BOT.PLAY) || if ($2 == PLAY) {
       if ($3 == $null) { return }
-      set %bot.play. [ $+ [ $network ] ] $3
-      $botsay(SET,Option,$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
+      set %bot.play. [ $+ [ $network ] ] $3-
+      botsetshow PLAY bot.play channel is now %bot.play. [ $+ [ $network ] ]
       return
     }
-    if ($2 == bot.nick) {
+    if ($2 == BOT.NICK) || ($2 == NICK) {
       if ($3 == $null) { return }
       set %bot.nick. [ $+ [ $network ] ] $3
-      $botsay(SET,Option,$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
+      botsetshow NICK Your bot.nick is now set as %bot.nick. [ $+ [ $network ] ]
       return
     }
-    if ($2 == bot.pass) {
+    if ($2 == BOT.PASS) || ($2 == PASS) {
       if ($3 == $null) { return }
       set %bot.pass. [ $+ [ $network ] ] $3
-      $botsay(SET,Option,$null,$null,bot.pass, %bot.pass. [ $+ [ $network ] ] ).active
+      botsetshow PASS bot.pass is set as %bot.pass. [ $+ [ $network ] ]
       return
     }
-    if ($2 == bot.value) {
-      if (%bot.value == $null) { set %bot.value - }
+    if ($2 == BOT.VALUE) || if ($2 == VALUE) {
+      if (%bot.value. [ $+ [ $network ] ] == $null) { set %bot.value. [ $+ [ $network ] ] - }
       if ($3 == $null) { return }
-      else { set %bot.value $3- }
-      $botsay(Bot Action,Set,bot.value,is set to,%bot.value).active
+      else { set %bot.value. [ $+ [ $network ] ] $3- }
+      botsetshow VALUE bot.value is set to %bot.value. [ $+ [ $network ] ]
       return
     }
-    if ($2 == bot.trigger) {
+    if ($2 == BOT.TRIGGER) || if ($2 == TRIGGER) {
       if (%bot.trigger. [ $+ [ $network ] ] == 1) { set %bot.trigger. [ $+ [ $network ] ] 0 }
       else { set %bot.trigger. [ $+ [ $network ] ] 1 }
-      $botsay(Bot Action,Set,bot.trigger,is set to,%bot.trigger. [ $+ [ $network ] ]).active
+      botsetshow TRIGGER bot.trigger is set to %bot.trigger. [ $+ [ $network ] ]
       return
     }
-    if ($2 == bot.showall) {
-      if (%bot.showall. [ $+ [ $network ] ] == ON) { set %bot.showall. [ $+ [ $network ] ] OFF }
-      else { set %bot.showall. [ $+ [ $network ] ] ON }
-      $botsay(Bot Action,Set,bot.showall,is set to,%bot.showall. [ $+ [ $network ] ] ).active
-      return
-    }
-    if ($2 == bot.defense) {
-      if (%bot.defense. [ $+ [ $network ] ] == ON) { set %bot.defense. [ $+ [ $network ] ] OFF }
-      else { set %bot.defense. $+ $network ON }
-      $botsay(Bot Action,Set,bot.defense,is set to, %bot.defense. [ $+ [ $network ] ] ).active
-      return
-    }
-    if ($2 == bot.reconnect) {
-      if ($3 == ON) {
-        set %bot.reconnect. [ $+ [ $network ] ] ON
-        $botsay(Bot Action,Set,bot.reconnect,Set to,%bot.reconnect. [ $+ [ $network ] ] ).active
-        return
-      }
-      if ($3 == OFF) {
-        set %bot.reconnect. [ $+ [ $network ] ] OFF
-        $botsay(Bot Action,Set,bot.reconnect,Set to,%bot.reconnect. [ $+ [ $network ] ] ).active
-        return
-      }
+    if ($2 == BOT.SHOWALL) || if ($2 == SHOWALL) || if ($2 == DEBUG) {
+      if ($3 == ON) { set %bot.showall. [ $+ [ $network ] ] ON | botsetshow SHOWALL bot.showall or debug is set to %bot.showall. [ $+ [ $network ] ] | return }
+      if ($3 == OFF) { set %bot.showall. [ $+ [ $network ] ] OFF | botsetshow SHOWALL bot.showall or debug is set to %bot.showall. [ $+ [ $network ] ] | return }
       if ($3 == $null) {
-        if (%bot.reconnect. [ $+ [ $network ] ] == ON) {
-          set %bot.reconnect. [ $+ [ $network ] ] OFF
-          $botsay(Bot Action,Set,bot.reconnect,Set to,%bot.reconnect. [ $+ [ $network ] ] ).active
-          return
-        }
-        else {
-          set %bot.reconnect. [ $+ [ $network ] ] ON
-          $botsay(Bot Action,Set,bot.reconnect,Set to,%bot.reconnect. [ $+ [ $network ] ] ).active
-          return
-        }
-        if (%bot.reconnect. [ $+ [ $network ] ] == OFF) {
-          set %bot.reconnect. [ $+ [ $network ] ] ON
-          $botsay(Bot Action,Set,bot.reconnect,Set to,%bot.reconnect. [ $+ [ $network ] ] ).active
-          return
-        }
-        else {
-          set %bot.reconnect. [ $+ [ $network ] ] OFF
-          $botsay(Bot Action,Set,bot.reconnect,Set to,%bot.reconnect. [ $+ [ $network ] ] ).active
-          return
-        }
+        if (%bot.showall. [ $+ [ $network ] ] == ON) { set %bot.showall. [ $+ [ $network ] ] OFF | botsetshow SHOWALL bot.showall or debug is set to %bot.showall. [ $+ [ $network ] ] | return }
+        if (%bot.showall. [ $+ [ $network ] ] == OFF) { set %bot.showall. [ $+ [ $network ] ] ON | botsetshow SHOWALL bot.showall or debug is set to %bot.showall. [ $+ [ $network ] ] | return }
+      }
+      return
+    }
+    if ($2 == BOT.DEFENSE) || if ($2 == DEFENSE) {
+      if ($3 == ON) { set %bot.defense. [ $+ [ $network ] ] ON | botsetshow DEFENSE bot.defense is set to %bot.defense. [ $+ [ $network ] ] | return }
+      if ($3 == OFF) { set %bot.defense. [ $+ [ $network ] ] OFF | botsetshow DEFENSE bot.defense is set to %bot.defense. [ $+ [ $network ] ] | return }
+      if ($3 == $null) {
+        if (%bot.defense. [ $+ [ $network ] ] == ON) { set %bot.defense. [ $+ [ $network ] ] OFF | botsetshow DEFENSE bot.defense is set to %bot.defense. [ $+ [ $network ] ] | return }
+        if (%bot.defense. [ $+ [ $network ] ] == OFF) { set %bot.defense. [ $+ [ $network ] ] ON | botsetshow DEFENSE bot.defense is set to %bot.defense. [ $+ [ $network ] ] ] | return }
+      }
+      return
+    }
+    if ($2 == BOT.RECONNECT) || if ($2 == RECONNECT) {
+      if ($3 == ON) { set %bot.reconnect. [ $+ [ $network ] ] ON | botsetshow RECONNECT Bot reconnect after d/c Set to %bot.reconnect. [ $+ [ $network ] ] | return }
+      if ($3 == OFF) { set %bot.reconnect. [ $+ [ $network ] ] OFF | botsetshow RECONNECT Bot reconnect after d/c Set to %bot.reconnect. [ $+ [ $network ] ] | return }
+      if ($3 == $null) {
+        if (%bot.reconnect. [ $+ [ $network ] ] == ON) { set %bot.reconnect. [ $+ [ $network ] ] OFF | botsetshow RECONNECT Bot reconnect after d/c Set to %bot.reconnect. [ $+ [ $network ] ] | return }
+        if (%bot.reconnect. [ $+ [ $network ] ] == OFF) { set %bot.reconnect. [ $+ [ $network ] ] ON | botsetshow RECONNECT Bot reconnect after d/c Set to %bot.reconnect. [ $+ [ $network ] ] | return }
+      }
+      return
+    }
+    if ($2 == BOT.KILLWIN) || if ($2 == KILLWIN) {
+      if ($3 == ON) { set %bot.killwin. [ $+ [ $network ] ] ON | botsetshow KILLWIN Close Bot With It's Window Set to %bot.killwin. [ $+ [ $network ] ] | return }
+      if ($3 == OFF) { set %bot.killwin. [ $+ [ $network ] ] OFF | botsetshow KILLWIN Close Bot With It's Window Set to %bot.killwin. [ $+ [ $network ] ] | return }
+      if ($3 == $null) {
+        if (%bot.killwin. [ $+ [ $network ] ] == ON) { set %bot.killwin. [ $+ [ $network ] ] OFF | botsetshow KILLWIN Close Bot With It's Window Set to %bot.killwin. [ $+ [ $network ] ] | return }
+        if (%bot.killwin. [ $+ [ $network ] ] == OFF) { set %bot.killwin. [ $+ [ $network ] ] ON | botsetshow KILLWIN Close Bot With It's Window Set to %bot.killwin. [ $+ [ $network ] ] | return }
       }
       return
     }
@@ -171,7 +171,7 @@ alias bot {
   }
   if ($1 == KICK) {
     if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] kick $2  $3 : $+ $4- | return }
-    else { sockwrite -n Bot [ $+ [ $network ] ] kick # $2  : $+ $3- }
+    else { sockwrite -n Bot [ $+ [ $network ] ] kick # $2  : $+ $3- | return }
   }
   if ($1 == JOIN) {
     if ($2 == $null) { sockwrite -n Bot [ $+ [ $network ] ] join # }
@@ -199,8 +199,8 @@ alias bot {
     return
   }
   if ($1 == SAY) {
+    if ($2 == $null) { return }
     if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] privmsg $2 : $+ $3- | return }
-    if ($2 == $null) { sockwrite -n Bot [ $+ [ $network ] ] privmsg %bot.work. [ $+ [ $network ] ] :Nothing to say. Ending. | return }
     else { sockwrite -n Bot [ $+ [ $network ] ] privmsg %bot.work. [ $+ [ $network ] ] : $+ $2- | return }
     return
   }
@@ -208,55 +208,7 @@ alias bot {
     if ($2 == $null) { sockwrite -n Bot [ $+ [ $network ] ] privmsg %bot.work. [ $+ [ $network ] ] :Nothing sent to write. Ending. | return }
     else { sockwrite -n Bot [ $+ [ $network ] ] privmsg %bot.work. [ $+ [ $network ] ] : $+ $2- | return }
   }
-  if ($1 == DEBUG) {
-    if ($2 == ON) {
-      set %bot.showall. [ $+ [ $network ] ] ON
-      $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall. [ $+ [ $network ] ] ).active
-      return
-    }
-    if ($2 == OFF) {
-      set %bot.showall. [ $+ [ $network ] ] OFF
-      $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall. [ $+ [ $network ] ] ).active
-      return
-    }
-    if ($2 == $null) {
-      if (%bot.showall. [ $+ [ $network ] ] == ON) {
-        set %bot.showall. [ $+ [ $network ] ] OFF
-        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall. [ $+ [ $network ] ] ).active
-        return
-      }
-      else {
-        set %bot.showall. [ $+ [ $network ] ] ON
-        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall. [ $+ [ $network ] ] ).active
-        return
-      }
-      if (%bot.showall. [ $+ [ $network ] ] == OFF) {
-        set %bot.showall. [ $+ [ $network ] ] ON
-        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall. [ $+ [ $network ] ] ).active
-        return
-      }
-      else {
-        set %bot.showall. [ $+ [ $network ] ] OFF
-        $botsay(Bot Action,Debug,bot.showall,Set to,%bot.showall. [ $+ [ $network ] ] ).active
-        return
-      }
-    }
-    return
-  }
-  if ($1 == STATUS) {
-    var %tmp.botn1 1
-    var %tmp.botn2 $sock(bot*,0)
-    $report($chain(45)).active
-    $report(Bot Status,$null,Listing active servers).active
-    while (%tmp.botn1 <= %tmp.botn2) {
-      $report(Bot Status,On Server,%tmp.botn1,$remove($sock(bot*,%tmp.botn1),Bot)).active
-      inc %tmp.botn1
-    }
-    $report($chain(45)).active
-    unset %tmp.botn1
-    unset %tmp.botn2
-    return
-  }
+  if ($1 == STATUS) { bot.status | return }
   if ($1 == AGAIN) {
     ; This is a debug thing. If you think your bot is not ident'ing right, this is the USER method. Use it to send it AGAIN.
     sockwrite -n  Bot [ $+ [ $network ] ] user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
@@ -269,13 +221,12 @@ alias bot {
       return
     }
     else {
-      sockwrite -n Bot [ $+ [ $network ] ] quit : $+ $2-
+      if ($sock(bot [ $+ [ $network ] ]) != $null) { sockwrite -n Bot [ $+ [ $network ] ] quit : $+ $2- }
       if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
       return
     }
   }
-  $botsay(Bot,$null,Options,$null,$null,$null,AGAIN, CYCLE, DEBUG, ID, AJ, JOIN, KICK, NICK, ON/START, OFF/STOP, PART, QUIT, SAY, SEND, SET, STATUS, SHOW, WRITE).active
-  $botsay(Bot,$null,Options,$null,$null,$null,Try /BOT SHOW to get a look at the settings values and /BOT SET to figure out how to change them.).active
+  bot.end
   halt
 }
 on 1:SOCKOPEN:Bot*:{
@@ -324,6 +275,16 @@ on 1:SOCKOPEN:Bot*:{
     $report(BotSay,$sockname,is now open and set).active
     return
   }
+  if ($sockname == BotDeepNet) {
+    sockwrite -n BotDeepNet nick %bot.nick. [ $+ [ $network ] ]
+    ;sockwrite -n BotDeepNet pass %bot.pass. [ $+ [ $network ] ]
+    sockwrite -n BotDeepNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+    ;.timer 1 5 sockwrite -n BotDeepNet identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 15 sockwrite -n BotDeepNet identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 10 sockwrite -n BotDeepNet join %bot.work. [ $+ [ $network ] ]
+    $report(BotSay,$sockname,is now open and set).active
+    return
+  }
   else {
     sockwrite -n $sockname user $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
     ;sockwrite -n $sockname nick $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
@@ -349,7 +310,7 @@ alias bot.bullet {
 on 1:SOCKREAD:Bot*:{
   if ($sockerr > 0) { sockclose %bot.onp2. [ $+ [ $network ] ] | $botsay(Sock Error,READ,%bot.onp2. [ $+ [ $network ] ],$sock(%bot.onp2. [ $+ [ $network ] ]).wserr,$sock(%bot.onp2. [ $+ [ $network ] ]).wsmsg)active | return }
   if (%bot.trigger. [ $+ [ $network ] ] == 1) {
-    sockwrite -n %bot.onp2. [ $+ [ $network ] ] privmsg %bot.work. [ $+ [ $network ] ] : $+ %bot.value. [ $+ [ $network ] ]
+    sockwrite -n $sockname privmsg %bot.work. [ $+ [ $network ] ] : $+ %bot.value. [ $+ [ $network ] ]
     .timer 1 1 set %bot.value. [ $+ [ $network ] ] -
     .timer 1 1 set %bot.trigger. [ $+ [ $network ] ] 0
   }
@@ -362,37 +323,33 @@ on 1:SOCKREAD:Bot*:{
     if (%bot.showall. [ $+ [ $network ] ] == ON) { $botsay(Pong,Sent Pong,to,$remove($gettok(%bot.readline,2,32),:)).active }
   }
   ;if ($remove($left(%bot.readline,$calc($pos(%bot.readline,$chr(33),1) -1)),$chr(58)) == $me) && ($remove($gettok(%bot.readline,4,32),:,$chr(1)) == PING)  { sockwrite -n Bot [ $+ [ $network ] ] NOTICE $me : $+ $chr(1) $+ PING $gettok(%bot.readline,5-6,32) $+ $chr(1) }
-  if ($gettok(%bot.readline,2,32) == 353) { $botsay(BotSay,$remove(%bot.onp2. [ $+ [ $network ] ],Bot) Users $+ $gettok(%bot.readline,6-,32)) | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 311) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 312) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 307) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 319) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
-  if ($gettok(%bot.readline,2,32) == PART) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) Part $remove($gettok(%bot.readline,1,33),:)  Left $remove($gettok(%bot.readline,3,32),:)) }
-  if ($gettok(%bot.readline,2,32) == JOIN) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) Join $remove($gettok(%bot.readline,1,33),:) entered $remove($gettok(%bot.readline,3,32),:)) }
-  if ($gettok(%bot.readline,2,32) == NOTICE) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) $remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ : Notice - $remove($gettok(%bot.readline,4-,32),:)) }
-  if ($gettok(%bot.readline,2,32) == NICK) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) NickChange $remove($gettok(%bot.readline,1,33),:) is now know as $remove($gettok(%bot.readline,3,32),:) $remove($gettok(%bot.readline,4-,32),:)) }
-  if ($gettok(%bot.readline,2,32) == QUIT) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) Quit $remove($gettok(%bot.readline,1,33),:) $remove($gettok(%bot.readline,3-,32),:)) }
-  if ($gettok(%bot.readline,2,32) == TOPIC) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) Topic $remove($gettok(%bot.readline,1,33),:) set $remove($gettok(%bot.readline,3,32),:) $remove($gettok(%bot.readline,4-,32),:)) }
+  if ($gettok(%bot.readline,2,32) == 353) { $botsay(BotSay,$remove(%bot.onp2. [ $+ [ $network ] ],Bot),Users $+ $gettok(%bot.readline,6-,32)).active | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 311) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 312) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 307) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 319) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
+  if ($gettok(%bot.readline,2,32) == PART) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Part,$remove($gettok(%bot.readline,1,33),:),Left,$remove($gettok(%bot.readline,3,32),:)) }
+  if ($gettok(%bot.readline,2,32) == JOIN) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Join,$remove($gettok(%bot.readline,1,33),:),entered,$remove($gettok(%bot.readline,3,32),:)) }
+  if ($gettok(%bot.readline,2,32) == NOTICE) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),$remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ : Notice - $remove($gettok(%bot.readline,4-,32),:)) }
+  if ($gettok(%bot.readline,2,32) == NICK) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),NickChange,$remove($gettok(%bot.readline,1,33),:),is now know as,$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,4-,32),:)) }
+  if ($gettok(%bot.readline,2,32) == QUIT) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Quit,$remove($gettok(%bot.readline,1,33),:),$remove($gettok(%bot.readline,3-,32),:)) }
+  if ($gettok(%bot.readline,2,32) == TOPIC) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Topic,$remove($gettok(%bot.readline,1,33),:),set $remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,4-,32),:)) }
   if ($gettok(%bot.readline,2,32) == KICK) {
-    $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) Kick $remove($gettok(%bot.readline,1,33),:) kicked $remove($gettok(%bot.readline,4,32),:) from $remove($gettok(%bot.readline,3,32),:) $remove($gettok(%bot.readline,5-,32),:))
-    sockwrite -n %bot.onp2. [ $+ [ $network ] ] join $remove($gettok(%bot.readline,3,32),:) 
-    ;if ( $remove($gettok(%bot.readline,4,32),:) == %bot.name. [ $+ [ $network ] ] ) { sockwrite -n Bot [ $+ [ $network ] ] join $remove($gettok(%bot.readline,3,32),:) }
-    ;if ($sock(Bot [ $+ [ $network ] ]).mark == $remove($gettok(%bot.readline,4,32),:)) { sockwrite -n Bot [ $+ [ $network ] ] join $remove($gettok(%bot.readline,3,32),:) }
+    $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Kick,$remove($gettok(%bot.readline,1,33),:),kicked,$remove($gettok(%bot.readline,4,32),:),from,$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,5-,32),:))
+    sockwrite -n $sockname join $remove($gettok(%bot.readline,3,32),:) 
+    return
   }
-  if ($gettok(%bot.readline,2,32) == MODE) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot) ] ] ,1,44) Mode, $remove($gettok(%bot.readline,1,33),:) set $remove($gettok(%bot.readline,4-,32),:) on $remove($gettok(%bot.readline,3,32),:)) }
+  if ($gettok(%bot.readline,2,32) == MODE) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Mode,$remove($gettok(%bot.readline,1,33),:),set,$remove($gettok(%bot.readline,4-,32),:) on $remove($gettok(%bot.readline,3,32),:)) }
   if ($gettok(%bot.readline,2,32) == PRIVMSG) {
-    ;if *-bc cycle*
-    ;
     ;Ctcp Handling
-    ;
     if ($left($remove($gettok(%bot.readline,4-,32),:),1) == $chr(1)) {
       if (* $+ $chr(1) $+ ACTION* iswm $remove($gettok(%bot.readline,4-,32),:)) {
-        $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) Action  $+ $color(action) $+ $remove($gettok(%bot.readline,1,33),:)  $left($remove($gettok(%bot.readline,4-,32),: $+ $chr(1) $+ ACTION),-1))
+        $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44) Action  $+ $color(action) $+ $remove($gettok(%bot.readline,1,33),:),$left($remove($gettok(%bot.readline,4-,32),: $+ $chr(1) $+ ACTION),-1))
         goto bossout
       }
       else {
         ;$botsay(Full Info:,At else,$null,$null,$null,%bot.readline).active
-        $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44) Ctcp $remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ : $remove($remove($gettok(%bot.readline,4-,32),:), )) 
+        $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44),Ctcp,$remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ :,$remove($remove($gettok(%bot.readline,4-,32),:), ))
         goto bossout
       }
       goto botread
@@ -412,7 +369,7 @@ on 1:SOCKCLOSE:Bot*:{
   sockclose Bot [ $+ [ $network ] ]
   if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] ] }
   set %Bot.active. [ $+ [ $network ] ] 0
-  $botsay(BotClose,Closing Bot [ $+ [ $network ] ] ,$sock(Bot [ $+ [ $network ] ] ).wserr $sock(Bot [ $+ [ $network ] ] ).wsmsg).active
+  botsetshow BotClose ClosingBot [ $+ [ $network ] ] $sock(Bot [ $+ [ $network ] ] ).wserr $sock(Bot [ $+ [ $network ] ] ).wsmsg
   if (%bot.reconnect. [ $+ [ $network ] ] == ON) { timerfire $+ $network 1 1 goto bot start $network }
 }
 alias botsay {
@@ -459,6 +416,7 @@ alias bot.disp {
     if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
     set %bot.disp. [ $+ [ $network ] ] STATUS
     unset %bot.disp.dev. [ $+ [ $network ] ]
+
     $report(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
     return
   }
@@ -526,7 +484,8 @@ alias botstart {
   if (%bot.trigger. [ $+ [ $network ] ] == $null) { set %bot.trigger. [ $+ [ $network ] ] 0 }
   if (%bot.showall. [ $+ [ $network ] ] == $null) { set %bot.showall. [ $+ [ $network ] ] OFF }
   if (%bot.defense. [ $+ [ $network ] ] == $null) { set %bot.defense. [ $+ [ $network ] ] OFF }
-  if (%bot.reconnect. [ $+ [ $network ] ] == $null) { set %bot.reconnect. [ $+ [ $network ] ] OFF } 
+  if (%bot.reconnect. [ $+ [ $network ] ] == $null) { set %bot.reconnect. [ $+ [ $network ] ] OFF }
+  if (%bot.killwin. [ $+ [ $network ] ] == $null) { set %bot.killwin. [ $+ [ $network ] ] ON }
   return
 }
 alias bothelp {
@@ -545,7 +504,8 @@ alias bothelp {
   $report($chain(2),$null,$null,bot.trigger,%bot.trigger. [ $+ [ $network ] ] ).active
   $report($chain(2),$null,$null,bot.showall,%bot.showall. [ $+ [ $network ] ] ).active
   $report($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.reconnect,%bot.reconnect. [ $+ [ $network ] ] ).active  
+  $report($chain(2),$null,$null,bot.reconnect,%bot.reconnect. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,$null,bot.killwin,%bot.killwin. [ $+ [ $network ] ] ).active
   $report($chain(2),$null,$null,xxx,no value).active
   $report($chain(2),$null,$null,********************,********************).active
   $report($chain(2),$null,$null,$null,do /Bot SET to see a list.).active
@@ -554,7 +514,7 @@ alias bothelp {
 }
 alias botvar {
   $report($chain(34)).active
-  $report($chain(2),$null,$null,$null,use /Bot SET value.below).active
+  $report($chain(2),$null,$null,$null,use /Bot SET BOT.XXX value or /BOT SET XXX value).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.disp).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.work).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.play).active
@@ -565,22 +525,64 @@ alias botvar {
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.showall).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.defense).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.reconnect).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.killwin).active
   $report($chain(2),$null,$null,$null,$null,Use /BOT SET BOT.DISP for Options).active
   $report($chain(2),$null,$null,$null,$null,Use /BOT SHOW for full menu).active
   $report($chain(34)).active
   return
 }
 alias bot.disp.info {
+  $report($chain(60)).active
+  $report($null,$null,The bot setting where bot will display activity).active
+  $report($null,$null,of all the channels it is on. Or not if it OFF.).active
   $report($chain(40)).active
-  $report(The bot setting where bot will display activity).active
-  $report(of all the channels it is on. Or not if it OFF.).active
-  $report($chain(20)).active
-  $report(BOT SET bot.disp  <OFF>).active
-  $report(BOT SET bot.disp  <ACTIVE>).active
-  $report(BOT SET bot.disp  <STATUS>).active
-  $report(BOT SET bot.disp  <CHANNEL #name>).active
-  $report(BOT SET bot.disp  <WINDOW @name>).active
-  $report(BOT SET bot.disp  <MESSAGE name>).active
-  $report($chain(40)).active
-  return        
+  $report(BOT SET bot.disp  <OFF> (The bot has no output.)).active
+  $report(BOT SET bot.disp  <ACTIVE> (The bot displays to your active channel.)).active
+  $report(BOT SET bot.disp  <STATUS> (The bot displays to the network status.)).active
+  $report(BOT SET bot.disp  <CHANNEL #name> (To a channel window.)).active
+  $report(BOT SET bot.disp  <WINDOW @name> (To a named @window.)).active
+  $report(BOT SET bot.disp  <MESSAGE name> (To a person as private message.)).active
+  $report(BOT SET bot.disp  REPORT (Is a quick status.)).active
+  $report($chain(60)).active
+  return
 }
+alias bot.status {
+  var %tmp.botn1 1
+  var %tmp.botn2 $sock(bot*,0)
+  $report($chain(30)).active
+  $report(Bot Status,$null,Listing active servers).active
+  while (%tmp.botn1 <= %tmp.botn2) {
+    $report(Bot Status,On Server,%tmp.botn1,$remove($sock(bot*,%tmp.botn1),Bot)).active
+    $report(Using,$null,%bot.disp. [ $+ [ $network ] ] $+ %bot.disp.dev. [ $+ [ $network ] ]).active
+    $report($chain(30)).active
+    inc %tmp.botn1
+  }
+  ;$report($chain(35)).active
+  unset %tmp.botn1
+  unset %tmp.botn2
+  return
+}
+alias bot.end {
+  $report($chain(40)).active
+  $report($null,$null,Bot Commands:).active
+  $report(ON/START - OFF/STOP - SET - SHOW).active
+  $report(ID - SEND - OP - DEOP - KICK - JOIN).active
+  $report(PART - AJ - CYCLE - SAY - DEBUG).active
+  $report(NICK - STATUS - AGAIN - QUIT).active
+  $report($null,$null,Try /BOT SHOW to get a look at the values.).active
+  $report($null,$null,and /BOT SET to work out how to change them.).active
+  $report($null,$null,/BOT SET BOT.DISP for info on where the bot puts its text output.).active
+  $report($chain(40)).active
+  return
+}
+on *:CLOSE:@: {
+  if ($target == @BotSay [ $+ [ $network ] ] ) {
+    if (%bot.killwin. [ $+ [ $network ] ]  == ON) {
+      $report(Closing this bot since it's window was closed.).status
+      bot quit :Closing the window
+      sockclose Bot [ $+ [ $network ] ]
+      .timerclsb [ $+ [ $network ] ] 1 1 bot off
+    }
+  }
+}
+alias botsetshow { $report(Bot Setting,$null,SET,$1,$2-).active | script.play Notify.wav }
