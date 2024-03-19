@@ -169,6 +169,30 @@ alias bot {
     else { sockwrite -n Bot [ $+ [ $network ] ] mode # -o $2 | return }
     return
   }
+  if ($1 == HELPOP) {
+    if ($2- == $null) { sockwrite -n Bot [ $+ [ $network ] ] mode # +h $me | return }
+    if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] mode $2 +h $3 | return }
+    else { sockwrite -n Bot [ $+ [ $network ] ] mode # +h $2 }
+    return
+  }
+  if ($1 == HELPDEOP) {
+    if ($2- == $null) { sockwrite -n Bot [ $+ [ $network ] ] mode # -h $me | return }
+    if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] mode $2 -h $3 | return }
+    else { sockwrite -n Bot [ $+ [ $network ] ] mode # -h $2 | return }
+    return
+  }
+  if ($1 == VOICE) {
+    if ($2- == $null) { sockwrite -n Bot [ $+ [ $network ] ] mode # +v $me | return }
+    if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] mode $2 +v $3 | return }
+    else { sockwrite -n Bot [ $+ [ $network ] ] mode # +v $2 }
+    return
+  }
+  if ($1 == DEVOICE) {
+    if ($2- == $null) { sockwrite -n Bot [ $+ [ $network ] ] mode # -v $me | return }
+    if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] mode $2 -v $3 | return }
+    else { sockwrite -n Bot [ $+ [ $network ] ] mode # -v $2 | return }
+    return
+  }
   if ($1 == KICK) {
     if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] kick $2  $3 : $+ $4- | return }
     else { sockwrite -n Bot [ $+ [ $network ] ] kick # $2  : $+ $3- | return }
@@ -184,15 +208,12 @@ alias bot {
     return
   }
   if ($1 == PART) {
-    if ($2 == $null) { sockwrite -n Bot [ $+ [ $network ] ] part # }
-    if ($2 != $null) && ($3 == $null) { sockwrite -n Bot [ $+ [ $network ] ] part $2 }
-    if ($2 != $null) && ($3 != $null) { sockwrite -n Bot [ $+ [ $network ] ] part $2 $3- }
+    if ($2 == $null) { sockwrite -n Bot [ $+ [ $network ] ] part # : $+ See ya! }
+    if ($2 != $null) && ($3 == $null) { sockwrite -n Bot [ $+ [ $network ] ] part $2 : $+ gotta go! }
+    if ($2 != $null) && ($3 != $null) { sockwrite -n Bot [ $+ [ $network ] ] part $2 : $+ $3- }
     return
   }
-  if ($1 == AJ) {
-    .timerbaj $+ $network 1 2 sockwrite -n Bot [ $+ [ $network ] ] join $key(settings,autojoinspeed)
-    return
-  }
+  if ($1 == AJ) { .timerbaj $+ $network 1 2 sockwrite -n Bot [ $+ [ $network ] ] join $key(settings,autojoinspeed) | return }
   if ($1 == CYCLE) {
     if ($2 == $null) { sockwrite -n Bot [ $+ [ $network ] ] part # $cr join # }
     else { sockwrite -n Bot [ $+ [ $network ] ] part $2 :Cycling $cr join $2 }
@@ -354,12 +375,8 @@ on 1:SOCKREAD:Bot*:{
       }
       goto botread
     }
-    if ($chr(35) isin $remove($gettok(%bot.readline,3,32),:)) {
-      $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44) $remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,1,33),:),$remove($gettok(%bot.readline,4-,32),:))
-    }
-    else {
-      $botsay(BotSay,$remove($gettok(%bot.readline,3,32),:),privmsg,$remove($gettok(%bot.readline,1,33),:),--> Whispered -->,$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,4-,32),:))
-    }
+    if ($chr(35) isin $remove($gettok(%bot.readline,3,32),:)) { $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44) $remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,1,33),:),$remove($gettok(%bot.readline,4-,32),:)) }
+    else { $botsay(BotSay,$remove($gettok(%bot.readline,3,32),:),privmsg,$remove($gettok(%bot.readline,1,33),:),--> Whispered -->,$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,4-,32),:)) }
     goto Botread
   }
   :bossout
@@ -468,10 +485,7 @@ alias bot.disp {
   }
 }
 alias bot.check {
-  if (%Bot.active. [ $+ [ $network ] ] == 1) {
-    $report(Bot Check,$null,$null,$null,The bot is running on $remove(Bot [ $+ [ $network ] ],Bot)).active
-    halt
-  }
+  if (%Bot.active. [ $+ [ $network ] ] == 1) { $report(Bot Check,$null,$null,$null,The bot is running on $remove(Bot [ $+ [ $network ] ],Bot)).active | halt }
   else { return }
 }
 alias botstart {
