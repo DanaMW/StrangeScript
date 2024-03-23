@@ -263,6 +263,7 @@ on 1:SOCKOPEN:Bot*:{
     .timer 1 5 sockwrite -n $sockname identify $me %bot.pass. [ $+ [ $network ] ]
     .timer 1 6 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
+    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
@@ -273,6 +274,7 @@ on 1:SOCKOPEN:Bot*:{
     .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n BotDalNet join %bot.work. [ $+ [ $network ] ]
     .timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
+    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
@@ -283,6 +285,7 @@ on 1:SOCKOPEN:Bot*:{
     .timer 1 5 sockwrite -n $sockname identify $me %bot.pass. [ $+ [ $network ] ]
     .timer 1 6 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
+    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
@@ -293,6 +296,7 @@ on 1:SOCKOPEN:Bot*:{
     ;.timer 1 5 sockwrite -n BotUnderNet identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 15 sockwrite -n BotUnderNet identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n BotUnderNet join %bot.work. [ $+ [ $network ] ]
+    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
@@ -303,13 +307,14 @@ on 1:SOCKOPEN:Bot*:{
     ;.timer 1 5 sockwrite -n BotDeepNet identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 15 sockwrite -n BotDeepNet identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 10 sockwrite -n BotDeepNet join %bot.work. [ $+ [ $network ] ]
+    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
   else {
     sockwrite -n $sockname user $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
     ;sockwrite -n $sockname nick $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
-    sockmark $sockname nick %bot.nick. [ $+ [ $network ] ]
+    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     if ( %bot.pass != $null ) { sockwrite -n $sockname nickserv identify %bot.nick. [ $+ [ $network ] ] %bot.pass. [ $+ [ $network ] ] }
     .timer 1 3 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
     sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
