@@ -414,8 +414,9 @@ alias botsay {
   if (%bot.disp. [ $+ [ $network ] ] == CHANNEL) { return echo -t %bot.disp.dev. [ $+ [ $network ] ] $sys %tmp.zbuild }
   if (%bot.disp. [ $+ [ $network ] ] == MESSAGE) { return msg %bot.disp.dev. [ $+ [ $network ] ] $sys %tmp.zbuild }
   if (%bot.disp. [ $+ [ $network ] ] == WINDOW) {
-    window -g1 %bot.disp.dev. [ $+ [ $network ] ]
-  return aline -p %bot.disp.dev. [ $+ [ $network ] ] $sys %tmp.zbuild }
+    window -g1e0 %bot.disp.dev. [ $+ [ $network ] ]
+    return aline -p %bot.disp.dev. [ $+ [ $network ] ] $sys %tmp.zbuild
+  }
   return
 }
 alias bot.disp {
