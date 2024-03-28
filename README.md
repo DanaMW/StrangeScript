@@ -28,6 +28,8 @@ script running. It won't hurt a thing.
 ```
 To use the bot, do /bot OFF first. That resets the bot.
 You may use that at any time the bot needs resetting.
+The bot is multi-server, you can have a copy running on
+each server if you like.
 ```
 
 @author Dana L. Meli-Wischman
