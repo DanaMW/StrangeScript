@@ -1,62 +1,26 @@
 alias bot {
+  set %chew.1 $1
+  set %chew.2 $2
+  set %chew.2 $3-
   botstart
-  if ($1 == ON) || ($1 == START) {
-    if ($2 != $null) { set %bot.onp2. [ $+ [ $network ] ] $2 }
-    if (%bot.onp2. [ $+ [ $network ] ] == $null) { set %bot.onp2. [ $+ [ $network ] ] $network }
-    if ($network == localNet) { set %bot.onp2. [ $+ [ $network ] ] local }
-    if (%bot.onp2. [ $+ [ $network ] ] == local) {
-      bot.check
-      sockopen -n BotLocal irc.localdomain.net 6667
-      botsetshow ON Local irc.localdomain.net 6667
-      return
-    }
-    if (%bot.onp2. [ $+ [ $network ] ] == dalnet) {
-      bot.check
-      sockopen -n BotDalNet irc.dal.net 6667
-      botsetshow ON DalNet irc.dal.net 6667
-      return
-    }
-    if (%bot.onp2. [ $+ [ $network ] ] == libera.chat) {
-      bot.check
-      sockopen -n Botlibera.chat irc.libera.chat 6667
-      botsetshow ON libera.chat irc.libera.chat 6667
-      return
-    }
-    if (%bot.onp2. [ $+ [ $network ] ] == undernet) {
-      bot.check
-      sockopen -n BotUnderNet us.undernet.org 6667
-      botsetshow ON UnderNet us.undernet.org 6667
-      return
-    }
-    if (%bot.onp2. [ $+ [ $network ] ] == DeepNet) {
-      bot.check
-      sockopen -n BotDeepNet irc.deepnet.chat 6667
-      botsetshow ON DeepNet irc.DeepNet.chat 6667
-      return
-    }
-    if (%bot.onp2. [ $+ [ $network ] ] == ircgo) {
-      bot.check
-      sockopen -n BotIRCGo irc.IRCGo.org 6667
-      botsetshow ON IRCGo irc.IRCGo.org 6667
-      return
-    }
-    ;else {
-    ;  %bot.onp2. [ $+ [ $2 ] ] == $2
-    ;  bot.check
-    ;  sockopen -n Bot $+ $2  irc. $+ $2 6667
-    ;  $report(Bot,ON,$null,$2,irc. $+ $2,6667).active
-    ;  return
-    ;}
-    $report(Bot,$null,Input Error,$null,$null,$null,Just do 2/BOT ON or /BOT ON DeepNet or DalNet or Libera.Chat or UnderNet Etc.).active
+  if ($1 == ON) || if ($1 == START) {
+    bot.go $2
     return
   }
   if ($1 == OFF) || ($1 == STOP) {
-    sockclose Bot [ $+ [ $network ] ]
-    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c @botSay [ $+ [ $network ] ] }
-    set %Bot.active. [ $+ [ $network ] ] 0
+    if ($2 == $null) { set %temp.btoff $network }
+    else { set %temp.btoff $2 }
+    sockclose Bot [ $+ [ %temp.btoff ] ]
+    if ($window(@botSay [ $+ [ %temp.btoff ] ]) != $null) { window -c @botSay [ $+ [ %temp.btoff ] ] }
+    set %Bot.active. [ $+ [ %temp.btoff ] ] 0
+    .timerfiredeepnet off
+    botsetshow $chain(5) Bot Off $chain(12)
     botsetshow OFF You selected off. It's off.
-    botsetshow bot.active is set to %bot.active. [ $+ [ $network ] ]
+    botsetshow bot.active %temp.btoff is set to %bot.active. [ $+ [ %temp.btoff ] ]
+    botsetshow $chain(5) $chain(19)
     return
+  }
+  else {
   }
   if ($1 == ID) {
     .timer 1 2 sockwrite -n Bot [ $+ [ $network ] ] identify %bot.pass. [ $+ [ $network ] ]
@@ -75,7 +39,7 @@ alias bot {
       botsetshow WORK bot.work channel is now %bot.work. [ $+ [ $network ] ]
       return
     }
-    if ($2 == BOT.PLAY) || if ($2 == PLAY) {
+    if ($2 == BOT.PLAY) || ($2 == PLAY) {
       if ($3 == $null) { return }
       set %bot.play. [ $+ [ $network ] ] $3-
       botsetshow PLAY bot.play channel is now %bot.play. [ $+ [ $network ] ]
@@ -93,20 +57,20 @@ alias bot {
       botsetshow PASS bot.pass is set as %bot.pass. [ $+ [ $network ] ]
       return
     }
-    if ($2 == BOT.VALUE) || if ($2 == VALUE) {
+    if ($2 == BOT.VALUE) || ($2 == VALUE) {
       if (%bot.value. [ $+ [ $network ] ] == $null) { set %bot.value. [ $+ [ $network ] ] - }
       if ($3 == $null) { return }
       else { set %bot.value. [ $+ [ $network ] ] $3- }
       botsetshow VALUE bot.value is set to %bot.value. [ $+ [ $network ] ]
       return
     }
-    if ($2 == BOT.TRIGGER) || if ($2 == TRIGGER) {
+    if ($2 == BOT.TRIGGER) || ($2 == TRIGGER) {
       if (%bot.trigger. [ $+ [ $network ] ] == 1) { set %bot.trigger. [ $+ [ $network ] ] 0 }
       else { set %bot.trigger. [ $+ [ $network ] ] 1 }
       botsetshow TRIGGER bot.trigger is set to %bot.trigger. [ $+ [ $network ] ]
       return
     }
-    if ($2 == BOT.SHOWALL) || if ($2 == SHOWALL) || if ($2 == DEBUG) {
+    if ($2 == BOT.SHOWALL) || ($2 == SHOWALL) || if ($2 == DEBUG) {
       if ($3 == ON) { set %bot.showall. [ $+ [ $network ] ] ON | botsetshow SHOWALL bot.showall or debug is set to %bot.showall. [ $+ [ $network ] ] | return }
       if ($3 == OFF) { set %bot.showall. [ $+ [ $network ] ] OFF | botsetshow SHOWALL bot.showall or debug is set to %bot.showall. [ $+ [ $network ] ] | return }
       if ($3 == $null) {
@@ -115,7 +79,16 @@ alias bot {
       }
       return
     }
-    if ($2 == BOT.DEFENSE) || if ($2 == DEFENSE) {
+    if ($2 == BOT.RELAY) || ($2 == RELAY) {
+      if ($3 == ON) { set %bot.relay. [ $+ [ $network ] ] ON | botsetshow RELAY bot.relay is set to %bot.relay. [ $+ [ $network ] ] | return }
+      if ($3 == OFF) { set %bot.relay. [ $+ [ $network ] ] OFF | botsetshow RELAY bot.relay is set to %bot.relay. [ $+ [ $network ] ] | return }
+      if ($3 == $null) {
+        if (%bot.relay. [ $+ [ $network ] ] == ON) { set %bot.relay. [ $+ [ $network ] ] OFF | botsetshow RELAY bot.relay is set to %bot.relay. [ $+ [ $network ] ] | return }
+        if (%bot.relay. [ $+ [ $network ] ] == OFF) { set %bot.relay. [ $+ [ $network ] ] ON | botsetshow RELAY bot.relay is set to %bot.relay. [ $+ [ $network ] ] | return }
+      }
+      return
+    }
+    if ($2 == BOT.DEFENSE) || ($2 == DEFENSE) {
       if ($3 == ON) { set %bot.defense. [ $+ [ $network ] ] ON | botsetshow DEFENSE bot.defense is set to %bot.defense. [ $+ [ $network ] ] | return }
       if ($3 == OFF) { set %bot.defense. [ $+ [ $network ] ] OFF | botsetshow DEFENSE bot.defense is set to %bot.defense. [ $+ [ $network ] ] | return }
       if ($3 == $null) {
@@ -124,7 +97,7 @@ alias bot {
       }
       return
     }
-    if ($2 == BOT.RECONNECT) || if ($2 == RECONNECT) {
+    if ($2 == BOT.RECONNECT) || ($2 == RECONNECT) {
       if ($3 == ON) { set %bot.reconnect. [ $+ [ $network ] ] ON | botsetshow RECONNECT Bot reconnect after d/c Set to %bot.reconnect. [ $+ [ $network ] ] | return }
       if ($3 == OFF) { set %bot.reconnect. [ $+ [ $network ] ] OFF | botsetshow RECONNECT Bot reconnect after d/c Set to %bot.reconnect. [ $+ [ $network ] ] | return }
       if ($3 == $null) {
@@ -133,7 +106,7 @@ alias bot {
       }
       return
     }
-    if ($2 == BOT.KILLWIN) || if ($2 == KILLWIN) {
+    if ($2 == BOT.KILLWIN) || ($2 == KILLWIN) {
       if ($3 == ON) { set %bot.killwin. [ $+ [ $network ] ] ON | botsetshow KILLWIN Close Bot With It's Window Set to %bot.killwin. [ $+ [ $network ] ] | return }
       if ($3 == OFF) { set %bot.killwin. [ $+ [ $network ] ] OFF | botsetshow KILLWIN Close Bot With It's Window Set to %bot.killwin. [ $+ [ $network ] ] | return }
       if ($3 == $null) {
@@ -248,14 +221,19 @@ alias bot {
     }
   }
   bot.end
-  halt
+  return
 }
 on 1:SOCKOPEN:Bot*:{
-  if ($sockerr > 0) { sockclose Bot [ $+ [ $network ] ] | $botsay(Sock Error,OPEN,Bot [ $+ [ $network ] ],$sock(Bot [ $+ [ $network ] ]).wserr,$sock(Bot [ $+ [ $network ] ]).wsmsg).active | return }
+  if ($sockerr > 0) {
+    $report(Sock Error,OPEN,Bot [ $+ [ $sockname ] ],$sock(Bot [ $+ [ $sockname ] ]).wserr,$sock(Bot [ $+ [ $sockname ] ]).wsmsg).active
+    sockclose Bot [ $+ [ $sockname ] ]
+    return
+  }
   $report(Socket,OPEN,Socket Name,Bot [ $+ [ $network ] ]).active
   set %Bot.active. [ $+ [ $network ] ] 1
-  ;if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] $$?="Bot must have a nick, pick one:" }
-  ;if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] $$?="Password for that nick if you know it:" }
+  ;
+  ; These are seperate for fine tuning then we will combine into one when we know what works best for all of them
+  ;
   if ($sockname == BotLocal) || ($sockname == BotIRCGo) {
     if ( %bot.pass. [ $+ [ $network ] ] != $null ) { sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ] }
     sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
@@ -267,17 +245,20 @@ on 1:SOCKOPEN:Bot*:{
     $report(BotSay,$sockname,is now open and set).active
     return
   }
+  ;
   if ($sockname == BotDalNet) {
-    sockwrite -n BotDalNet pass %bot.pass. [ $+ [ $network ] ]
-    sockwrite -n BotDalNet nick %bot.nick. [ $+ [ $network ] ]
-    sockwrite -n BotDalNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
-    .timer 1 5 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
-    .timer 1 10 sockwrite -n BotDalNet join %bot.work. [ $+ [ $network ] ]
-    .timer 1 15 sockwrite -n BotDalNet identify %bot.pass. [ $+ [ $network ] ]
+    $report(BOT,$null,$null,Using:,Dalnet config for setup of bot).active
+    sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ]
+    sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
+    sockwrite -n $sockname user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+    .timer 1 5 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 10 sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
+    .timer 1 15 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
     sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
+  ;
   if ($sockname == Botlibera.chat) {
     if ( %bot.pass. [ $+ [ $network ] ] != $null ) { sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ] }
     sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
@@ -290,34 +271,35 @@ on 1:SOCKOPEN:Bot*:{
     return
   }
   if ($sockname == BotUnderNet) {
-    sockwrite -n BotUnderNet nick %bot.nick. [ $+ [ $network ] ]
-    ;sockwrite -n BotUnderNet pass %bot.pass. [ $+ [ $network ] ]
-    sockwrite -n BotUnderNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
-    ;.timer 1 5 sockwrite -n BotUnderNet identify %bot.pass. [ $+ [ $network ] ]
-    .timer 1 15 sockwrite -n BotUnderNet identify %bot.pass. [ $+ [ $network ] ]
-    .timer 1 10 sockwrite -n BotUnderNet join %bot.work. [ $+ [ $network ] ]
+    sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
+    ;sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ]
+    sockwrite -n $sockname user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+    ;.timer 1 5 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 15 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 10 sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
     sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
   if ($sockname == BotDeepNet) {
-    sockwrite -n BotDeepNet nick %bot.nick. [ $+ [ $network ] ]
-    ;sockwrite -n BotDeepNet pass %bot.pass. [ $+ [ $network ] ]
-    sockwrite -n BotDeepNet user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
-    ;.timer 1 5 sockwrite -n BotDeepNet identify %bot.pass. [ $+ [ $network ] ]
-    .timer 1 15 sockwrite -n BotDeepNet identify %bot.pass. [ $+ [ $network ] ]
-    .timer 1 10 sockwrite -n BotDeepNet join %bot.work. [ $+ [ $network ] ]
+    sockwrite -n $sockname nick %bot.nick. [ $+ [ $network ] ]
+    ;sockwrite -n $sockname pass %bot.pass. [ $+ [ $network ] ]
+    sockwrite -n $sockname user $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) $remove( %bot.nick. [ $+ [ $network ] ] ,`) : $+ $remove( %bot.nick. [ $+ [ $network ] ] ,`)
+    ;.timer 1 5 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 15 sockwrite -n $sockname identify %bot.pass. [ $+ [ $network ] ]
+    .timer 1 10 sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
     sockmark $sockname %bot.nick. [ $+ [ $network ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
   else {
-    sockwrite -n $sockname user $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
-    ;sockwrite -n $sockname nick $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`) $remove(%bot.nick. [ $+ [ $network ] ] ,`)
-    sockmark $sockname %bot.nick. [ $+ [ $network ] ]
-    if ( %bot.pass != $null ) { sockwrite -n $sockname nickserv identify %bot.nick. [ $+ [ $network ] ] %bot.pass. [ $+ [ $network ] ] }
-    .timer 1 3 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $network ] ]
-    sockwrite -n $sockname join %bot.work. [ $+ [ $network ] ]
+    halt
+    sockwrite -n $sockname user $remove(%bot.nick. [ $+ [ $sockname ] ] ,`) $remove(%bot.nick. [ $+ [ $sockname ] ] ,`) $remove(%bot.nick. [ $+ [ $sockname ] ] ,`) $remove(%bot.nick. [ $+ [ $sockname ] ] ,`)
+    ;sockwrite -n $sockname nick $remove(%bot.nick. [ $+ [ $sockname ] ] ,`) $remove(%bot.nick. [ $+ [ $sockname ] ] ,`) $remove(%bot.nick. [ $+ [ $sockname ] ] ,`) $remove(%bot.nick. [ $+ [ $sockname ] ] ,`)
+    sockmark $sockname %bot.nick. [ $+ [ $sockname ] ]
+    if ( %bot.pass != $null ) { sockwrite -n $sockname nickserv identify %bot.nick. [ $+ [ $sockname ] ] %bot.pass. [ $+ [ $sockname ] ] }
+    .timer 1 3 sockwrite -n $sockname privmsg nickserv :identify recess %bot.pass. [ $+ [ $sockname ] ]
+    sockwrite -n $sockname join %bot.work. [ $+ [ $sockname ] ]
     $report(BotSay,$sockname,is now open and set).active
     return
   }
@@ -343,17 +325,17 @@ on 1:SOCKREAD:Bot*:{
   :Botread
   sockread %bot.readline
   if ($sockbr == 0) { return }
-  if (%bot.showall. [ $+ [ $network ] ] == ON) { $botsay(Full Info:,$null,$null,$null,$null,%bot.readline).active }
+  if (%bot.showall. [ $+ [ $network ] ] == ON) { $botsay(Full Info:,$null,$null,$null,$null,%bot.readline) }
   if ($gettok(%bot.readline,1,32) == PING) {
     sockwrite -n $sockname PONG $gettok(%bot.readline,2,32)
-    if (%bot.showall. [ $+ [ $network ] ] == ON) { $botsay(Pong,Sent Pong,to,$remove($gettok(%bot.readline,2,32),:)).active }
+    if (%bot.showall. [ $+ [ $network ] ] == ON) { $botsay(Pong,Sent Pong,to,$remove($gettok(%bot.readline,2,32),:)) }
   }
   ;if ($remove($left(%bot.readline,$calc($pos(%bot.readline,$chr(33),1) -1)),$chr(58)) == $me) && ($remove($gettok(%bot.readline,4,32),:,$chr(1)) == PING)  { sockwrite -n Bot [ $+ [ $network ] ] NOTICE $me : $+ $chr(1) $+ PING $gettok(%bot.readline,5-6,32) $+ $chr(1) }
-  if ($gettok(%bot.readline,2,32) == 353) { $botsay(BotSay,$remove(%bot.onp2. [ $+ [ $network ] ],Bot),Users $+ $gettok(%bot.readline,6-,32)).active | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 311) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 312) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 307) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
-  if ($gettok(%bot.readline,2,32) == 319) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)).active | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 353) { $botsay(BotSay,$remove(%bot.onp2. [ $+ [ $network ] ],Bot),Users $+ $gettok(%bot.readline,6-,32)) | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 311) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 312) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 307) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
+  if ($gettok(%bot.readline,2,32) == 319) { $botsay(BotSay,Whois $remove($gettok(%bot.readline,4-,32),:)) | goto bossout }
   if ($gettok(%bot.readline,2,32) == PART) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Part,$remove($gettok(%bot.readline,1,33),:),Left,$remove($gettok(%bot.readline,3,32),:)) }
   if ($gettok(%bot.readline,2,32) == JOIN) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),Join,$remove($gettok(%bot.readline,1,33),:),entered,$remove($gettok(%bot.readline,3,32),:)) }
   if ($gettok(%bot.readline,2,32) == NOTICE) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],Bot),1,44),$remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ : Notice - $remove($gettok(%bot.readline,4-,32),:)) }
@@ -374,7 +356,7 @@ on 1:SOCKREAD:Bot*:{
         goto bossout
       }
       else {
-        ;$botsay(Full Info:,At else,$null,$null,$null,%bot.readline).active
+        ;$botsay(Full Info:,At else,$null,$null,$null,%bot.readline)
         $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44),Ctcp,$remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ :,$remove($remove($gettok(%bot.readline,4-,32),:), ))
         goto bossout
       }
@@ -491,50 +473,78 @@ alias bot.disp {
   }
 }
 alias bot.check {
-  if (%Bot.active. [ $+ [ $network ] ] == 1) { $report(Bot Check,$null,$null,$null,The bot is running on $remove(Bot [ $+ [ $network ] ],Bot)).active | halt }
-  else { return }
+  if ($1 != $null) {
+    if (%Bot.active. [ $+ [ $1 ] ] == 1) {
+      $report($chain(18) Bot Check $chain(18)).active
+      $report(The bot is listed as,$null,$null,RUNNING,on $remove(Bot [ $+ [ $1 ] ],Bot)).active
+      $report($null,$null,$null,To reset use /BOT OFF then /BOT ON <address>).active
+      $report($chain(46)).active
+      halt
+    }
+    else { return }
+  }
+  else {
+    if (%Bot.active. [ $+ [ $network ] ] == 1) {
+      $report($chain(18) Bot Check $chain(18)).active
+      $report(The bot is listed as,$null,$null,RUNNING,on $remove(Bot [ $+ [ $network ] ],Bot)).active
+      $report($null,$null,$null,To reset use /BOT OFF then /BOT ON <address>).active
+      $report($chain(46)).active
+      halt
+    }
+    else { return }
+  }
 }
 alias botstart {
-  if (%bot.disp. [ $+ [ $network ] ] == $null) { set %bot.disp. [ $+ [ $network ] ] STATUS }
-  if (%bot.work. [ $+ [ $network ] ] == $null) { set %bot.work. [ $+ [ $network ] ] #StrangeScript }
-  if (%bot.play. [ $+ [ $network ] ] == $null) { set %bot.play. [ $+ [ $network ] ] #StrangeScript }
-  if (%bot.nick. [ $+ [ $network ] ] == $null) { set %bot.nick. [ $+ [ $network ] ] Guest00001 }
-  if (%bot.pass. [ $+ [ $network ] ] == $null) { set %bot.pass. [ $+ [ $network ] ] DefaultPass }
-  if (%bot.value. [ $+ [ $network ] ] == $null) { set %bot.value. [ $+ [ $network ] ] Some default text }
-  if (%bot.trigger. [ $+ [ $network ] ] == $null) { set %bot.trigger. [ $+ [ $network ] ] 0 }
-  if (%bot.showall. [ $+ [ $network ] ] == $null) { set %bot.showall. [ $+ [ $network ] ] OFF }
-  if (%bot.defense. [ $+ [ $network ] ] == $null) { set %bot.defense. [ $+ [ $network ] ] OFF }
-  if (%bot.reconnect. [ $+ [ $network ] ] == $null) { set %bot.reconnect. [ $+ [ $network ] ] OFF }
-  if (%bot.killwin. [ $+ [ $network ] ] == $null) { set %bot.killwin. [ $+ [ $network ] ] ON }
+  if ($1 != $null) { set %tmp.bsrt $1 }
+  else { set %tmp.bsrt $network }
+  if (%bot.disp. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.disp. [ $+ [ %tmp.bsrt ] ] STATUS }
+  if (%bot.work. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.work. [ $+ [ %tmp.bsrt ] ] #StrangeScript }
+  if (%bot.play. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.play. [ $+ [ %tmp.bsrt ] ] #StrangeScript }
+  if (%bot.nick. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.nick. [ $+ [ %tmp.bsrt ] ] Guest00001 }
+  if (%bot.pass. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.pass. [ $+ [ %tmp.bsrt ] ] DefaultPass }
+  if (%bot.value. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.value. [ $+ [ %tmp.bsrt ] ] Some default text }
+  if (%bot.trigger. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.trigger. [ $+ [ %tmp.bsrt ] ] 0 }
+  if (%bot.showall. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.showall. [ $+ [ %tmp.bsrt ] ] OFF }
+  if (%bot.defense. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.defense. [ $+ [ %tmp.bsrt ] ] OFF }
+  if (%bot.reconnect. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.reconnect. [ $+ [ %tmp.bsrt ] ] OFF }
+  if (%bot.killwin. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.killwin. [ $+ [ %tmp.bsrt ] ] ON }
+  if (%bot.relay. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.relay. [ $+ [ %tmp.bsrt ] ] OFF }
+  unset %tmp.bsrt
   return
 }
 alias bothelp {
-  $report($chain(50)).active
-  $report($chain(2),$null,$null,$null,use /Bot SET value.below to alter).active
+  if ($1 != $null) { set %tmp.bhlp $1 }
+  else { set %tmp.bhlp $network }
+  $report($chain(18) Settings Display $chain(18)).active
+  $report($chain(2),$null,$null,$null,"/Bot SET BOT.xxx <value>" to alter).active
+  $report($chain(2),$null,$null,$null,or "/Bot SET xxx <value>" works too).active
   $report($chain(2),$null,$null,********************,********************).active
-  $report($chain(2),$null,Bot Status,$sock(Bot [ $+ [ $network ] ]).status,$sock(Bot [ $+ [ $network ] ]).name).active 
-  $report($chain(2),$null,$null,Current Network,$network).active
-  $report($chain(2),$null,$null,bot.disp,%bot.disp. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.work, %bot.work. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.pass,%bot.pass. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.value,%bot.value. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.trigger,%bot.trigger. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.showall,%bot.showall. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.reconnect,%bot.reconnect. [ $+ [ $network ] ] ).active
-  $report($chain(2),$null,$null,bot.killwin,%bot.killwin. [ $+ [ $network ] ] ).active
+  $report($chain(2),$null,Bot Status,$sock(Bot [ $+ [ %tmp.bhlp ] ]).status,$sock(Bot [ $+ [ %tmp.bhlp ] ] ).name).active 
+  $report($chain(2),$null,$null,Current Network,%tmp.bhlp).active
+  $report($chain(2),$null,$null,bot.disp,%bot.disp. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.work, %bot.work. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.pass,%bot.pass. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.value,%bot.value. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.trigger,%bot.trigger. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.showall,%bot.showall. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.reconnect,%bot.reconnect. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.killwin,%bot.killwin. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.relay,%bot.relay. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,xxx,no value).active
   $report($chain(2),$null,$null,********************,********************).active
   $report($chain(2),$null,$null,$null,do /Bot SET to see a list.).active
   $report($chain(50)).active
+  unset %tmp.bhlp
   return
 }
 alias botvar {
-  $report($chain(34)).active
-  $report($chain(2),$null,$null,$null,use /Bot SET BOT.XXX value or /BOT SET XXX value).active
+  $report($chain(15) Set Display $chain(15)).active
+  $report($chain(2),$null,$null,use,/Bot SET BOT.XXX value).active
+  $report($chain(2),$null,$null,or,/BOT SET XXX value).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.disp).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.work).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.play).active
@@ -546,6 +556,7 @@ alias botvar {
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.defense).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.reconnect).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.killwin).active
+  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.relay).active
   $report($chain(2),$null,$null,$null,$null,Use /BOT SET BOT.DISP for Options).active
   $report($chain(2),$null,$null,$null,$null,Use /BOT SHOW for full menu).active
   $report($chain(34)).active
@@ -569,12 +580,11 @@ alias bot.disp.info {
 alias bot.status {
   var %tmp.botn1 1
   var %tmp.botn2 $sock(bot*,0)
-  $report($chain(30)).active
-  $report(Bot Status,$null,Listing active servers).active
+  $report($chain(11) Listing Active Bots $chain(11)).active
   while (%tmp.botn1 <= %tmp.botn2) {
     $report(Bot Status,On Server,%tmp.botn1,$remove($sock(bot*,%tmp.botn1),Bot)).active
     $report(Using,$null,%bot.disp. [ $+ [ $network ] ] $+ %bot.disp.dev. [ $+ [ $network ] ]).active
-    $report($chain(30)).active
+    $report($chain(37)).active
     inc %tmp.botn1
   }
   ;$report($chain(35)).active
@@ -583,8 +593,7 @@ alias bot.status {
   return
 }
 alias bot.end {
-  $report($chain(40)).active
-  $report($null,$null,Bot Commands:).active
+  $report($chain(13) Bot Commands $chain(13)).active
   $report(ON/START - OFF/STOP - SET - SHOW).active
   $report(ID - SEND - OP - DEOP - KICK - JOIN).active
   $report(PART - AJ - CYCLE - SAY - DEBUG).active
@@ -606,3 +615,81 @@ on *:CLOSE:@: {
   }
 }
 alias botsetshow { $report(Bot Setting,$null,SET,$1,$2-).active | script.play Notify.wav }
+;on ^1:INPUT:@:{
+;  if ($target == @BotSay [ $+ [ $network ] ] ) {
+;    $report(Test,$1-).status
+;    sockwrite -n Bot [ $+ [ $network ] ] privmsg $me : $+ $1-
+;    halt
+;  }
+;  halt
+;}
+alias bot.go {
+  if ($1 == $null) { set %temp.btoff $network }
+  else { set %temp.btoff $1 }
+  set %bot.onp2. [ $+ [ %temp.btoff ] ] %temp.btoff 
+  if ($1 == localNet) { set %bot.onp2. [ $+ [ $1 ] ] local }
+  $report(%bot.onp1. [ $+ [ %temp.btoff ] ] ,This).active
+  ;
+  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == local) {
+    bot.check %temp.btoff
+    sockopen -n BotLocal irc.localdomain.net 6667
+    botsetshow ON Local irc.localdomain.net 6667
+    return
+  }
+  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == dalnet) {
+    bot.check %temp.btoff
+    sockopen -n BotDalNet irc.dal.net 6667
+    botsetshow ON DalNet irc.dal.net 6667
+    return
+  }
+  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == libera.chat) {
+    bot.check %temp.btoff
+    sockopen -n Botlibera.chat irc.libera.chat 6667
+    botsetshow ON libera.chat irc.libera.chat 6667
+    return
+  }
+  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == undernet) {
+    bot.check %temp.btoff
+    sockopen -n BotUnderNet us.undernet.org 6667
+    botsetshow ON UnderNet us.undernet.org 6667
+    return
+  }
+  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == DeepNet) {
+    bot.check %temp.btoff
+    sockopen -n BotDeepNet irc.deepnet.chat 6667
+    botsetshow ON DeepNet irc.DeepNet.chat 6667
+    return
+  }
+  if (%bot.onp2. [ $+ [ $1 ] ] == ircgo) {
+    bot.check %temp.btoff
+    sockopen -n BotIRCGo irc.IRCGo.org 6667
+    botsetshow ON IRCGo irc.IRCGo.org 6667
+    return
+  }
+  if ($1 == $null) { set %bot.active. [ $+ [ $network ] ] 1 }
+  if ($1 != $null)  { set %bot.active. [ $+ [ $1 ] ] 1 }
+  ;else {
+  ;
+  ; Network Matched biot below      ;
+  ;set %bot.active. [ $+ [ %temp.btoff ] ] 0
+  ;$report(bot.onp2,$null,$null,%bot.onp2. [ $+ [ %temp.btoff ] ] ).active
+  ;$report(bot.active,$null,$null,%bot.active. [ $+ [ %temp.btoff ] ] ).active
+  ;$report(1,$null,$null,$1).active
+  ;$report(2,$null,$null,$2).active
+  ;if ($2 != $null) {
+  ;if ($2 == local) || ($1 == localhost) { set %temp.addre irc.localdomain.net }
+  ;if ($2 == dalnet) { set %temp.addre irc.dal.net }
+  ;if ($2 == undernet) { set %temp.addre us.undernet.org }
+  ;if ($2 == libera.chat) { set %temp.addre irc.libera.chat }
+  ;if ($2 == deepnet) { set %temp.addre irc.deepnet.chat }
+  ;else { set %temp.addre $$?="Enter IRC login Address" }
+  ;bot.check $1
+  ;sockopen -n Bot [ $+ [ $2 ] ] %temp.addre 6667
+  ;botsetshow ON $1 %temp.addre 6667
+  ;unset %temp.addre
+  ;return
+  ;}
+  ;}
+  ;$report(Bot,$null,Input Error,$null,$null,$null,Just do /BOT ON DeepNet or DalNet or just /BOT ON for your current network.).active
+  return
+}
