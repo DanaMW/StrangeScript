@@ -2,69 +2,23 @@ alias bot.go {
   if ($1 == $null) { set %temp.btoff $network }
   else { set %temp.btoff $1 }
   set %bot.onp2. [ $+ [ %temp.btoff ] ] %temp.btoff 
-  $report(%bot.onp1. [ $+ [ %temp.btoff ] ] ,This).active
-  ;
-  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == LocalNet) {
-    bot.check %temp.btoff
-    sockopen -n BotLocalNet irc.localdomain.net 6667
-    botsetshow ON LocalNet irc.localdomain.net 6667
-    return
-  }
-  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == dalnet) {
-    bot.check %temp.btoff
-    sockopen -n BotDalNet irc.dal.net 6667
-    botsetshow ON DalNet irc.dal.net 6667
-    return
-  }
-  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == libera.chat) {
-    bot.check %temp.btoff
-    sockopen -n Botlibera.chat irc.libera.chat 6667
-    botsetshow ON libera.chat irc.libera.chat 6667
-    return
-  }
-  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == undernet) {
-    bot.check %temp.btoff
-    sockopen -n BotUnderNet us.undernet.org 6667
-    botsetshow ON UnderNet us.undernet.org 6667
-    return
-  }
-  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == DeepNet) {
-    bot.check %temp.btoff
-    sockopen -n BotDeepNet irc.deepnet.chat 6667
-    botsetshow ON DeepNet irc.DeepNet.chat 6667
-    return
-  }
-  if (%bot.onp2. [ $+ [ %temp.btoff ] ] == ircgo) {
-    bot.check %temp.btoff
-    sockopen -n BotIRCGo irc.IRCGo.org 6667
-    botsetshow ON IRCGo irc.IRCGo.org 6667
-    return
-  }
-  if ($1 == $null) { set %bot.active. [ $+ [ $network ] ] 1 }
-  if ($1 != $null)  { set %bot.active. [ $+ [ $1 ] ] 1 }
-  ;else {
-  ;
-  ; Network Matched biot below      ;
-  ;set %bot.active. [ $+ [ %temp.btoff ] ] 0
-  ;$report(bot.onp2,$null,$null,%bot.onp2. [ $+ [ %temp.btoff ] ] ).active
-  ;$report(bot.active,$null,$null,%bot.active. [ $+ [ %temp.btoff ] ] ).active
-  ;$report(1,$null,$null,$1).active
-  ;$report(2,$null,$null,$2).active
-  ;if ($2 != $null) {
-  ;if ($2 == local) || ($1 == localhost) { set %temp.addre irc.localdomain.net }
-  ;if ($2 == dalnet) { set %temp.addre irc.dal.net }
-  ;if ($2 == undernet) { set %temp.addre us.undernet.org }
-  ;if ($2 == libera.chat) { set %temp.addre irc.libera.chat }
-  ;if ($2 == deepnet) { set %temp.addre irc.deepnet.chat }
-  ;else { set %temp.addre $$?="Enter IRC login Address" }
-  ;bot.check $1
-  ;sockopen -n Bot [ $+ [ $2 ] ] %temp.addre 6667
-  ;botsetshow ON $1 %temp.addre 6667
-  ;unset %temp.addre
-  ;return
-  ;}
-  ;}
-  ;$report(Bot,$null,Input Error,$null,$null,$null,Just do /BOT ON DeepNet or DalNet or just /BOT ON for your current network.).active
+  ;$report(%bot.onp1. [ $+ [ %temp.btoff ] ] ,This).active
+  bot.check %temp.btoff
+  sockopen -n Bot $+ %temp.btoff $bAdd(%temp.btoff) 6667
+  botsetshow ON %temp.btoff $bAdd(%temp.btoff) 6667
+  set %bot.active. [ $+ [ %temp.btoff ] ] 1
+  return
+}
+alias bot.stop {
+  if ($1 == $null) { set %temp.btoff $network }
+  else { set %temp.btoff $1 }
+  sockclose Bot [ $+ [ %temp.btoff ] ]
+  if ($window(@botSay [ $+ [ %temp.btoff ] ]) != $null) { window -c @botSay [ $+ [ %temp.btoff ] ] }
+  set %Bot.active. [ $+ [ %temp.btoff ] ] 0
+  botsetshow $chain(5) Bot Off $chain(12)
+  botsetshow OFF You selected off. It's off.
+  botsetshow bot.active %temp.btoff is set to %bot.active. [ $+ [ %temp.btoff ] ]
+  botsetshow $chain(5) $chain(19)
   return
 }
 alias bot {
@@ -73,23 +27,13 @@ alias bot {
   set %chew.2 $3-
   botstart
   if ($1 == ON) || if ($1 == START) {
-    bot.go $2
+    ; bot.go is what I wrote to shorten all the crap I had for starting the new bots.
+    bot.go $2 $3
     return
   }
   if ($1 == OFF) || ($1 == STOP) {
-    if ($2 == $null) { set %temp.btoff $network }
-    else { set %temp.btoff $2 }
-    sockclose Bot [ $+ [ %temp.btoff ] ]
-    if ($window(@botSay [ $+ [ %temp.btoff ] ]) != $null) { window -c @botSay [ $+ [ %temp.btoff ] ] }
-    set %Bot.active. [ $+ [ %temp.btoff ] ] 0
-    .timerfiredeepnet off
-    botsetshow $chain(5) Bot Off $chain(12)
-    botsetshow OFF You selected off. It's off.
-    botsetshow bot.active %temp.btoff is set to %bot.active. [ $+ [ %temp.btoff ] ]
-    botsetshow $chain(5) $chain(19)
+    bot.stop $2 $3
     return
-  }
-  else {
   }
   if ($1 == ID) {
     .timer 1 2 sockwrite -n Bot [ $+ [ $network ] ] identify %bot.pass. [ $+ [ $network ] ]
@@ -663,7 +607,7 @@ alias bot.status {
   $report($chain(11) Listing Active Bots $chain(11)).active
   while (%tmp.botn1 <= %tmp.botn2) {
     $report(Bot Status,On Server,%tmp.botn1,$remove($sock(bot*,%tmp.botn1),Bot)).active
-    $report(Using,$null,%bot.disp. [ $+ [ $network ] ] $+ %bot.disp.dev. [ $+ [ $network ] ]).active
+    $report(Using,$null,%bot.disp. [ $+ [ $remove($sock(bot*,%tmp.botn1),Bot) ] ] $+ %bot.disp.dev. [ $+ [ $remove($sock(bot*,%tmp.botn1),Bot) ] ]).active
     $report($chain(37)).active
     inc %tmp.botn1
   }
