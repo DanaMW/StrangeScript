@@ -25,7 +25,7 @@ alias bot {
   set %chew.1 $1
   set %chew.2 $2
   set %chew.2 $3-
-  botstart
+  botstart $1-
   if ($1 == ON) || if ($1 == START) {
     ; bot.go is what I wrote to shorten all the crap I had for starting the new bots.
     bot.go $2 $3
@@ -236,6 +236,36 @@ alias bot {
   bot.end
   return
 }
+alias botstart {
+  var %tmp.bsrt $network
+  if ($1 == $null) { goto BSSlide }
+  if ($1 == ON) { goto BSSlide }
+  if ($1 == START) { goto BSSlide }
+  if ($1 == OFF) { goto BSSlide }
+  if ($1 == STOP) { goto BSSlide }
+  if ($1 == SHOW) { goto BSSlide }
+  if ($1 == STATUS) { goto BSSlide }
+  if ($1 == SET) { goto BSSlide }
+  If ($sock(Bot [ $+ [ %tmp.bsrt ] ] ) == $null) {
+    $report(Bot Error,NoGoMoJo,%tmp.bsrt,$null,The socket is not up - run /bot on).active
+    halt
+  }
+  :BSSlide
+  if (%bot.disp. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.disp. [ $+ [ %tmp.bsrt ] ] STATUS }
+  if (%bot.work. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.work. [ $+ [ %tmp.bsrt ] ] #StrangeScript }
+  if (%bot.play. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.play. [ $+ [ %tmp.bsrt ] ] #StrangeScript }
+  if (%bot.nick. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.nick. [ $+ [ %tmp.bsrt ] ] Guest00001 }
+  if (%bot.pass. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.pass. [ $+ [ %tmp.bsrt ] ] DefaultPass }
+  if (%bot.value. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.value. [ $+ [ %tmp.bsrt ] ] Some default text }
+  if (%bot.trigger. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.trigger. [ $+ [ %tmp.bsrt ] ] 0 }
+  if (%bot.showall. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.showall. [ $+ [ %tmp.bsrt ] ] OFF }
+  if (%bot.defense. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.defense. [ $+ [ %tmp.bsrt ] ] OFF }
+  if (%bot.reconnect. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.reconnect. [ $+ [ %tmp.bsrt ] ] OFF }
+  if (%bot.killwin. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.killwin. [ $+ [ %tmp.bsrt ] ] ON }
+  if (%bot.relay. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.relay. [ $+ [ %tmp.bsrt ] ] OFF }
+  unset %tmp.bsrt
+  return
+}
 on 1:SOCKOPEN:Bot*:{
   if ($sockerr > 0) {
     $report(Sock Error,OPEN,Bot [ $+ [ $sockname ] ],$sock(Bot [ $+ [ $sockname ] ]).wserr,$sock(Bot [ $+ [ $sockname ] ]).wsmsg).active
@@ -386,7 +416,7 @@ on 1:SOCKREAD:Bot*:{
       }
       goto botread
     }
-    if ($chr(35) isin $remove($gettok(%bot.readline,3,32),:)) { $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44) $remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,1,33),:),$remove($gettok(%bot.readline,4-,32),:)) }
+    if ($chr(35) isin $remove($gettok(%bot.readline,3,32),:)) { $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44),$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,1,33),:),$remove($gettok(%bot.readline,4-,32),:)) }
     else { $botsay(BotSay,$remove($gettok(%bot.readline,3,32),:),privmsg,$remove($gettok(%bot.readline,1,33),:),--> Whispered -->,$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,4-,32),:)) }
     goto Botread
   }
@@ -517,24 +547,6 @@ alias bot.check {
     }
     else { return }
   }
-}
-alias botstart {
-  if ($1 != $null) { set %tmp.bsrt $1 }
-  else { set %tmp.bsrt $network }
-  if (%bot.disp. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.disp. [ $+ [ %tmp.bsrt ] ] STATUS }
-  if (%bot.work. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.work. [ $+ [ %tmp.bsrt ] ] #StrangeScript }
-  if (%bot.play. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.play. [ $+ [ %tmp.bsrt ] ] #StrangeScript }
-  if (%bot.nick. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.nick. [ $+ [ %tmp.bsrt ] ] Guest00001 }
-  if (%bot.pass. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.pass. [ $+ [ %tmp.bsrt ] ] DefaultPass }
-  if (%bot.value. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.value. [ $+ [ %tmp.bsrt ] ] Some default text }
-  if (%bot.trigger. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.trigger. [ $+ [ %tmp.bsrt ] ] 0 }
-  if (%bot.showall. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.showall. [ $+ [ %tmp.bsrt ] ] OFF }
-  if (%bot.defense. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.defense. [ $+ [ %tmp.bsrt ] ] OFF }
-  if (%bot.reconnect. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.reconnect. [ $+ [ %tmp.bsrt ] ] OFF }
-  if (%bot.killwin. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.killwin. [ $+ [ %tmp.bsrt ] ] ON }
-  if (%bot.relay. [ $+ [ %tmp.bsrt ] ] == $null) { set %bot.relay. [ $+ [ %tmp.bsrt ] ] OFF }
-  unset %tmp.bsrt
-  return
 }
 alias bothelp {
   if ($1 != $null) { set %tmp.bhlp $1 }
