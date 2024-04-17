@@ -33,7 +33,10 @@ copy running on each server if you like.
 ```
 
 ```text
-Lastly I hope this old script helps you build up your own script. There is some very good code in here that still works perfectly well. You can learn a lot from it. I hope you have fun.
+Lastly I hope this old script helps you build up your own
+script. There is some very good code in here that still
+works perfectly well. You can learn a lot from it.
+I hope you have fun.
 ```
 
 @author Dana L. Meli-Wischman
