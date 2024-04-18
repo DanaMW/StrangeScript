@@ -416,7 +416,7 @@ on 1:SOCKREAD:Bot*:{
       }
       goto botread
     }
-    if ($chr(35) isin $remove($gettok(%bot.readline,3,32),:)) { $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44),$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,1,33),:),$remove($gettok(%bot.readline,4-,32),:)) }
+    if ($chr(35) isin $remove($gettok(%bot.readline,3,32),:)) { $botsay(BotSay,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44),$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,1,33),:),$remove($gettok(%bot.readline,4-,32),:)) }
     else { $botsay(BotSay,$remove($gettok(%bot.readline,3,32),:),privmsg,$remove($gettok(%bot.readline,1,33),:),--> Whispered -->,$remove($gettok(%bot.readline,3,32),:),$remove($gettok(%bot.readline,4-,32),:)) }
     goto Botread
   }
