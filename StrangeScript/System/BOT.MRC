@@ -10,10 +10,22 @@ alias bot.go {
   return
 }
 alias bot.stop {
+  if ($1 == ALL) {
+    var %tmp.bsw 1
+    while (%tmp.bsw <= $window(@botSay*,0)) { 
+      bot off $remove($window(@botSay*,%tmp.bsw),@botsay)
+      window -c $window(@botSay*,%tmp.bsw)
+      inc %tmp.bsw
+      if (%tmp.bsw > $window(@botSay*,0)) { break }
+    }
+    unset %tmp.bsw %tmp.bsw1
+    return
+  } 
   if ($1 == $null) { set %temp.btoff $network }
   else { set %temp.btoff $1 }
   sockclose Bot [ $+ [ %temp.btoff ] ]
   if ($window(@botSay [ $+ [ %temp.btoff ] ]) != $null) { window -c @botSay [ $+ [ %temp.btoff ] ] }
+  window -c @botSay [ $+ [ %temp.btoff ] ] 
   set %Bot.active. [ $+ [ %temp.btoff ] ] 0
   botsetshow $chain(5) Bot Off $chain(12)
   botsetshow OFF You selected off. It's off.
@@ -32,7 +44,7 @@ alias bot {
     return
   }
   if ($1 == OFF) || ($1 == STOP) {
-    bot.stop $2 $3
+    bot.stop $2 $3 $4
     return
   }
   if ($1 == ID) {
