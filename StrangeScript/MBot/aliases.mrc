@@ -155,7 +155,7 @@ report {
   mode $2 +h $1
   return
 }
-/take { raw access # clear $+ $cr $+ access # add host *!*@*  | /mkall # | /prop # ownerkey tester }
+/take { return | ;raw access # clear $+ $cr $+ access # add host *!*@*  | /mkall # | /prop # ownerkey tester }
 info return StrangeServer
 mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) $chr(91) IRCX: %IRCX.mode $chr(93) $chr(91) $server $chr(93) }
 /join { jn $1 $2 $3 $4 $5 $6- }
@@ -223,12 +223,13 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   return
 }
 /mkall {
-  unset %mass2
-  set %mass 0
+  return
+  var %mass2
+  var %mass 0
   :incl
   if (%mass < $nick($1,0)) {
     inc %mass 1
-    if $nick($1,%mass) != $me { set %mass2 %mass2 $+ , $+ $nick($1,%mass) }
+    if ($nick($1,%mass) != $me) { set %mass2 %mass2 $+ , $+ $nick($1,%mass) }
     goto incl
   }
   .raw kick $1 %mass2

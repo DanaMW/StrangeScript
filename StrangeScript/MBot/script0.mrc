@@ -86,7 +86,7 @@ on *:QUIT:{
 on 1:TEXT:*:?:{
   close -m
   if ($nick == %boss) { if ($strip($1) == .identify) { /msg nickserv identify $2 | halt } }
-  if ($nick != ChanServ) && ($nick != OperServ) && ($nick != NickServ) {  .notice %boss Whisper@ $+ $nick $+ : $1- }
+  if ($nick != ChanServ) && ($nick != OperServ) && ($nick != NickServ) { .notice %boss Whisper@ $+ $nick $+ : $1- }
 }
 on *:NICK: {
   if ($nick == %boss) {

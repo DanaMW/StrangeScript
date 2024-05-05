@@ -23,7 +23,7 @@ on *:TEXT:*:#: {
       .enable #DoCommand
       halt
     }
-    #.help Format: .help [[.]<command>] (Makes the bot show the complete command list or the specified command.)
+    ;#.help Format: .help [[.]<command>] (Makes the bot show the complete command list or the specified command.)
     if ($strip($1) == .help) {
       write -c bothelp.txt
       if ($2 == $null) {
@@ -31,7 +31,7 @@ on *:TEXT:*:#: {
         var %tmp = 1
         while (%tmp <= $lines(script1.mrc)) {
           var %tmp1 = $read(script1.mrc,n,%tmp)
-          if (*;#.* iswm %tmp1) { var %tmp1 = $remove(%tmp1,;#) | var %tmp1 = $gettok(%tmp1,2,32) | var %tmp2 = %tmp2 $lower(%tmp1) }
+          if (*;#.* iswm %tmp1) { var %tmp1 = $remove(%tmp1,;#) | var %tmp1 = $gettok(%tmp1,1,32) | var %tmp2 = %tmp2 $lower(%tmp1) }
           inc %tmp
           if ($numtok(%tmp2,32) == 15) { .msg # %tmp2 | var %tmp2 }
           if (%tmp > $lines(script1.mrc)) { break }
@@ -76,15 +76,14 @@ on *:TEXT:*:#: {
       UP.Service # $remove($strip($1-),.)
       halt
     }
-    ;#.autojoin Format: .autojoin <ON|OFF|SPEED|ADD|DEL|SHOW> [#room] (Configures the autojoin for the bot.)
+    ;#.autojoin Format: .autojoin <ON|OFF|ADD|DEL|SHOW> [#room] (Configures the autojoin for the bot.)
     if ($strip($1) == .AUTOJOIN) {
-      if ($2 == $null) { .msg # Format: .autojoin <ON|OFF|SPEED|ADD|DEL|SHOW> [<#room>] | halt }
+      if ($2 == $null) { .msg # Format: .autojoin <ON|OFF|ADD|DEL|SHOW> [<#room>] | halt }
       if ($2 == SHOW) { .msg # $report(Current,$null,$null,%autojoin) | halt }
       if ($2 == ADD) { set %autojoin $addtok(%autojoin,$3,44) | .msg # $report(Current,$null,$null,%autojoin) | halt }
       if ($2 == DEL) { set %autojoin $remtok(%autojoin,$3,1,44) | .msg # $report(Current,$null,$null,%autojoin) | halt }
       if ($2 == ON) { set %do.autojoin ON | .msg # $report(Current,$null,$null,%do.autojoin) | halt }
       if ($2 == OFF) { set %do.autojoin OFF | .msg # $report(Current,$null,$null,%do.autojoin) | halt }
-      if ($2 == SPEED) { set %do.autojoin SPEED | .msg # $report(Current,$null,$null,%do.autojoin) | halt }
       halt
     }
     ;#.away Format: .away <reason> (Sets the bot away.)
@@ -114,7 +113,7 @@ on *:TEXT:*:#: {
     ;#.cb Format: .cb (Runs Check.Boss)
     if ($strip($1) == .cb) {
       ;if ($nick != %boss) { .msg # This is a %boss only command | halt }
-      Check.boss Strange
+      Check.boss recess
       halt
     }
     ;#.cnn Format: .cnn [<-r|-u>] [<NUM>] (Gets CNN News or URL.)
@@ -277,13 +276,18 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.mk Format: .mk (Makes the bot mass kick current room.)
-    if ($strip($1) == .mk) { if ($nick != %boss) { .msg # This is a %boss only command | halt } | mkall # | .cycle | halt }
+    if ($strip($1) == .mk) {
+      if ($nick != %boss) { .msg # This is a %boss only command | halt }
+      mkall #
+      .cycle
+      halt
+    }
     ;#.take Format: .take (Makes the bot try to take the current room.)
-    ;if ($strip($1) == .take) { 
-    if ($nick != %boss) { .msg # This is a %boss only command | halt }
-    .raw access # clear $cr access # add host *!*@*
-    /mkall #
-    halt
+    if ($strip($1) == .take) {
+      if ($nick != %boss) { .msg # This is a %boss only command | halt }
+      mkall #
+      halt
+    }
     ;#.mode Format: .mode <raw command> (Makes the bot send a server raw.)
     if ($strip($1) == .mode) {
       if ($nick != %boss) { .msg # This is a %boss only command | halt }
@@ -405,7 +409,7 @@ on *:TEXT:*:#: {
       if ($2 == -l) { .msg # $report(ShitList,$null,List,%shitlist,%shitlist.Do) | halt }
       if ($2 == ON) { set %shitlist.Do ON | .msg # $report(ShitList,Set,%shitlist.Do,%shitlist) | halt }
       if ($2 == OFF) { set %shitlist.Do OFF | .msg # $report(ShitList,Set,%shitlist.Do,%shitlist) | halt }
-      if ($2 == -a) {
+      if ($2 == ADD) || ($2 == -a) {
         if ($3 == $null) { .msg # $report(Format,$null,$null,.shit -add <IP>) | halt }
         if ($3 != $null) {
           var %tmpip = $3
@@ -413,7 +417,7 @@ on *:TEXT:*:#: {
           else { set %shitlist $addtok(%shitlist,%tmpip,44) | .msg # $report(ShitList,%tmpip,Add,%shitlist,%shitlist.Do) | halt }
         }
       }
-      if ($2 == DEL) {
+      if ($2 == DEL) || ($2 == -d) {
         if ($3 == $null) || ($3 !isnum) {
           .msg # $report(Format,$null,$null,.shit -d <IP>)
           var %tmp = 1
@@ -426,14 +430,15 @@ on *:TEXT:*:#: {
         }
         if ($3 != $null) && ($3 isnum) { .msg # $report(ShitList,$null,Delete,$gettok(%shitlist,$3,44),%shitlist.Do) | set %shitlist $deltok(%shitlist,$3,44) | halt }
       }
-      if ($2 == CLEAR) { set %shitlist "" | .msg # $report(ShitList,%tmpip,Clear,*,%shitlist.Do) | halt }
+      if ($2 == CLEAR) || ($2 == -c) { set %shitlist "" | .msg # $report(ShitList,%tmpip,Clear,*,%shitlist.Do) | halt }
     }
     ;#.say Format: .say <text> or .say <numberoftimes> <text> or .say <numberoftimes> <channel> <text>) (Puts text to active or given channel)
-    ;if ($strip($1) == .say) {
-    if ($2 == $null) { msg # $report(Format,$null,$null,.say <text> or .say <numberoftimes> <text> or .say <numberoftimes> <channel> <text>) | halt }
-    if ($2 !isnum) {
-      if ($chr(35) isin $2) { /msg $2 $3- | halt }
-      else { .msg # $2- | halt }
+    if ($strip($1) == .say) {
+      if ($2 == $null) { msg # $report(Format,$null,$null,.say <text> or .say <numberoftimes> <text> or .say <numberoftimes> <channel> <text>) | halt }
+      if ($2 !isnum) {
+        if ($chr(35) isin $2) { /msg $2 $3- | halt }
+        else { .msg # $2- | halt }
+      }
     }
     if ($2 isnum) {
       set %tmp 1

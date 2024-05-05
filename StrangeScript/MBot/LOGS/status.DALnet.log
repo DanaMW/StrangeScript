@@ -706,3 +706,492 @@ access Unknown command
 #StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :3 dana
 #StrangeScript End of /WHO list.
 -
+
+Session Start: Sun May 05 04:37:49 2024
+Session Ident: Status Window
+02* Connecting to irc.dal.net (6666)
+-
+02* Unable to connect to server (Connection timed out)
+-
+02* Connect cancelled
+-
+03* Your main nickname is now danamw
+-
+02* /connect: not connected to server
+-
+01-> -recess- #.HELP Unknown command
+-
+#.HELP Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+03* You were kicked from #StrangeScript by recess (KuntKick!)
+-
+#StrangeScript unable to join channel (address is banned)
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+02* Disconnected
+-
+02* /msg: not connected to server (line 14, script0.mrc)
+-
+02* Connecting to irc.dal.net (6661)
+-
+05-punch.wa.us.dal.net:AUTH- *** Looking up your hostname...
+-
+05-punch.wa.us.dal.net:AUTH- *** Found your hostname
+-
+recess Nickname is already in use.
+-
+NOTICE You must finish connecting with another nickname first.
+-
+Welcome to the DALnet IRC Network danamw!~danamw@100.42.170.206
+Your host is punch.wa.us.dal.net, running version bahamut-2.2.3
+This server was created Mon Dec 11 2023 at 20:33:25 UTC
+-
+punch.wa.us.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+-
+NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ are available on this server
+CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: are available on this server
+-
+There are 56 users and 7070 invisible on 36 servers
+84 IRC Operators online
+3688 channels formed
+I have 198 clients and 1 servers
+-
+Current local users: 198 Max: 2105
+Current global users: 7126 Max: 12060
+-
+05-punch.wa.us.dal.net- *** Notice -- motd was last changed at 14/8/2020 11:15
+-
+05-punch.wa.us.dal.net- *** Notice -- Please read the motd if you haven't read it
+-
+- punch.wa.us.dal.net Message of the Day - 
+-
+End of /MOTD command.
+-
+05-punch.wa.us.dal.net- *** Notice -- This server runs an open proxy monitor to prevent abuse.
+-
+05-punch.wa.us.dal.net- *** Notice -- If you see connections on various ports from irc.dal.net
+-
+05-punch.wa.us.dal.net- *** Notice -- please disregard them, as they are the monitor in action.
+-
+05-punch.wa.us.dal.net- *** Notice -- For more information please visit http://kline.dal.net/proxy/
+-
+03* danamw sets mode: +iH
+-
+03Local host: 100.42.170.206.douglasfast.net (100.42.170.206)
+-
+05-NickServ- This nick is owned by someone else. Please choose another.
+-
+05-NickServ- If this is your nick, type: /msg NickServ@services.dal.net IDENTIFY <password>
+-
+05-NickServ- Your nick will be changed in 60 seconds if you do not comply.
+-
+04Set Auto Lag Check to 1115 04seconds between.
+04Auto Lag Check is now 11ON
+-
+05-NickServ- Password accepted for DanaMW.
+-
+03* danamw sets mode: +r
+-
+#StrangeScript danamw @sector @Deep3D @recess 
+#StrangeScript End of /NAMES list.
+-
+02* Added recess to user list
+-
+#House-Of-Insults danamw @recess @sector @Deep3D 
+#House-of-Insults End of /NAMES list.
+-
+#sus danamw @recess @sector @Deep3D 
+#sus End of /NAMES list.
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+05-NickServ- Password accepted for DanaMW.
+-
+#StrangeScript danamw H@ ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript End of /WHO list.
+-
+#House-Of-Insults danamw H@ ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#House-Of-Insults recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#House-Of-Insults sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#House-Of-Insults Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#House-Of-Insults End of /WHO list.
+-
+#sus danamw H@ ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#sus recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#sus sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#sus Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#sus End of /WHO list.
+-
+01-> -recess- #.HELP Unknown command
+-
+#.HELP Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+03* You were kicked from #StrangeScript by recess (Big mistake)
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+#StrangeScript danamw @sector @Deep3D @recess 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H@ ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript End of /WHO list.
+-
+04-o recess danamw #StrangeScript
+-
+#StrangeScript danamw @sector @Deep3D @recess 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript danamw H ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript End of /WHO list.
+-
+03* You were kicked from #StrangeScript by recess (KuntKick!)
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H@ ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript End of /WHO list.
+-
+01-> -recess- #.HELP Unknown command
+-
+#.HELP Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+03* You were kicked from #StrangeScript by recess (KuntKick!)
+-
+#StrangeScript unable to join channel (address is banned)
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+#StrangeScript danamw @sector @Deep3D @recess 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript End of /WHO list.
+-
+01-> -recess- #.HELP Unknown command
+-
+#.HELP Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- #.HELP Unknown command
+-
+#.HELP Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+03* You were kicked from #StrangeScript by recess (KuntKick!)
+-
+#StrangeScript unable to join channel (address is banned)
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+#StrangeScript danamw @sector @Deep3D @recess 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript End of /WHO list.
+-
+%autojoin No such channel
+-
+#House-Of-Insults danamw @recess @sector @Deep3D 
+#House-of-Insults End of /NAMES list.
+-
+#sus danamw @recess @sector @Deep3D 
+#sus End of /NAMES list.
+-
+#House-Of-Insults danamw H@ ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#House-Of-Insults recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#House-Of-Insults sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#House-Of-Insults Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#House-Of-Insults End of /WHO list.
+-
+#sus danamw H ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#sus recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#sus sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#sus Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#sus End of /WHO list.
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+03* You were kicked from #StrangeScript by recess (Big mistake)
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript End of /WHO list.
+-
+03* You were kicked from #StrangeScript by recess (KuntKick!)
+-
+#StrangeScript unable to join channel (address is banned)
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript End of /WHO list.
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+04-o recess danamw #StrangeScript
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H ~danamw@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :2 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :3 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :3 Deep3D
+#StrangeScript End of /WHO list.
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+01-> -recess- ACCESS Unknown command
+-
+access Unknown command
+-
+02* /msg: not connected to server (line 14, script0.mrc)
+-
+Session Close: Sun May 05 05:33:25 2024
+
+Session Start: Sun May 05 06:41:00 2024
+Session Ident: Status Window
+02* Connecting to irc.dal.net (6666)
+-
+05-lion.tx.us.dal.net:AUTH- *** Looking up your hostname...
+-
+05-lion.tx.us.dal.net:AUTH- *** Checking Ident
+-
+06* Identd request from 108.181.149.86
+06* Identd replied: 52122, 6666 : USERID : UNIX : recess
+-
+05-lion.tx.us.dal.net:AUTH- *** Found your hostname
+-
+05-lion.tx.us.dal.net:AUTH- *** Got Ident response
+-
+recess Nickname is already in use.
+-
+NOTICE You must finish connecting with another nickname first.
+-
+NOTICE You must finish connecting with another nickname first.
+-
+NOTICE You must finish connecting with another nickname first.
+-
+Welcome to the DALnet IRC Network danamw!recess@100.42.170.206
+Your host is lion.tx.us.dal.net, running version bahamut-2.2.3
+This server was created Tue Dec 19 2023 at 17:03:13 EST
+-
+lion.tx.us.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+-
+NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ are available on this server
+CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: are available on this server
+-
+There are 60 users and 7202 invisible on 36 servers
+81 IRC Operators online
+3710 channels formed
+I have 1377 clients and 1 servers
+-
+Current local users: 1377 Max: 1513
+Current global users: 7262 Max: 8222
+-
+05-lion.tx.us.dal.net- *** Notice -- motd was last changed at 21/2/2024 4:48
+-
+- lion.tx.us.dal.net Message of the Day - 
+-
+End of /MOTD command.
+-
+03* danamw sets mode: +iH
+-
+05-NickServ- This nick is owned by someone else. Please choose another.
+-
+05-NickServ- If this is your nick, type: /msg NickServ@services.dal.net IDENTIFY <password>
+-
+03Local host: 100.42.170.206.douglasfast.net (100.42.170.206)
+-
+05-NickServ- Your nick will be changed in 60 seconds if you do not comply.
+-
+04Set Auto Lag Check to 1115 04seconds between.
+04Auto Lag Check is now 11ON
+-
+05-NickServ- Password accepted for DanaMW.
+-
+03* danamw sets mode: +r
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#House-Of-Insults danamw @recess @sector @Deep3D 
+#House-of-Insults End of /NAMES list.
+-
+#sus danamw @recess @sector @Deep3D 
+#sus End of /NAMES list.
+-
+04-> [recess] SSBOT iygouygpiughipug87i
+-
+05-NickServ- Password accepted for DanaMW.
+-
+#StrangeScript danamw H recess@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :3 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :4 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :4 Deep3D
+#StrangeScript End of /WHO list.
+-
+02* Added *!*@*.42.100.ip to user list
+-
+#House-Of-Insults danamw H@ recess@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#House-Of-Insults recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :3 dana
+#House-Of-Insults sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :4 sector
+#House-Of-Insults Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :4 Deep3D
+#House-Of-Insults End of /WHO list.
+-
+#sus danamw H@ recess@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#sus recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :3 dana
+#sus sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :4 sector
+#sus Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :4 Deep3D
+#sus End of /WHO list.
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H recess@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :3 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :4 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :4 Deep3D
+#StrangeScript End of /WHO list.
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H recess@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :3 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :4 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :4 Deep3D
+#StrangeScript End of /WHO list.
+-
+#StrangeScript danamw @recess @sector @Deep3D 
+#StrangeScript End of /NAMES list.
+-
+#StrangeScript danamw H recess@3387-2c31-1efb-afbd-b720.42.100.ip :0 dana
+#StrangeScript recess H@ dana@3387-2c31-1efb-afbd-b720.42.100.ip :3 dana
+#StrangeScript sector H@ ~sector@b45f-4932-751a-2de7-5ca.19.85.ip :4 sector
+#StrangeScript Deep3D H@ ~Deep3D@b45f-4932-751a-2de7-5ca.19.85.ip :4 Deep3D
+#StrangeScript End of /WHO list.
+-
+00-> -recess- MENU Unknown command
+-
+MENU Unknown command
+-
+00-> -recess- MENU Unknown command
+-
+MENU Unknown command
+-
+02* /msg: insufficient parameters (line 446, script1.mrc)
+-
+02* /msg: insufficient parameters (line 446, script1.mrc)
+-
+02* You are not on a channel
+-
+There are 60 users and 7279 invisible on 36 servers
+82 IRC Operators online
+3721 channels formed
+I have 1383 clients and 1 servers
+-
+Current local users: 1383 Max: 1513
+Current global users: 7339 Max: 8222
+-
