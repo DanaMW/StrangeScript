@@ -31,14 +31,20 @@ resets the bot. You may use /bot off at any time the bot
 needs resetting. The bot is multi-server, you can have 1
 copy running on each server if you like.
 The OLD bot MBot (MasterBot) Runs off its own copy of mIRC.
-It is fully integrated into the script. 
+It is fully integrated into the script.
 ```
 
 ```text
-Lastly I hope this old script helps you build up your own
+I hope this old script helps you build up your own
 script. There is some very good code in here that still
 works perfectly well. You can learn a lot from it.
 I hope you have fun.
+```
+
+```text
+I updated the original bot, MasterBot (MBot).
+It seems to be running fine but if you use it
+and see something let me know.
 ```
 
 @author Dana L. Meli-Wischman
