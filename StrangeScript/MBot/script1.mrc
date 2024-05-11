@@ -31,7 +31,7 @@ on *:TEXT:*:#: {
         var %tmp = 1
         while (%tmp <= $lines(script1.mrc)) {
           var %tmp1 = $read(script1.mrc,n,%tmp)
-          if (*;#.* iswm %tmp1) { var %tmp1 = $remove(%tmp1,;#) | var %tmp1 = $gettok(%tmp1,1,32) | var %tmp2 = %tmp2 $lower(%tmp1) }
+          if (*;#.* iswm %tmp1) && (*iswm* !iswm %tmp1) && (*=* !iswm %tmp1) { var %tmp1 = $remove(%tmp1,;#) | var %tmp1 = $gettok(%tmp1,3,32) | var %tmp2 = %tmp2 $lower(%tmp1) }
           inc %tmp
           if ($numtok(%tmp2,32) == 15) { .msg # %tmp2 | var %tmp2 }
           if (%tmp > $lines(script1.mrc)) { break }
@@ -173,7 +173,7 @@ on *:TEXT:*:#: {
         ;.run -np %tmp.stat1
         .run -np D:\SS\MircStats\mircstats.exe -c %tmp.stat $+ .cfg
       }
-      if ($exists(%tmp.stat1)  == $false) { .msg # There is no configuration file for that room. Youll need to make one huh. }
+      if ($exists(%tmp.stat1) == $false) { .msg # There is no configuration file for that room. You'll need to make one huh. }
       halt
     }
     ;#.quit Format: .quit <reason> (Makes the bot quit.)
@@ -533,7 +533,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .you) { .nick $2 | halt }
     if ($strip($1) == drop) && ($2 == dead) { set %report Exit | /report1 # Done | .exit | halt }
     if ($strip($1) == go) && ($2 == away) { .msg # Fine then | .part # | halt }
-    if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { .msg # What? do i look fucking stupid? | halt } }
+    if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { .msg # What? Do i look fucking stupid? | halt } }
     ;#.sw Format: .sw (.)
     if ($strip($1) == .sw) {
       if ($2 == $null) { msg # $report(Format,$null,$null,.sw <raw socket command> | halt }
@@ -588,7 +588,7 @@ on *:TEXT:*:#: {
     ;#.wz Format: .wz <city, state/zipcode> (returns the weather)
     if ($strip($1) == .wz) {
       if ($2 == $null) { msg # Format: .wz <city, state/zipcode> (returns the weather) | halt }
-      elseif ($2 == OFF) { sockclose weather | sockclose wt | msg # Weather sockets  closed. | return }
+      elseif ($2 == OFF) { sockclose weather | sockclose wt | msg # Weather sockets closed. | return }
       else { weather # $2- | return }
     }
     ;#.var Format: .var (Shows infomation on a given variable)
