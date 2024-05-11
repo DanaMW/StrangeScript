@@ -1,4 +1,5 @@
-ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
+;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
+ver return MasterBot $chr(91) v2.01.00.05.11.2024 $chr(93) coded for 10S04trange10S04cript
 load.rest {
   load -rs script0.mrc
   load -rs script1.mrc
@@ -61,7 +62,7 @@ Check.Serv.Log {
       if ($gettok(%tmp.log,3,32) == update) || ($gettok(%tmp.log,3,32) == query) { %method %boss Security ( $+ %log.security $+ ) -- %tmp.log }
     }
   }
-  :endit
+  :endit 
   return
 }
 /check.boss {
@@ -135,10 +136,10 @@ report {
   mode $2 +o $1
   return
 }
-/hup {
+/hup { 
   ;if ($1 == $null) {
   ;echo -at 04 You need to include the nick $textcolor ( 09 /hup nick $textcolor )
-  ;halt
+  ;halt 
   ;if ($1 != $null) {
   ;echo -at 04 Sending a 11 HUP 04 style ping to $1
   ;.raw -q privmsg $1 : $+ $chr(1) $+ PING +++ATH0 $+ $chr(1)
@@ -182,20 +183,20 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   echo -at 11 ERROR IN SET.AUTO.JOIN NORMAL
   halt
   :second.halfN
-  set %autojoin1 %temp1
-  set %autojoin2 %temp2
-  set %autojoin3 %temp3
-  set %autojoin4 %temp4
-  set %autojoin5 %temp5
-  set %autojoin6 %temp6
-  set %autojoin7 %temp7
-  set %autojoin8 %temp8
-  set %autojoin9 %temp9
+  set %autojoin1 %temp1 
+  set %autojoin2 %temp2 
+  set %autojoin3 %temp3 
+  set %autojoin4 %temp4 
+  set %autojoin5 %temp5 
+  set %autojoin6 %temp6 
+  set %autojoin7 %temp7 
+  set %autojoin8 %temp8 
+  set %autojoin9 %temp9 
   set %autojoin10 %temp10
   unset %tmp %temp* %count
 }
 /pound {
-  if ($me ison %pound) { set %pound "" | set %pound.active OFF | .notice %boss Pound Disabled, Entered Room | halt }
+  if ($me ison %pound) { set %pound "" | set %pound.active OFF | .notice %boss Pound Disabled, Entered Room | halt } 
   .timerPND 1 10 /pound
   .raw join %pound
 }
@@ -204,7 +205,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%attempt > 2) {
     /ignore -ntu45 *!*@*
     .timerFloodOver 1 45 /set %attempt 0
-    if (%attempt == 3) {
+    if (%attempt == 3) { 
       .notice %boss 00 $+ CTCP 04 $+ Flood Protection has been 11 $+ ACTIVATED 04 $+ by 11 $+ $nick
       echo -st 00 $+ CTCP 04 $+ Flood Protection has been 11 $+ ACTIVATED 04 $+ by 11 $+ $nick
     }
@@ -279,7 +280,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   return
 }
 /tease {
-  raw -q mode # +o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1
+  raw -q mode # +o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 
   halt
 }
 /rt {
@@ -289,7 +290,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   .timer 1 4 /remote.tease $1 $2
 }
 /remote.tease {
-  raw -q mode $1 +o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2
+  raw -q mode $1 +o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 
   halt
 }
 /fly {
@@ -302,10 +303,10 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   set %rumble OFF
   set %tmp.quit 1
   :qloop2
-  If (%tmp.quit <= $chan(0)) {
+  If (%tmp.quit <= $chan(0)) { 
     .raw part $chan(%tmp.quit)
     .raw join $chan(%tmp.quit) %key. [ $+ [ $chan(%tmp.quit) ] ]
-    inc %tmp.quit
+    inc %tmp.quit 
     goto qloop2
   }
   unset %tmp.quit
@@ -370,14 +371,14 @@ deathip {
   return
 }
 /myaddress {
-  if (Dal.net isin $server) { return $address($1,3) }
+  if (Dal.net isin $server) { return $address($1,3) } 
   if (XXX isin $address($1,4)) { return $replace($address($1,2),XXX,*) }
   elseif (XX isin $address($1,4)) { return $replace($address($1,2),XX,*) }
   elseif (X isin $address($1,4)) { return $replace($address($1,2),X,*) }
   else { return $address($1,3) }
 }
 /myaddress2 {
-  if (Dal.net isin $server) { return $address($1,4) }
+  if (Dal.net isin $server) { return $address($1,4) } 
   if (XXX isin $address($1,4)) { return $replace($address($1,2),XXX,*) }
   elseif (XX isin $address($1,4)) { return $replace($address($1,2),XX,*) }
   elseif (X isin $address($1,4)) { return $replace($address($1,2),X,*) }
