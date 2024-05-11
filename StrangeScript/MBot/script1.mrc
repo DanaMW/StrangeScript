@@ -523,13 +523,13 @@ on *:TEXT:*:#: {
     if ($strip($1) == .timer) { timer.show # }
     ;#.tease Format: .tease (.)
     if ($strip($1) == .tease) {
-      if ($nick != %boss) { .msg # This is a %boss only command | halt }
+      if ($nick != %boss) { .msg # $report(Nice Try,This is a %boss only command) | halt }
       /rt # $2
       halt
     }
     ;#.ver Format: .ver (Returns bot version.)
     if ($strip($1) == .ver) { .msg # $ver | halt }
-    ;#.you Format: .you <nick> (causes the both to take the given nick.)
+    ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
     if ($strip($1) == drop) && ($2 == dead) { set %report Exit | /report1 # Done | .exit | halt }
     if ($strip($1) == go) && ($2 == away) { .msg # Fine then | .part # | halt }
@@ -561,12 +561,12 @@ on *:TEXT:*:#: {
     if ($strip($1) == .sl) { sl # | halt }
     ;#.info Format: .info (.)
     if ($strip($1) == .info) {
-      .msg # The Information Utility is not yet configured.
+      .msg # $report(Error,The Information Utility is not yet configured)
       halt
     }
     ;#.spawn Format: .spawn # (.)
     if ($strip($1) == .spawn) {
-      .msg # The Information Utility is not yet configured.
+      .msg # $report(Error,The Information Utility is not yet configured)
       halt
     }
     if ($left($strip($1-),1) == >) { SSPy $1- }
@@ -593,8 +593,9 @@ on *:TEXT:*:#: {
     }
     ;#.var Format: .var (Shows infomation on a given variable)
     if ($strip($1) == .var) {
-      if ($var($2,1) = $null) { .msg # The variable $2 does not exist | halt  }
-      else { .msg # Variable $2 $+ = $+ $var($2,1).value }
+      if ($2 == COUNT) { msg # $report(Variable,$var(*,0),set variables) | halt }
+      if ($var($2,1) = $null) { .msg # $report(Variable,Error,The variable,$2,does not exist) | halt  }
+      else { msg # $report(Variable,$2,=,$var($2,1).value) }
       halt
     }
   }
