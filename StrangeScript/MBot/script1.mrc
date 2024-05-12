@@ -27,7 +27,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .help) {
       write -c bothelp.txt
       if ($2 == $null) {
-        .msg # Please wait while i extract the help, this may take a minute
+        .msg # Please wait while i extract the help, this may take a second.
         var %tmp = 1
         while (%tmp <= $lines(script1.mrc)) {
           var %tmp1 = $read(script1.mrc,n,%tmp)
@@ -42,13 +42,13 @@ on *:TEXT:*:#: {
         halt
       }
       else {
-        .msg # Please wait while i extract the help, this may take a minute
+        .msg # Please wait while i extract the help, this may take a second.
         var %tmp = 1
         var %cleanup = $remove($2,.)
         while (%tmp <= $lines(script1.mrc)) {
           var %tmp1 = $read(script1.mrc,n,%tmp)
           var %tmp2 = $chr(42) $+ ;#. $+ %cleanup $+ $chr(42)
-          if (%tmp2 iswm %tmp1) { .msg # $gettok(%tmp1,3-,32) | unset %tmp1 | break }
+          if (%tmp2 iswm %tmp1) { .msg # $gettok(%tmp1,2-,32) | unset %tmp1 | break }
           inc %tmp
           if (%tmp > $lines(script1.mrc)) { break }
         }
@@ -60,11 +60,10 @@ on *:TEXT:*:#: {
     ;&& (%tmp != 35) && (%tmp != 49) 
     ;
     if ($strip($1) == $chr(63) $+ $chr(63)) { SSpy.Help | halt }
-    ;#.alias Format: .alias (Shows infomation on a given alias)
+    ;#.alias Format: .alias <alias> (Shows infomation on a given alias)
     if ($strip($1) == .alias) {
-      if ($isalias($2) != $true) { .msg # The alias $2 was not found | halt  }
-      else { .msg # Alias  $2 is in $isalias($2).fname }
-      halt
+      if ($isalias($2) != $true) { .msg # $report(Alias,Error,The alias,$2,was not found) | halt  }
+      else { .msg # $report(Alias,$2,is in,$isalias($2).fname) | halt }
     }
     ;#.aj Format: .aj (Joins all set autojoin rooms.)
     if ($strip($1) == .AJ) { .raw join %autojoin | .msg # $report(AutoJoin All,$null,Joined,%autojoin) | halt }
@@ -513,7 +512,7 @@ on *:TEXT:*:#: {
     }
     ;#.stop Format: .stop (.)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-    ;#.talk Format: .talk (.)
+    ;#.talk Format: .talk ON/OFF (Turns bot talker on or off for the room you are in.)
     if ($strip($1) == .talk) {
       if ($2 == ON) { .load -rs talker.mrc | if ($3 != $null) { set %talk.room $3 } | if ($3 == $null) { set %talk.room # } | .msg # $report(Speach Interaction,$null,$null,On) | .msg # $report(Active Rooms,$null,$null,%talk.room) | halt }
       if ($2 == OFF) { .unload -rs talker.mrc | unset %talk.room | .msg # $report(Speach interaction,$null,$null,Off) | halt }
