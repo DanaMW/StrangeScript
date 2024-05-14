@@ -20,18 +20,18 @@ on *:TEXT:*:#:{
   if (*ok* iswm $strip($1-)) && (*joke* !iswm $strip($1-)) { if ($rand(1,3) == 1) { .msg # $+ It better be ok. } | halt } 
   if (*tramp* iswm $strip($1-)) { .msg # $read $mircdirtext\tramp.txt | halt }
   if (*asshole* iswm $strip($1-)) { .msg # $read $mircdirtext\ass.txt | halt }
-  if (*shit* iswm $strip($1-)) { .msg # $read $mircdirtext\shit.txt | halt }
+  if (*shit* iswm $strip($1-)) { .msg # $read $mircdirtext\shit.txt | halt } 
   if (*lamer* iswm $strip($1-)) { .msg # $read $mircdirtext\lamer.txt | halt }
   if (*hoe* iswm $strip($1-)) { .msg # $read $mircdirtext\hoe.txt | halt }
   if (*whore* iswm $strip($1-)) { .msg # $read $mircdirtext\hoe.txt | halt }
-  if (*no* iswm $strip($1-)) { .msg # uh huh | halt }
+  if (*no* iswm $strip($1-)) { if ($rand(1,3) == 1) { .msg # uh huh | halt } }
   if (*lol* iswm $strip($1-)) { if ($rand(1,3) == 1) { .msg # $read $mircdirtext\laugh.txt } | halt }
   if (*question* iswm $strip($1-)) { .msg # Oh great! another fucking question from $nick | halt }
   if ($chr(63) isin $strip($1-)) { if ($rand(1,3) == 1) { .msg # Oh great! another fucking question from $nick } | halt } 
   if (*llol* iswm $strip($1-)) { .msg # Cant you fucking spell $nick | halt }
   if (*loll* iswm $strip($1-)) { .msg # Cant you fucking spell $nick | halt }
   if (*lool* iswm $strip($1-)) { .msg # Whats a LOOL $nick? | halt }
-  if (*good* iswm $strip($1-)) { .msg # You know I'm good. | halt }
+  if (*good* iswm $strip($1-)) { if ($rand(1,3) == 1) { .msg # You know I'm good. | halt } }
   if (*brb* iswm $strip($1-)) { .msg # Dont worry I'll be here! | halt }
   if (*test* iswm $strip($1-)) { .msg # $read $mircdirtext\test.txt | halt }
   if (*later* iswm $strip($1-)) { .msg # OK later. I'll be around. | halt }
