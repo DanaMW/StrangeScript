@@ -30,7 +30,7 @@ on *:NOTICE:*:*:{
   if ($nick != ChanServ) && ($nick != NickServ) { .notice %boss Notice@ $+ $nick $+ : $1- }
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
     if (*dal.net iswm $server) { nickserv identify %irc.nick.pass }
-    else { msg nickserv identify %irc.nick.pass }
+    else { nickserv identify %irc.nick.pass }
   }
   inc %count.note
   if ($nick != %boss) && (%count.note < 6) {
@@ -70,11 +70,11 @@ on *:JOIN:#: {
 on 5:TEXT:*:#: {
   if ($nick == %boss) { 
     if ($1 == cancel) { .disable #DoCommand | msg # $report(Fuckup,$null,$null,Canceled) | halt }
-    .msg # ok
+    msg # ok
     if ($chr(47) !isin $1) { $chr(47) $+ $1- }
     else { $1- }
     .disable #DoCommand 
-    .msg # done
+    msg # done
   }
   halt
 }
@@ -85,7 +85,7 @@ on *:QUIT:{
 }
 on 1:TEXT:*:?:{
   close -m
-  if ($nick == %boss) { if ($strip($1) == .identify) { /msg nickserv identify $2 | halt } }
+  if ($nick == %boss) { if ($strip($1) == .identify) { nickserv identify $2 | halt } }
   if ($nick != ChanServ) && ($nick != OperServ) && ($nick != NickServ) { .notice %boss Whisper@ $+ $nick $+ : $1- }
 }
 on *:NICK: {
@@ -103,7 +103,7 @@ on *:KICK:#: {
   if ($nick == $server) && (*strange* !iswm $server) { halt }
   if ($nick == ChanServ) && (*strange* !iswm $server) { halt }
   if ($knick != %boss) && ($knick != $me) { HALT }
-  if ($knick == $me) && ($nick == %boss) { .raw join # %key. [ $+ [ # ] ] | .msg # stop abusing the bot | halt }
+  if ($knick == $me) && ($nick == %boss) { .raw join # %key. [ $+ [ # ] ] | msg # stop abusing the bot | halt }
   if ($knick == $me) && ($nick != %boss) && ( $nick != $me) { .raw join # %key. [ $+ [ # ] ] | .raw kick # $nick Auto | halt }
   if ($knick == $me) && ($nick == $me) { .raw join # %key. [ $+ [ # ] ] | halt }
   if ($knick == %boss) && ($nick != $me) { .raw kick # $nick Auto | halt }

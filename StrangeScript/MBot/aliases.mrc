@@ -260,6 +260,8 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
     else { .msg nickserv identify %irc.nick.pass }
   }
   if ($ial != $true) { .ial on }
+  if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
+  if (%autojoin. [ $+ [ $network ] ] == $null) { set %autojoin. [ $+ [ $network ] ] = #StrangeScript }
   set %count.note 0
   set %pound.active OFF
   set %spy OFF

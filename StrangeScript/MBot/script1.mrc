@@ -6,7 +6,8 @@ on *:ACTION:*:#:{
 alias point {
   if (%display. [ $+ [ $network ] ] == CHAN) { return msg # }
   if (%display. [ $+ [ $network ] ] == NOTICE) { return notice %boss }
-  notice %boss we have a display problem at point
+  notice %boss We have a display problem at point.
+  notice %boss Set .display on the bot to fix it.
   halt
 }
 on *:TEXT:*:#: {
@@ -208,7 +209,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .heel) { .raw mode # -o $me | halt }
     ;#.ident Format: .ident (Makes the bot identify to chanserv using saved password.)
     ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
-    if ($strip($1) == .identify) || ($strip($1) == .ident) { if (*dal.net iswm $server) { nickserv identify %irc.nick.pass } | else { /msg nickserv identify %irc.nick.pass } | halt }
+    if ($strip($1) == .identify) || ($strip($1) == .ident) { if (*dal.net iswm $server) { nickserv identify %irc.nick.pass } | else { nickserv identify %irc.nick.pass } | halt }
     ;#.ignore Format: .ignore <nick/ip> (Makes the bot ignore given <nick or ip> for 15 minutes.)
     if ($strip($1) == .ignore) { if ($2 == $null) { $point Format: .ignore <nick/ip> | halt } | .ignore -u900 $2 | $point $report(Ignore,$2,Added) | halt }
     ;#.ircx Format: .ircx (Makes the bot set itself to ircx mode.)
