@@ -1,6 +1,6 @@
 =-on 1:WALLOPS:*killed by System*: echo -st $1-
 on 1:CONNECT:{
-  if ($chr(37) isin %autojoin) && (%IRCX.mode == ON) { ircx }
+  if ($chr(37) isin %autojoin. [ $+ [ $network ] ]) && (%IRCX.mode == ON) { ircx }
   auto.join
   join.setup
   .timerBOSSSET 1 20 check.boss %boss
