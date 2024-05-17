@@ -252,16 +252,17 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%boss != $me) { .ctcp %boss REG }
   .raw mode $me +i
   set %IRCX.mode OFF
-  if ($server == strange.selfip.biz) { ircx | set %IRCX.mode ON | nickserv identify %irc.nick.pass }
-  if ($network == Jong) { ircx | set %IRCX.mode ON }
-  if ($network == IRCx) { ircx | set %IRCX.mode ON }
+  ;if ($server == strange.selfip.biz) { ircx | set %IRCX.mode ON | nickserv identify %irc.nick.pass }
+  ;if ($network == Jong) { ircx | set %IRCX.mode ON }
+  ;if ($network == IRCx) { ircx | set %IRCX.mode ON }
   if (%IRCX.mode == OFF) {
-    if ($network == dalnet) { .nickserv identify %irc.nick.pass }
-    else { nickserv identify %irc.nick.pass }
+    if ($network == dalnet) { nickserv identify %irc.nick.pass.[ $+ [ $network ] ] }
+    else { nickserv identify $me %irc.nick.pass.[ $+ [ $network ] ] }
   }
   if ($ial != $true) { .ial on }
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
   if (%autojoin. [ $+ [ $network ] ] == $null) { set %autojoin. [ $+ [ $network ] ] = #StrangeScript }
+  set %connected. [ $+ [ $network ] ] $network 
   set %count.note 0
   set %pound.active OFF
   set %spy OFF

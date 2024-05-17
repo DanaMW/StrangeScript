@@ -490,7 +490,12 @@ on *:TEXT:*:#: {
     ;#.servers Format: .servers (Lists the server connected to)
     if ($strip($1) == .servers) {
       $point $report(Servers,$null,Bot is connected to ,$scid(0) servers)
-
+      var %tmp.server = 1
+      while (%tmp.server <= $var(connected*,0)) {
+        $point $report(Servers,%tmp.server,$var(connected*,%tmp.server).value)
+        inc %tmp.server
+        if (%tmp.server > $var(connected*,0)) { break }
+      }
     }
     ;#.setss Format: .setss <server> (Setup for servers)
     if ($strip($1) == .setss) {
