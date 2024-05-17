@@ -1,5 +1,5 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
-ver return MasterBot $chr(91) v2.01.05.05.16.2024 $chr(93) coded for 10S04trange10S04cript
+ver return MasterBot $chr(91) v2.01.06.05.17.2024 $chr(93) coded for 10S04trange10S04cript
 load.rest {
   load -rs script0.mrc
   load -rs script1.mrc
@@ -252,12 +252,12 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%boss != $me) { .ctcp %boss REG }
   .raw mode $me +i
   set %IRCX.mode OFF
-  if ($server == strange.selfip.biz) { ircx | set %IRCX.mode ON | .msg nickserv identify %irc.nick.pass }
+  if ($server == strange.selfip.biz) { ircx | set %IRCX.mode ON | nickserv identify %irc.nick.pass }
   if ($network == Jong) { ircx | set %IRCX.mode ON }
   if ($network == IRCx) { ircx | set %IRCX.mode ON }
   if (%IRCX.mode == OFF) {
     if ($network == dalnet) { .nickserv identify %irc.nick.pass }
-    else { .msg nickserv identify %irc.nick.pass }
+    else { nickserv identify %irc.nick.pass }
   }
   if ($ial != $true) { .ial on }
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
