@@ -509,8 +509,8 @@ on *:TEXT:*:#: {
       Set.SS # $2- | halt
     }
     ;#.ss Format: .ss  ON/OFF/STATS/NICK DAL/ICQ <room to join/nickforsocket> (spy from current serv to another)
-    ;#.serverspy Format: .serverspy  ON/OFF/STATS/NICK DAL/ICQ <room to join/nickforsocket> (spy from current serv to another)
-    if ($strip($1) == .ss) || ($strip($1) == .serverspy) {
+    ;#.servspy Format: .servspy  ON/OFF/STATS/NICK DAL/ICQ <room to join/nickforsocket> (spy from current serv to another)
+    if ($strip($1) == .ss) || ($strip($1) == .servspy) {
       if ($2 == $null) { $point $report(Format,$null,$null,.ss ON/OFF/STATS/NICK/SERVER/PASS/PORT DAL/ICQ <room to join/nickforsocket/newpass/port> (spy from current serv to another)) | halt }
       if ($nick != %boss) { $point $report(Error,No Go,This is a %boss only command) | halt }
       SS.Command $1-
@@ -548,7 +548,7 @@ on *:TEXT:*:#: {
       }
       halt 
     }
-    ;#.stop Format: .stop (.)
+    ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
     ;#.talk Format: .talk ON/OFF (Turns bot talker on or off for the room you are in.)
     if ($strip($1) == .talk) {
@@ -556,7 +556,7 @@ on *:TEXT:*:#: {
       if ($2 == OFF) { .unload -rs talker.mrc | unset %talk.room | $point $report(Speach interaction,$null,$null,Off) | halt }
       halt
     }
-    ;#.timer Format: .timer (Displays the currently active timers and info.)
+    ;#.timer Format: .timer (displays the currently active timers and info.)
     if ($strip($1) == .timer) { timer.show # }
     ;#.tease Format: .tease (.)
     if ($strip($1) == .tease) {
@@ -564,7 +564,7 @@ on *:TEXT:*:#: {
       /rt # $2
       halt
     }
-    ;#.ver Format: .ver (Returns bot version.)
+    ;#.ver Format: .ver (returns bot version.)
     if ($strip($1) == .ver) { $point $ver | halt }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
@@ -597,7 +597,7 @@ on *:TEXT:*:#: {
       sockwrite -n * $2 $3 $4 $5 $6 $7 $8 $9
       $point $report(Socket Command,Sent,$2-) | halt
     }
-    ;#.sock Format: .sock (.)
+    ;#.sock Format: .sock FIRE/KILL/SHOW (working with the socks)
     if ($strip($1) == .sock) || ($strip($1) == .socks) {
       if ($2 == $null) { $point $report(Format,$null,$null,.sock(s) FIRE/KILL/SHOW $chr(35)) | halt }
       if ($nick != %boss) { $point $report(Error,No Go,This is a %boss only command) | halt }
