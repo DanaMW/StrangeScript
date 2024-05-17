@@ -487,6 +487,11 @@ on *:TEXT:*:#: {
         $point $report(LastSeen,$2,$null,%tmp.xx)
       }
     }
+    ;#.servers Format: .servers (Lists the server connected to)
+    if ($strip($1) == .servers) {
+      $point $report(Servers,$null,Bot is connected to ,$scid(0) servers)
+
+    }
     ;#.setss Format: .setss <server> (Setup for servers)
     if ($strip($1) == .setss) {
       if ($2 == $null) {
