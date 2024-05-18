@@ -1,5 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
-ver return MasterBot $chr(91) v2.01.07.05.17.2024 $chr(93) coded for 10S04trange10S04cript
+ver return MasterBot $chr(91) v2.01.08.05.18.2024 $chr(93) coded for 10S04trange10S04cript
+cls alias clear
 load.rest {
   load -rs script0.mrc
   load -rs script1.mrc
@@ -734,3 +735,27 @@ MenuPicks {
   return
 }
 /play.mod { if ($1 != $null) { .notice %boss $replace($1-,$chr(9),$chr(160))  } }
+/insta.aj {
+  $report(Insta-AutoJoin,$null,$null,Creating your autojoin list).active
+  var %tmp.iaj = 1
+  var %tmp.iaj1 = ""
+  while (%tmp.iaj <= $chan(0)) {
+    var %tmp.iaj1 = $addtok(%tmp.iaj1,$chan(%tmp.iaj),44)
+    $report(Insta-AutoJoin,$null,Adding,$null,$chan(%tmp.iaj)).active
+    inc %tmp.iaj
+    if (%tmp.iaj > $chan(0)) { break }
+  }
+  set %autojoin. [ $+ [ $network ] ] %tmp.iaj1
+  notice %boss $report(Insta-AutoJoin,$null,Done,%tmp.iaj1)
+}
+/partall {
+  set %tmp.pa 1
+  while (%tmp.pa <= $chan(0)) {
+    if ($1- != $null) { .raw part $chan(%tmp.pa) : $+ $1- }
+    else { .raw PART $chan(%tmp.pa) :Gotta go! }
+    inc %tmp.pa
+    if (%tmp.pa > $chan(0)) { break }
+  }
+  unset %tmp.pa
+  halt
+}

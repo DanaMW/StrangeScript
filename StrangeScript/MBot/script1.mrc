@@ -81,7 +81,7 @@ on *:TEXT:*:#: {
       else { $point $report(Alias,$2,is in,$isalias($2).fname) | halt }
     }
     ;#.aj Format: .aj (Joins all set autojoin rooms.)
-    if ($strip($1) == .AJ) { .raw join %autojoin. [ $+ [ $network ] ] | $point $report(AutoJoin All,$null,Joined,%autojoin. [ $+ [ $network ] ]) | halt }
+    if ($strip($1) == .AJ) { .raw join : $+ %autojoin. [ $+ [ $network ] ] | $point $report(AutoJoin All,$null,Joined,%autojoin. [ $+ [ $network ] ]) | halt }
     ;#.sop Format: .SOP <#room> <-a (ADD)|-d (DEL)|-l (LIST)|-w (WIPE)> [<nick>] (Configures the join auto owner settings.)
     ;#.aop Format: .AOP <#room> <-a (ADD)|-d (DEL)|-l (LIST)|-w (WIPE)> [<nick>] (Configures the join auto ops settings.)
     ;#.hop Format: .HOP <#room> <-a (ADD)|-d (DEL)|-l (LIST)|-w (WIPE)> [<nick>] (Configures the join half ops settings.)
@@ -90,14 +90,15 @@ on *:TEXT:*:#: {
       UP.Service # $remove($strip($1-),.)
       halt
     }
-    ;#.autojoin Format: .autojoin <ON|OFF|ADD|DEL|SHOW> [#room] (Configures the autojoin for the bot.)
+    ;#.autojoin Format: .autojoin <ON|OFF|ADD|DEL|SHOW|CREATE> [#room] (Configures the autojoin for the bot.)
     if ($strip($1) == .AUTOJOIN) {
-      if ($2 == $null) { $point Format: .autojoin <ON|OFF|ADD|DEL|SHOW> [<#room>] | halt }
+      if ($2 == $null) { $point Format: .autojoin <ON|OFF|ADD|DEL|SHOW|CREATE> [<#room>] | halt }
       if ($2 == SHOW) { $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
       if ($2 == ADD) { set %autojoin. [ $+ [ $network ] ] $addtok(%autojoin. [ $+ [ $network ] ],$3,44) | $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
       if ($2 == DEL) { set %autojoin. [ $+ [ $network ] ] $remtok(%autojoin. [ $+ [ $network ] ],$3,1,44) | $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
       if ($2 == ON) { set %do.autojoin ON | $point $report(Current,$null,$null,%do.autojoin) | halt }
       if ($2 == OFF) { set %do.autojoin OFF | $point $report(Current,$null,$null,%do.autojoin) | halt }
+      if ($2 == CREATE) { insta.aj | $point $report(Current,Created New,$null,%autojoin. [ $+ [ $network ] ]) | halt }
       halt
     }
     ;#.away Format: .away <reason> (Sets the bot away.)
@@ -209,7 +210,10 @@ on *:TEXT:*:#: {
     if ($strip($1) == .heel) { .raw mode # -o $me | halt }
     ;#.ident Format: .ident (Makes the bot identify to chanserv using saved password.)
     ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
-    if ($strip($1) == .identify) || ($strip($1) == .ident) { if (*dal.net iswm $server) { nickserv identify %irc.nick.pass } | else { nickserv identify %irc.nick.pass } | halt }
+    if ($strip($1) == .identify) || ($strip($1) == .ident) { 
+      if (*dal.net iswm $server) { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] | $point $report(Ident,Done) | halt }
+      else { nickserv identify $me %irc.nick.pass. [ $+ [ $network ] ] | $point $report(Ident,Done) | halt }
+    }
     ;#.ignore Format: .ignore <nick/ip> (Makes the bot ignore given <nick or ip> for 15 minutes.)
     if ($strip($1) == .ignore) { if ($2 == $null) { $point Format: .ignore <nick/ip> | halt } | .ignore -u900 $2 | $point $report(Ignore,$2,Added) | halt }
     ;#.ircx Format: .ircx (Makes the bot set itself to ircx mode.)
@@ -321,8 +325,11 @@ on *:TEXT:*:#: {
       .mode $2 $3 $4 $5 $6 $7 $8 $9 | set %report Mode Set $2 | /report1 # Done
       halt
     }
-    ;#.nick Format: .nick <base nick> (Changes the bots nick to <base nick>[#####].)
-    if ($strip($1) == .nick) { .nick $2 $+ $chr(91) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $chr(93) | halt }
+    ;#.nick Format: .nick <nick> ALL (Changes the bots nick or ALL bots to <base nick>[#####].)
+    if ($strip($1) == .nick) {
+      if $3 == ALL) { nick $2 $+ $chr(91) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $chr(93) | halt }
+      else { nick $2 | halt }
+    }
     ;#.bnick Format: .bnick [INC/LONG] <base nick> (Changes all the bots nick to <base nick>[#] or <base nick>[#####].)
     if ($strip($1) == .bnick) { 
       if ($2 == inc) { .nick $3 $+ $chr(91) $+ $right($remove($nopath($mircini),.ini),-3) $+ $chr(93) | halt }
@@ -343,10 +350,11 @@ on *:TEXT:*:#: {
     }
     ;#.unoper Format: .unoper (makes the bot send /Unoper to the server. Works only if supprted.)
     if ($strip($1) == .unoper) { if ($2 == $null) { .raw unoper | halt } }
-    ;#.part Format: .part [<channel>] (Parts current or given channel.)
+    ;#.part Format: .part [ALL|<channel>] (Parts current or given channel.)
     if ($strip($1) == .part) {
       if ($2 == $null) { part # | halt }
       if ($2 != $null) {
+        if ($2 == ALL) { partall }
         if ($chr(35) !isin $2) { $point $report(Part,Cant part,Invalid room name) | halt }
         else { part $2 | $point $report(Parted,$2) | halt }
       }
@@ -463,14 +471,14 @@ on *:TEXT:*:#: {
     if ($strip($1) == .say) {
       if ($2 == $null) { $point $report(Format,$null,$null,.say <text> or .say <numberoftimes> <text> or .say <numberoftimes> <channel> <text>) | halt }
       if ($2 !isnum) {
-        if ($chr(35) isin $2) { /msg $2 $3- | halt }
-        else { $point $2- | halt }
+        if ($chr(35) isin $2) { msg $2 $3- | halt }
+        else { msg # $2- | halt }
       }
     }
     if ($2 isnum) {
       set %tmp 1
       if ($chr(35) isin $3) { while (%tmp <= $2) { .msg $3 $4- | inc %tmp | if (%tmp > $2) { break } } }
-      if ($chr(35) !isin $3) { while (%tmp <= $2) { $point $3- | inc %tmp | if (%tmp > $2) { break } } }
+      if ($chr(35) !isin $3) { while (%tmp <= $2) { msg # $3- | inc %tmp | if (%tmp > $2) { break } } }
       unset %tmp
       halt
 
@@ -657,6 +665,6 @@ on *:TEXT:*:#: {
     }
   }
 }
-raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss $upper($2) $3- } }
+;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss $upper($2) $3- } }
 raw 473:*:{ .notice %boss Join Failed $2 Invite Only, Using ChanServ to auto invite me. | .chanserv invite $2 $me  }
 ;Check for end of file
