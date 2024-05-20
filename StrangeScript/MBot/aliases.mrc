@@ -1,5 +1,5 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
-ver return MasterBot $chr(91) v2.01.08.05.18.2024 $chr(93) coded for 10S04trange10S04cript
+ver return MasterBot $chr(91) v2.01.09.05.20.2024 $chr(93) coded for 10S04trange10S04cript
 cls alias clear
 load.rest {
   load -rs script0.mrc
