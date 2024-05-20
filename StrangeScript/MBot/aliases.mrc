@@ -1,5 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
-ver return MasterBot $chr(91) v2.01.06.05.17.2024 $chr(93) coded for 10S04trange10S04cript
+ver return MasterBot $chr(91) v2.01.09.05.20.2024 $chr(93) coded for 10S04trange10S04cript
+cls alias clear
 load.rest {
   load -rs script0.mrc
   load -rs script1.mrc
@@ -252,16 +253,17 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%boss != $me) { .ctcp %boss REG }
   .raw mode $me +i
   set %IRCX.mode OFF
-  if ($server == strange.selfip.biz) { ircx | set %IRCX.mode ON | nickserv identify %irc.nick.pass }
-  if ($network == Jong) { ircx | set %IRCX.mode ON }
-  if ($network == IRCx) { ircx | set %IRCX.mode ON }
+  ;if ($server == strange.selfip.biz) { ircx | set %IRCX.mode ON | nickserv identify %irc.nick.pass }
+  ;if ($network == Jong) { ircx | set %IRCX.mode ON }
+  ;if ($network == IRCx) { ircx | set %IRCX.mode ON }
   if (%IRCX.mode == OFF) {
-    if ($network == dalnet) { .nickserv identify %irc.nick.pass }
-    else { nickserv identify %irc.nick.pass }
+    if ($network == dalnet) { nickserv identify %irc.nick.pass.[ $+ [ $network ] ] }
+    else { nickserv identify $me %irc.nick.pass.[ $+ [ $network ] ] }
   }
   if ($ial != $true) { .ial on }
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
   if (%autojoin. [ $+ [ $network ] ] == $null) { set %autojoin. [ $+ [ $network ] ] = #StrangeScript }
+  set %connected. [ $+ [ $network ] ] $network 
   set %count.note 0
   set %pound.active OFF
   set %spy OFF
@@ -733,3 +735,27 @@ MenuPicks {
   return
 }
 /play.mod { if ($1 != $null) { .notice %boss $replace($1-,$chr(9),$chr(160))  } }
+/insta.aj {
+  $report(Insta-AutoJoin,$null,$null,Creating your autojoin list).active
+  var %tmp.iaj = 1
+  var %tmp.iaj1 = ""
+  while (%tmp.iaj <= $chan(0)) {
+    var %tmp.iaj1 = $addtok(%tmp.iaj1,$chan(%tmp.iaj),44)
+    $report(Insta-AutoJoin,$null,Adding,$null,$chan(%tmp.iaj)).active
+    inc %tmp.iaj
+    if (%tmp.iaj > $chan(0)) { break }
+  }
+  set %autojoin. [ $+ [ $network ] ] %tmp.iaj1
+  notice %boss $report(Insta-AutoJoin,$null,Done,%tmp.iaj1)
+}
+/partall {
+  set %tmp.pa 1
+  while (%tmp.pa <= $chan(0)) {
+    if ($1- != $null) { .raw part $chan(%tmp.pa) : $+ $1- }
+    else { .raw PART $chan(%tmp.pa) :Gotta go! }
+    inc %tmp.pa
+    if (%tmp.pa > $chan(0)) { break }
+  }
+  unset %tmp.pa
+  halt
+}

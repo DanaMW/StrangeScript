@@ -1,6 +1,6 @@
-=-on 1:WALLOPS:*killed by System*: echo -st $1-
+on 1:WALLOPS:*killed by System*:{ notice %boss $1- | echo -st $1- }
 on 1:CONNECT:{
-  if ($chr(37) isin %autojoin. [ $+ [ $network ] ]) && (%IRCX.mode == ON) { ircx }
+  ;if ($chr(37) isin %autojoin. [ $+ [ $network ] ]) && (%IRCX.mode == ON) { ircx }
   auto.join
   join.setup
   .timerBOSSSET 1 20 check.boss %boss
@@ -8,10 +8,13 @@ on 1:CONNECT:{
     if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
     if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }
   }
-  ;if (%irc.oper.nick != $null) && (%irc.oper.pass != $null) { .timerOPER 1 60 oper %irc.oper.nick %irc.oper.pass }
+  ;if (%irc.oper.nick. [ $+ [ $network ] ] != $null) && (%irc.oper.pass. [ $+ [ $network ] ] != $null) { .timerOPER 1 60 oper %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ] }
   halt
 }
-on 1:DISCONNECT:{ .msg %boss $report(Dissconnect,$time) }
+on 1:DISCONNECT:{
+  .msg %boss $report(Dissconnect,$time)
+  unset %connected. [ $+ [ $network ] ]
+}
 on 1:DCCSERVER:CHAT: halt
 on 1:DCCSERVER:SEND: halt
 on 1:DCCSERVER:FSERVE: halt
@@ -29,8 +32,8 @@ on *:SNOTICE:*:{
 on *:NOTICE:*:*:{
   if ($nick != ChanServ) && ($nick != NickServ) { .notice %boss Notice@ $+ $nick $+ : $1- }
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
-    if (*dal.net iswm $server) { nickserv identify %irc.nick.pass }
-    else { nickserv identify %irc.nick.pass }
+    if (*dal.net iswm $server) { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
+    else { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
   }
   inc %count.note
   if ($nick != %boss) && (%count.note < 6) {
@@ -155,17 +158,17 @@ on *:PART:#:{
     }
   }
 }
-alias Lgchk { .timer850 0 %Lag.mrc.secs Lagchk }
+alias Lgchk { .timer850. $+ $network 0 %Lag.mrc.secs Lagchk }
 alias Lagchk { set %Lag.mrc.tmp $ticks | .raw Lag-CK }
 alias Lagon { echo -st 04 $+ Auto Lag Check is now 11 $+ ON | set %Lagchk on | Lgchk }
-alias Lagoff { echo -st 04 $+ Auto Lag Check is now 11 $+ OFF | set %Lagchk off | .timer850 off }
-alias ShowLag { if (%Clock == off) { titlebar - $chr(91) $logo ©1999 ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) } }
+alias Lagoff { echo -st 04 $+ Auto Lag Check is now 11 $+ OFF | set %Lagchk off | .timer850. $+ $network off }
+alias ShowLag { if (%Clock == off) { titlebar - $chr(91) $logo ©1999-2024 ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) } }
 alias Lagset { 
   if ($1 == $null) { echo -at 04 $+ Auto Lag Check syntax: /Lagset <seconds> | halt } 
   if ($1 != $null) {
-    set %Lag.mrc.secs $1
+    set %Lag.mrc.secs. [ $+ [ $network ] ] $1
     echo -st 04 $+ Set Auto Lag Check to 11 $+ %Lag.mrc.secs 04 $+ seconds between. 
-    if (%Lagchk == on) { Lgchk }
+    if (%Lagchk. [ $+ [ $network ] ] == ON) { Lgchk }
   }
 }
 raw 421:*: { 
