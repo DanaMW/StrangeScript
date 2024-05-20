@@ -90,9 +90,9 @@ on *:TEXT:*:#: {
       UP.Service # $remove($strip($1-),.)
       halt
     }
-    ;#.autojoin Format: .autojoin <ON|OFF|ADD|DEL|SHOW|CREATE> [#room] (Configures the autojoin for the bot.)
+    ;#.autojoin Format: .autojoin <ON|OFF|ADD|DEL|SHOW|CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from current rooms.)
     if ($strip($1) == .AUTOJOIN) {
-      if ($2 == $null) { $point Format: .autojoin <ON|OFF|ADD|DEL|SHOW|CREATE> [<#room>] | halt }
+      if ($2 == $null) { $point Format: .autojoin <ON|OFF|ADD|DEL|SHOW|CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from current rooms.) | halt }
       if ($2 == SHOW) { $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
       if ($2 == ADD) { set %autojoin. [ $+ [ $network ] ] $addtok(%autojoin. [ $+ [ $network ] ],$3,44) | $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
       if ($2 == DEL) { set %autojoin. [ $+ [ $network ] ] $remtok(%autojoin. [ $+ [ $network ] ],$3,1,44) | $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
