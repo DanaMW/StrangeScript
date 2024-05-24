@@ -15,7 +15,7 @@ If you want to talk I am on DalNet.
 In StrangeScript I started with the COMPLETE and ORIGINAL
 StrangeScript just the way it was the day I parked it.
 Now I have decided to work on it and fix all the things
-I haven't done it in 10 years. Here we go. This script is
+I haven't done it in 20+ years. Here we go. This script is
 mIRC only. I stashed the AdiIRC copy up there.
 ```
 
