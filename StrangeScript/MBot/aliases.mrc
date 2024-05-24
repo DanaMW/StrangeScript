@@ -1,6 +1,8 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
-ver return MasterBot $chr(91) v2.01.09.05.20.2024 $chr(93) coded for 10S04trange10S04cript
-cls alias clear
+name return 10M04aster10B04ot
+ver return $name 10 $+ $chr(91) v002.04.05.24.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+cls clear
+clsa clearall
 load.rest {
   load -rs script0.mrc
   load -rs script1.mrc
@@ -55,7 +57,7 @@ Check.Serv.Log {
   if ($lines(c:\dns\etc\namedb\security.log) < %log.security) { .msg #COS ISC BIND Security file has changed, running reset. | slc -r }
   if ($lines(c:\dns\etc\namedb\security.log) > %log.security) { set %log.sso 0 }
   if ($lines(c:\dns\etc\namedb\security.log) >= %log.security) && (%log.sso != 1) {
-    n55=    if ($lines(c:\dns\etc\namedb\security.log) == %log.security) { set %log.sso 1 }
+    if ($lines(c:\dns\etc\namedb\security.log) == %log.security) { set %log.sso 1 }
     if ($lines(c:\dns\etc\namedb\security.log) > %log.security) { inc %log.security | set %log.sso 0 }
     var %tmp.log = $read(c:\dns\etc\namedb\security.log, %log.security)
     ;if (%log.sso != 1) && (client 68.187.32.* !iswm %tmp.log) && (client 192.168.0.* !iswm %tmp.log) {

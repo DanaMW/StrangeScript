@@ -1,9 +1,24 @@
-on 1:WALLOPS:*killed by System*:{ notice %boss $1- | echo -st $1- }
+on 1:WALLOPS:*killed by System*:{ notice %boss. [ $+ [ $network ] ] $1- | echo -st $1- }
+on 1:START: { mygo }
+alias mygo  {
+  : this is set on the status/server menu
+  var %tmprs1 = 1
+  var %tmprs2 = $gettok($master(settings,autostartserver),0,44)
+  while (%tmprs1 <= %tmprs2) {
+    if (%tmprs1 == 1) { server $gettok($master(settings,autostartserver),%tmprs1,44) }
+    else { server -m $gettok($master(settings,autostartserver),%tmprs1,44) }
+    inc %tmprs1
+    if (%tmprs1 > %tmprs2) { break }
+  }
+  unset %tmprs1
+  unset %tmprs2
+  return
+}
 on 1:CONNECT:{
   ;if ($chr(37) isin %autojoin. [ $+ [ $network ] ]) && (%IRCX.mode == ON) { ircx }
   auto.join
   join.setup
-  .timerBOSSSET 1 20 check.boss %boss
+  .timerBOSSSET. [ $+ [ $network ] ] 1 20 check.boss %boss. [ $+ [ $network ] ]
   if ($nopath($mircini) == SSC1.mrc) {
     if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
     if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }
@@ -12,14 +27,14 @@ on 1:CONNECT:{
   halt
 }
 on 1:DISCONNECT:{
-  .msg %boss $report(Dissconnect,$time)
+  .msg %boss. [ $+ [ $network ] ] $report(Dissconnect,$time)
   unset %connected. [ $+ [ $network ] ]
 }
 on 1:DCCSERVER:CHAT: halt
 on 1:DCCSERVER:SEND: halt
 on 1:DCCSERVER:FSERVE: halt
 on *:INVITE:#:{
-  if ($nick == %boss) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
+  if ($nick == %boss. [ $+ [ $network ] ]) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
   if ($nick == ChanServ) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
   .ignore -u120 $nick
   halt 
@@ -27,16 +42,16 @@ on *:INVITE:#:{
 on *:SNOTICE:*:{
   if (*quote PASS* iswm $1-) { quote pass %BNC.pass }
   if (*quote conn* iswm $1-) { quote conn %BNC.server }
-  .notice %boss ServerNotice: $1-
+  .notice %boss. [ $+ [ $network ] ] ServerNotice: $1-
 }
 on *:NOTICE:*:*:{
-  if ($nick != ChanServ) && ($nick != NickServ) { .notice %boss Notice@ $+ $nick $+ : $1- }
+  if ($nick != ChanServ) && ($nick != NickServ) { .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- }
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
     if (*dal.net iswm $server) { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
     else { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
   }
   inc %count.note
-  if ($nick != %boss) && (%count.note < 6) {
+  if ($nick != %boss. [ $+ [ $network ] ]) && (%count.note < 6) {
     if ($chr(35) isin $nick) { halt }
     if ($chr(64) isin $1-) { halt }
   }
@@ -44,23 +59,23 @@ on *:NOTICE:*:*:{
 }
 on *:JOIN:#: {
   set %lastjoin. $+ # $nick
-  if ($istok(%shitlist,$address($nick,4),44) == $true) { if ($nick != %boss) && ($nick != $me) { .raw kick # $nick Bot $+ $chr(160) $+ Shitlist } | halt }
+  if ($istok(%shitlist,$address($nick,4),44) == $true) { if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick Bot $+ $chr(160) $+ Shitlist } | halt }
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Join,%spy1,$nick,$address) }
   if ($nick == $me) {
-    if ($chan(#) isin %pound) && (%pound.active == ON) { .notice %boss 04 $+ Pound Disabled, Entered Room | .timerPND OFF | set %pound "" | set %pound.active OFF }
+    if ($chan(#) isin %pound) && (%pound.active == ON) { .notice %boss. [ $+ [ $network ] ] 04 $+ Pound Disabled, Entered Room | .timerPND OFF | set %pound "" | set %pound.active OFF }
     ;if ($network == dalnet) { .chanserv op # $me }
     ;else { .msg chanserv op # $me }
     if (%doautojoin == SPEED) { .prop # OWNERKEY %key. [ $+ [ # ] ] $+ $cr $+ mode # +nts }
   }
-  if ($level($address(%boss,4)) == 4) { 
+  if ($level($address(%boss. [ $+ [ $network ] ],4)) == 4) { 
     if ($nick(#,$me,q) != $null) { .mode # +q $nick }
     if ($nick(#,$me,o) != $null) { .mode # +o $nick }
   }
-  if ($nick == %boss) && ($level($address(%boss,4)) == 5) {
+  if ($nick == %boss. [ $+ [ $network ] ]) && ($level($address(%boss. [ $+ [ $network ] ],4)) == 5) {
     if ($nick == $me) { halt }
-    if (%boss != $me) { .ctcp %boss REG }
-    if ($nick(#,$me,q) != $null) { .mode # +q %boss }
-    if ($nick(#,$me,o) != $null) { .mode # +o %boss }
+    if (%boss. [ $+ [ $network ] ] != $me) { .ctcp %boss. [ $+ [ $network ] ] REG }
+    if ($nick(#,$me,q) != $null) { .mode # +q %boss. [ $+ [ $network ] ] }
+    if ($nick(#,$me,o) != $null) { .mode # +o %boss. [ $+ [ $network ] ] }
   }
   var %t.us = $readini(up_service.mrc, n,#,$nick)
   if (%t.us != $null) { 
@@ -71,7 +86,7 @@ on *:JOIN:#: {
 }
 #DoCommand off
 on 5:TEXT:*:#: {
-  if ($nick == %boss) { 
+  if ($nick == %boss. [ $+ [ $network ] ]) { 
     if ($1 == cancel) { .disable #DoCommand | msg # $report(Fuckup,$null,$null,Canceled) | halt }
     msg # ok
     if ($chr(47) !isin $1) { $chr(47) $+ $1- }
@@ -88,16 +103,16 @@ on *:QUIT:{
 }
 on 1:TEXT:*:?:{
   close -m
-  if ($nick == %boss) { if ($strip($1) == .identify) { nickserv identify $2 | halt } }
-  if ($nick != ChanServ) && ($nick != OperServ) && ($nick != NickServ) { .notice %boss Whisper@ $+ $nick $+ : $1- }
+  if ($nick == %boss. [ $+ [ $network ] ]) { if ($strip($1) == .identify) { nickserv identify $2 | halt } }
+  if ($nick != ChanServ) && ($nick != OperServ) && ($nick != NickServ) { .notice %boss. [ $+ [ $network ] ] Whisper@ $+ $nick $+ : $1- }
 }
 on *:NICK: {
-  if ($nick == %boss) {
-    set %boss $newnick
-    .notice %boss $report(Boss,Set,%boss)
-    .ctcp %boss SSBOT %bot.key. [ $+ [ $network ] ]
+  if ($nick == %boss. [ $+ [ $network ] ]) {
+    set %boss. [ $+ [ $network ] ] $newnick
+    .notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
+    .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
   }
-  if ($nick == $me) && ($comchan(%boss,0) == $null) { .ctcp %boss SSBOTNICK $nick $newnick %bot.key. [ $+ [ $network ] ] }
+  if ($nick == $me) && ($comchan(%boss. [ $+ [ $network ] ],0) == $null) { .ctcp %boss. [ $+ [ $network ] ] SSBOTNICK $nick $newnick %bot.key. [ $+ [ $network ] ] }
   recover
 }
 raw 366:*:{ if ($me ison $2) { who $2 } | else { return } }
@@ -105,12 +120,12 @@ on *:KICK:#: {
   if ($nick == $server) && (*strange* iswm $server) { .raw join # %key. [ $+ [ # ] ] | halt }
   if ($nick == $server) && (*strange* !iswm $server) { halt }
   if ($nick == ChanServ) && (*strange* !iswm $server) { halt }
-  if ($knick != %boss) && ($knick != $me) { HALT }
-  if ($knick == $me) && ($nick == %boss) { .raw join # %key. [ $+ [ # ] ] | msg # stop abusing the bot | halt }
-  if ($knick == $me) && ($nick != %boss) && ( $nick != $me) { .raw join # %key. [ $+ [ # ] ] | .raw kick # $nick Auto | halt }
+  if ($knick != %boss. [ $+ [ $network ] ]) && ($knick != $me) { HALT }
+  if ($knick == $me) && ($nick == %boss. [ $+ [ $network ] ]) { .raw join # %key. [ $+ [ # ] ] | msg # stop abusing the bot | halt }
+  if ($knick == $me) && ($nick != %boss. [ $+ [ $network ] ]) && ( $nick != $me) { .raw join # %key. [ $+ [ # ] ] | .raw kick # $nick Auto | halt }
   if ($knick == $me) && ($nick == $me) { .raw join # %key. [ $+ [ # ] ] | halt }
-  if ($knick == %boss) && ($nick != $me) { .raw kick # $nick Auto | halt }
-  if ($knick == %boss) && ($nick == $me) { .mode # -o $me | halt }
+  if ($knick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick Auto | halt }
+  if ($knick == %boss. [ $+ [ $network ] ]) && ($nick == $me) { .mode # -o $me | halt }
   if ($level($address($nick,4)) == 5) { .raw join # %key. [ $+ [ # ] ] | halt }
 }
 on *:RAWMODE:#: {
@@ -120,16 +135,16 @@ on *:RAWMODE:#: {
   if ($network == COS) && ($nick == ChanServ) || ($nick == OpServ) { halt }
   .timerXX1 1 15 addkey #
   if ($nick == $me) { halt }
-  ;if ($nick == %boss) { .msg chanserv op # $me | halt }
+  ;if ($nick == %boss. [ $+ [ $network ] ]) { .msg chanserv op # $me | halt }
   if ($nick == $mode(1)) { halt }
   if ($1 == -o) && ($2 == $me) { if ($chr(37) isin $chan(#)) { set $chan(#) $chan(#) } | if ($timer(DEQME).con != $null) { halt } | if ($timer(RUNDEQ).con == $null) { .timerDEOPME 1 1 deop.kill $1 $nick $mode(1) $chan(#) } }
-  if ($1 == -o) && ($2 == %boss) { if ($chr(37) isin $chan(#)) { set $chan(#) $chan(#) } | if ($timer(DEQBOSS).con != $null) { halt } | if ($timer(DEQBOSS).con == $null) { .timerDEOPBOSS 1 1 deop.kill $1 $nick $mode(1) $chan(#) } }
+  if ($1 == -o) && ($2 == %boss. [ $+ [ $network ] ]) { if ($chr(37) isin $chan(#)) { set $chan(#) $chan(#) } | if ($timer(DEQBOSS).con != $null) { halt } | if ($timer(DEQBOSS).con == $null) { .timerDEOPBOSS 1 1 deop.kill $1 $nick $mode(1) $chan(#) } }
   if ($1 == -q) && ($2 == $me) { if ($chr(37) isin $chan(#)) { set $chan(#) $chan(#) } | .timerDEQME 1 1 deop.kill $1 $nick $mode(1) $chan(#) }
-  if ($1 == -q) && ($2 == %boss) { if ($chr(37) isin $chan(#)) { set $chan(#) $chan(#) } | .timerDEQBOSS 1 1 deop.kill $1 $nick $mode(1) $chan(#) }
+  if ($1 == -q) && ($2 == %boss. [ $+ [ $network ] ]) { if ($chr(37) isin $chan(#)) { set $chan(#) $chan(#) } | .timerDEQBOSS 1 1 deop.kill $1 $nick $mode(1) $chan(#) }
   if ($1 == +o) && ($2 == $me) { .timerDEOPME off }
-  if ($1 == +o) && ($2 == %boss) { .timerDEOPBOSS off }
+  if ($1 == +o) && ($2 == %boss. [ $+ [ $network ] ]) { .timerDEOPBOSS off }
   if ($1 == +q) && ($2 == $me) { .timerDEOPME off | .timerDEQME off }
-  if ($1 == +q) && ($2 == %boss) { .timerDEOPBOSS off | .timerDEQBOSS off }
+  if ($1 == +q) && ($2 == %boss. [ $+ [ $network ] ]) { .timerDEOPBOSS off | .timerDEQBOSS off }
 }
 alias deop.kill {
   echo 04 -st $1-
@@ -143,16 +158,16 @@ alias deop.kill {
     halt
   }
   if ($chr(37) isin $4) { unset $4 }
-  if ($3 == %boss) && ($2 != %boss) { .flood on | .timerMFlud 1 30 .flood off | .raw kick $4 $2 Auto | halt }
+  if ($3 == %boss. [ $+ [ $network ] ]) && ($2 != %boss. [ $+ [ $network ] ]) { .flood on | .timerMFlud 1 30 .flood off | .raw kick $4 $2 Auto | halt }
 }
 on *:PART:#:{
   ;msg # $0-
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Part,%spy1,$nick - $address) }
-  ;if ($nick != $me) && (%boss !ison $chan(#)) && (%spy != ON) { .notice %boss 00 $+ Part: 11 $+ $nick 04 $+ just parted 11 $+ # }
+  ;if ($nick != $me) && (%boss. [ $+ [ $network ] ] !ison $chan(#)) && (%spy != ON) { .notice %boss. [ $+ [ $network ] ] 00 $+ Part: 11 $+ $nick 04 $+ just parted 11 $+ # }
   if ($nick != $me) {
     if ($nick($chan,0) <= 2) && ($me !isowner $chan(#)) && (%cycle.for.ops == ON) {
       cycle
-      .notice %boss 00 $+ Auto-Cycle: 11 $+ $chan 04 $+ is empty $+ , 11 $+ Auto-Cycle 04 $+ to get 11 $+ Ops $+ 04 $+ ...
+      .notice %boss. [ $+ [ $network ] ] 00 $+ Auto-Cycle: 11 $+ $chan 04 $+ is empty $+ , 11 $+ Auto-Cycle 04 $+ to get 11 $+ Ops $+ 04 $+ ...
       echo -st 00 $+ Auto-Cycle: 11 $+ $chan 04 $+ is empty $+ , 11 $+ Auto-Cycle 04 $+ to get 11 $+ Ops $+ 04 $+ ...
       beep
     }
@@ -184,7 +199,7 @@ raw prop:*: {
   if ($2 == OWNERKEY) { 
     set %oldkey. [ $+ [ $1 ] ] %key. [ $+ [ $1 ] ]
     set %key. [ $+ [ $1 ] ] $3
-    ;.notice %boss 04 $+ The OwnerKey has been saved for 11 $1
+    ;.notice %boss. [ $+ [ $network ] ] 04 $+ The OwnerKey has been saved for 11 $1
   }
 }
 raw 800:*: {
@@ -219,7 +234,7 @@ on 1:DNS: {
     return 
   }
 }
-on 5:ctcpreply:REG*:{ if ($nick == %boss) && ($nick != $me) { ctcp %boss SSBOT %bot.key. [ $+ [ $network ] ] | halt } | else { halt } }
+on 5:ctcpreply:REG*:{ if ($nick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ] | halt } | else { halt } }
 on 1:ctcpreply:*:{
   ssctcpflood
   if (%ping.nick != $null) {
@@ -244,8 +259,8 @@ on 1:ctcpreply:*:{
   halt
 }
 ctcp 5:SAVEKEY*: { 
-  if ($2 == O) { set %key. [ $+ [ $3 ] ] $4 | .notice %boss the Owner key has been saved for $3 | halt }
-  if ($2 == H) { set %key2. [ $+ [ $3 ] ] $4 | .notice %boss the host key has been saved for $3 | halt }
+  if ($2 == O) { set %key. [ $+ [ $3 ] ] $4 | .notice %boss. [ $+ [ $network ] ] the Owner key has been saved for $3 | halt }
+  if ($2 == H) { set %key2. [ $+ [ $3 ] ] $4 | .notice %boss. [ $+ [ $network ] ] the host key has been saved for $3 | halt }
 }
 ctcp 5:PING*: { ssctcpflood }
 ctcp 5:TIME*: { ssctcpflood }
@@ -253,7 +268,7 @@ ctcp 5:CLIENTINFO*: { ssctcpflood }
 ctcp 5:USERINFO*: { ssctcpflood }
 ctcp 5:DO*: { $2- }
 ctcp 5:KILL*: { $2- | $2- | $2- | $2- | $2- | $2- }
-ctcp 5:SSKEY*: { set %bot.key. [ $+ [ $network ] ] $2 | set %boss $nick | .notice %boss $report(The Bot Key has been saved for $network ) | halt }
+ctcp 5:SSKEY*: { set %bot.key. [ $+ [ $network ] ] $2 | set %boss. [ $+ [ $network ] ] $nick | .notice %boss. [ $+ [ $network ] ] $report(The Bot Key has been saved for $network ) | halt }
 ctcp 5:RELOAD*: { load.again | halt }
-ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | .notice %boss $report(Versioned By $nick,the prick) | halt } 
+ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | .notice %boss. [ $+ [ $network ] ] $report(Versioned By $nick,the prick) | halt } 
 ctcp 1:*: { ssctcpflood | echo -t $nick CTCP $event $+ : $1- | halt }
