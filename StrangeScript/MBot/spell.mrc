@@ -43,4 +43,8 @@ on 1:sockread:spell: {
   }
   goto read3
 }
-on 1:sockclose:spell:{ .play %spell.room spell.txt | halt }
+on 1:sockclose:spell:{
+  if ($exists(spell.txt) == $false) { $point $report(Desc,Failed,$null,The process failed) | halt }
+  .play %spell.room spell.txt
+  halt
+}
