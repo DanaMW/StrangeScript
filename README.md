@@ -7,8 +7,11 @@ little thing. If you are going to rip out a piece of it
 and add it to your script at least give me credit, in
 your script, or click me a like above, which is the
 right thing to do. Thank you.
+```
 
-If you want to talk I am on DalNet.
+```text
+Notice: This is NOT a beginner script.This script requires
+skill with IRC servers and mIRC to use. I warned you.
 ```
 
 ```text
