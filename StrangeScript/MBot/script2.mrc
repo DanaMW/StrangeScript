@@ -16,8 +16,8 @@ on 1:SOCKREAD:Protect*:{
 }
 on 1:SOCKOPEN:Spy*:{
   if ($sockerr > 0) { msg $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,2,44)  $report(SockError,OPEN,$sockname,$sock($sockname).wserr,$sock($sockname).wsmsg) | sockclose $sockname | return }
-  if (*strange* iswm $sockname) { sockwrite -n $sockname pass %server.spy.pass.strange $cr user $remove(%boss,`) $remove(%boss,`) $remove(%boss,`) $remove(%boss,`) }
-  else { sockwrite -n $sockname user $remove(%boss,`) $remove(%boss,`) $remove(%boss,`) $remove(%boss,`) }
+  if (*strange* iswm $sockname) { sockwrite -n $sockname pass %server.spy.pass.strange $cr user $remove(%boss. [ $+ [ $network ] ],`) $remove(%boss. [ $+ [ $network ] ],`) $remove(%boss. [ $+ [ $network ] ],`) $remove(%boss. [ $+ [ $network ] ],`) }
+  else { sockwrite -n $sockname user $remove(%boss. [ $+ [ $network ] ],`) $remove(%boss. [ $+ [ $network ] ],`) $remove(%boss. [ $+ [ $network ] ],`) $remove(%boss. [ $+ [ $network ] ],`) }
   sockwrite -n $sockname nick %server.spy.nick. [ $+ [ $remove($sockname,Spy) ] ]
   sockmark $sockname %server.spy.nick. [ $+ [ $remove($sockname,Spy) ] ]
   sockwrite -n $sockname privmsg nickserv :identify %server.spy.pass. [ $+ [ $lower($remove($sockname,Spy)) ] ]
@@ -38,7 +38,7 @@ on 1:SOCKREAD:Spy*:{
     set %clone.server. [ $+ [ $sockname ] ] $remove($2,:)
   }
   if (*having problems connecting* iswm $1-) {
-    msg %boss $1-
+    msg %boss. [ $+ [ $network ] ] $1-
     sockwrite -n $sockname pong $19
   }
   if ($remove($left(%spy.readline,$calc($pos(%spy.readline,$chr(33),1) -1)),$chr(58)) == $me) && ($remove($gettok(%spy.readline,4,32),:,$chr(1)) == PING)  { sockwrite -n $sockname notice $me : $+ $chr(1) $+ PING $gettok(%spy.readline,5-6,32) $+ $chr(1) }
@@ -77,20 +77,20 @@ on 1:SOCKREAD:Spy*:{
       ;msg $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,2,44) $chr(91) $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) $chr(93) $chr(91) $remove($3,:) $chr(93) $chr(91) $remove($gettok(%spy.readline,1,33),:) $chr(93) $+ : $remove($gettok(%spy.readline,4-,32),:)
     msg $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,2,44) $report($gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,1,44),$remove($3,:),$remove($gettok(%spy.readline,1,33),:)) $+ :  $+ $remove($gettok(%spy.readline,4-,32),:)    }
     else {
-      notice %boss $chr(91) $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) $chr(93) $chr(91) Privmsg $chr(93) $chr(91) $remove($gettok(%spy.readline,1,33),:) Whispered to $remove($gettok(%spy.readline,3,32),:) $chr(93) $+ : $remove($gettok(%spy.readline,4-,32),:) 
+      notice %boss. [ $+ [ $network ] ] $chr(91) $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) $chr(93) $chr(91) Privmsg $chr(93) $chr(91) $remove($gettok(%spy.readline,1,33),:) Whispered to $remove($gettok(%spy.readline,3,32),:) $chr(93) $+ : $remove($gettok(%spy.readline,4-,32),:) 
       ;msg $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,2,44) $chr(91) $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,1,44) $chr(93) $chr(91) Privmsg $chr(93) $chr(91) $remove($gettok(%spy.readline,1,33),:) Whispered to $remove($gettok(%spy.readline,3,32),:) $chr(93) $+ : $remove($gettok(%spy.readline,4-,32),:) 
     }
   }
   :bossout
-  ;notice %boss $sockname %spy.readline
+  ;notice %boss. [ $+ [ $network ] ] $sockname %spy.readline
   goto spyread
 }
 on 1:SOCKCLOSE:Spy*:{
   unset %clone.server. [ $+ [ $sockname ] ]
   msg $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,2,44) $report(SockClose,$sockname,just closed,$sock($sockname).wserr,$sock($sockname).wsmsg)
-  if ($sockname == SpyICQ) { s.timer 1 1 ockopen SpyICQ irc.icq.com 6667 | notice %boss $report(ServerSpy,ON,ICQ) }
-  if ($sockname == SpyDAL) { .timer 1 1 sockopen SpyDAL irc.dal.net 6667 | notice %boss $report(ServerSpy,ON,DAL) }
-  if ($sockname == SpySTRANGE) { .timer 1 1 sockopen SpySTRANGE cos.selfip.biz 6667 | notice %boss $report(ServerSpy,ON,STRANGE) }
-  if ($sockname == SpyXPEACE) { .timer 1 1 sockopen SpyXPEACE irc.xpeacex.com 6667 | notice %boss $report(ServerSpy,ON,XPEACE) }
-  if ($sockname == SpyCHAT) { .timer 1 1 sockopen SpyCHAT irc.chatnet.org 6667 | notice %boss $report(ServerSpy,ON,CHAT) }
+  if ($sockname == SpyICQ) { s.timer 1 1 ockopen SpyICQ irc.icq.com 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,ICQ) }
+  if ($sockname == SpyDAL) { .timer 1 1 sockopen SpyDAL irc.dal.net 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,DAL) }
+  if ($sockname == SpySTRANGE) { .timer 1 1 sockopen SpySTRANGE cos.selfip.biz 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,STRANGE) }
+  if ($sockname == SpyXPEACE) { .timer 1 1 sockopen SpyXPEACE irc.xpeacex.com 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,XPEACE) }
+  if ($sockname == SpyCHAT) { .timer 1 1 sockopen SpyCHAT irc.chatnet.org 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,CHAT) }
 }

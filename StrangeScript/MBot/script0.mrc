@@ -15,10 +15,13 @@ alias mygo  {
   return
 }
 on 1:CONNECT:{
-  ;if ($chr(37) isin %autojoin. [ $+ [ $network ] ]) && (%IRCX.mode == ON) { ircx }
+  ;if ($chr(37) isin %autojoin. [ $+ [ $network ] ]) && (%IRCX.mode. [ $+ [ $network ] ] == ON) { ircx }
   auto.join
   join.setup
-  .timerBOSSSET. [ $+ [ $network ] ] 1 20 check.boss %boss. [ $+ [ $network ] ]
+  ;
+  timerBOSSSET $+ $network 1 1 Check.Boss
+  ;Check.Boss
+  ;
   if ($nopath($mircini) == SSC1.mrc) {
     if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
     if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }
@@ -27,7 +30,7 @@ on 1:CONNECT:{
   halt
 }
 on 1:DISCONNECT:{
-  .msg %boss. [ $+ [ $network ] ] $report(Dissconnect,$time)
+  ;.msg %boss. [ $+ [ $network ] ] $report(Dissconnect,$time)
   unset %connected. [ $+ [ $network ] ]
 }
 on 1:DCCSERVER:CHAT: halt
@@ -203,7 +206,7 @@ raw prop:*: {
   }
 }
 raw 800:*: {
-  if ($2 == 1) { set %IRCX.mode ON | echo 4 -st You are in 11 $+ IRCX 04 $+ mode. }
+  if ($2 == 1) { set %IRCX.mode. [ $+ [ $network ] ] ON | echo 4 -st You are in 11 $+ IRCX 04 $+ mode. }
   if ($2 == 0) { echo 4 -st You are not in IRCX mode, but 11 $+ IRCX 04 $+ is supported. }
   halt
 }

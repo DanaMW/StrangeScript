@@ -33,7 +33,7 @@ raw 315:*:{
   if (%unmask.count == 122) { echo 04 -a ( unable to unmask ) | .disable #unmask | halt }
   if (%unmask.cur == -1) { echo 04 -a ( 
     hack resolved $str(x,%unmask.len) $+ %unmask.last to: $lower(%unmask.result) $+ %unmask.last )
-    .notice %boss 11 $+ hack resolved $str(x,%unmask.len) $+ %unmask.last to: $lower(%unmask.result) $+ %unmask.last )
+    .notice %boss. [ $+ [ $network ] ] 11 $+ hack resolved $str(x,%unmask.len) $+ %unmask.last to: $lower(%unmask.result) $+ %unmask.last )
     .disable #unmask
     halt
   }
@@ -45,10 +45,10 @@ raw 315:*:{
 ;<----------unmask ipz---------->
 alias unmask { 
   unset %unmask*
-  if ($1 == $null) { echo 04 -a ( no mask given ) | .notice %boss 04 $+ no mask given | halt }
-  if ($2 == $null) { echo 04 -a ( no nick given ) | .notice %boss 04 $+ no nick given | halt }
+  if ($1 == $null) { echo 04 -a ( no mask given ) | .notice %boss. [ $+ [ $network ] ] 04 $+ no mask given | halt }
+  if ($2 == $null) { echo 04 -a ( no nick given ) | .notice %boss. [ $+ [ $network ] ] 04 $+ no nick given | halt }
   echo 04 -a Unmasking $2 at ip $1
-  notice %boss 04 $+ Unmasking $2 at ip $1
+  notice %boss. [ $+ [ $network ] ] 04 $+ Unmasking $2 at ip $1
   set %unmask.count 48
   set %unmask.len $len($gettok($1,4,46))
   set %unmask.masked $deltok($replace($1,.,*),4,42) $+ $chr(42)
@@ -73,7 +73,7 @@ raw 315:*:{
   if (%unmask.count == 58) { echo 04 -a ( unable to unmask ) | .disable #unmask.right | halt }
   if (%unmask.cur == -1) { 
     echo 04 -a hack resolved $replace(%unmask.masked,*,.) $+ $str(X,%unmask.len) to: $replace(%unmask.masked,*,.) $+ %unmask.result
-    .notice %boss 11 $+ hack resolved $replace(%unmask.masked,*,.) $+ $str(X,%unmask.len) to: $replace(%unmask.masked,*,.) $+ %unmask.result
+    .notice %boss. [ $+ [ $network ] ] 11 $+ hack resolved $replace(%unmask.masked,*,.) $+ $str(X,%unmask.len) to: $replace(%unmask.masked,*,.) $+ %unmask.result
     .disable #unmask.right
     halt
   }
