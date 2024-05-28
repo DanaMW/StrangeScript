@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.04.05.24.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.05.05.28.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -70,21 +70,12 @@ Check.Serv.Log {
 }
 /check.boss {
   updatenl
-  if ($1 != $null) { set %boss $1 }
-  else { notice %boss There is an error in the Check.Boss routine. No nick is being passed on the command line. Halting | return }
-  .notice $1 Checking and repairing the BOSS variable
-  auser 5 $address(%boss,4) %boss
-  .notice $1 adding user leverl 5 $address(%boss,4) %boss
-  ;if ($nopath($mircini) == SSC1.mrc) {
-  ;  if ($address(frenchie,4) != $null) { .msg #COS Adding user frenchie | auser 4 $address(frenchie,4) frenchie }
-  ;  if ($address(m0,4) != $null) { .msg #COS Adding user m0 | auser 4 $address(m0,4) m0 }
-  ;  if ($address(mystro,4) != $null) { .msg #COS Adding user mystro | auser 4 $address(mystro,4) mystro }
-  ;  if ($address(RDC,4) != $null) { .msg #COS Adding user RDC | auser 4 $address(RDC,4) RDC }
-  ;  if ($address(wolflord,4) != $null) { .msg #COS Adding user wolflord | auser 4 $address(wolflord,4) wolflord }
-  ;  if ($address(Nightdeath^,4) != $null) { .msg #COS Adding user Nightdeath^ | auser 4 $address(Nightdeath^,4) Nightdeath^ }
-  ;  if ($address(Lethal_INjection,4) != $null) { .msg #COS Adding user Lethal_INjection | auser 4 $address(Lethal_INjection,4) Lethal_INjection }
-  ;  if ($address(Code,4) != $null) { .msg #COS Adding user Code | auser 4 $address(Code,4) Code }
-  ;}
+  if (%boss. [ $+ [ $network ] ] == $null) { $point $report(Check.Boss,Error,CB variable is null,Line 75 abouts) | halt }
+  $point $report(Boss,$null,Checking and repairing the BOSS variable)
+  $point $report(Boss,Set,%boss. [ $+ [ $network ] ])
+  ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
+  auser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
+  $point $report(Boss,Adding,user leverl 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ])
   return
 }
 /fix.mode {
@@ -162,7 +153,7 @@ report {
 }
 /take { mkall # }
 info return StrangeServer
-mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) $chr(91) IRCX: %IRCX.mode $chr(93) $chr(91) $server $chr(93) }
+mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) $chr(91) IRCX: %IRCX.mode. [ $+ [ $network ] ] $chr(93) $chr(91) $server $chr(93) }
 /join { jn $1 $2 $3 $4 $5 $6- }
 /jn {
   if ($2 != $null) { .raw join $1 $2- }
@@ -252,13 +243,13 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
 }
 /join.setup {
   beep
-  if (%boss != $me) { .ctcp %boss REG }
+  if (%boss. [ $+ [ $network ] ] != $me) { .ctcp %boss. [ $+ [ $network ] ] REG }
   .raw mode $me +i
-  set %IRCX.mode OFF
-  ;if ($server == strange.selfip.biz) { ircx | set %IRCX.mode ON | nickserv identify %irc.nick.pass }
-  ;if ($network == Jong) { ircx | set %IRCX.mode ON }
-  ;if ($network == IRCx) { ircx | set %IRCX.mode ON }
-  if (%IRCX.mode == OFF) {
+  set %IRCX.mode. [ $+ [ $network ] ] OFF
+  ;if ($server == strange.selfip.biz) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON | nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
+  ;if ($network == Jong) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON }
+  ;if ($network == IRCx) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON }
+  if (%IRCX.mode. [ $+ [ $network ] ] == OFF) {
     if ($network == dalnet) { nickserv identify %irc.nick.pass.[ $+ [ $network ] ] }
     else { nickserv identify $me %irc.nick.pass.[ $+ [ $network ] ] }
   }
@@ -347,7 +338,7 @@ deathip {
 }
 /adjust {
   clearial
-  if (%IRCX.mode == ON) {
+  if (%IRCX.mode. [ $+ [ $network ] ] == ON) {
     var %tmp.adjust = 1
     while (%tmp.adjust <= $chan(0)) {
       if ($me isop $chan(%tmp.adjust)) { var %tmp.store = $addtok(%tmp.store,$chan(%tmp.adjust),44) }

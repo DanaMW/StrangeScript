@@ -123,12 +123,18 @@ on *:TEXT:*:#: {
       if ($3 == $null) { .kick # $2 BAM | halt }
       else { .kick $3 $2 BAM | halt }
     }
-    ;#.boss Format: .boss (Sets yourself boss in the bot and registers it.)
-    if ($strip($1) == .boss) { if ($level($address($nick,4)) != 5) { halt } | set %boss. [ $+ [ $network ] ] $nick | .notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ]) | .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ] | halt }
+    ;#.boss Format: .boss <nick> (Sets nick/you boss in the bot and registers it.)
+    if ($strip($1) == .boss) {
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($2 == $null) { set %boss. [ $+ [ $network ] ] $nick }
+      else { set %boss. [ $+ [ $network ] ] $2 }
+      $point $report(Set Boss,$null,Boss is now set:,%boss. [ $+ [ $network ] ]) 
+      check.boss
+    }
     ;#.cb Format: .cb (Runs Check.Boss)
     if ($strip($1) == .cb) {
-      ;if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
-      Check.boss recess
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      Check.boss %boss. [ $+ [ $network ] ]
       halt
     }
     ;#.cnn Format: .cnn [<-r|-u>] [<NUM>] (Gets CNN News or URL.)
@@ -145,7 +151,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .deq) { if ($2 == $null) { $point $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
     ;#.display Format: .display [CHAN/NOTICE] (Sets the bot reply channel/notice. Without any replys it's state,)
     if ($strip($1) == .display) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == $null) { $point $report(Display,$null,Display is set to,%display. [ $+ [ $network ] ]) | halt }
       if ($2 == CHAN) {
         set %display. [ $+ [ $network ] ] CHAN
@@ -155,10 +161,14 @@ on *:TEXT:*:#: {
         set %display. [ $+ [ $network ] ] NOTICE
         $point $report(Display,$null,Display is set to,%display. [ $+ [ $network ] ])
       }
+      if ($2 == HEX) {
+        set %display. [ $+ [ $network ] ] HEX
+        $point $report(Display,$null,Display is set to,%display. [ $+ [ $network ] ])
+      }
     }
     ;#.dns Format: .dns <-s(STATS)|-i(INFO)|-d(DIG)> [<domian.name>] (Manages ISC BIND dns server.)
     if ($strip($1) == .dns) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == $null) { $point Format: .dns <-s(STATS)|-i(INFO)|-d(DIG)> [<domian.name>] (Manages ISC BIND dns server.) | halt }
       if ($exists(c:\temp\temp.txt) == $true) { .remove c:\temp\temp.txt }
       if ($2 == -s) {
@@ -235,7 +245,7 @@ on *:TEXT:*:#: {
     }
     ;#.LiveMenu Format: .livemenu (Enters the interactive ip to ip mirc ini editor.)
     if ($strip($1) == .livemenu) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       ;if ($2 == $null) { $point.LiveMenu Format: .livemenu (Enters the interactive ip to ip mirc ini editor.) | halt }
       LiveMenu # $nick
       ;  if ($2 == silent) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc) | halt }
@@ -243,17 +253,17 @@ on *:TEXT:*:#: {
     }
     ;#.log Format: .log <-s ON/OFF|-q ON/OFF|ON|OFF|SHOW> (Turns log reads on or off.)
     if ($strip($1) == .log) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == $null) { $point Format: .log <-s ON/OFF|-q ON/OFF|ON|OFF|SHOW> (Turns log reads on or off.) | halt }
       LOG.ADJUST # $2-
       halt
     }
     ;#.login Format: .login <server> (Makes the bot login to <server address:port>.)
-    if ($strip($1) == .login) { if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt } | server $2- }
+    if ($strip($1) == .login) { if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt } | server $2- }
     ;#.auser Format: .auser <nick> (Adds a user to the UserList)
     if ($strip($1) == .auser) {
       if ($2 == $null) { $point Format: .auser <nick> | halt }
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       auser 4 $address($2,4) $2
       $point I am now stuck taking orders from $2 $+ , sucks to be me.
       halt
@@ -261,7 +271,7 @@ on *:TEXT:*:#: {
     ;#.ruser Format: .ruser <nick> (Removes a user from the UserList)
     if ($strip($1) == .ruser) {
       if ($2 == $null) { $point Format: .ruser <nick> | halt }
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       ruser $2
       $point Thanks for getting $2 the fuck off my back.
       halt
@@ -279,7 +289,7 @@ on *:TEXT:*:#: {
     }
     ;#.mail Format: .mail <on|off|-u> [<nick>] (Checks for CNN Breaking news or if USER has mail.)
     if ($strip($1) == .mail) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == $null) { $point Format: .mail <on|off|-u> [<nick>] (Checks for CNN Breaking news or if USER has mail.) | halt }
       if ($2 == ON) { .timerMAIL 0 120 mail #COS | set %mail.run ON | $point MailCheck is now %mail.run | halt }
       if ($2 == OFF) { .timerMAIL OFF | set %mail.run OFF | unset %mail.user | set %mail.write OFF | $point MailCheck is now %mail.run | halt }
@@ -287,10 +297,10 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.menu Format: .menu (Enables the Spy Menu.)
-    if ($strip($1) == .menu) { if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt } | .enable #Menu | $point $report(Spy Menu,ON) | menu # | halt }
+    if ($strip($1) == .menu) { if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt } | .enable #Menu | $point $report(Spy Menu,ON) | menu # | halt }
     ;#.base Format: .base <NICK|CHANNEL> (Sets up the base user/#room reported to.)
     if ($strip($1) == .base) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 != $null) { set %base. [ $+ [ $network ] ] $2 | goto ch1 | halt }
       $point Format: .base <NICK|CHANNEL>  (Sets up the base (User or #room reported to).) 
       :ch1
@@ -299,7 +309,7 @@ on *:TEXT:*:#: {
     }
     ;#.method Format: .method <MSG|NOTICE NICK|#CHANNEL> (The pair sets up the bot play method.)
     if ($strip($1) == .method) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == MSG) || ($2 == NOTICE) && ($3 != $null) { set %method. [ $+ [ $network ] ] . $+ $2 | set %base. [ $+ [ $network ] ] $3 | goto ch2 | halt }
       $point Format: .method <MSG|NOTICE NICK|#CHANNEL> (The pair sets up the bot play method.) 
       :ch2
@@ -308,20 +318,20 @@ on *:TEXT:*:#: {
     }
     ;#.mk Format: .mk (Makes the bot mass kick current room.)
     if ($strip($1) == .mk) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       mkall #
       .cycle
       halt
     }
     ;#.take Format: .take (Makes the bot try to take the current room.)
     if ($strip($1) == .take) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       mkall #
       halt
     }
     ;#.mode Format: .mode <raw command> (Makes the bot send a server raw.)
     if ($strip($1) == .mode) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       .mode $2 $3 $4 $5 $6 $7 $8 $9 | set %report Mode Set $2 | /report1 # Done
       halt
     }
@@ -352,14 +362,14 @@ on *:TEXT:*:#: {
     if ($strip($1) == .unoper) { if ($2 == $null) { .raw unoper | halt } }
     ;#.part Format: .part [ALL|<channel>] (Parts current or given channel.)
     if ($strip($1) == .part) {
-      if ($2 == $null) { part # | halt }
+      if ($2 == $null) { part # I'm out | halt }
       if ($2 != $null) {
         if ($2 == ALL) { partall }
         if ($chr(35) !isin $2) { $point $report(Part,Cant part,Invalid room name) | halt }
-        else { part $2 | $point $report(Parted,$2) | halt }
+        else { part $2 Gotta go! | $point $report(Parted,$2) | halt }
       }
     }
-    ;#.ping Format: .ping [<nick|channel>] (Pings you,  nick or channel. )
+    ;#.ping Format: .ping [<nick|channel>] (Pings you, nick or channel. )
     if ($strip($1) == .ping) {
       if ($2 == $null) { set %ping.chan # | set %ping.nick $nick | .raw -q privmsg $nick : $+ $chr(1) $+ PING $ticks $+ $chr(1) | halt }
       if ($2 != $null) {
@@ -375,8 +385,8 @@ on *:TEXT:*:#: {
     ;#.prop Format: .prop [channel] (Sets the props on current channel or [channel].)
     if ($strip($1) == .prop) {
       if ($2 == $null) {
-        if (%key. [ $+ [ # ] ] != $null) { /prop # OWNERKEY %key. [ $+ [ # ] ] }
-        if (%key2. [ $+ [ # ] ] != $null) { .prop # HOSTKEY %key2. [ $+ [ # ] ] }
+        if (%key. [ $+ [ # ] ] != $null) { prop # OWNERKEY %key. [ $+ [ # ] ] }
+        if (%key2. [ $+ [ # ] ] != $null) { prop # HOSTKEY %key2. [ $+ [ # ] ] }
         .raw mode # +ntw
         halt
       }
@@ -402,7 +412,7 @@ on *:TEXT:*:#: {
     ;#.raw Format: .raw <raw command> (This is a %boss. [ $+ [ $network ] ] only command)
     if ($strip($1) == .raw) {
       if ($2 == $null) { $point $report(Format,$null,$null,.raw <raw command>,This is a %boss. [ $+ [ $network ] ] only command) | halt }
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       $replace($2-,$chr(160),$chr(32))
       $point $report(Raw,$null,Sent,$2-)
       halt
@@ -419,12 +429,12 @@ on *:TEXT:*:#: {
     }
     ;#.reload Format: .reload (reloads the bots scripts)
     if ($strip($1) == .reload) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       load.again
     }
     ;#.reup Format: .reup (Causes the bot to restart)
     if ($strip($1) == .reup) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       server $server
     }
     ;#.safe Format: .safe (Goes into Safe mode ignoring everything except you)
@@ -513,14 +523,14 @@ on *:TEXT:*:#: {
         $point Valid Server letters are: c = chatnet, p = splog, j = jong, g = global
         halt
       }
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       Set.SS # $2- | halt
     }
     ;#.ss Format: .ss  ON/OFF/STATS/NICK DAL/ICQ <room to join/nickforsocket> (spy from current serv to another)
     ;#.servspy Format: .servspy  ON/OFF/STATS/NICK DAL/ICQ <room to join/nickforsocket> (spy from current serv to another)
     if ($strip($1) == .ss) || ($strip($1) == .servspy) {
       if ($2 == $null) { $point $report(Format,$null,$null,.ss ON/OFF/STATS/NICK/SERVER/PASS/PORT DAL/ICQ <room to join/nickforsocket/newpass/port> (spy from current serv to another)) | halt }
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       SS.Command $1-
       halt
     }
@@ -568,12 +578,12 @@ on *:TEXT:*:#: {
     if ($strip($1) == .timer) { timer.show # }
     ;#.tease Format: .tease (.)
     if ($strip($1) == .tease) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Nice Try,$null,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Nice Try,$null,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       /rt # $2
       halt
     }
     ;#.ver Format: .ver (returns bot version.)
-    if ($strip($1) == .ver) { $point $ver | halt }
+    if ($strip($1) == .ver) { $point $ver | $point You know it  10B04a10B04y | halt }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
     if ($strip($1) == drop) && ($2 == dead) { set %report Exit | /report1 # Done | .exit | halt }
@@ -581,7 +591,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
     ;#.setvar Format: .setvar <variable> <value>/CLEAR (allows you to create, set, change, or clear a variable.)
     if ($strip($1) == .setvar) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Nice Try,$null,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Nice Try,$null,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == $null) { $point Format: .setvar <variable> <value>/CLEAR | halt }
       if ($3 == CLEAR) {
         $point unsetting $2
@@ -608,7 +618,7 @@ on *:TEXT:*:#: {
     ;#.sock Format: .sock FIRE/KILL/SHOW (working with the socks)
     if ($strip($1) == .sock) || ($strip($1) == .socks) {
       if ($2 == $null) { $point $report(Format,$null,$null,.sock(s) FIRE $chr(35) $+ $chr(35) $+ /KILL/SHOW) | halt }
-      if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == SHOW) {
         $point $report(Format,$null,$null,.sock(s) FIRE  $chr(35) $+ $chr(35) $+ /KILL/SHOW)
         halt
@@ -659,11 +669,28 @@ on *:TEXT:*:#: {
       elseif ($2 == OFF) { sockclose weather | sockclose wt | $point Weather sockets closed. | return }
       else { weather # $2- | return }
     }
-    ;#.var Format: .var (Shows infomation on a given variable)
+    ;#.var Format: .var <%variable> (Shows infomation on a given variable)
     if ($strip($1) == .var) {
+      if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == COUNT) { $point $report(Variable,$var(*,0),set variables) | halt }
-      if ($var($2,1) = $null) { $point $report(Variable,Error,The variable,$2,does not exist) | halt  }
-      else { $point $report(Variable,$2,=,$var($2,1).value) }
+      if ($var($2,1) = $null) {
+        $point $report(Format:,$null,.var <%variable> (Shows infomation on a given variable))
+        halt
+        ;$point $report(Variable,Error,The variable,$2,does not exist)
+        ;halt
+      }
+      else {
+        if ($var($2,0) > 1) {
+          if ($var($2,0) == 1) { $point $report(Variable,there is,$var($2,0),Displaying:) }
+          else { $point $report(Variable,there are,$var($2,0),Displaying:,$2) }
+          var %tmp.vr 1
+          while (%tmp.vr <= $var($2,0)) {
+            $point $report(Variable,$var($2,%tmp.vr),=,$var($2,%tmp.vr).value)
+            inc %tmp.vr
+            if (%tmp.vr > $var($2,0)) { break }
+          }
+        }
+      }
       halt
     }
   }
