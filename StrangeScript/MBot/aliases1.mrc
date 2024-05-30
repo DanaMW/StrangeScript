@@ -201,3 +201,130 @@ masterwrite {
   else { .writeini %tmp.fold $1 $2 "" | $report(MasterWrite: Clearing key,$1-).active }
   return
 }
+/hex.ini {
+  unset %hex.*
+  set %hex.word $replace($1-,$chr(32),$chr(95))
+  set %n 1
+  while (%n <= $len(%hex.word)) {
+    set %hex.char $asc($mid(%hex.word,%n,1))
+    set %hex.val1 $int($calc(%hex.char / 16))
+    set %hex.val2 $calc($calc(%hex.char - (%hex.val1 * 16)))
+    if (%hex.val1 == 10) { set %hex.val1 A }
+    if (%hex.val1 == 11) { set %hex.val1 B }
+    if (%hex.val1 == 12) { set %hex.val1 C }
+    if (%hex.val1 == 13) { set %hex.val1 D }
+    if (%hex.val1 == 14) { set %hex.val1 E }
+    if (%hex.val1 == 15) { set %hex.val1 F }
+    if (%hex.val2 == 10) { set %hex.val2 A }
+    if (%hex.val2 == 11) { set %hex.val2 B }
+    if (%hex.val2 == 12) { set %hex.val2 C }
+    if (%hex.val2 == 13) { set %hex.val2 D }
+    if (%hex.val2 == 14) { set %hex.val2 E }
+    if (%hex.val2 == 15) { set %hex.val2 F }
+    set %hex.char %hex.val1 $+ %hex.val2
+    set %hex.comp %hex.comp $+ %hex.char
+    inc %n
+    if (%n > $len(%hex.word)) { break }
+  }
+  .timer 1 1 unset %hex.* %n
+  return %hex.comp
+}
+/unhex.ini {
+  unset %hex.*
+  set %hex.word $1-
+  set %hex.word $remove(%hex.word,',^)
+  set %n 1
+  while (%n <= $len(%hex.word)) {
+    set %hex.char $mid(%hex.word,%n,1)
+    if (%hex.char == A) { set %hex.char 10 }
+    if (%hex.char == B) { set %hex.char 11 }
+    if (%hex.char == C) { set %hex.char 12 }
+    if (%hex.char == D) { set %hex.char 13 }
+    if (%hex.char == E) { set %hex.char 14 }
+    if (%hex.char == F) { set %hex.char 15 }
+    set %hex.val $calc(16 * %hex.char)
+    inc %n
+    set %hex.char $mid(%hex.word,%n,1)
+    if (%hex.char == A) { set %hex.char 10 }
+    if (%hex.char == B) { set %hex.char 11 }
+    if (%hex.char == C) { set %hex.char 12 }
+    if (%hex.char == D) { set %hex.char 13 }
+    if (%hex.char == E) { set %hex.char 14 }
+    if (%hex.char == F) { set %hex.char 15 }
+    set %hex.val $calc(%hex.val + %hex.char)
+    set %hex.val $chr(%hex.val)
+    set %hex.comp %hex.comp $+ %hex.val
+    inc %n
+    if (%n > $len(%hex.word)) { break }
+  }
+  .timer 1 1 unset %hex.* %n
+  return $replace(%hex.comp,$chr(95),$chr(160))
+}
+/hex.out {
+  set %hex.word ""
+  set %hex.word $replace($1-,$chr(32),$chr(95))
+  set %n 1
+  :begin
+  if (%n > $len(%hex.word)) { goto end }
+  set %hex.char $asc($mid(%hex.word,%n,1))
+  set %hex.val1 $int($calc(%hex.char / 16))
+  set %hex.val2 $calc($calc(%hex.char - (%hex.val1 * 16)))
+  if (%hex.val1 == 10) { set %hex.val1 A }
+  if (%hex.val1 == 11) { set %hex.val1 B }
+  if (%hex.val1 == 12) { set %hex.val1 C }
+  if (%hex.val1 == 13) { set %hex.val1 D }
+  if (%hex.val1 == 14) { set %hex.val1 E }
+  if (%hex.val1 == 15) { set %hex.val1 F }
+  if (%hex.val2 == 10) { set %hex.val2 A }
+  if (%hex.val2 == 11) { set %hex.val2 B }
+  if (%hex.val2 == 12) { set %hex.val2 C }
+  if (%hex.val2 == 13) { set %hex.val2 D }
+  if (%hex.val2 == 14) { set %hex.val2 E }
+  if (%hex.val2 == 15) { set %hex.val2 F }
+  set %hex.char %hex.val1 $+ %hex.val2
+  set %hex.comp %hex.comp $+ %hex.char
+  inc %n
+  goto begin
+  :end
+  .privmsg $active  $+ %hex.comp
+  echo -t # $output  $+ %sc.me $+ $lll $white $+ $me  $+ %sc.me $+ $rrr $+  $report($null,Hexed) $+  $1-
+  unset %hex.* %n
+  return
+}
+/unhex.out {
+  set %hex.word ""
+  set %hex.word $3-
+  set %hex.word $remove(%hex.word,',^)
+  set %n 1
+  :begin
+  if (%n > $len(%hex.word)) { goto end }
+  set %hex.char $mid(%hex.word,%n,1)
+  if (%hex.char == A) { set %hex.char 10 }
+  if (%hex.char == B) { set %hex.char 11 }
+  if (%hex.char == C) { set %hex.char 12 }
+  if (%hex.char == D) { set %hex.char 13 }
+  if (%hex.char == E) { set %hex.char 14 }
+  if (%hex.char == F) { set %hex.char 15 }
+  set %hex.val $calc(16 * %hex.char)
+  inc %n
+  set %hex.char $mid(%hex.word,%n,1)
+  if (%hex.char == A) { set %hex.char 10 }
+  if (%hex.char == B) { set %hex.char 11 }
+  if (%hex.char == C) { set %hex.char 12 }
+  if (%hex.char == D) { set %hex.char 13 }
+  if (%hex.char == E) { set %hex.char 14 }
+  if (%hex.char == F) { set %hex.char 15 }
+  set %hex.val $calc(%hex.val + %hex.char)
+  set %hex.val $chr(%hex.val)
+  set %hex.comp %hex.comp $+ %hex.val
+  inc %n
+  goto begin
+  :end
+  if ($1 == $2) { 
+    if ($master(settings,Query.Windows) == ON) && ($window(=$nick) == $null) { /query $1 }
+    if ($window(=$nick) == $null) { echo $color(highlight) -at WHISPER:  $+ %sc.me $+ $lll $white $+ $1  $+ %sc.me $+ $rrr $+  $report($null,UnHexed) $+  $replace(%hex.comp,$chr(95),$chr(160)) }
+    if ($window(=$nick) != $null) { echo $color(highlight) -t $nick $output  $+ %sc.me $+ $lll $white $+ $1  $+ %sc.me $+ $rrr $+  $report($null,UnHexed) $+  $replace(%hex.comp,$chr(95),$chr(160)) }
+  }
+  else { echo -t $2 $output  $+ %sc.me $+ $lll $white $+ $1  $+ %sc.me $+ $rrr $+  $report($null,UnHexed) $+  $replace(%hex.comp,$chr(95),$chr(160)) }
+  unset %hex.* %n
+}
