@@ -90,7 +90,7 @@ on *:JOIN:#: {
 #DoCommand off
 on 5:TEXT:*:#: {
   if ($nick == %boss. [ $+ [ $network ] ]) { 
-    if ($1 == cancel) { .disable #DoCommand | msg # $report(Fuckup,$null,$null,Canceled) | halt }
+    if ($1 == cancel) { .disable #DoCommand | $point $report(Fuckup,$null,$null,Canceled) | halt }
     msg # ok
     if ($chr(47) !isin $1) { $chr(47) $+ $1- }
     else { $1- }
@@ -108,12 +108,14 @@ on 1:TEXT:*:?:{
   close -m
   if ($nick == %boss. [ $+ [ $network ] ]) { if ($strip($1) == .identify) { nickserv identify $2 | halt } }
   if ($nick != ChanServ) && ($nick != OperServ) && ($nick != NickServ) { .notice %boss. [ $+ [ $network ] ] Whisper@ $+ $nick $+ : $1- }
+  if ($left($1,2) == ) { unhex.out $nick $nick $right($1-,-2) | halt }
 }
 on *:NICK: {
   if ($nick == %boss. [ $+ [ $network ] ]) {
     set %boss. [ $+ [ $network ] ] $newnick
     .notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
     .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
+    timerBC [ $+ [ $network ] ] 1 1 check.boss %boss. [ $+ [ $network ] ]
   }
   if ($nick == $me) && ($comchan(%boss. [ $+ [ $network ] ],0) == $null) { .ctcp %boss. [ $+ [ $network ] ] SSBOTNICK $nick $newnick %bot.key. [ $+ [ $network ] ] }
   recover
@@ -135,7 +137,6 @@ on *:RAWMODE:#: {
   if ($nick == $server) { halt }
   if ($nick == System) { halt }
   if ($nick == ChanServ) { halt }
-  if ($network == COS) && ($nick == ChanServ) || ($nick == OpServ) { halt }
   .timerXX1 1 15 addkey #
   if ($nick == $me) { halt }
   ;if ($nick == %boss. [ $+ [ $network ] ]) { .msg chanserv op # $me | halt }

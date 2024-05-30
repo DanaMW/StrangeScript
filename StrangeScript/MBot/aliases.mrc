@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.05.05.28.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.06.05.30.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -109,6 +109,9 @@ report {
   if ($3 != $null) { var %tmp.rbuild = %tmp.rbuild $+ 10 $+ $chr(91) $+ 14 $3 10 $+ $chr(93) $+ 05 $+ $chr(124) }
   if ($4 != $null) { var %tmp.rbuild = %tmp.rbuild $+ 10 $+ $chr(91) $+ 04 $4 10 $+ $chr(93) $+ 05 $+ $chr(124) }
   if ($5- != $null) { var %tmp.rbuild = %tmp.rbuild $+ 10 $+ $chr(91) $+ 15 $5- 10 $+ $chr(93) $+ 05 $+ $chr(124) }
+  ;if (%hex. [ $+ [ $network ] ] == ON) {
+  ;%tmp.rbuild
+  ;}
   if ($prop == active) { return echo -at $sys %tmp.rbuild }
   if ($prop == status) { return echo -st $sys %tmp.rbuild }
   if ($prop == $null) { return %tmp.rbuild }
@@ -129,21 +132,6 @@ report {
   elseif ($1 isop $chan($2)) { return }
   mode $2 +o $1
   return
-}
-/hup { 
-  ;if ($1 == $null) {
-  ;echo -at 04 You need to include the nick $textcolor ( 09 /hup nick $textcolor )
-  ;halt 
-  ;if ($1 != $null) {
-  ;echo -at 04 Sending a 11 HUP 04 style ping to $1
-  ;.raw -q privmsg $1 : $+ $chr(1) $+ PING +++ATH0 $+ $chr(1)
-  ;halt
-  ;}
-  ;}
-  ;/cycle {
-  ;if ($1 != $null) { .raw part $1 $cr join $1 %key. [ $+ [ $1 ] ] }
-  ;else { .raw part # $cr join # %key. [ $+ [ # ] ] }
-  ;}
 }
 /do.hop {
   if ($1 isowner $chan($2)) { return }
