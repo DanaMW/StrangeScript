@@ -15,7 +15,8 @@ on *:TEXT:*:#: {
   if ($nick == $me) { halt }
   if (%boss.repeat == ON) { msg # On # %boss. [ $+ [ $network ] ] said: $1- }
   if ($left($1,2) == ) {
-
+    $report(Hexed,$unhex.ini($1-)).active
+    return
   }
   if (%easy.room != $null) && (# == %easy.room) && ($left($strip($1-),1) != >) && ($left($strip($1-),1) != .) {
     if ($sock(Spy [ $+ [ %easy.server ] ] ) != $null) {
@@ -156,8 +157,8 @@ on *:TEXT:*:#: {
     if ($strip($1) == .display) {
       if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == $null) {
-        $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ])
-        halt
+        if (%hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ]) }
+        else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
       }
       if ($2 == CHAN) {
         set %display. [ $+ [ $network ] ] CHAN
@@ -167,17 +168,20 @@ on *:TEXT:*:#: {
       if ($2 == NOTICE) {
         set %display. [ $+ [ $network ] ] NOTICE
         if (%hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ]) }
-        else { $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ]) }
+        else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
       }
       if ($2 == HEX) {
-        if (%hex. [ $+ [ $network ] ] == ON) || (%hex. [ $+ [ $network ] ] == $null) {
-          set %hex. [ $+ [ $network ] ] OFF
-          $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ])
-        }
-        else {
+        if ($3 == ON) {
           set %hex. [ $+ [ $network ] ] ON
           $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ])
+          halt
         }
+        if ($3 == OFF) {
+          set %hex. [ $+ [ $network ] ] OFF
+          $point $report(Display,$null,is,%display. [ $+ [ $network ] ])
+          halt
+        }
+        else { $point $report(Display,$null,Use:,.display hex ON/OFF) }
       }
     }
     ;#.dns Format: .dns <-s(STATS)|-i(INFO)|-d(DIG)> [<domian.name>] (Manages ISC BIND dns server.)
@@ -627,7 +631,7 @@ on *:TEXT:*:#: {
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
     if ($strip($1) == drop) && ($2 == dead) { set %report Exit | /report1 # Done | .exit | halt }
-    if ($strip($1) == go) && ($2 == away) { $point Fine then | .part # | halt }
+    if ($strip($1) == go) && ($2 == away) { $point Fine then | .part # | timer $+ $rand(1,99) 1 30 join # | halt }
     if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
     ;#.setvar Format: .setvar <variable> <value>/CLEAR (allows you to create, set, change, or clear a variable.)
     if ($strip($1) == .setvar) {
@@ -713,16 +717,15 @@ on *:TEXT:*:#: {
     if ($strip($1) == .var) {
       if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == COUNT) { $point $report(Variable,$var(*,0),set variables) | halt }
-      if ($var($2,1) = $null) {
-        $point $report(Format:,$null,.var <%variable> (Shows infomation on a given variable))
-        halt
-        ;$point $report(Variable,Error,The variable,$2,does not exist)
-        ;halt
-      }
+      if ($var($2,1) = $null) { $point $report(Variable,Error,The variable,$2,does not exist) | halt }
       else {
+        if ($var($2,0) == 1) {
+          $point $report(Variable,there is,$var($2,0),Displaying:)
+          $point $report(Variable,$var($2,1),=,$var($2,1).value)
+          halt
+        } 
+        else { $point $report(Variable,there are,$var($2,0),Displaying:) }
         if ($var($2,0) > 1) {
-          if ($var($2,0) == 1) { $point $report(Variable,there is,$var($2,0),Displaying:) }
-          else { $point $report(Variable,there are,$var($2,0),Displaying:,$2) }
           var %tmp.vr 1
           while (%tmp.vr <= $var($2,0)) {
             $point $report(Variable,$var($2,%tmp.vr),=,$var($2,%tmp.vr).value)

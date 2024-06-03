@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.06.05.30.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.08.06.02.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -109,9 +109,7 @@ report {
   if ($3 != $null) { var %tmp.rbuild = %tmp.rbuild $+ 10 $+ $chr(91) $+ 14 $3 10 $+ $chr(93) $+ 05 $+ $chr(124) }
   if ($4 != $null) { var %tmp.rbuild = %tmp.rbuild $+ 10 $+ $chr(91) $+ 04 $4 10 $+ $chr(93) $+ 05 $+ $chr(124) }
   if ($5- != $null) { var %tmp.rbuild = %tmp.rbuild $+ 10 $+ $chr(91) $+ 15 $5- 10 $+ $chr(93) $+ 05 $+ $chr(124) }
-  ;if (%hex. [ $+ [ $network ] ] == ON) {
-  ;%tmp.rbuild
-  ;}
+  if (%hex. [ $+ [ $network ] ] == ON) { var %tmp.rbuild =  $+ $hex.ini(%tmp.rbuild) }
   if ($prop == active) { return echo -at $sys %tmp.rbuild }
   if ($prop == status) { return echo -st $sys %tmp.rbuild }
   if ($prop == $null) { return %tmp.rbuild }
@@ -244,6 +242,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if ($ial != $true) { .ial on }
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
   if (%autojoin. [ $+ [ $network ] ] == $null) { set %autojoin. [ $+ [ $network ] ] = #StrangeScript }
+  if (%hex. [ $+ [ $network ] ] == $null) { set %hex. [ $+ [ $network ] ] OFF }
   set %connected. [ $+ [ $network ] ] $network 
   set %count.note 0
   set %pound.active OFF
