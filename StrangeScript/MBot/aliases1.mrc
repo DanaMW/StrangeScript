@@ -328,3 +328,12 @@ masterwrite {
   else { echo -t $2 $output  $+ %sc.me $+ $lll $white $+ $1  $+ %sc.me $+ $rrr $+  $report($null,UnHexed) $+  $replace(%hex.comp,$chr(95),$chr(160)) }
   unset %hex.* %n
 }
+;/notice {
+;  haltdef
+;  if (%do.hex. [ $+ [ $network ] ] == ON) {
+;    var %tmp.sendnote =  $+ $hex.ini($2-)
+;    raw notice $1 : $+ %tmp.sendnote
+;  }
+;  else { raw notice $1 : $+ $2- }
+;  halt
+;}

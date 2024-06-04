@@ -15,7 +15,7 @@ on *:TEXT:*:#: {
   if ($nick == $me) { halt }
   if (%boss.repeat == ON) { msg # On # %boss. [ $+ [ $network ] ] said: $1- }
   if ($left($1,2) == ) {
-    $report(Hexed,$unhex.ini($1-)).active
+    $report(UnHexed,$null,$unhex.ini($1-)).active
     return
   }
   if (%easy.room != $null) && (# == %easy.room) && ($left($strip($1-),1) != >) && ($left($strip($1-),1) != .) {
@@ -157,27 +157,31 @@ on *:TEXT:*:#: {
     if ($strip($1) == .display) {
       if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Error,No Go,This is a %boss. [ $+ [ $network ] ] only command) | halt }
       if ($2 == $null) {
-        if (%hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ]) }
+        if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
       }
       if ($2 == CHAN) {
         set %display. [ $+ [ $network ] ] CHAN
-        if (%hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ]) }
+        if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ]) }
       }
-      if ($2 == NOTICE) {
+      if ($2 == NOT) || ($2 == NOTICE) {
         set %display. [ $+ [ $network ] ] NOTICE
-        if (%hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ]) }
+        if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
       }
       if ($2 == HEX) {
         if ($3 == ON) {
-          set %hex. [ $+ [ $network ] ] ON
-          $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%hex. [ $+ [ $network ] ])
+          ;set %do.hex. [ $+ [ $network ] ] ON
+          ;
+          set %do.hex. [ $+ [ $network ] ] OFF
+          $point $report(Display,$null,Hex is diabled until i get notice out working.)
+          ;
+          $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ])
           halt
         }
         if ($3 == OFF) {
-          set %hex. [ $+ [ $network ] ] OFF
+          set %do.hex. [ $+ [ $network ] ] OFF
           $point $report(Display,$null,is,%display. [ $+ [ $network ] ])
           halt
         }
