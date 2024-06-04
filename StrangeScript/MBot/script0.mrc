@@ -113,9 +113,9 @@ on 1:TEXT:*:?:{
 on *:NICK: {
   if ($nick == %boss. [ $+ [ $network ] ]) {
     set %boss. [ $+ [ $network ] ] $newnick
-    .notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
+    $point %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
     .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
-    timerBC [ $+ [ $network ] ] 1 1 check.boss %boss. [ $+ [ $network ] ]
+    timerBC [ $+ [ $network ] ] 1 10 check.boss %boss. [ $+ [ $network ] ]
   }
   if ($nick == $me) && ($comchan(%boss. [ $+ [ $network ] ],0) == $null) { .ctcp %boss. [ $+ [ $network ] ] SSBOTNICK $nick $newnick %bot.key. [ $+ [ $network ] ] }
   recover
