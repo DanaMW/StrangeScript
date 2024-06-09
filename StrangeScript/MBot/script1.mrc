@@ -634,26 +634,26 @@ on *:TEXT:*:#: {
     if ($strip($1) == .ver) { $point $ver | $point You know it  10B04a10B04y | halt }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
-    if ($strip($1) == drop) && ($2 == dead) { set %report Exit | /report1 # Done | .exit | halt }
-    if ($strip($1) == go) && ($2 == away) { $point Fine then | .part # | timer $+ $rand(1,99) 1 30 join # | halt }
-    if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
+    if ($strip($1) == drop) && ($2 == dead) { msg # $report(Exit,$null,$null,Done) | .exit | halt }
+    if ($strip($1) == go) && ($2 == away) { msg # Fine then. | .part # pffft | timer $+ $rand(1,99) 1 30 join # | halt }
+    if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 :Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
     ;#.setvar Format: .setvar <variable> <value>/CLEAR (allows you to create, set, change, or clear a variable.)
     if ($strip($1) == .setvar) {
       if ($nick != %boss. [ $+ [ $network ] ]) { msg # $report(Nice Try,$null,This is a %boss. [ $+ [ $network ] ] only command) | halt }
-      if ($2 == $null) { $point Format: .setvar <variable> <value>/CLEAR | halt }
+      if ($2 == $null) { $point $report(Format:,$null,.setvar <variable> <value>/CLEAR) | halt }
       if ($3 == CLEAR) {
-        $point unsetting $2
+        $point $report(SetVar,$null,unsetting $2)
         unset $2
         halt
       }
       if ($3 == $null) {
         if ($var($2,1) == $null) { halt }
-        else { $point $report(Variable,$2,=,$var($2,1).value) | halt }
+        else { $point $report(SetVar,$2,=,$var($2,1).value) | halt }
       }
       else {
-        if (*%* !iswm $2) { $point Not a proper variable | halt }
+        if (*%* !iswm $2) { $point $report(SetVar,Error,Not a proper variable) | halt }
         set $2 $3-
-        $point setting $2 $3-
+        $point $report(SetVar,setting,$2,$3-)
         halt
       }
     }
@@ -687,12 +687,12 @@ on *:TEXT:*:#: {
     if ($strip($1) == .sl) { sl # | halt }
     ;#.info Format: .info (.)
     if ($strip($1) == .info) {
-      $point $report(Error,The Information Utility is not yet configured)
+      $point $report(Info,Error,The Information Utility is not yet configured)
       halt
     }
     ;#.spawn Format: .spawn # (.)
     if ($strip($1) == .spawn) {
-      $point $report(Error,The Information Utility is not yet configured)
+      $point $report(Spawn,Error,The Information Utility is not yet configured)
       halt
     }
     if ($left($strip($1-),1) == >) { SSPy $1- }
