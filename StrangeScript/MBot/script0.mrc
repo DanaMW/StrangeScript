@@ -62,7 +62,11 @@ on *:NOTICE:*:*:{
 }
 on *:JOIN:#: {
   set %lastjoin. $+ # $nick
-  if ($istok(%shitlist,$address($nick,4),44) == $true) { if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick Bot $+ $chr(160) $+ Shitlist } | halt }
+  if ($istok(%shitlist. [ $+ [ $network ] ],$address($nick,4),44) == $true) {
+    if (%shitlist.Do. [ $+ [ $network ] ] == ON) {
+      if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick :Bot $+ $chr(160) $+ Shitlist }
+    }
+  }
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Join,%spy1,$nick,$address) }
   if ($nick == $me) {
     if ($chan(#) isin %pound) && (%pound.active == ON) { .notice %boss. [ $+ [ $network ] ] 04 $+ Pound Disabled, Entered Room | .timerPND OFF | set %pound "" | set %pound.active OFF }
