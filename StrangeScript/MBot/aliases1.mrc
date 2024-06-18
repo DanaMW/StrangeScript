@@ -126,7 +126,7 @@ UP.Service {
   if ($exists(up_service.ini) == $false) { write -c up_service.ini }
   if ($1 == $null) { $pointer $report(UP,$null,Error,Null in command to,UP.Service) | return }
   if ($2 == $null) || ($3 == $null) || ($4 == $null) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-d/DEL/|-lLIST|-w/WIPE> <nick>) | return }
-  if ($4 != -A) && ($4 != ADD) && ($4 != -D) && ($4 != DEL) && ($4 != DELETE) && ($4 != -L) && ($4 != LIST) && ($4 != -W) && ($4 != WIPE) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-a/ADD|-d/DEL|-l/LIST|-w/WIPE> <nick>) | return }
+  if ($4 != -A) && ($4 != ADD) && ($4 != -D) && ($4 != DEL) && ($4 != DELETE) && ($4 != -L) && ($4 != LIST) && ($4 != -W) && ($4 != WIPE) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>) | return }
   if ($4 == -a) || ($4 == ADD) {
     if ($5 == $null) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>) | return }
     var %t.us = $readini(up_service.ini, n,$3,$5)
