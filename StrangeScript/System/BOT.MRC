@@ -563,10 +563,11 @@ alias bot.check {
 alias bothelp {
   if ($1 != $null) { set %tmp.bhlp $1 }
   else { set %tmp.bhlp $network }
-  $report($chain(18) Settings Display $chain(18)).active
+  $report($chain(18) Bot Show Menu $chain(18)).active
   $report($chain(2),$null,$null,$null,"/Bot SET BOT.xxx <value>" to alter).active
   $report($chain(2),$null,$null,$null,or "/Bot SET xxx <value>" works too).active
-  $report($chain(2),$null,$null,********************,********************).active
+  $report($chain(2),$null,$null,$null,do /Bot SET to see a list.).active
+  $report($chain(18) Settings Display $chain(18)).active
   $report($chain(2),$null,Bot Status,$sock(Bot [ $+ [ %tmp.bhlp ] ]).status,$sock(Bot [ $+ [ %tmp.bhlp ] ] ).name).active 
   $report($chain(2),$null,$null,Current Network,%tmp.bhlp).active
   $report($chain(2),$null,$null,bot.disp,%bot.disp. [ $+ [ %tmp.bhlp ] ] ).active
@@ -575,16 +576,11 @@ alias bothelp {
   $report($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.pass,%bot.pass. [ $+ [ %tmp.bhlp ] ] ).active
-  $report($chain(2),$null,$null,bot.value,%bot.value. [ $+ [ %tmp.bhlp ] ] ).active
-  $report($chain(2),$null,$null,bot.trigger,%bot.trigger. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.showall,%bot.showall. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.defense,%bot.defense. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.reconnect,%bot.reconnect. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.killwin,%bot.killwin. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.relay,%bot.relay. [ $+ [ %tmp.bhlp ] ] ).active
-  $report($chain(2),$null,$null,xxx,no value).active
-  $report($chain(2),$null,$null,********************,********************).active
-  $report($chain(2),$null,$null,$null,do /Bot SET to see a list.).active
   $report($chain(50)).active
   unset %tmp.bhlp
   return
@@ -598,8 +594,6 @@ alias botvar {
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.play).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.nick).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.pass).active
-  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.value).active
-  $report($chain(2),SET,$null,Option,$null,$null,$null,bot.trigger).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.showall).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.defense).active
   $report($chain(2),SET,$null,Option,$null,$null,$null,bot.reconnect).active
