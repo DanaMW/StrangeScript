@@ -30,8 +30,9 @@ on 1:CONNECT:{
   halt
 }
 on 1:DISCONNECT:{
-  ;.msg %boss. [ $+ [ $network ] ] $report(Dissconnect,$time)
+  ;point $report(Dissconnect,$time)
   unset %connected. [ $+ [ $network ] ]
+  unset %connserv. [ $+ [ $network ] ]
 }
 on 1:DCCSERVER:CHAT: halt
 on 1:DCCSERVER:SEND: halt

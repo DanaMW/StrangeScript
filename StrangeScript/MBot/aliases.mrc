@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.16.06.18.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.17.06.21.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -85,15 +85,15 @@ Check.Serv.Log {
   return
 }
 /recover {
-  if ($me == %recover) {
-    .timerREC OFF
+  if ($me == %recover. [ $+ [ $network ] ]) {
+    timerREC $+ $network OFF
     .notice %boss 04 $+ Nick Recovered
-    unset %recover
+    unset %recover. [ $+ [ $network ] ]
     halt
   }
-  if ($me != %recover) {
-    if (%recover != $null) { nick %recover }
-    .timerREC 1 10 recover
+  if ($me != %recover. [ $+ [ $network ] ]) {
+    if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] }
+    timerREC $+ $network 1 15 recover
   }
   return
 }
@@ -244,6 +244,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%autojoin. [ $+ [ $network ] ] == $null) { set %autojoin. [ $+ [ $network ] ] = #StrangeScript }
   if (%do.hex. [ $+ [ $network ] ] == $null) { set %do.hex. [ $+ [ $network ] ] OFF }
   set %connected. [ $+ [ $network ] ] $network 
+  set %connserv. [ $+ [ $network ] ] $server
   set %count.note 0
   set %pound.active OFF
   set %spy OFF
