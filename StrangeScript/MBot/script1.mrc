@@ -88,14 +88,25 @@ on *:TEXT:*:#: {
     if ($strip($1) == $chr(63) $+ $chr(63)) { SSpy.Help | halt }
     ;#.alias Format: .alias <alias> (Shows infomation on a given alias)
     if ($strip($1) == .alias) {
-      if ($isalias($2) != $true) { $point $report(Alias,Error,The alias,$2,was not found) | halt  }
-      else { $point $report(Alias,$2,is in,$isalias($2).fname) | halt }
+      if ($isalias($2) != $true) { $pointer $report(Alias,Note,The alias,$2,was not found) | halt  }
+      else {
+        .flood on
+        $pointer $report(Alias,$2,is in,$isalias($2).fname)
+        $pointer $report(Alias,is,$isalias($2,0).alias)
+        var %tmp.alsh 1
+        while (%tmp.alsh <= $isalias($2,0).alias) {
+          $pointer $report(Alias,$null,$isalias($2,%tmp.alsh).alias)
+          inc %tmp.alsh
+          if (%tmp.alsh > $isalias($2,0).alias) { break }
+        }
+      }
+      halt
     }
     ;#.aj Format: .aj (Joins all set .autojoin rooms.)
     if ($strip($1) == .AJ) { .raw join : $+ %autojoin. [ $+ [ $network ] ] | $point $report(AutoJoin All,$null,Joined,%autojoin. [ $+ [ $network ] ]) | halt }
     ;#.sop Format: .SOP <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto owner settings.)
     ;#.aop Format: .AOP <#room> <-A/ADD|-D/DEL|-L/LIST)|-W/WIPE> [<nick>] (Configures the join auto ops settings.)
-    ;#.hop Format: .HOP <#room> <-Aa/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto half ops settings.)
+    ;#.hop Format: .HOP <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto half ops settings.)
     if ($strip($1) == .SOP) || ($strip($1) == .AOP) || ($strip($1) == .HOP) {
       if ($2 == $null) { $point $report(UP,$null,Format: $upper($1) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>]) | halt }
       UP.Service # $remove($strip($1-),.)
@@ -170,10 +181,14 @@ on *:TEXT:*:#: {
     if ($strip($1) == .cycleall) { cycleall | halt }
     ;#.dcc Format: .dcc (Causes the bot to dcc chat the boss.)
     if ($strip($1) == .dcc) { .dcc chat %boss. [ $+ [ $network ] ] | halt }
-    ;#.deop Format: .deop <nick> [channel] (Makes the bot deop <nick> in current room or [channel].)
-    if ($strip($1) == .deop) { if ($2 == $null) { $point $report(Format,$null,$null,.deop <nick> or .deop <nick> <channel>) | halt } | if ($2 == %boss. [ $+ [ $network ] ]) { halt } | if ($3 == $null) { .raw mode $chan -o $2 | halt } | else { .raw mode $3 -o $2 | halt } }
+    ;#.deop Format: .deop [channel] <nick> (Makes the bot deop <nick> in current room or [channel].)
+    if ($strip($1) == .deop) {
+      if ($2 == $null) { $point $report(Format,$null,$null,.deop <nick> or .deop <nick> <channel>) | halt }
+      if ($2 == %boss. [ $+ [ $network ] ]) || ($3 == %boss. [ $+ [ $network ] ]) { halt }
+      if ($chr(35) isin $2) { .raw mode $2 -o $3 | halt } | else { .raw mode # -o $2 | halt }
+    }
     ;#.deq Format: .deq <nick> [channel] (Makes the bot deq <nick> in current room or [channel].)
-    if ($strip($1) == .deq) { if ($2 == $null) { $point $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
+    if ($strip($1) == .deq) { if ($2 == $null) { $pointer $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
     ;#.display Format: .display [CHAN/NOTICE/[HEX]] (Sets the bot reply channel/notice/[hex(format)]. Left blank it shows it's current state.)
     if ($strip($1) == .display) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
@@ -404,7 +419,7 @@ on *:TEXT:*:#: {
       $point $report(Play Method,$null,%method. [ $+ [ $network ] ]) $report(Base,$null,%base. [ $+ [ $network ] ])
       halt
     }
-    ;#.method Format: .method <MSG|NOTICE NICK|#CHANNEL> (The pair sets up the bot play method.)
+    ;#.method Format: .method <MSG|NOTICE> <NICK|#CHANNEL> (A way to set the bot play Method./Base. as a pair.)
     if ($strip($1) == .method) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
       if ($2 == MSG) || ($2 == NOTICE) && ($3 != $null) { set %method. [ $+ [ $network ] ] . $+ $2 | set %base. [ $+ [ $network ] ] $3 | goto ch2 | halt }
@@ -500,8 +515,13 @@ on *:TEXT:*:#: {
         halt
       }
     }
-    ;#.put Format: .put <channel> <text> (Makes the bot say <text> on <channel>.)
-    if ($strip($1) == .put) { msg $2 $3- | halt }
+    ;#.put Format: .put [#channel] <text> (Makes the bot say <text> on [#channel] or current channel if not defined.)
+    if ($strip($1) == .put) {
+      if ($2 == $null) { $pointer Format: .put [#channel] <text> (Makes the bot say <text> on [#channel] or current channel if not defined.) }
+      if ($chr(35) isin $2) { msg $2 $3- }
+      else { msg # $2- }
+      halt
+    }
     if ($strip($1) == .unmask) { if ($2 == $null) { $point You must include the nick | halt } | unmask $gettok($address($2,2),2,64) $2 | halt }
     ;#.q Format: .q or .q <nick> or .q <nick> ALOT (Makes the bot +q the boss or <nick> or +qqqqqq <nick>.)
     if ($strip($1) == .q) {
@@ -512,25 +532,23 @@ on *:TEXT:*:#: {
     }
     ;#.rand Format: .rand (Gives the bot a random lettered nick.)
     if ($strip($1) == .rand) { .nick $rand(A,Z) $+ $rand(A,Z) $+ $rand(A,Z) $+ $rand(A,Z) $+ $rand(A,Z) $+ $rand(A,Z) $+ $rand(A,Z) $+ $rand(A,Z) | halt }
-    ;#.raw Format: .raw <raw command> (This is a boss only command)
+    ;#.raw Format: .raw <raw command> (This is a no go command)
     if ($strip($1) == .raw) {
-      if ($2 == $null) { $point $report(Format,$null,$null,.raw <raw command>,This is a boss only command) | halt }
+      if ($2 == $null) { $point $report(Format,$null,$null,.raw <raw command>,This is a no go command) | halt }
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
       $replace($2-,$chr(160),$chr(32))
       $point $report(Raw,$null,Sent,$2-)
       halt
     }
     ;#.recover Format: .recover <nick> (Recovers the given nickname by all means at it's disposal.)
-    if ($strip($1) == .recover) { recover.do }
     ;#.remkey Format: .remkey (Deletes the owner and host key on the current channel.)
     if ($strip($1) == .remkey) { unset %key. [ $+ [ # ] ] | unset %key2. [ $+ [ # ] ] | set %report OwnerKey and Hostkey | /report1 # Deleted | halt }
-    ;#.recover Format: .recover <#> <nick> (The given bot number recovers given nickname.)
+    ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turn recover off.)
     if ($strip($1) == .recover) { 
-      if ($2 == $null) { $point Format: .recover <#> <nick> (The given bot number recovers given nickname.) | halt }
-      if ($2 == OFF) { .timerREC OFF | unset %recover | $point $report(Recover,Off) | halt }
-      elseif ($2 == $me) { set %recover $3 | $point $report(Recover,Attempting to recover,%recover) | recover | halt }
-      elseif ($2 == $mid($nopath($mircini),4,1)) { set %recover $3 | $point $report(Recover,Attempting to recover,%recover) | recover | halt }
-      else { halt }
+      if ($2 == $null) { $point $report(Recover,$null,Format: .recover <nick> (The bot recovers given nickname. Or turn recover off.)) | halt }
+      if ($2 == OFF) { .timerREC $+ $network OFF | unset %recover. [ $+ [ $network ] ] | $point $report(Recover,Off) | halt }
+      else { set %recover. [ $+ [ $network ] ] $2 | $point $report(Recover,Attempting to recover,%recover. [ $+ [ $network ] ]) | recover | halt }
+      halt
     }
     ;#.reload Format: .reload (reloads the bots scripts)
     if ($strip($1) == .reload) {
@@ -616,15 +634,18 @@ on *:TEXT:*:#: {
         $point $report(LastSeen,$2,$null,%tmp.xx)
       }
     }
-    ;#.servers Format: .servers (Lists the server connected to)
-    if ($strip($1) == .servers) {
-      $point $report(Servers,$null,Bot is connected to ,$scid(0) servers)
+    ;#.server Format: .server (Lists the server connected to) [same as servers]
+    ;#.servers Format: .servers (Lists the servers connected to) [same as server]
+    if ($strip($1) == .server) || ($strip($1) == .servers) {
+      $point $report(Server,$null,Bot is connected to ,$scid(0) servers)
       var %tmp.server = 1
       while (%tmp.server <= $var(connected*,0)) {
-        $point $report(Servers,%tmp.server,$var(connected*,%tmp.server).value)
+        if ($var(connected*,0) == 1) { $point $report(Server,%tmp.server,$var(connected*,%tmp.server).value) $report($var(connserv*,%tmp.server).value) }
+        else { $point $report(Servers,%tmp.server,$var(connected*,%tmp.server).value) $report($var(connserv*,%tmp.server).value) }
         inc %tmp.server
         if (%tmp.server > $var(connected*,0)) { break }
       }
+      $point $report(Server,$null,End of List)
     }
     ;#.setss Format: .setss <server> (Setup for servers)
     if ($strip($1) == .setss) {
