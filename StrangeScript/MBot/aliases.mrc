@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.17.06.21.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.18.06.26.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -218,12 +218,12 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
 }
 /auto.join {
   .raw mode $me +i
-  if (%do.autojoin. [ $+ [ $server ] ] == OFF) { return }
+  if (%do.autojoin. [ $+ [ $network ] ] == OFF) { return }
   var %tmp.oo = 1
-  while (%tmp.oo <= $numtok(%autojoin. [ $+ [ $network ] ],44)) {
-    .raw join $gettok(%autojoin. [ $+ [ $network ] ],%tmp.oo,44) %key. [ $+ [ $gettok(%autojoin. [ $+ [ $network ] ],%tmp.oo,44) ] ]
+  while (%tmp.oo <= $numtok(%autojoin.rooms.rooms. [ $+ [ $network ] ],44)) {
+    .raw join $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) %key. [ $+ [ $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) ] ]
     inc %tmp.oo
-    if (%tmp.oo > $numtok(%autojoin. [ $+ [ $network ] ],44)) { break }
+    if (%tmp.oo > $numtok(%autojoin.rooms. [ $+ [ $network ] ],44)) { break }
   }
   return
 }
@@ -232,16 +232,14 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%boss. [ $+ [ $network ] ] != $me) { .ctcp %boss. [ $+ [ $network ] ] REG }
   .raw mode $me +i
   set %IRCX.mode. [ $+ [ $network ] ] OFF
-  ;if ($server == strange.selfip.biz) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON | nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
-  ;if ($network == Jong) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON }
-  ;if ($network == IRCx) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON }
+  if ($network == IRCx) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON }
   if (%IRCX.mode. [ $+ [ $network ] ] == OFF) {
     if ($network == dalnet) { nickserv identify %irc.nick.pass.[ $+ [ $network ] ] }
     else { nickserv identify $me %irc.nick.pass.[ $+ [ $network ] ] }
   }
   if ($ial != $true) { .ial on }
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
-  if (%autojoin. [ $+ [ $network ] ] == $null) { set %autojoin. [ $+ [ $network ] ] = #StrangeScript }
+  if (%autojoin.rooms. [ $+ [ $network ] ] == $null) { set %autojoin.rooms. [ $+ [ $network ] ] = #StrangeScript }
   if (%do.hex. [ $+ [ $network ] ] == $null) { set %do.hex. [ $+ [ $network ] ] OFF }
   set %connected. [ $+ [ $network ] ] $network 
   set %connserv. [ $+ [ $network ] ] $server
@@ -278,12 +276,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   raw -q mode $1 +o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o+o-o $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 $2 
   halt
 }
-/fly {
-  if ($1 == 1) { .raw join $2 | .raw kick $2 $3 | .raw part $2 }
-  if ($1 == 2) { halt }
-  if ($1 == 3) { halt }
-  if ($1 == 4) { halt }
-}
+/fly { if ($chr(35) isin $1) { .raw join $1 $cr kick $1 :boom $cr part $1 } }
 /cycleall {
   set %rumble OFF
   set %tmp.quit 1

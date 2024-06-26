@@ -43,6 +43,7 @@ on *:TEXT:*:#: {
     }
     ;#.help Format: .help [[.]<command>] (Makes the bot show the complete command list or the specified command.)
     if ($strip($1) == .help) {
+      .flood off
       write -c bothelp.txt
       if ($2 == $null) {
         $point $report(Help,$null,Please wait while I extract the help.,This may take a second.)
@@ -92,7 +93,7 @@ on *:TEXT:*:#: {
       else {
         .flood on
         $pointer $report(Alias,$2,is in,$isalias($2).fname)
-        $pointer $report(Alias,is,$isalias($2,0).alias)
+        ;$pointer $report($null,$null,$isalias($2,0).alias),lines)
         var %tmp.alsh 1
         while (%tmp.alsh <= $isalias($2,0).alias) {
           $pointer $report(Alias,$null,$isalias($2,%tmp.alsh).alias)
@@ -103,7 +104,7 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.aj Format: .aj (Joins all set .autojoin rooms.)
-    if ($strip($1) == .AJ) { .raw join : $+ %autojoin. [ $+ [ $network ] ] | $point $report(AutoJoin All,$null,Joined,%autojoin. [ $+ [ $network ] ]) | halt }
+    if ($strip($1) == .AJ) { .raw join : $+ %autojoin.rooms. [ $+ [ $network ] ] | $point $report(AutoJoin All,$null,Joined,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
     ;#.sop Format: .SOP <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto owner settings.)
     ;#.aop Format: .AOP <#room> <-A/ADD|-D/DEL|-L/LIST)|-W/WIPE> [<nick>] (Configures the join auto ops settings.)
     ;#.hop Format: .HOP <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto half ops settings.)
@@ -115,25 +116,25 @@ on *:TEXT:*:#: {
     ;#.autojoin Format: .autojoin <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST|-C/CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from currently joined rooms.)
     if ($strip($1) == .AUTOJOIN) {
       if ($2 == $null) { $point Format: .autojoin <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST|-C/CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from currently joined rooms.) | halt }
-      if ($2 == -S) || ($2 == SHOW) { $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
-      if ($2 == -L) || ($2 == LIST) { $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ]) | halt }
+      if ($2 == -S) || ($2 == SHOW) { $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
+      if ($2 == -L) || ($2 == LIST) { $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
       if ($2 == -A) || ($2 == ADD) {
         if ($chr(35) !isin $3) { var %t.aaj = $chr(35) $+ $3 }
         else { var %t.aaj = $3 }
-        set %autojoin. [ $+ [ $network ] ] $addtok(%autojoin. [ $+ [ $network ] ],%t.aaj,44)
-        $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ])
+        set %autojoin.rooms. [ $+ [ $network ] ] $addtok(%autojoin.rooms. [ $+ [ $network ] ],%t.aaj,44)
+        $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ])
         halt
       }
       if ($2 == -D) || ($2 == DEL) || ($2 == DELETE) {
         if ($chr(35) !isin $3) { var %t.daj = $chr(35) $+ $3 }
         else { var %t.daj = $3 }
-        set %autojoin. [ $+ [ $network ] ] $remtok(%autojoin. [ $+ [ $network ] ],%t.daj,44)
-        $point $report(Current,$null,$null,%autojoin. [ $+ [ $network ] ])
+        set %autojoin.rooms. [ $+ [ $network ] ] $remtok(%autojoin.rooms. [ $+ [ $network ] ],%t.daj,44)
+        $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ])
         halt
       }
-      if ($2 == ON) { set %do.autojoin ON | $point $report(Current,$null,$null,%do.autojoin) | halt }
-      if ($2 == OFF) { set %do.autojoin OFF | $point $report(Current,$null,$null,%do.autojoin) | halt }
-      if ($2 == -C) || ($2 == CREATE) { insta.aj | $point $report(Current,Created New,$null,%autojoin. [ $+ [ $network ] ]) | halt }
+      if ($2 == ON) { set %do.autojoin. [ $+ [ $network ] ] ON | $point $report(Current,$null,$null,%do.autojoin. [ $+ [ $network ] ]) | halt }
+      if ($2 == OFF) { set %do.autojoin. [ $+ [ $network ] ] OFF | $point $report(Current,$null,$null,%do.autojoin. [ $+ [ $network ] ]) | halt }
+      if ($2 == -C) || ($2 == CREATE) { insta.aj | $point $report(Current,Created New,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
       halt
     }
     ;#.away Format: .away <reason> (Sets the bot away.)

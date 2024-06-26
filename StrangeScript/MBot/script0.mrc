@@ -15,7 +15,7 @@ alias mygo  {
   return
 }
 on 1:CONNECT:{
-  ;if ($chr(37) isin %autojoin. [ $+ [ $network ] ]) && (%IRCX.mode. [ $+ [ $network ] ] == ON) { ircx }
+  ;if ($chr(37) isin %autojoin.rooms. [ $+ [ $network ] ]) && (%IRCX.mode. [ $+ [ $network ] ] == ON) { ircx }
   auto.join
   join.setup
   ;
