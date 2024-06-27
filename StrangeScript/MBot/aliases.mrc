@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.18.06.26.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.19.06.27.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -139,7 +139,7 @@ report {
 }
 /take { mkall # }
 info return StrangeServer
-mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) $chr(91) IRCX: %IRCX.mode. [ $+ [ $network ] ] $chr(93) $chr(91) $server $chr(93) }
+mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc. [ $+ [ $network ] ] $chr(93) $chr(91) IRCX: %IRCX.mode. [ $+ [ $network ] ] $chr(93) $chr(91) $server $chr(93) }
 /join { jn $1 $2 $3 $4 $5 $6- }
 /jn {
   if ($2 != $null) { .raw join $1 $2- }

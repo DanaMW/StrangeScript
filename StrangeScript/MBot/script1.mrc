@@ -353,16 +353,16 @@ on *:TEXT:*:#: {
     }
     ;#.lag Format: .lag (Shows the bots lag on the server.)
     if ($strip($1) == .lag) {
-      if ($2 == silent) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc) | halt }
-      else { $point $report(Lag Report,$server,%Lag.mrc) | halt }
+      if ($2 == silent) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
+      else { $point $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
     }
     ;#.LiveMenu Format: .livemenu (Enters the interactive ip to ip mirc ini editor.)
     if ($strip($1) == .livemenu) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
       ;if ($2 == $null) { $point.LiveMenu Format: .livemenu (Enters the interactive ip to ip mirc ini editor.) | halt }
       LiveMenu # $nick
-      ;  if ($2 == silent) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc) | halt }
-      ;  else { $point $report(Lag Report,$server,%Lag.mrc) | halt }
+      ;  if ($2 == silent) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
+      ;  else { $point $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
     }
     ;#.log Format: .log <-s ON/OFF|-q ON/OFF|ON|OFF|SHOW> (Turns log reads on or off.)
     if ($strip($1) == .log) {
@@ -541,12 +541,24 @@ on *:TEXT:*:#: {
       $point $report(Raw,$null,Sent,$2-)
       halt
     }
-    ;#.recover Format: .recover <nick> (Recovers the given nickname by all means at it's disposal.)
+    ;#.reconnect Format: .reconnect <ON|OFF> ( Sets reconnect after disconnect for the bot [You must use .quit to exit if ON]. )
+    if ($strip($1) == .reconnect) {
+      var %tmp.reconnect = $lcr
+      if ($2 == ON) {
+        set %reconnect. [ $+ [ $network ] ] ON
+      }
+      if ($2 == OFF) {
+        set %reconnect. [ $+ [ $network ] ] OFF
+      }
+      else { $point $report(Reconnect,$null,is set to,%reconnect. [ $+ [ $network ] ]) | halt }
+      $point $report(Reconnect,$null,switched to,%reconnect. [ $+ [ $network ] ])
+      return
+    }
     ;#.remkey Format: .remkey (Deletes the owner and host key on the current channel.)
     if ($strip($1) == .remkey) { unset %key. [ $+ [ # ] ] | unset %key2. [ $+ [ # ] ] | set %report OwnerKey and Hostkey | /report1 # Deleted | halt }
-    ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turn recover off.)
+    ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turns recover off.)
     if ($strip($1) == .recover) { 
-      if ($2 == $null) { $point $report(Recover,$null,Format: .recover <nick> (The bot recovers given nickname. Or turn recover off.)) | halt }
+      if ($2 == $null) { $point $report(Recover,$null,Format: .recover <nick> (The bot recovers given nickname. Or turns recover off.)) | halt }
       if ($2 == OFF) { .timerREC $+ $network OFF | unset %recover. [ $+ [ $network ] ] | $point $report(Recover,Off) | halt }
       else { set %recover. [ $+ [ $network ] ] $2 | $point $report(Recover,Attempting to recover,%recover. [ $+ [ $network ] ]) | recover | halt }
       halt

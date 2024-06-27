@@ -331,6 +331,14 @@ masterwrite {
   else { echo -t $2 $output  $+ %sc.me $+ $lll $white $+ $1  $+ %sc.me $+ $rrr $+  $report($null,UnHexed) $+  $replace(%hex.comp,$chr(95),$chr(160)) }
   unset %hex.* %n
 }
+lcr {
+  set %recon.L 0
+  set %recon.C 0
+  set %recon.R 0
+  if (%reconnect. [ $+ [ $network ] ] == OFF) { set %recon.L 0 }
+  if (%reconnect. [ $+ [ $network ] ] == ON) { set %recon.L 1 }
+  return %recon.L $+ %recon.C $+ %recon.R
+}
 ;/notice {
 ;  haltdef
 ;  if (%do.hex. [ $+ [ $network ] ] == ON) {

@@ -30,9 +30,18 @@ on 1:CONNECT:{
   halt
 }
 on 1:DISCONNECT:{
-  ;point $report(Dissconnect,$time)
-  unset %connected. [ $+ [ $network ] ]
-  unset %connserv. [ $+ [ $network ] ]
+  if (%reconnect. [ $+ [ $network ] ] == ON) {
+    unset %connected. [ $+ [ $network ] ]
+    unset %connserv. [ $+ [ $network ] ]
+    beep | beep | beep
+    server $network
+    return
+  }
+  else {
+    unset %connected. [ $+ [ $network ] ]
+    unset %connserv. [ $+ [ $network ] ]
+    halt
+  }
 }
 on 1:DCCSERVER:CHAT: halt
 on 1:DCCSERVER:SEND: halt
@@ -182,26 +191,26 @@ on *:PART:#:{
     }
   }
 }
-alias Lgchk { .timer850. $+ $network 0 %Lag.mrc.secs Lagchk }
-alias Lagchk { set %Lag.mrc.tmp $ticks | .raw Lag-CK }
-alias Lagon { echo -st 04 $+ Auto Lag Check is now 11 $+ ON | set %Lagchk on | Lgchk }
-alias Lagoff { echo -st 04 $+ Auto Lag Check is now 11 $+ OFF | set %Lagchk off | .timer850. $+ $network off }
-alias ShowLag { if (%Clock == off) { titlebar - $chr(91) $logo ©1999-2024 ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc $chr(93) } }
+alias Lgchk { .timer850. $+ $network 0 %Lag.mrc.secs. [ $+ [ $network ] ] Lagchk }
+alias Lagchk { set %Lag.mrc.tmp. [ $+ [ $network ] ] $ticks | .raw Lag-CK }
+alias Lagon { $pointer $report(Auto Lag Check,$null,is now,ON) | set %Lagchk. [ $+ [ $network ] ] ON | Lgchk }
+alias Lagoff { $pointer $report(Auto Lag Check,$null,is now,OFF) | set %Lagchk. [ $+ [ $network ] ] OFF | .timer850. $+ $network OFF }
+alias ShowLag { if (%Clock. [ $+ [ $network ] ] == OFF) { titlebar - $chr(91) $logo ©1999-2024 ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc. [ $+ [ $network ] ] $chr(93) } }
 alias Lagset { 
   if ($1 == $null) { echo -at 04 $+ Auto Lag Check syntax: /Lagset <seconds> | halt } 
   if ($1 != $null) {
     set %Lag.mrc.secs. [ $+ [ $network ] ] $1
-    echo -st 04 $+ Set Auto Lag Check to 11 $+ %Lag.mrc.secs 04 $+ seconds between. 
+    point $report(Auto Lag Check,SET,to,%Lag.mrc.secs. [ $+ [ $network ] ] seconds between.)
     if (%Lagchk. [ $+ [ $network ] ] == ON) { Lgchk }
   }
 }
 raw 421:*: { 
   if $2 == Lag-CK {
-    %Lag.mrc = $ticks - %Lag.mrc.tmp
-    if $len(%Lag.mrc) == 3 { set %Lag.mrc . $+ %Lag.mrc secs | ShowLag | halt }
-    if $len(%Lag.mrc) < 3 { %Lag.mrc = .0 $+ %Lag.mrc secs | ShowLag | halt }
-    if $len(%Lag.mrc) > 3 { %tmp = $len(%Lag.mrc) - 3 | %Lag.mrc = $mid(%Lag.mrc,1,%tmp) $+ . $+ $mid(%Lag.mrc,%tmp,3) secs | ShowLag | unset %tmp | halt }
-    titlebar $chr(91) lag: %Lag.mrc $chr(93)
+    %Lag.mrc. [ $+ [ $network ] ] = $ticks - %Lag.mrc.tmp. [ $+ [ $network ] ]
+    if $len(%Lag.mrc. [ $+ [ $network ] ]) == 3 { set %Lag.mrc. [ $+ [ $network ] ] . $+ %Lag.mrc. [ $+ [ $network ] ] secs | ShowLag | halt }
+    if $len(%Lag.mrc. [ $+ [ $network ] ]) < 3 { %Lag.mrc. [ $+ [ $network ] ] = .0 $+ %Lag.mrc. [ $+ [ $network ] ] secs | ShowLag | halt }
+    if $len(%Lag.mrc. [ $+ [ $network ] ]) > 3 { %tmp = $len(%Lag.mrc. [ $+ [ $network ] ]) - 3 | %Lag.mrc. [ $+ [ $network ] ] = $mid(%Lag.mrc. [ $+ [ $network ] ],1,%tmp) $+ . $+ $mid(%Lag.mrc. [ $+ [ $network ] ],%tmp,3) secs | ShowLag | unset %tmp | halt }
+    titlebar $chr(91) lag: %Lag.mrc. [ $+ [ $network ] ] $chr(93)
   }
 }
 raw prop:*: {
