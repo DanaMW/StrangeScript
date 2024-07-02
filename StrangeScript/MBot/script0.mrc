@@ -270,6 +270,7 @@ on 1:ctcpreply:*:{
       }
       if (%ping.tmp <= 1) { set %ping.tmp $chr(149) $+ $str($chr(215),9) }
       .notice %ping.nick Ping reply from you took %ping.tmp1
+      $point $report(Ping Reply,$null,%ping.nick,took about,%ping.tmp1)
       unset %ping.chan %ping.nick
     }
     halt

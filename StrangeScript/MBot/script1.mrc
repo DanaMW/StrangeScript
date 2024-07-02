@@ -351,9 +351,11 @@ on *:TEXT:*:#: {
       if ($2 == %boss. [ $+ [ $network ] ]) { halt }
       if ($chr(35) isin $2) { .kick $2 $3 $4- | halt } | else { .kick # $2 $3- | halt }
     }
-    ;#.lag Format: .lag (Shows the bots lag on the server.)
+    ;#.lag Format: .lag <ON|OFF|-S/SILENT> <No parameter will show the bots lag on the server.)
     if ($strip($1) == .lag) {
-      if ($2 == silent) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
+      if ($2 == ON) { Lagon | halt }
+      if ($2 == OFF) { Lagoff | halt }
+      if ($2 == silent) || ($2 == -S) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
       else { $point $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
     }
     ;#.LiveMenu Format: .livemenu (Enters the interactive ip to ip mirc ini editor.)
@@ -488,7 +490,12 @@ on *:TEXT:*:#: {
     }
     ;#.ping Format: .ping [<nick|channel>] (Pings you, nick or channel. )
     if ($strip($1) == .ping) {
-      if ($2 == $null) { set %ping.chan # | set %ping.nick $nick | .raw -q privmsg $nick : $+ $chr(1) $+ PING $ticks $+ $chr(1) | halt }
+      if ($2 == $null) { 
+        set %ping.chan #
+        set %ping.nick $nick
+        .raw -q privmsg $nick : $+ $chr(1) $+ PING $ticks $+ $chr(1)
+        halt
+      }
       if ($2 != $null) {
         set %ping.chan #
         if ($chr(35) isin $2) { unset %ping.nick }

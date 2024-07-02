@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.19.06.27.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.20.07.01.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -220,7 +220,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   .raw mode $me +i
   if (%do.autojoin. [ $+ [ $network ] ] == OFF) { return }
   var %tmp.oo = 1
-  while (%tmp.oo <= $numtok(%autojoin.rooms.rooms. [ $+ [ $network ] ],44)) {
+  while (%tmp.oo <= $numtok(%autojoin.rooms. [ $+ [ $network ] ],44)) {
     .raw join $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) %key. [ $+ [ $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) ] ]
     inc %tmp.oo
     if (%tmp.oo > $numtok(%autojoin.rooms. [ $+ [ $network ] ],44)) { break }
