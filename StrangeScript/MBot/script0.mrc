@@ -122,7 +122,7 @@ on 1:TEXT:*:?:{
   close -m
   if ($nick == %boss. [ $+ [ $network ] ]) { if ($strip($1) == .identify) { nickserv identify $2 | halt } }
   if ($nick != ChanServ) && ($nick != OperServ) && ($nick != NickServ) { .notice %boss. [ $+ [ $network ] ] Whisper@ $+ $nick $+ : $1- }
-  if ($left($1,2) == ) { unhex.out $nick $nick $right($1-,-2) | halt }
+  ;if ($left($1,2) == ) { unhex.out $nick $nick $right($1-,-2) | halt }
 }
 on *:NICK: {
   if ($nick == %boss. [ $+ [ $network ] ]) {
