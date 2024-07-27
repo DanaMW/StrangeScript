@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.21.07.04.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.23.07.25.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -84,18 +84,70 @@ Check.Serv.Log {
   mode $me
   return
 }
+;/recover {
+;  if ($1 == OFF) {
+;    timerREC $+ $network OFF
+;    halt
+;  }
+;  if ($me == %recover. [ $+ [ $network ] ]) {
+;    timerREC $+ $network OFF
+;    .notice %boss 04 $+ Nick Recovered
+;    unset %recover. [ $+ [ $network ] ]
+;    halt
+;  }
+;  if ($me != %recover. [ $+ [ $network ] ]) {
+;    if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] }
+;    timerREC $+ $network 1 15 recover $1
+;  }
+;  return
+;}
 /recover {
-  if ($me == %recover. [ $+ [ $network ] ]) {
-    timerREC $+ $network OFF
-    .notice %boss 04 $+ Nick Recovered
-    unset %recover. [ $+ [ $network ] ]
-    halt
+  if ($1 == OFF) {
+    set %recover. [ $+ [ $network ] ] ""
+    .timernick. $+ $network off
+    $report(Auto Nick Recover,Set,Off).active
+    return
   }
-  if ($me != %recover. [ $+ [ $network ] ]) {
-    if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] }
-    timerREC $+ $network 1 15 recover
+  if ($1 == $null) {
+    var %tmp.recover = $input(Enter the nick to recover,egi,StrangeScript needs input,NewUser)
+    if (%tmp.recover == %null) { return }
+    if ($key(settings,savednick1) == $null) { keywrite settings savednick1 %tmp.recover }
+    keywrite settings recover %tmp.recover
+    .timerRECOV. $+ $network 0 15 assimilate $key(settings,recover)
+    $report(Auto Nick Recover,$key(settings,recover),On,Recovering Nickname).active
+    assimilate $key(settings,recover)
+    return
   }
-  return
+  if ($1 != $null) { 
+    keywrite settings recover $1
+    ;.timerNICK. $+ $network 0 15 assimilate $key(settings,recover)
+    .timerRECOV. $+ $network 0 15 assimilate $key(settings,recover)
+    ;$report(Auto Nick Recover,$key(settings,recover),On,Recovering Nickname).active
+    assimilate $key(settings,recover)
+    return
+  }
+}
+/assimilate {
+  if (guest* iswm $me) && ($key(settings,beme) == ON) { keywrite settings recover $key(settings,savednick1) }
+  if ($key(settings,recover) == $null) {
+    if (timer(RECOV. [ $+ [ $network ] ] ) != $null) { .timerRECOV. $+ $network off }
+    return
+  } 
+  if ($me == $key(settings,recover)) {
+    $report(Auto Nick Recover,$key(settings,recover),Done,Recover Complete).active
+    .timerRECOV. $+ $network off
+    if ($readini($textdir $+ PassWord.ini,n,$network,$me) != $null) { nickserv identify $key(settings,recover) $readini($textdir $+ PassWord.ini,n,$network,$me) }
+    keywrite settings recover ""
+    mode $me
+    return
+  }
+  if ($key(settings,recover) != $me) {
+    keywrite settings nicktime.active ON
+    .timer 1 15 keywrite settings nicktime.active OFF
+    if ($key(settings,recover) != $null) { nick $key(settings,recover) } 
+    $report(Auto Nick Recover,$key(settings,recover),Attempting to Recover Nickname).active
+    return
+  }
 }
 /report1 {
   .msg $1 10 $+ $chr(91) $+ 00,01 $+ %report $+ 10 $+ $chr(93) $chr(91) $+ 11,01 $+ $2- $+  $+ 10 $+ $chr(93)

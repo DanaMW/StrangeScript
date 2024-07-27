@@ -438,6 +438,10 @@ on *:TEXT:*:#: {
       .cycle
       halt
     }
+    ;#.pending Format: .pending (Let's you know $true or $false if the machine has a reboot pending.)
+    if ($strip($1) == .pending) {
+      halt
+    }
     ;#.take Format: .take (Makes the bot try to take the current room.)
     if ($strip($1) == .take) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
@@ -462,7 +466,7 @@ on *:TEXT:*:#: {
       if ($2 == long) { .nick $2 $+ $chr(91) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $chr(93) | halt }
       if ($2 != inc) && ($2 != long) { .nick $3 $+ $chr(91) $+ $right($remove($nopath($mircini),.ini),-3) $+ $chr(93) | halt }  
     }
-    ;#.o Format: .o [nick] (makes the bot op the boos or [nick] on current channel.)
+    ;#.o Format: .o [nick] (makes the bot op the boss or [nick] on current channel.)
     if ($strip($1) == .o) { if ($2 == $null) { .raw mode $chan +o $nick | halt } | if ($2 == ?) { .raw mode $chan +o %lastjoin. [ $+ [ $chan ] ] | halt } | else { .raw mode $chan +o $2 | halt } }
     ;#.oper  Format: .oper (makes the bot send /Oper to the server.)
     if ($strip($1) == .oper) {
@@ -566,8 +570,13 @@ on *:TEXT:*:#: {
     ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turns recover off.)
     if ($strip($1) == .recover) { 
       if ($2 == $null) { $point $report(Recover,$null,Format: .recover <nick> (The bot recovers given nickname. Or turns recover off.)) | halt }
-      if ($2 == OFF) { .timerREC $+ $network OFF | unset %recover. [ $+ [ $network ] ] | $point $report(Recover,Off) | halt }
-      else { set %recover. [ $+ [ $network ] ] $2 | $point $report(Recover,Attempting to recover,%recover. [ $+ [ $network ] ]) | recover | halt }
+      if ($2 == OFF) {
+        .timerREC $+ $network OFF
+        unset %recover. [ $+ [ $network ] ]
+        $point $report(Recover,Off)
+        halt
+      }
+      else { set %recover. [ $+ [ $network ] ] $2$point $report(Recover,Attempting to recover,%recover. [ $+ [ $network ] ]) | recover | halt }
       halt
     }
     ;#.reload Format: .reload (reloads the bots scripts)
@@ -578,7 +587,10 @@ on *:TEXT:*:#: {
     ;#.reup Format: .reup (Causes the bot to restart)
     if ($strip($1) == .reup) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
-      server $server
+      if ($network == Dalnet) { server irc.dal.net | return }
+      if ($network == Libera.Chat) { server irc.Libera.Chat | return }
+      else { server $server }
+      halt
     }
     ;#.safe Format: .safe (Goes into Safe mode ignoring everything except you)
     if ($strip($1) == .safe) { .ignore -u60 *!*@* | halt }
@@ -657,13 +669,14 @@ on *:TEXT:*:#: {
     ;#.server Format: .server (Lists the server connected to) [same as servers]
     ;#.servers Format: .servers (Lists the servers connected to) [same as server]
     if ($strip($1) == .server) || ($strip($1) == .servers) {
-      $point $report(Server,$null,Bot is connected to ,$scid(0) servers)
-      var %tmp.server = 1
-      while (%tmp.server <= $var(connected*,0)) {
-        if ($var(connected*,0) == 1) { $point $report(Server,%tmp.server,$var(connected*,%tmp.server).value) $report($var(connserv*,%tmp.server).value) }
-        else { $point $report(Servers,%tmp.server,$var(connected*,%tmp.server).value) $report($var(connserv*,%tmp.server).value) }
-        inc %tmp.server
-        if (%tmp.server > $var(connected*,0)) { break }
+      ;$pointer $report(Server,$null,Bot is connected to ,$scid(0) servers)
+      var %tmp.srv1 = 1
+      var %tmp.srv2 = $var(connected*,0)
+      while (%tmp.srv1 <= %tmp.srv2) {
+        if (%tmp.srv2 == 1) { $point $report(Server,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
+        else { $point $report(Server,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
+        inc %tmp.srv1
+        if (%tmp.srv1 > %tmp.srv2) { break }
       }
       $point $report(Server,$null,End of List)
     }
