@@ -1,8 +1,8 @@
 on *:TEXT:*:#:{
   ;sstalkflood $nick
-  if ($istok(%talk.room,$chan,44) != $true) { halt }
+  if ($istok(%talk.room. [ $+ [ $network ] ],$chan,44) != $true) { halt }
   if ($nick == $chan(#)) { halt }
-  if ($nick == %boss) { if (*shutup* iswm $strip($1-)) { .msg # $report(Speach interaction,$null,$null,Off) | .unload -rs talker.mrc | halt  } }
+  if ($nick == %boss. [ $+ [ $network ] ]) { if (*shutup* iswm $strip($1-)) { $pointer $report(Speach interaction,$null,$null,Off) | .unload -rs talker.mrc | halt  } }
   if (*shutup* iswm $strip($1-)) { .msg # Yeah right like you could ever tell me what to do | halt }
   if (godamn isin $strip($1-)) { .msg # $read $mircdirtext\god.txt | halt }
   if (goddamn isin $strip($1-)) { .msg # $read $mircdirtext\god.txt | halt }

@@ -162,11 +162,11 @@ on *:TEXT:*:#: {
     }
     ;#.boss Format: .boss <nick> (Sets nick/you boss in the bot and registers it.)
     if ($strip($1) == .boss) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
-      if ($2 == $null) { set %boss. [ $+ [ $network ] ] $nick }
+      if ($2 == $null) { $point $report(Boss,$null,is set at,%boss. [ $+ [ $network ] ]) | halt }
       else { set %boss. [ $+ [ $network ] ] $2 }
-      $point $report(Set Boss,$null,Boss is now set:,%boss. [ $+ [ $network ] ]) 
-      check.boss
+      ;$point $report(Set Boss,$null,Boss is now set:,%boss. [ $+ [ $network ] ])
+      check.boss %boss. [ $+ [ $network ] ]
+      halt
     }
     ;#.cb Format: .cb (Runs Check.Boss)
     if ($strip($1) == .cb) {
@@ -569,15 +569,17 @@ on *:TEXT:*:#: {
     if ($strip($1) == .remkey) { unset %key. [ $+ [ # ] ] | unset %key2. [ $+ [ # ] ] | set %report OwnerKey and Hostkey | /report1 # Deleted | halt }
     ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turns recover off.)
     if ($strip($1) == .recover) { 
-      if ($2 == $null) { $point $report(Recover,$null,Format: .recover <nick> (The bot recovers given nickname. Or turns recover off.)) | halt }
-      if ($2 == OFF) {
-        .timerREC $+ $network OFF
-        unset %recover. [ $+ [ $network ] ]
-        $point $report(Recover,Off)
-        halt
-      }
-      else { set %recover. [ $+ [ $network ] ] $2$point $report(Recover,Attempting to recover,%recover. [ $+ [ $network ] ]) | recover | halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
+      recover $2-
       halt
+      ;if ($2 == OFF) {
+      ;  .timerREC $+ $network OFF
+      ;  unset %recover. [ $+ [ $network ] ]
+      ;  $point $report(Recover,Off)
+      ;  halt
+      ;}
+      ;else { set %recover. [ $+ [ $network ] ] $2 | $point $report(Recover,Attempting to recover,%recover. [ $+ [ $network ] ]) | recover | halt }
+      ;halt
     }
     ;#.reload Format: .reload (reloads the bots scripts)
     if ($strip($1) == .reload) {
@@ -733,12 +735,28 @@ on *:TEXT:*:#: {
     }
     ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
+    ;
     ;#.talk Format: .talk ON/OFF (Turns bot talker on or off for the room you are in.)
+    if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
     if ($strip($1) == .talk) {
-      if ($2 == ON) { .load -rs talker.mrc | if ($3 != $null) { set %talk.room $3 } | if ($3 == $null) { set %talk.room # } | $point $report(Speach Interaction,$null,$null,On) | $point $report(Active Rooms,$null,$null,%talk.room) | halt }
-      if ($2 == OFF) { .unload -rs talker.mrc | unset %talk.room | $point $report(Speach interaction,$null,$null,Off) | halt }
+      if ($2 == ON) { 
+        .load -rs talker.mrc
+        if ($3 == $null) { set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],#,44) }
+        if ($3 != $null) { set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44) }
+        $point $report(Speach Interaction,$null,$null,On)
+        $point $report(Active Rooms,$null,$null,%talk.room. [ $+ [ $network ] ])
+        halt
+      }
+      if ($2 == OFF) {
+        if ($3 != $null) { set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44) }
+        if ($3 == $null) { set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],#,44) }
+        $point $report(Speach interaction,$null,Turned,Off)
+        halt
+      }
+      else { $point $report(Active Rooms,$null,$null,%talk.room. [ $+ [ $network ] ]) | halt }
       halt
     }
+    ;
     ;#.timer Format: .timer (displays the currently active timers and info.)
     if ($strip($1) == .timer) { timer.show # }
     ;#.tease Format: .tease (.)

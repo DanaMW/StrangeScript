@@ -180,18 +180,18 @@ play.filter {
 }
 key {
   ;1=network 2=room 3=key
-  var %tmp.fold = $textdir $+ $network $+ .ini
+  var %tmp.fold = $network $+ .ini
   return $readini(%tmp.fold,$1,$2)
 }
 master {
   ;1=network 2=room 3=key
-  var %tmp.fold = $textdir $+ ScriptInfo.ini
+  var %tmp.fold = ScriptInfo.ini
   return $readini(%tmp.fold,$1,$2)
 }
 keywrite {
   ;keywrite Room key value
   if ($1 == $null) || ($2 == $null) { $report(Error In KeyWrite: Trying to delete key,$1-).active | return }
-  var %tmp.fold = $textdir $+ $network $+ .ini
+  var %tmp.fold = $network $+ .ini
   if ($3 != $null) { .writeini %tmp.fold $1 $2 $3- }
   else { .writeini %tmp.fold $1 $2 "" }
   return
@@ -199,7 +199,7 @@ keywrite {
 masterwrite {
   ;masterwrite Room key value
   if ($1 == $null) || ($2 == $null) { $report(Error In MasterWrite: Trying to delete key,$1-).active | return }
-  var %tmp.fold = $textdir $+ ScriptInfo.ini
+  var %tmp.fold = ScriptInfo.ini
   if ($3 != $null) { .writeini %tmp.fold $1 $2 $3- }
   else { .writeini %tmp.fold $1 $2 "" | $report(MasterWrite: Clearing key,$1-).active }
   return
