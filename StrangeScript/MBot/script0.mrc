@@ -19,7 +19,7 @@ on 1:CONNECT:{
   auto.join
   join.setup
   ;
-  timerBOSSSET $+ $network 1 1 Check.Boss
+  timerBOSSSET $+ $network 1 1 Check.Boss $me
   ;Check.Boss
   ;
   if ($nopath($mircini) == SSC1.mrc) {
@@ -33,7 +33,7 @@ on 1:DISCONNECT:{
   if (%reconnect. [ $+ [ $network ] ] == ON) {
     unset %connected. [ $+ [ $network ] ]
     unset %connserv. [ $+ [ $network ] ]
-    beep | beep | beep
+    beep | beep
     server $network
     return
   }

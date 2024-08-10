@@ -570,7 +570,7 @@ on *:TEXT:*:#: {
     ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turns recover off.)
     if ($strip($1) == .recover) { 
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
-      recover $2-
+      recover $2
       halt
       ;if ($2 == OFF) {
       ;  .timerREC $+ $network OFF
