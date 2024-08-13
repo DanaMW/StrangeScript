@@ -19,7 +19,7 @@ on 1:CONNECT:{
   auto.join
   join.setup
   ;
-  timerBOSSSET $+ $network 1 1 Check.Boss $me
+  timerBOSSSET $+ $network 1 1 Check.Boss %boss. [ $+ [ $network ] ]
   ;Check.Boss
   ;
   if ($nopath($mircini) == SSC1.mrc) {
