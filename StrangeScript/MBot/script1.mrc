@@ -176,9 +176,13 @@ on *:TEXT:*:#: {
     }
     ;#.cnn Format: .cnn [<-r|-u>] [<NUM>] (Gets CNN News or URL.)
     if ($strip($1) == .cnn) { cnn # $nick $2- | halt }
-    ;#.cycle Format: .cycle [<channel>] (Cycles the current or given channel.)
-    if ($strip($1) == .cycle) { if ($2 == $null) { .raw part $chan $cr join $chan %key. [ $+ [ $chan ] ] | halt } | else { .raw part $2 | .raw join $2 %key. [ $+ [ $2 ] ] | halt } }
-    ;#.cycleall Format: .cycleall (Cycles all channels.)
+    ;#.cycle Format: .cycle [<channel>|-A] (Cycles the current or given channel or cycles all joined channels.)
+    if ($strip($1) == .cycle) {
+      if ($2 == -A) || ($2 == -ALL) { $point Cycling [ALL] for the boss | cycleall | halt }
+      if ($2 == $null) { .raw part $chan $cr join $chan %key. [ $+ [ $chan ] ] | halt }
+      else { .raw part $2 | .raw join $2 %key. [ $+ [ $2 ] ] | halt }
+    }
+    ;#.cycleall Format: .cycleall (Cycles all joined channels.)
     if ($strip($1) == .cycleall) { cycleall | halt }
     ;#.dcc Format: .dcc (Causes the bot to dcc chat the boss.)
     if ($strip($1) == .dcc) { .dcc chat %boss. [ $+ [ $network ] ] | halt }

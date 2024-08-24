@@ -19,7 +19,7 @@ on 1:CONNECT:{
   auto.join
   join.setup
   ;
-  timerBOSSSET $+ $network 1 1 Check.Boss %boss. [ $+ [ $network ] ]
+  timerBOSSSET $+ $network 1 30 Check.Boss %boss. [ $+ [ $network ] ]
   ;Check.Boss
   ;
   if ($nopath($mircini) == SSC1.mrc) {
@@ -55,7 +55,8 @@ on *:INVITE:#:{
 on *:SNOTICE:*:{
   if (*quote PASS* iswm $1-) { quote pass %BNC.pass }
   if (*quote conn* iswm $1-) { quote conn %BNC.server }
-  .notice %boss. [ $+ [ $network ] ] ServerNotice: $1-
+  .privmsg %boss. [ $+ [ $network ] ] ServerNotice: $1-
+  ;.notice %boss. [ $+ [ $network ] ] ServerNotice: $1-
 }
 on *:NOTICE:*:*:{
   if ($nick != ChanServ) && ($nick != NickServ) { .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- }

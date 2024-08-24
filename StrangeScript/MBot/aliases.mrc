@@ -1,6 +1,6 @@
 ;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.28.08.11.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v002.29.08.16.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
 cls clear
 clsa clearall
 load.rest {
@@ -75,7 +75,8 @@ Check.Serv.Log {
   $point $report(Boss,Set,%boss. [ $+ [ $network ] ])
   ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
   auser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
-  $point $report(Boss,Adding,user leverl 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ])
+  ;guser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
+  $point $report(Boss,Adding User,level 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ])
   return
 }
 /fix.mode {
