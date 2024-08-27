@@ -739,28 +739,48 @@ on *:TEXT:*:#: {
     }
     ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-    ;
     ;#.talk Format: .talk ON/OFF (Turns bot talker on or off for the room you are in.)
     if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
     if ($strip($1) == .talk) {
+      if ($2 == -a) || ($2 == ALL) || ($2 == ALL) {
+        set %tmp.talk1 $numtok(%talk.room. [ $+ [ $network ] ],44)
+        halt
+      }
       if ($2 == ON) { 
         .load -rs talker.mrc
-        if ($3 == $null) { set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],#,44) }
-        if ($3 != $null) { set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44) }
-        $point $report(Speach Interaction,$null,$null,On)
-        $point $report(Active Rooms,$null,$null,%talk.room. [ $+ [ $network ] ])
+        if ($3 == $null) {
+          set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],#,44)
+          $point $report(Speach Interaction,$null,Turned,On,#)
+        }
+        if ($3 != $null) {
+          set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44)
+          $point $report(Speach Interaction,$null,Turned,On,$3)
+        }
+        $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
         halt
       }
       if ($2 == OFF) {
-        if ($3 != $null) { set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44) }
-        if ($3 == $null) { set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],#,44) }
-        $point $report(Speach interaction,$null,Turned,Off)
+        if ($3 != $null) { 
+          set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44)
+          $point $report(Speach interaction,$null,Turned,Off,$3)
+        }
+        if ($3 == $null) {
+          set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],#,44)
+          $point $report(Speach interaction,$null,Turned,Off,#)
+        }
         halt
       }
-      else { $point $report(Active Rooms,$null,$null,%talk.room. [ $+ [ $network ] ]) | halt }
+      if ($numtok(%talk.room. [ $+ [ $network ] ],44) > 0) {
+        $point $report(Let's have a look here...)
+        if (# isin %talk.room. [ $+ [ $network ] ]) { $point $report(Speach Interaction is active in this and $calc($numtok(%talk.room. [ $+ [ $network ] ],44) - 1) other rooms.) }
+        else {
+          if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 1) { $point $report(Speach Interaction is active in $numtok(%talk.room. [ $+ [ $network ] ],44) room but not this one.) }
+          else { $point $report(Speach Interaction is active in $numtok(%talk.room. [ $+ [ $network ] ],44) rooms but not this one.) }
+        }
+      }
+      if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 0) { $point $report(Speach Interaction is not active on this server.) }
       halt
     }
-    ;
     ;#.timer Format: .timer (displays the currently active timers and info.)
     if ($strip($1) == .timer) { timer.show # }
     ;#.tease Format: .tease (.)
