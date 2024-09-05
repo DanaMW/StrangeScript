@@ -4,14 +4,20 @@ on *:ACTION:*:#:{
   }
 }
 alias point {
-  if (%display. [ $+ [ $network ] ] == CHAN) { return msg # }
+  if (%display. [ $+ [ $network ] ] == CHAN) {
+    if ($chan == $null) { return msg #StrangeScript }
+    if ($chan != $null) { return msg $chan }
+  }
   if (%display. [ $+ [ $network ] ] == NOTICE) { return notice %boss. [ $+ [ $network ] ] }
   notice %boss. [ $+ [ $network ] ] We have a display problem at point.
   notice %boss. [ $+ [ $network ] ] Set .display to CHAN or NOTICE on the bot to fix it.
   halt
 }
 alias pointer {
-  if (%display.user. [ $+ [ $network ] ] == CHAN) { return msg $chan }
+  if (%display.user. [ $+ [ $network ] ] == CHAN) { 
+    if ($chan == $null) { return msg #StrangeScript }
+    if ($chan != $null) { return msg $chan }
+  }
   if (%display.user. [ $+ [ $network ] ] == NOTICE) { return notice $nick }
   notice %boss. [ $+ [ $network ] ] We have a display problem at pointer, not point.
   notice %boss. [ $+ [ $network ] ] Set .displayuser to CHAN or NOTICE on the bot to fix it.
@@ -383,8 +389,9 @@ on *:TEXT:*:#: {
     if ($strip($1) == .auser) {
       if ($2 == $null) { $point Format: .auser <nick> | halt }
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
+      halt
       auser 4 $address($2,4) $2
-      $point I am now stuck taking orders from $2 $+ , sucks to be me.
+      $pointer I am now stuck taking orders from $2 $+ , sucks to be me.
       halt
     }
     ;#.ruser Format: .ruser <nick> (Removes a user from the UserList)
@@ -739,22 +746,30 @@ on *:TEXT:*:#: {
     }
     ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-    ;#.talk Format: .talk ON/OFF (Turns bot talker on or off for the room you are in.)
+    ;#.talk Format: .talk ON/OFF (Turns Interactive Speach on or off for the room you are in.)
     if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
     if ($strip($1) == .talk) {
-      if ($2 == -a) || ($2 == ALL) || ($2 == ALL) {
+      if ($2 == -a) || ($2 == ALL) || ($2 == $chr(42)) {
         set %tmp.talk1 $numtok(%talk.room. [ $+ [ $network ] ],44)
+        var %tmp.talk2 = 1
+        $point $report(Interactive Speach,$null,Enabled in...)
+        while (%tmp.talk2 <= %tmp.talk1) {
+          $point $report(%tmp.talk2,$gettok(%talk.room. [ $+ [ $network ] ],%tmp.talk2,44))
+          inc %tmp.talk2
+          if (%tmp.talk2 > %tmp.talk1) { break }
+        }
+        $point $report(Interactive Speach,$null,Finished)
         halt
       }
       if ($2 == ON) { 
         .load -rs talker.mrc
         if ($3 == $null) {
           set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],#,44)
-          $point $report(Speach Interaction,$null,Turned,On,#)
+          $point $report(Interactive Speach,$null,Turned,On,#)
         }
         if ($3 != $null) {
           set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44)
-          $point $report(Speach Interaction,$null,Turned,On,$3)
+          $point $report(Interactive Speach,$null,Turned,On,$3)
         }
         $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
         halt
@@ -762,23 +777,23 @@ on *:TEXT:*:#: {
       if ($2 == OFF) {
         if ($3 != $null) { 
           set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44)
-          $point $report(Speach interaction,$null,Turned,Off,$3)
+          $point $report(Interactive Speach,$null,Turned,Off,$3)
         }
         if ($3 == $null) {
           set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],#,44)
-          $point $report(Speach interaction,$null,Turned,Off,#)
+          $point $report(Interactive Speach,$null,Turned,Off,#)
         }
         halt
       }
       if ($numtok(%talk.room. [ $+ [ $network ] ],44) > 0) {
-        $point $report(Let's have a look here...)
-        if (# isin %talk.room. [ $+ [ $network ] ]) { $point $report(Speach Interaction is active in this and $calc($numtok(%talk.room. [ $+ [ $network ] ],44) - 1) other rooms.) }
+        $point $report(Let's have a look...)
+        if (# isin %talk.room. [ $+ [ $network ] ]) { $point $report(Interactive Speach is active in this and $calc($numtok(%talk.room. [ $+ [ $network ] ],44) - 1) other room(s).) }
         else {
-          if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 1) { $point $report(Speach Interaction is active in $numtok(%talk.room. [ $+ [ $network ] ],44) room but not this one.) }
-          else { $point $report(Speach Interaction is active in $numtok(%talk.room. [ $+ [ $network ] ],44) rooms but not this one.) }
+          if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 1) { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) room but not this one.) }
+          else { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) rooms but not this one.) }
         }
       }
-      if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 0) { $point $report(Speach Interaction is not active on this server.) }
+      if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 0) { $point $report(Interactive Speach is not active on this server.) }
       halt
     }
     ;#.timer Format: .timer (displays the currently active timers and info.)
