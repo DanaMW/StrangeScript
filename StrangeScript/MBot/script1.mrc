@@ -212,7 +212,7 @@ on *:TEXT:*:#: {
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ]) }
       }
-      if ($2 == NOT) || ($2 == NOTICE) {
+      if ($2 == NOT) || if ($2 == NOTE) || if ($2 == NOTi) || ($2 == NOTICE) {
         set %display. [ $+ [ $network ] ] NOTICE
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
