@@ -383,8 +383,8 @@ on *:TEXT:*:#: {
       LOG.ADJUST # $2-
       halt
     }
-    ;#.login Format: .login <server> (Makes the bot login to <server address:port>.)
-    if ($strip($1) == .login) { if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt } | server $2- }
+    ;#.Server Format: .server <server> (Makes the bot login to <server address:port>.)
+    if ($strip($1) == .server) { if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt } | server $2- }
     ;#.auser Format: .auser <nick> (Adds a user to the UserList)
     if ($strip($1) == .auser) {
       if ($2 == $null) { $point Format: .auser <nick> | halt }
@@ -679,19 +679,20 @@ on *:TEXT:*:#: {
         $point $report(LastSeen,$2,$null,%tmp.xx)
       }
     }
-    ;#.server Format: .server (Lists the server connected to) [same as servers]
-    ;#.servers Format: .servers (Lists the servers connected to) [same as server]
-    if ($strip($1) == .server) || ($strip($1) == .servers) {
-      ;$pointer $report(Server,$null,Bot is connected to ,$scid(0) servers)
+    ;#.conn Format: .conn (Lists the server connected to) [same as servers]
+    ;#.connect Format: .connect (Lists the server connected to) [same as servers]
+    ;#.connection Format: .connection (Lists the server connected to) [same as servers]
+    if ($strip($1) == .conn) || ($strip($1) == .connect) || ($strip($1) == .connection) {
+      ;$pointer $report(Connection,$null,Bot is connected to ,$scid(0) servers)
       var %tmp.srv1 = 1
       var %tmp.srv2 = $var(connected*,0)
       while (%tmp.srv1 <= %tmp.srv2) {
-        if (%tmp.srv2 == 1) { $point $report(Server,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
-        else { $point $report(Server,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
+        if (%tmp.srv2 == 1) { $point $report(Connection,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
+        else { $point $report(Connection,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
         inc %tmp.srv1
         if (%tmp.srv1 > %tmp.srv2) { break }
       }
-      $point $report(Server,$null,End of List)
+      $point $report(Connection,$null,End of List)
     }
     ;#.setss Format: .setss <server> (Setup for servers)
     if ($strip($1) == .setss) {
@@ -805,7 +806,7 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.ver Format: .ver (returns bot version.)
-    if ($strip($1) == .ver) { .msg # $ver | msg # You know it  10B04a10B04y | halt }
+    if ($strip($1) == .ver) { .msg # $ver | halt }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
     if ($strip($1) == drop) && ($2 == dead) { msg # $report(Exit,$null,$null,Done) | .exit | halt }
