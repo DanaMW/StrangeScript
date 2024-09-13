@@ -348,3 +348,14 @@ lcr {
 ;  else { raw notice $1 : $+ $2- }
 ;  halt
 ;}
+/quit.Pick {
+  var %tmp.QP1 = 1
+  var %tmp.QP2 = $var(connected*,0)
+  while (%tmp.QP1 <= %tmp.QP2) {
+    if (%tmp.QP2 == 1) { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) | break }
+    else { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) }
+    inc %tmp.QP1
+    if (%tmp.srv1 > %tmp.srv2) { break }
+  }
+  $point $report(Pick 1 to %tmp.srv1 to quit that server.)
+}

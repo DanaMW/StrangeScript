@@ -312,20 +312,10 @@ on *:TEXT:*:#: {
     }
     ;#.ghost Format: .ghost <nick> (Simply ghosts the nick. No other action is taken.)
     if ($strip($1) == .ghost) { $point $report(Ghost,$null,You need to edit this funtion - it doesn't do shit) | halt }
-    ;#.quit Format: .quit <reason> (Makes the bot quit.)
+    ;#.quit Format: .quit -L|LIST <server> <reason> (Pick quit list|Makes the bot quit.)
     if ($strip($1) == .quit) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }    
-      $point $report(Quitting,Done)
-      if ($2 != $null) {
-        timer 1 1 quit $replace($2-,$chr(32),$chr(160))
-        timer -o 1 2 exit
-        halt
-      }
-      else {
-        timer 1 1 quit $replace(Miss me while I'm gone!,$chr(32),$chr(160))
-        timer -o 1 2 exit
-        halt
-      }
+      if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
+      if ($2 == -L) || ($2 == List) { quit.Pick | halt }
     }
     ;#.heel Format: .heel (Makes the bot deop itself.)
     if ($strip($1) == .heel) { .raw mode # -o $me | halt }
@@ -383,8 +373,11 @@ on *:TEXT:*:#: {
       LOG.ADJUST # $2-
       halt
     }
-    ;#.Server Format: .server <server> (Makes the bot login to <server address:port>.)
-    if ($strip($1) == .server) { if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt } | server $2- }
+    ;#.server Format: .server <server address:port> (Makes the bot login to <server address:port>.)
+    if ($strip($1) == .server) {
+      ;if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
+      server $2-
+    }
     ;#.auser Format: .auser <nick> (Adds a user to the UserList)
     if ($strip($1) == .auser) {
       if ($2 == $null) { $point Format: .auser <nick> | halt }
