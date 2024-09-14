@@ -166,13 +166,17 @@ on *:TEXT:*:#: {
       if ($chr(35) isin $2) { .kick $2 $3 BAM | halt }
       else { .kick # $2 BAM | halt }
     }
-    ;#.boss Format: .boss <nick> (Sets nick/you boss in the bot and registers it.)
+    ;#.boss Format: .boss <nick> (Displays/Sets the BOSS variable.)
     if ($strip($1) == .boss) {
-      if ($2 == $null) { $point $report(Boss,$null,is set at,%boss. [ $+ [ $network ] ]) | halt }
-      else { set %boss. [ $+ [ $network ] ] $2 }
-      ;$point $report(Set Boss,$null,Boss is now set:,%boss. [ $+ [ $network ] ])
-      check.boss %boss. [ $+ [ $network ] ]
-      halt
+      if ($2 == $null) {
+        $point $report(Boss,$null,Boss is set:,%boss. [ $+ [ $network ] ])
+        halt
+      }
+      if ($2 != $null) {
+        $point $report(Boss,$null,Are you the man?)
+        ctcp %boss. [ $+ [ $network ] ] SSBOT $key(settings,botkey)
+
+      }
     }
     ;#.cb Format: .cb (Runs Check.Boss)
     if ($strip($1) == .cb) {
@@ -191,7 +195,10 @@ on *:TEXT:*:#: {
     ;#.cycleall Format: .cycleall (Cycles all joined channels.)
     if ($strip($1) == .cycleall) { cycleall | halt }
     ;#.dcc Format: .dcc (Causes the bot to dcc chat the boss.)
-    if ($strip($1) == .dcc) { .dcc chat %boss. [ $+ [ $network ] ] | halt }
+    if ($strip($1) == .dcc) {
+      .dcc chat %boss. [ $+ [ $network ] ]
+      halt
+    }
     ;#.deop Format: .deop [channel] <nick> (Makes the bot deop <nick> in current room or [channel].)
     if ($strip($1) == .deop) {
       if ($2 == $null) { $point $report(Format,$null,$null,.deop <nick> or .deop <nick> <channel>) | halt }
@@ -316,6 +323,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .quit) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
       if ($2 == -L) || ($2 == List) { quit.Pick | halt }
+
     }
     ;#.heel Format: .heel (Makes the bot deop itself.)
     if ($strip($1) == .heel) { .raw mode # -o $me | halt }

@@ -1,6 +1,22 @@
-;ver return MasterBot $chr(91) v2.00.03 beta.11.20.2003 $chr(93) coded for 10S04trange10S04cript
+;Major version  (xx)
+ut1 return 2
+;
+;Minor version (xx)
+ut2 return 38
+;
+;month (xx)
+ut3 return 09
+;
+;day (xx)
+ut4 return 14
+;
+;year (xxxx)
+ut5 return 2024
+;-----------------------------------------------------
 name return 10M04aster10B04ot
-ver return $name 10 $+ $chr(91) v002.37.09.12.2024 10 $+ $chr(93) $+ 00 coded for 10S04trange10S04cript
+ss return 10S04trange10S04cript
+ver return $name 10 $+ $chr(91) v00 $+ $ut1 $+ 10. $+ 00 $+ $ut2 $+ 10. $+ 00 $+ $ut3 $+ 10. $+ 00 $+ $ut4 $+ 10. $+ 00 $+ $ut5 10 $+ $chr(93) $+ 00 coded for $ss
+;-----------------------------------------------------
 cls clear
 clsa clearall
 load.rest {

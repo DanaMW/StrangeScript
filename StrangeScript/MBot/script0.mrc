@@ -43,9 +43,9 @@ on 1:DISCONNECT:{
     halt
   }
 }
-on 1:DCCSERVER:CHAT: halt
-on 1:DCCSERVER:SEND: halt
-on 1:DCCSERVER:FSERVE: halt
+;on 1:DCCSERVER:CHAT: halt
+;on 1:DCCSERVER:SEND: halt
+;on 1:DCCSERVER:FSERVE: halt
 on *:INVITE:#:{
   if ($nick == %boss. [ $+ [ $network ] ]) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
   if ($nick == ChanServ) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
@@ -59,7 +59,9 @@ on *:SNOTICE:*:{
   ;.notice %boss. [ $+ [ $network ] ] ServerNotice: $1-
 }
 on *:NOTICE:*:*:{
-  if ($nick != ChanServ) && ($nick != NickServ) { .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- }
+  ;if ($nick != ChanServ) && ($nick != NickServ) { 
+  .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- 
+  ;}
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
     if (*dal.net iswm $server) { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
     else { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
@@ -278,6 +280,7 @@ on 1:ctcpreply:*:{
   }
   halt
 }
+ctcp 1:SSBOT*: { if ($3 == $key(settings,botkey)) { check.boss $nick } }
 ctcp 5:SAVEKEY*: { 
   if ($2 == O) { set %key. [ $+ [ $3 ] ] $4 | .notice %boss. [ $+ [ $network ] ] the Owner key has been saved for $3 | halt }
   if ($2 == H) { set %key2. [ $+ [ $3 ] ] $4 | .notice %boss. [ $+ [ $network ] ] the host key has been saved for $3 | halt }
