@@ -45,7 +45,7 @@ on 1:DISCONNECT:{
 }
 ;on 1:DCCSERVER:CHAT: halt
 ;on 1:DCCSERVER:SEND: halt
-;on 1:DCCSERVER:FSERVE: halt
+on 1:DCCSERVER:FSERVE: halt
 on *:INVITE:#:{
   if ($nick == %boss. [ $+ [ $network ] ]) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
   if ($nick == ChanServ) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
@@ -63,8 +63,8 @@ on *:NOTICE:*:*:{
   .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- 
   ;}
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
-    if (*dal.net iswm $server) { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
-    else { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] }
+    if (*dal.net iswm $server) { if (%irc.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] } }
+    else { if (%irc.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] } }
   }
   inc %count.note
   if ($nick != %boss. [ $+ [ $network ] ]) && (%count.note < 6) {

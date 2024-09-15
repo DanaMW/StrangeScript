@@ -205,7 +205,7 @@ on *:TEXT:*:#: {
       if ($2 == %boss. [ $+ [ $network ] ]) || ($3 == %boss. [ $+ [ $network ] ]) { halt }
       if ($chr(35) isin $2) { .raw mode $2 -o $3 | halt } | else { .raw mode # -o $2 | halt }
     }
-    ;#.deq Format: .deq <nick> [channel] (Makes the bot deq <nick> in current room or [channel].)
+    ;#.deq Format: .deq [channel] <nick> (Makes the bot deq <nick> in current room or [channel].)
     if ($strip($1) == .deq) { if ($2 == $null) { $pointer $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
     ;#.display Format: .display [CHAN/NOTICE/[HEX]] (Sets the bot reply channel/notice/[hex(format)]. Left blank it shows it's current state.)
     if ($strip($1) == .display) {
@@ -323,7 +323,8 @@ on *:TEXT:*:#: {
     if ($strip($1) == .quit) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
       if ($2 == -L) || ($2 == List) { quit.Pick | halt }
-
+      quit.Pick $2-
+      halt
     }
     ;#.heel Format: .heel (Makes the bot deop itself.)
     if ($strip($1) == .heel) { .raw mode # -o $me | halt }
@@ -685,15 +686,16 @@ on *:TEXT:*:#: {
     ;#.connection Format: .connection (Lists the server connected to) [same as servers]
     if ($strip($1) == .conn) || ($strip($1) == .connect) || ($strip($1) == .connection) {
       ;$pointer $report(Connection,$null,Bot is connected to ,$scid(0) servers)
+      var %tmp.srv0 = $remove($1,.) $+ :
       var %tmp.srv1 = 1
       var %tmp.srv2 = $var(connected*,0)
       while (%tmp.srv1 <= %tmp.srv2) {
-        if (%tmp.srv2 == 1) { $point $report(Connection,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
-        else { $point $report(Connection,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
+        if (%tmp.srv2 == 1) { $point $report(%tmp.srv0,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
+        else { $point $report(%tmp.srv0,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
         inc %tmp.srv1
         if (%tmp.srv1 > %tmp.srv2) { break }
       }
-      $point $report(Connection,$null,End of List)
+      ;$point $report(%tmp.srv0,$null,End of List)
     }
     ;#.setss Format: .setss <server> (Setup for servers)
     if ($strip($1) == .setss) {
