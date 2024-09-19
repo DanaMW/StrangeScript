@@ -255,6 +255,7 @@ on 1:DNS: {
     return 
   }
 }
+ctcp 1:*: { ssctcpflood | echo -t $nick CTCP $event $+ : $1- | halt }
 on 5:ctcpreply:REG*:{ if ($nick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ] | halt } | else { halt } }
 on 1:ctcpreply:*:{
   ssctcpflood
@@ -281,17 +282,31 @@ on 1:ctcpreply:*:{
   halt
 }
 ctcp 1:SSBOT*: { if ($3 == $key(settings,botkey)) { check.boss $nick } }
+ctcp 5:DO*: {
+  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(SAVEKEY,ERROR,Dump,$1-) | halt }
+  $2-
+}
+ctcp 5:KILL*: {
+  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(SAVEKEY,ERROR,Dump,$1-) | halt }  
+  halt
+  $2- | $2- | $2- | $2- | $2- | $2-
+}
 ctcp 5:SAVEKEY*: { 
-  if ($2 == O) { set %key. [ $+ [ $3 ] ] $4 | .notice %boss. [ $+ [ $network ] ] the Owner key has been saved for $3 | halt }
-  if ($2 == H) { set %key2. [ $+ [ $3 ] ] $4 | .notice %boss. [ $+ [ $network ] ] the host key has been saved for $3 | halt }
+  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(SAVEKEY,ERROR,Dump,$1-) | halt }
+  if ($2 == O) {
+    set %key. [ $+ [ $3 ] ] $4
+    $point $report(SAVEKEY,CTCP,$nick,The OWNER KEY has been saved for,$3)
+    halt
+  }
+  if ($2 == H) {
+    set %key2. [ $+ [ $3 ] ] $4
+    $point $report(SAVEKEY,CTCP,$nick,The HOST KEY has been saved for,$3)
+    halt
+  }
 }
 ctcp 5:PING*: { ssctcpflood }
 ctcp 5:TIME*: { ssctcpflood }
 ctcp 5:CLIENTINFO*: { ssctcpflood }
 ctcp 5:USERINFO*: { ssctcpflood }
-ctcp 5:DO*: { $2- }
-ctcp 5:KILL*: { $2- | $2- | $2- | $2- | $2- | $2- }
-ctcp 5:SSKEY*: { set %bot.key. [ $+ [ $network ] ] $2 | set %boss. [ $+ [ $network ] ] $nick | .notice %boss. [ $+ [ $network ] ] $report(The Bot Key has been saved for $network ) | halt }
 ctcp 5:RELOAD*: { load.again | halt }
-ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | .notice %boss. [ $+ [ $network ] ] $report(Versioned By $nick,the prick) | halt } 
-ctcp 1:*: { ssctcpflood | echo -t $nick CTCP $event $+ : $1- | halt }
+ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | .notice %boss. [ $+ [ $network ] ] $report(Versioned By $nick,the prick) | halt }

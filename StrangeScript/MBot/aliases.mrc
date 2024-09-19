@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 39
+ut2 return 40
 ;
 ;month (xx)
 ut3 return 09
 ;
 ;day (xx)
-ut4 return 15
+ut4 return 16
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -86,7 +86,7 @@ Check.Serv.Log {
 }
 /check.boss {
   $point $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
-  if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | $point $report(Boss,$null,You better hope you're you.) }
+  ;if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | $point $report(Boss,$null,You better hope you're you.) }
   if (%boss. [ $+ [ $network ] ] == $null) { $point $report(Check.Boss,Error,CB variable is null,Line 72 alias) | halt }
   $point $report(Boss,Set,%boss. [ $+ [ $network ] ])
   ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
@@ -730,8 +730,7 @@ MenuPicks {
 /SSpy.Help {
   .msg # $chr(91) ServerSpy Help Information. $chr(93)
   .msg # Format: >S O TEXT (S = Server letter, O = Option, TEXT = Command params)
-  .msg # Valid Server letters are: x = xpeace, s = strange, i = icq, d = dal, g = global
-  .msg # Valid Server letters are: c = chatnet, p = splog, j = jong, b = blaze
+  .msg # Valid Server letters are: s = strange, d = dal, r = rizon, l = libera.chat
   .msg # -
   .msg # Valid Options are: (A)-action (C)-cycle (I)-info(whois) (J)-join (L)-roomlist (D)-ident (N)-nick (F)-filter(ignore)
   .msg # Valid Options are: (M)-mode (P)-part (R)-raw (S)-say(privmsg) (W)-whipser (K)-kick (G)-ping
@@ -739,23 +738,16 @@ MenuPicks {
   return
 }
 /Set.SS {
-  if ($2 == x) { var %tmp.spy.serv = xpeace }
+  if ($2 == r) { var %tmp.spy.serv = rizon }
   if ($2 == s) { var %tmp.spy.serv = strange }
-  if ($2 == i) { var %tmp.spy.serv = icq }
+  if ($2 == l) { var %tmp.spy.serv = libera.chat }
   if ($2 == d) { var %tmp.spy.serv = dalnet }
-  if ($2 == c) { var %tmp.spy.serv = chat }
-  if ($2 == p) { var %tmp.spy.serv = splog }
-  if ($2 == j) { var %tmp.spy.serv = jong }
-  if ($2 == b) { var %tmp.spy.serv = blaze }
-  if ($2 == g) { var %tmp.spy.serv = global }
-  ;ircx.blazin-irc.com
   .msg $1 Server Spy Setup for %tmp.spy.serv
   .msg $1 Server: %server.spy.server. [ $+ [ %tmp.spy.serv ] ]
   .msg $1 Server Nick: %server.spy.nick. [ $+ [ %tmp.spy.serv ] ]
   .msg $1 Server Port: %server.spy.port. [ $+ [ %tmp.spy.serv ] ]
   if (%server.spy.pass. [ $+ [ %tmp.spy.serv ] ] == $null) { .msg $1 Password: Not Set }
   else { .msg $1 Password: *hidden* (Set) | .notice %boss Password: %server.spy.pass. [ $+ [ %tmp.spy.serv ] ] }
-
   return
 }
 /play.mod { if ($1 != $null) { .notice %boss $replace($1-,$chr(9),$chr(160))  } }

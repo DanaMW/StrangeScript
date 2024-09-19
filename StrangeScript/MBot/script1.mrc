@@ -701,8 +701,8 @@ on *:TEXT:*:#: {
     if ($strip($1) == .setss) {
       if ($2 == $null) {
         $point $report(Format,$null,$null,.setss <server>)
-        $point Valid Server letters are: x = xpeace, s = strange, i = icq, d = dal,  b = blaze
-        $point Valid Server letters are: c = chatnet, p = splog, j = jong, g = global
+        $point Valid Server letters are: s = strange, d = dal
+        $point Valid Server letters are: r = rizon, l = libera.chat
         halt
       }
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
