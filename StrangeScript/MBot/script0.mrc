@@ -281,7 +281,7 @@ on 1:ctcpreply:*:{
   }
   halt
 }
-ctcp 1:SSBOT*: { if ($3 == $key(settings,botkey)) { check.boss $nick } }
+ctcp 5:SSBOT*: { if ($2 == %bot.key. [ $+ [ $network ] ]) { check.boss $nick } }
 ctcp 5:DO*: {
   if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(SAVEKEY,ERROR,Dump,$1-) | halt }
   $2-
