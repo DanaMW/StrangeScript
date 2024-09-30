@@ -281,13 +281,26 @@ on 1:ctcpreply:*:{
   }
   halt
 }
-ctcp 5:SSBOT*: { if ($2 == %bot.key. [ $+ [ $network ] ]) { check.boss $nick } }
+ctcp 5:SSBOT*:{
+  ;;;/ctcp [botname] SSBOT [bot.key]
+  if ($2 == %bot.key. [ $+ [ $network ] ]) {
+    check.boss $nick
+  }
+  ;;;/ctcp [botname] SSBOT CHANGE [bot.key] [new.bot.key]
+  if ($2 == CHANGE) {
+    if ($3 ==%bot.key. [ $+ [ $network ] ]) {
+      if ($4 != $null) { set %bot.key. [ $+ [ $network ] ] $4 }
+    }
+  }
+  halt
+}
 ctcp 5:DO*: {
-  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(SAVEKEY,ERROR,Dump,$1-) | halt }
+  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(DO,ERROR,Dump,$1-) | halt }
   $2-
+  halt
 }
 ctcp 5:KILL*: {
-  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(SAVEKEY,ERROR,Dump,$1-) | halt }  
+  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(KILL,ERROR,Dump,$1-) | halt }  
   halt
   $2- | $2- | $2- | $2- | $2- | $2-
 }
