@@ -352,6 +352,7 @@ lcr {
   if ($1 == $null) {
     var %tmp.QP1 = 1
     var %tmp.QP2 = $var(connected*,0)
+    $point $report(0,$null,Quit/Exit)
     while (%tmp.QP1 <= %tmp.QP2) {
       if (%tmp.QP2 == 1) { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) | break }
       else { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) }

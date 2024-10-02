@@ -4,20 +4,14 @@ on *:ACTION:*:#:{
   }
 }
 alias point {
-  if (%display. [ $+ [ $network ] ] == CHAN) {
-    if ($chan == $null) { return msg #StrangeScript }
-    if ($chan != $null) { return msg $chan }
-  }
+  if (%display. [ $+ [ $network ] ] == CHAN) { return msg $chan }
   if (%display. [ $+ [ $network ] ] == NOTICE) { return notice %boss. [ $+ [ $network ] ] }
   notice %boss. [ $+ [ $network ] ] We have a display problem at point.
   notice %boss. [ $+ [ $network ] ] Set .display to CHAN or NOTICE on the bot to fix it.
   halt
 }
 alias pointer {
-  if (%display.user. [ $+ [ $network ] ] == CHAN) { 
-    if ($chan == $null) { return msg #StrangeScript }
-    if ($chan != $null) { return msg $chan }
-  }
+  if (%display.user. [ $+ [ $network ] ] == CHAN) { return msg $chan }
   if (%display.user. [ $+ [ $network ] ] == NOTICE) { return notice $nick }
   notice %boss. [ $+ [ $network ] ] We have a display problem at pointer, not point.
   notice %boss. [ $+ [ $network ] ] Set .displayuser to CHAN or NOTICE on the bot to fix it.
@@ -322,7 +316,6 @@ on *:TEXT:*:#: {
     ;#.quit Format: .quit -L|LIST <server> <reason> (Pick quit list|Makes the bot quit.)
     if ($strip($1) == .quit) {
       if ($nick != %boss. [ $+ [ $network ] ]) { $pointer $report(Error,NoGoMoJo,This is a boss only command) | halt }
-      if ($2 == -L) || ($2 == List) { quit.Pick | halt }
       quit.Pick $2-
       halt
     }

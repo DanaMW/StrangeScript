@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 44
+ut2 return 45
 ;
 ;month (xx)
-ut3 return 09
+ut3 return 10
 ;
 ;day (xx)
-ut4 return 25
+ut4 return 02
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -85,14 +85,14 @@ Check.Serv.Log {
   return
 }
 /check.boss {
-  $point $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
-  ;if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | $point $report(Boss,$null,You better hope you're you.) }
-  if (%boss. [ $+ [ $network ] ] == $null) { $point $report(Check.Boss,Error,CB variable is null,Line 72 alias) | halt }
-  $point $report(Boss,Set,%boss. [ $+ [ $network ] ])
+  notice %boss. [ $+ [ $network ] ] $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
+  ;if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | notice %boss. [ $+ [ $network ] ] $report(Boss,$null,You better hope you're you.) }
+  if (%boss. [ $+ [ $network ] ] == $null) { notice %boss. [ $+ [ $network ] ] $report(Check.Boss,Error,CB variable is null,Line 72 alias) | halt }
+  notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
   ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
   auser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
   ;guser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
-  $point $report(Boss,Adding User,level 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ])
+  notice %boss. [ $+ [ $network ] ] $report(Boss,Adding User,level 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ])
   return
 }
 /fix.mode {
@@ -153,7 +153,7 @@ Check.Serv.Log {
   .msg $1 10 $+ $chr(91) $+ 00,01 $+ %report $+ 10 $+ $chr(93) $chr(91) $+ 11,01 $+ $2- $+  $+ 10 $+ $chr(93)
   return
 }
-report {
+/report {
   if ($1- == $null) { return No Text Sent to Report | return }
   else { var %tmp.rbuild = %tmp.rbuild 05 $+ $chr(124) }
   if ($1 != $null) { var %tmp.rbuild = %tmp.rbuild $+ 10 $+ $chr(91) $+ 15 $1 10 $+ $chr(93) $+ 05 $+ $chr(124) }
