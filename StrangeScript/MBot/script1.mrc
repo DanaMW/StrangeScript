@@ -4,14 +4,20 @@ on *:ACTION:*:#:{
   }
 }
 alias point {
-  if (%display. [ $+ [ $network ] ] == CHAN) { return msg $chan }
+  if (%display. [ $+ [ $network ] ] == CHAN) {
+    if ($chan == $null) { return notice %boss. [ $+ [ $network ] ] }
+    if ($chan != $null) { return msg $chan }
+  }
   if (%display. [ $+ [ $network ] ] == NOTICE) { return notice %boss. [ $+ [ $network ] ] }
   notice %boss. [ $+ [ $network ] ] We have a display problem at point.
   notice %boss. [ $+ [ $network ] ] Set .display to CHAN or NOTICE on the bot to fix it.
   halt
 }
 alias pointer {
-  if (%display.user. [ $+ [ $network ] ] == CHAN) { return msg $chan }
+  if (%display.user. [ $+ [ $network ] ] == CHAN) {
+    if ($chan == $null) { return notice $nick }
+    if ($chan != $null) { return msg $chan }
+  }
   if (%display.user. [ $+ [ $network ] ] == NOTICE) { return notice $nick }
   notice %boss. [ $+ [ $network ] ] We have a display problem at pointer, not point.
   notice %boss. [ $+ [ $network ] ] Set .displayuser to CHAN or NOTICE on the bot to fix it.

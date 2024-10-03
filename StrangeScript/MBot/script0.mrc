@@ -196,11 +196,11 @@ on *:PART:#:{
 }
 alias Lgchk { .timer850. $+ $network 0 %Lag.mrc.secs. [ $+ [ $network ] ] Lagchk }
 alias Lagchk { set %Lag.mrc.tmp. [ $+ [ $network ] ] $ticks | .raw Lag-CK }
-alias Lagon { $pointer $report(Auto Lag Check,$null,is now,ON) | set %Lagchk. [ $+ [ $network ] ] ON | Lgchk }
-alias Lagoff { $pointer $report(Auto Lag Check,$null,is now,OFF) | set %Lagchk. [ $+ [ $network ] ] OFF | .timer850. $+ $network OFF }
+alias Lagon { $point $report(Auto Lag Check,$null,is now,ON) | set %Lagchk. [ $+ [ $network ] ] ON | Lgchk }
+alias Lagoff { $point $report(Auto Lag Check,$null,is now,OFF) | set %Lagchk. [ $+ [ $network ] ] OFF | .timer850. $+ $network OFF }
 alias ShowLag { if (%Clock. [ $+ [ $network ] ] == OFF) { titlebar - $chr(91) $logo ©1999-2024 ] $chr(91) nick: $me $chr(93) $chr(91) lag: %Lag.mrc. [ $+ [ $network ] ] $chr(93) } }
 alias Lagset { 
-  if ($1 == $null) { echo -at 04 $+ Auto Lag Check syntax: /Lagset <seconds> | halt } 
+  if ($1 == $null) { $point $report(Auto Lag Check,$null,syntax,/Lagset <seconds>) | halt } 
   if ($1 != $null) {
     set %Lag.mrc.secs. [ $+ [ $network ] ] $1
     point $report(Auto Lag Check,SET,to,%Lag.mrc.secs. [ $+ [ $network ] ] seconds between.)
