@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 47
+ut2 return 49
 ;
 ;month (xx)
 ut3 return 10
 ;
 ;day (xx)
-ut4 return 05
+ut4 return 10
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -110,8 +110,7 @@ Check.Serv.Log {
     return
   }
   if ($1 == $null) {
-    ;var %tmp.recover. [ $+ [ $network ] ] = $input(Enter the nick to recover,egi,StrangeScript needs input,NewUser)
-    if (%tmp.recover. [ $+ [ $network ] ] == %null) { return }
+    var %tmp.recover. [ $+ [ $network ] ] = %bot.nick. [ $+ [ $network ] ]
     if (%nick.saved.1. [ $+ [ $network ] ] == $null) { set %nick.saved.1. [ $+ [ $network ] ] = %tmp.recover. [ $+ [ $network ] ] }
     set %recover. [ $+ [ $network ] ] = %tmp.recover. [ $+ [ $network ] ]
     .timerRECOV. $+ $network 0 15 assimilate %recover. [ $+ [ $network ] ]
@@ -141,7 +140,7 @@ Check.Serv.Log {
     mode $me
     return
   }
-  if ($key(settings,recover) != $me) {
+  if ($me == %recover. [ $+ [ $network ] ]) {
     ;keywrite settings nicktime.active ON
     .timer 1 15 keywrite settings nicktime.active OFF
     if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] } 
@@ -286,8 +285,8 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   set %IRCX.mode. [ $+ [ $network ] ] OFF
   if ($network == IRCx) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON }
   if (%IRCX.mode. [ $+ [ $network ] ] == OFF) {
-    if ($network == dalnet) { nickserv identify %irc.nick.pass.[ $+ [ $network ] ] }
-    else { nickserv identify $me %irc.nick.pass.[ $+ [ $network ] ] }
+    if ($network == dalnet) { nickserv identify %bot.nick.pass.[ $+ [ $network ] ] }
+    else { nickserv identify $me %bot.nick.pass.[ $+ [ $network ] ] }
   }
   if ($ial != $true) { .ial on }
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }

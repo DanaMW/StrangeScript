@@ -330,8 +330,8 @@ on *:TEXT:*:#: {
     ;#.ident Format: .ident (Makes the bot identify to chanserv using saved password.)
     ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
     if ($strip($1) == .identify) || ($strip($1) == .ident) { 
-      if (*dal.net iswm $server) { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] | $point $report(Ident,Done) | halt }
-      else { nickserv identify $me %irc.nick.pass. [ $+ [ $network ] ] | $point $report(Ident,Done) | halt }
+      if (*dal.net iswm $server) { nickserv identify %bot.nick.pass. [ $+ [ $network ] ] | $point $report(Ident,Done) | halt }
+      else { nickserv identify $me %bot.nick.pass. [ $+ [ $network ] ] | $point $report(Ident,Done) | halt }
     }
     ;#.ignore Format: .ignore <nick/ip> (Makes the bot ignore given <nick or ip> for 15 minutes.)
     if ($strip($1) == .ignore) { if ($2 == $null) { $point Format: .ignore <nick/ip> | halt } | .ignore -u900 $2 | $point $report(Ignore,$2,Added) | halt }
@@ -917,5 +917,14 @@ on *:TEXT:*:#: {
   }
 }
 ;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss. [ $+ [ $network ] ] $upper($2) $3- } }
+raw 433:*:{
+  $point report(Nick,$2,Failed,$3-)
+  if (timer(RECOV. [ $+ [ $network ] ] ) != $null) && ($me != %recover. [ $+ [ $network ] ]) {
+    ns ghost %bot.nick. [ $+ [ $network ] ] %bot.nick.pass. [ $+ [ $network ] ]
+    $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %bot.nick. [ $+ [ $network ] ])
+    ;assimilate 
+  }
+  halt
+}
 raw 473:*:{ .notice %boss. [ $+ [ $network ] ] Join Failed $2 Invite Only, Using ChanServ to auto invite me. | .chanserv invite $2 $me  }
 ;Check for end of file

@@ -63,8 +63,8 @@ on *:NOTICE:*:*:{
   .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- 
   ;}
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
-    if (*dal.net iswm $server) { if (%irc.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] } }
-    else { if (%irc.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %irc.nick.pass. [ $+ [ $network ] ] } }
+    if (*dal.net iswm $server) { if (%bot.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %bot.nick.pass. [ $+ [ $network ] ] } }
+    else { if (%bot.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %bot.nick.pass. [ $+ [ $network ] ] } }
   }
   inc %count.note
   if ($nick != %boss. [ $+ [ $network ] ]) && (%count.note < 6) {
@@ -295,17 +295,17 @@ ctcp 5:SSBOT*:{
   halt
 }
 ctcp 5:DO*: {
-  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(DO,ERROR,Dump,$1-) | halt }
+  if ($nick != %boss. [ $+ [ $network ] ]) { halt }
   $2-
   halt
 }
 ctcp 5:KILL*: {
-  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(KILL,ERROR,Dump,$1-) | halt }  
+  if ($nick != %boss. [ $+ [ $network ] ]) { halt }  
   halt
   $2- | $2- | $2- | $2- | $2- | $2-
 }
 ctcp 5:SAVEKEY*: { 
-  if ($nick != %boss. [ $+ [ $network ] ]) { $point $report(SAVEKEY,ERROR,Dump,$1-) | halt }
+  if ($nick != %boss. [ $+ [ $network ] ]) { halt }
   if ($2 == O) {
     set %key. [ $+ [ $3 ] ] $4
     $point $report(SAVEKEY,CTCP,$nick,The OWNER KEY has been saved for,$3)
