@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 49
+ut2 return 50
 ;
 ;month (xx)
 ut3 return 10
 ;
 ;day (xx)
-ut4 return 10
+ut4 return 13
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -85,7 +85,7 @@ Check.Serv.Log {
   return
 }
 /check.boss {
-  notice %boss. [ $+ [ $network ] ] $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
+  0  notice %boss. [ $+ [ $network ] ] $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
   ;if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | notice %boss. [ $+ [ $network ] ] $report(Boss,$null,You better hope you're you.) }
   if (%boss. [ $+ [ $network ] ] == $null) { notice %boss. [ $+ [ $network ] ] $report(Check.Boss,Error,CB variable is null,Line 72 alias) | halt }
   notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
@@ -103,31 +103,32 @@ Check.Serv.Log {
 }
 /recover {
   if ($1 == OFF) {
-    set %recover. [ $+ [ $network ] ] ""
-    ;.timernick. $+ $network off
+    unset %recover. [ $+ [ $network ] ]
     .timerRECOV. $+ $network off
-    $point $report(Auto Nick Recover,Set,Off)
+    $point $report(Nick Recover,Set,Off)
     return
   }
   if ($1 == $null) {
-    var %tmp.recover. [ $+ [ $network ] ] = %bot.nick. [ $+ [ $network ] ]
-    if (%nick.saved.1. [ $+ [ $network ] ] == $null) { set %nick.saved.1. [ $+ [ $network ] ] = %tmp.recover. [ $+ [ $network ] ] }
-    set %recover. [ $+ [ $network ] ] = %tmp.recover. [ $+ [ $network ] ]
+    if (%recover. [ $+ [ $network ] ] == $null) {
+      $point $report(Nick Recover,Error,No Nick To Recover)
+      $point $report(Nick Recover,$null,Include the nick to recover .recover <nick>)
+      halt
+    }
+    ;set %recover. [ $+ [ $network ] ] %bot.nick.1. [ $+ [ $network ] ]
     .timerRECOV. $+ $network 0 15 assimilate %recover. [ $+ [ $network ] ]
-    $point $report(Auto Nick Recover,$null,On,Recovering Nickname,%recover. [ $+ [ $network ] ])
+    $point $report(Nick Recover,$null,On,Recovering Nickname,%recover. [ $+ [ $network ] ])
     assimilate %recover. [ $+ [ $network ] ]
     return
   }
   if ($1 != $null) { 
     set %recover. [ $+ [ $network ] ] $1
-    ;.timerNICK. $+ $network 0 15 assimilate %recover. [ $+ [ $network ] ]
     .timerRECOV. $+ $network 0 15 assimilate %recover. [ $+ [ $network ] ]
     assimilate %recover. [ $+ [ $network ] ]
     return
   }
 }
 /assimilate {
-  if (guest* iswm $me) && ($key(settings,beme) == ON) { set %recover. [ $+ [ $network ] ] %nick.saved.1. [ $+ [ $network ] ] }
+  if (guest* iswm $me) { set %recover. [ $+ [ $network ] ] %bot.nick.1. [ $+ [ $network ] ] }
   if (%recover. [ $+ [ $network ] ] == $null) {
     if (timer(RECOV. [ $+ [ $network ] ] ) != $null) { .timerRECOV. $+ $network off }
     return
@@ -135,14 +136,13 @@ Check.Serv.Log {
   if ($me == %recover. [ $+ [ $network ] ]) {
     $point $report(Auto Nick Recover,$null,Done,Recover Complete,%recover. [ $+ [ $network ] ])
     .timerRECOV. $+ $network off
-    if ($readini($textdir $+ PassWord.ini,n,$network,$me) != $null) { nickserv identify %recover. [ $+ [ $network ] ] $readini($textdir $+ PassWord.ini,n,$network,$me) }
+    if ($me == %bot.nick.1. [ $+ [ $network ] ]) { nickserv identify %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+    if ($me == %bot.nick.2. [ $+ [ $network ] ]) { nickserv identify %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
     unset %recover. [ $+ [ $network ] ]
     mode $me
     return
   }
-  if ($me == %recover. [ $+ [ $network ] ]) {
-    ;keywrite settings nicktime.active ON
-    .timer 1 15 keywrite settings nicktime.active OFF
+  if ($me != %recover. [ $+ [ $network ] ]) {
     if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] } 
     $point $report(Auto Nick Recover,$null,Attempting to Recover Nickname,%recover. [ $+ [ $network ] ])
     return
@@ -285,8 +285,14 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   set %IRCX.mode. [ $+ [ $network ] ] OFF
   if ($network == IRCx) { ircx | set %IRCX.mode. [ $+ [ $network ] ] ON }
   if (%IRCX.mode. [ $+ [ $network ] ] == OFF) {
-    if ($network == dalnet) { nickserv identify %bot.nick.pass.[ $+ [ $network ] ] }
-    else { nickserv identify $me %bot.nick.pass.[ $+ [ $network ] ] }
+    if ($network == dalnet) {
+      if ($me == %bot.nick.1. [ $+ [ $network ] ]) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.2. [ $+ [ $network ] ]) { nickserv identify %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
+    }
+    else {
+      if ($me == %bot.nick.1. [ $+ [ $network ] ]) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.2. [ $+ [ $network ] ]) { nickserv identify %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
+    }
   }
   if ($ial != $true) { .ial on }
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
