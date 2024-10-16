@@ -63,8 +63,12 @@ on *:NOTICE:*:*:{
   .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- 
   ;}
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
-    if (*dal.net iswm $server) { if (%bot.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %bot.nick.pass. [ $+ [ $network ] ] } }
-    else { if (%bot.nick.pass. [ $+ [ $network ] ] != $null)  { nickserv identify %bot.nick.pass. [ $+ [ $network ] ] } }
+    if (*dal.net iswm $server) {
+      if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
+    }
+    if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1.pass. [ $+ [ $network ] ] }
+    if ($me == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.2.pass. [ $+ [ $network ] ] }
   }
   inc %count.note
   if ($nick != %boss. [ $+ [ $network ] ]) && (%count.note < 6) {

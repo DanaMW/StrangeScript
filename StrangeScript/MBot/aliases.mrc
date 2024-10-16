@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 50
+ut2 return 51
 ;
 ;month (xx)
 ut3 return 10
 ;
 ;day (xx)
-ut4 return 13
+ut4 return 15
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -85,7 +85,7 @@ Check.Serv.Log {
   return
 }
 /check.boss {
-  0  notice %boss. [ $+ [ $network ] ] $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
+  notice %boss. [ $+ [ $network ] ] $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
   ;if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | notice %boss. [ $+ [ $network ] ] $report(Boss,$null,You better hope you're you.) }
   if (%boss. [ $+ [ $network ] ] == $null) { notice %boss. [ $+ [ $network ] ] $report(Check.Boss,Error,CB variable is null,Line 72 alias) | halt }
   notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
@@ -468,7 +468,7 @@ deathip {
 timer.show {
   var %tmp.ts 1
   while (%tmp.ts <= $timer(0)) {
-    .msg # $chr(91) $+ %tmp.ts $+ $chr(93) Timer $+ $upper($timer(%tmp.ts)) Type: $timer(%tmp.ts).type Due: $timer(%tmp.ts).secs secs  Command: $timer(%tmp.ts).com
+    $point $report(Timer) $+ $report(%tmp.ts) $+ $report($upper($timer(%tmp.ts)),$null,$null,Type:,$timer(%tmp.ts).type) $+ $report($null,$null,$null,Due:,$timer(%tmp.ts).secs) $+ $report($null,$null,$null,Command,$timer(%tmp.ts).com)
     inc %tmp.ts
     if (%tmp.ts > $timer(0)) { break }
   }

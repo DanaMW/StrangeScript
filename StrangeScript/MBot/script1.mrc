@@ -369,12 +369,22 @@ on *:TEXT:*:#: {
       if ($2 == %boss. [ $+ [ $network ] ]) { halt }
       if ($chr(35) isin $2) { .kick $2 $3 $4- | halt } | else { .kick # $2 $3- | halt }
     }
-    ;#.lag Format: .lag <ON|OFF|-S/SILENT> <No parameter will show the bots lag on the server.)
+    ;#.lag Format: .lag <ON|OFF|-S/SECONDS> <No parameter will show the bots lag on the server.)
     if ($strip($1) == .lag) {
       if ($2 == ON) { Lagon | halt }
       if ($2 == OFF) { Lagoff | halt }
-      if ($2 == silent) || ($2 == -S) { .notice %boss. [ $+ [ $network ] ] $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
-      else { $point $report(Lag Report,$server,%Lag.mrc. [ $+ [ $network ] ]) | halt }
+      if ($2 == seconds) || ($2 == -S) { 
+        if ($3 == $null) {
+          set %Lag.mrc.secs. [ $+ [ $network ] ] 15
+          $point $report(Lag,$server,Interval set to,%Lag.mrc.secs. [ $+ [ $network ] ])
+        }
+        if ($3 != $null) && ($3 isnum) {
+          set %Lag.mrc.secs. [ $+ [ $network ] ] $3
+          $point $report(Lag,$server,Interval set to,%Lag.mrc.secs. [ $+ [ $network ] ]) 
+        }
+        $point $report(Lag,$server,%Lag.mrc. [ $+ [ $network ] ])
+        halt
+      }
     }
     ;#.LiveMenu Format: .livemenu (Enters the interactive ip to ip mirc ini editor.)
     if ($strip($1) == .livemenu) {
@@ -394,7 +404,13 @@ on *:TEXT:*:#: {
     ;#.server Format: .server <server address:port> (Makes the bot login to <server address:port>.)
     if ($strip($1) == .server) {
       ;if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+      if ($2 == $null) {
+        $point $report(Server,Error,You need to include the server address.)
+        $point $report(Server,$null,server <-m> <valid.server.address>)
+        halt
+      }
       server $2-
+      halt
     }
     ;#.auser Format: .auser <nick> (Adds a user to the UserList)
     if ($strip($1) == .auser) {
@@ -439,18 +455,10 @@ on *:TEXT:*:#: {
     if ($strip($1) == .base) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       if ($2 != $null) { set %base. [ $+ [ $network ] ] $2 | goto ch1 | halt }
-      $point Format: .base <NICK|CHANNEL>  (Sets up the base (User or #room reported to).) 
+      $point $report(Format:,$null,.base <NICK|CHANNEL>,Sets up the base USER or #ROOM reported to.) 
+      $point $report(Format:,$null,.display <CHAN/NOTICE>,Sets up the display method)
       :ch1
-      $point $report(Play Method,$null,%method. [ $+ [ $network ] ]) $report(Base,$null,%base. [ $+ [ $network ] ])
-      halt
-    }
-    ;#.method Format: .method <MSG|NOTICE> <NICK|#CHANNEL> (A way to set the bot play Method./Base. as a pair.)
-    if ($strip($1) == .method) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-      if ($2 == MSG) || ($2 == NOTICE) && ($3 != $null) { set %method. [ $+ [ $network ] ] . $+ $2 | set %base. [ $+ [ $network ] ] $3 | goto ch2 | halt }
-      $point Format: .method <MSG|NOTICE NICK|#CHANNEL> (The pair sets up the bot play method.) 
-      :ch2
-      $point $report(Play Method,$null,%method. [ $+ [ $network ] ]) $report(Base,$null,%base. [ $+ [ $network ] ])
+      $point $report(Display Method,$null,%display. [ $+ [ $network ] ]) $report(Base,$null,%base. [ $+ [ $network ] ])
       halt
     }
     ;#.mk Format: .mk (Makes the bot mass kick current room.)
@@ -613,6 +621,8 @@ on *:TEXT:*:#: {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       if ($network == Dalnet) { server irc.dal.net | return }
       if ($network == Libera.Chat) { server irc.Libera.Chat | return }
+      if ($network == Rizon) { server irc.rizon.net | return }
+      if ($network == UnderNet) { server us.undernet.org | return }
       else { server $server }
       halt
     }
@@ -690,17 +700,17 @@ on *:TEXT:*:#: {
         $point $report(LastSeen,$2,$null,%tmp.xx)
       }
     }
-    ;#.conn Format: .conn (Lists the server connected to) [same as servers]
-    ;#.connect Format: .connect (Lists the server connected to) [same as servers]
-    ;#.connection Format: .connection (Lists the server connected to) [same as servers]
+    ;#.conn Format: .conn (Lists the server connected to)
+    ;#.connect Format: .connect (Lists the server connected to)
+    ;#.connection Format: .connection (Lists the server connected to)
     if ($strip($1) == .conn) || ($strip($1) == .connect) || ($strip($1) == .connection) {
       ;$pointer $report(Connection,$null,Bot is connected to ,$scid(0) servers)
       var %tmp.srv0 = $remove($1,.) $+ :
       var %tmp.srv1 = 1
-      var %tmp.srv2 = $var(connected*,0)
+      var %tmp.srv2 = $var(connserv*,0)
       while (%tmp.srv1 <= %tmp.srv2) {
-        if (%tmp.srv2 == 1) { $point $report(%tmp.srv0,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
-        else { $point $report(%tmp.srv0,%tmp.srv1,$var(connected*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
+        if (%tmp.srv2 == 1) { $point $report(%tmp.srv0,%tmp.srv1,$var(connserv*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
+        else { $point $report(%tmp.srv0,%tmp.srv1,$var(connserv*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
         inc %tmp.srv1
         if (%tmp.srv1 > %tmp.srv2) { break }
       }
