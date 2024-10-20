@@ -15,13 +15,9 @@ alias mygo  {
   return
 }
 on 1:CONNECT:{
-  ;if ($chr(37) isin %autojoin.rooms. [ $+ [ $network ] ]) && (%IRCX.mode. [ $+ [ $network ] ] == ON) { ircx }
   auto.join
   join.setup
-  ;
   timerBOSSSET $+ $network 1 30 Check.Boss %boss. [ $+ [ $network ] ]
-  ;Check.Boss
-  ;
   if ($nopath($mircini) == SSC1.mrc) {
     if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
     if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }

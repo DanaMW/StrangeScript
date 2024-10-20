@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 51
+ut2 return 54
 ;
 ;month (xx)
 ut3 return 10
 ;
 ;day (xx)
-ut4 return 15
+ut4 return 20
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -17,6 +17,27 @@ name return 10M04aster10B04ot
 ss return 10S04trange10S04cript
 ver return $name 10 $+ $chr(91) v00 $+ $ut1 $+ 10. $+ 00 $+ $ut2 $+ 10. $+ 00 $+ $ut3 $+ 10. $+ 00 $+ $ut4 $+ 10. $+ 00 $+ $ut5 10 $+ $chr(93) $+ 00 coded for $ss
 ;-----------------------------------------------------
+all scid -a $1-
+aj autojoin
+ca cycleall
+sysdir return $mircdirsystem\
+botdir return $mircdirMBot\
+textdir return $mircdirtext\
+myecho if (@.* !isin $active) { return echo $color(normal text) -at < $+ $me $+ > }
+long { set %long ** | return }
+lowcol { if (%sc1 == $null) { return 04 } | else { if (%sc.bold == ON) { return  $+ %sc1 } | else { return  $+ %sc1 } } }
+highcol { if (%sc2 == $null) { return 11 } | else { if (%sc.bold == ON) { return  $+ %sc2 } | else { return  $+ %sc2 } } }
+bright { if (%sc3 == $null) { return 08 } | else { if (%sc.bold == ON) { return  $+ %sc3 } | else { return  $+ %sc3 } } }
+white { if (%sc4 == $null) { return 00 } | else { if (%sc.bold == ON) { return  $+ %sc4 } | else { return  $+ %sc4 } } }
+sep { if (%sc.seperater == $null) { return 10 } | else { if (%sc.bold == ON) { return  $+ %sc.seperater } | else { return  $+ %sc.seperater } } }
+space return $chr(160)
+spcm return $chr(44) $+ $chr(160)
+output return 11,11 
+sys return 4,4 
+;lll return $chr(124) $+ $chr(91)
+;rrr return $chr(93) $+ $chr(124)
+lll return $chr(186) $+ (
+rrr return ) $+ $chr(186)
 cls clear
 clsa clearall
 load.rest {
@@ -147,6 +168,16 @@ Check.Serv.Log {
     $point $report(Auto Nick Recover,$null,Attempting to Recover Nickname,%recover. [ $+ [ $network ] ])
     return
   }
+}
+/op.me {
+  set %tmp.om2 $1
+  set %tmp.om1 1
+  while (%tmp.om1 <= $chan(0)) {
+    mode $chan(%tmp.om1) +o %tmp.om2
+    inc %tmp.om1
+    if (%tmp.om1 > $chan(0)) { break }
+  }
+  unset %tmp.om1 %tmp.om2
 }
 /report1 {
   .msg $1 10 $+ $chr(91) $+ 00,01 $+ %report $+ 10 $+ $chr(93) $chr(91) $+ 11,01 $+ $2- $+  $+ 10 $+ $chr(93)
@@ -280,6 +311,8 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
 }
 /join.setup {
   beep
+  set %connected. [ $+ [ $network ] ] $network
+  set %connserv. [ $+ [ $network ] ] $server
   if (%boss. [ $+ [ $network ] ] != $me) { .ctcp %boss. [ $+ [ $network ] ] REG }
   .raw mode $me +i
   set %IRCX.mode. [ $+ [ $network ] ] OFF
@@ -298,8 +331,6 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
   if (%autojoin.rooms. [ $+ [ $network ] ] == $null) { set %autojoin.rooms. [ $+ [ $network ] ] = #StrangeScript }
   if (%do.hex. [ $+ [ $network ] ] == $null) { set %do.hex. [ $+ [ $network ] ] OFF }
-  set %connected. [ $+ [ $network ] ] $network 
-  set %connserv. [ $+ [ $network ] ] $server
   set %count.note 0
   set %pound.active OFF
   set %spy OFF

@@ -31,6 +31,7 @@ on *:TEXT:*:#: {
     $report(UnHexed,$null,$unhex.ini($1-)).active
     return
   }
+  if ($nick == %boss. [ $+ [ $network ] ]) { report $1- }
   if (%easy.room != $null) && (# == %easy.room) && ($left($strip($1-),1) != >) && ($left($strip($1-),1) != .) {
     if ($sock(Spy [ $+ [ %easy.server ] ] ) != $null) {
       if ($nick == %boss. [ $+ [ $network ] ]) { .timer 1 0 sockwrite -n Spy $+ %easy.server privmsg $gettok(%server.spy.on. [ $+ [ %easy.server ] ] ,3,44) : $+ $1- }
@@ -496,8 +497,13 @@ on *:TEXT:*:#: {
       if ($2 == long) { .nick $2 $+ $chr(91) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $chr(93) | halt }
       if ($2 != inc) && ($2 != long) { .nick $3 $+ $chr(91) $+ $right($remove($nopath($mircini),.ini),-3) $+ $chr(93) | halt }  
     }
-    ;#.o Format: .o [nick] (makes the bot op the boss or [nick] on current channel.)
-    if ($strip($1) == .o) { if ($2 == $null) { .raw mode $chan +o $nick | halt } | if ($2 == ?) { .raw mode $chan +o %lastjoin. [ $+ [ $chan ] ] | halt } | else { .raw mode $chan +o $2 | halt } }
+    ;#.o Format: .o [-A|ALL|-L|LAST|<nick>] (makes the bot op the boss or [nick] on current channel.)
+    if ($strip($1) == .o) {
+      if ($2 == $null) { mode $chan +o $nick | halt }
+      if ($2 == -A) || ($2 == ALL) { if ($3 == $null) { op.me %boss. [ $+ [ $network ] ] } | else { op.me $3 } | halt }
+      if ($2 == -L) || ($2 == LAST) { mode $chan +o %lastjoin. [ $+ [ $chan ] ] | halt }
+      else { mode $chan +o $2 | halt }
+    }
     ;#.oper  Format: .oper (makes the bot send /Oper to the server.)
     if ($strip($1) == .oper) {
       if (%irc.oper.nick == $null) { $point No nick is saved to oper with. Use .raw set % $+ irc.oper.nick <value> | halt }
@@ -636,10 +642,10 @@ on *:TEXT:*:#: {
       if ($2 == SET) { $point $report(ScanLog,Error,There is no set funtion in scanlog yet.) | halt }
       halt
     }
-    ;#.shit Format: .shit <ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW> <NICK/IP> (manages the shitlist)
-    ;#.shit Format: .shitlist <ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW> <NICK/IP> (manages the shitlist)
+    ;#.shit Format: .shit [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
+    ;#.shit Format: .shitlist [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
     if ($strip($1) == .shit) || ($strip($1) == .shitlist) {
-      if ($2 == $null) { $point $report(Format,$null,.shit <ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW> <NICK/IP>) | halt }
+      if ($2 == $null) { $point $report(Format,$null,.shit [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP>) | halt }
       if ($2 == ON) { set %shitlist.Do. [ $+ [ $network ] ] ON | $point $report(ShitList,$null,Is Set,%shitlist.Do. [ $+ [ $network ] ]) | halt }
       if ($2 == OFF) { set %shitlist.Do. [ $+ [ $network ] ] OFF | $point $report(ShitList,$null,Is Set,%shitlist.Do. [ $+ [ $network ] ]) | halt }
       if ($2 == ADD) || ($2 == -A) {
@@ -688,7 +694,7 @@ on *:TEXT:*:#: {
       halt
 
     }
-    ;#.slc Format: .slc <-s (SHOW)|-r (RESET)> (Configures the Security Log)
+    ;#.slc Format: .slc [<-s (SHOW)|-r (RESET)>} (Configures the Security Log)
     if ($strip($1) == .slc) { slc $2- | halt }
     ;#.seen Format: .seen <nick> (last time a nick was seen and where)
     if ($strip($1) == .seen) {
@@ -707,10 +713,10 @@ on *:TEXT:*:#: {
       ;$pointer $report(Connection,$null,Bot is connected to ,$scid(0) servers)
       var %tmp.srv0 = $remove($1,.) $+ :
       var %tmp.srv1 = 1
-      var %tmp.srv2 = $var(connserv*,0)
+      var %tmp.srv2 = $var(connect*,0)
       while (%tmp.srv1 <= %tmp.srv2) {
-        if (%tmp.srv2 == 1) { $point $report(%tmp.srv0,%tmp.srv1,$var(connserv*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) | break }
-        else { $point $report(%tmp.srv0,%tmp.srv1,$var(connserv*,%tmp.srv1).value) $report($var(connserv*,%tmp.srv1).value) }
+        if (%tmp.srv2 == 1) { $point $report(%tmp.srv0,%tmp.srv1,$var(connect*,%tmp.srv1).value) $report(%connserv. [ $+ [ $var(connect*,%tmp.srv1).value ] ])  | break }
+        else { $point $report(%tmp.srv0,%tmp.srv1,$var(connect*,%tmp.srv1).value) $report(%connserv. [ $+ [ $var(connect*,%tmp.srv1).value ] ])  }
         inc %tmp.srv1
         if (%tmp.srv1 > %tmp.srv2) { break }
       }
@@ -727,8 +733,8 @@ on *:TEXT:*:#: {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       Set.SS # $2- | halt
     }
-    ;#.ss Format: .ss  ON/OFF/STATS/NICK DAL/ICQ <room to join/nickforsocket> (spy from current serv to another)
-    ;#.servspy Format: .servspy  ON/OFF/STATS/NICK DAL/ICQ <room to join/nickforsocket> (spy from current serv to another)
+    ;#.ss Format: .ss  [ON/OFF/STATS/NICK] [DAL/ICQ] <room to join/nickforsocket> (spy from current serv to another)
+    ;#.servspy Format: .servspy  [ON/OFF/STATS/NICK] [DAL/ICQ] <room to join/nickforsocket> (spy from current serv to another)
     if ($strip($1) == .ss) || ($strip($1) == .servspy) {
       if ($2 == $null) { $point $report(Format,$null,$null,.ss ON/OFF/STATS/NICK/SERVER/PASS/PORT DAL/ICQ <room to join/nickforsocket/newpass/port> (spy from current serv to another)) | halt }
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
@@ -743,8 +749,8 @@ on *:TEXT:*:#: {
       else { spell # $2 | halt }
       halt
     }
-    ;#.st Format: .st ON/OFF (allows other users to talk through the spy sockets.)
-    ;#.spy Format: .spy ON/OFF #room (.)
+    ;#.st Format: .st [ON/OFF] (allows other users to talk through the spy sockets.)
+    ;#.spy Format: .spy [ON/OFF] <#room> (.)
     if ($strip($1) == .spy) {
       if ($2 == $null) { $point $report(Format:,.spy ON/OFF #room) | halt }
       if ($2 == ON) {
@@ -757,7 +763,7 @@ on *:TEXT:*:#: {
       }
       if ($2 == OFF) { set %spy OFF | set %spy1 "" | set %spy2 "" | $point $report(Spy,Disabled) | halt }
     }
-    ;#.spytalk Format: .spytalk ON/OFF (allows other users to talk through the spy sockets.)
+    ;#.spytalk Format: .spytalk [ON/OFF] (allows other users to talk through the spy sockets.)
     if ($strip($1) == .spytalk) || ($strip($1) == .st) {
       if ($2 == $null) { $point $report(Format,$null,$null,.spytalk ON/OFF, Current: %server.spy.talk) | $point $report(Format,$null,$null,.st ON/OFF, Current: %server.spy.talk) }
       else {
@@ -769,7 +775,7 @@ on *:TEXT:*:#: {
     }
     ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-    ;#.talk Format: .talk ON/OFF (Turns Interactive Speach on or off for the room you are in.)
+    ;#.talk Format: .talk [ON/OFF] (Turns Interactive Speach on or off for the room you are in and gives basic info. )
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     if ($strip($1) == .talk) {
       if ($2 == -a) || ($2 == ALL) || ($2 == $chr(42)) {

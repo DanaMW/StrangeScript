@@ -349,17 +349,29 @@ lcr {
 ;  halt
 ;}
 /quit.Pick {
+  var %tmp.QP1 = 1
+  var %tmp.QP2 = $var(connected*,0)
+  var %maxq = $var(connected*,0)
   if ($1 == $null) {
-    var %tmp.QP1 = 1
-    var %tmp.QP2 = $var(connected*,0)
-    $point $report(0,$null,Quit/Exit)
+    set %QP.set YES
+    $point $report(0,$null,All Exit/Quit)
     while (%tmp.QP1 <= %tmp.QP2) {
-      if (%tmp.QP2 == 1) { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) | break }
-      else { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) }
+      if (%tmp.QP2 == 1) { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value,$var(connserv*,%tmp.QP1).value) | break }
+      else { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) $+ $report($null,$null,$var(connserv*,%tmp.QP1).value) }
       inc %tmp.QP1
-      if (%tmp.srv1 > %tmp.srv2) { break }
+      if (%tmp.QP1 > %tmp.QP2) { break }
     }
-    $point $report(Select server to quit: <quit #>)
+    $point $report(Select server to quit: 0 to %maxq $+ : ) 
   }
-  else { $point $report(Testing,1,2,3) | halt }
-}
+  else {
+    if (%QP.set == $null) { $scid(0) }
+    set %QP.set YES
+    if ($1 == 0) { $point $report($null,Quiting) $+ $report($1) $+ $report($null,$null,$var(connected*,$scon($1)).value) | halt }
+    else {
+      $point $report($null,Quiting) $+ $report($1)
+      scon $var(connserv*,$1).value
+      msg #StrangeScript test
+      ;quit $var(connserv*,$1).value Bosses Orders
+    }
+    unset %QP.set %tmp.QP1 %tmp.QP2
+  }
