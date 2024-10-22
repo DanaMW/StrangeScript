@@ -608,14 +608,6 @@ on *:TEXT:*:#: {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       recover $2
       halt
-      ;if ($2 == OFF) {
-      ;  .timerREC $+ $network OFF
-      ;  unset %recover. [ $+ [ $network ] ]
-      ;  $point $report(Recover,Off)
-      ;  halt
-      ;}
-      ;else { set %recover. [ $+ [ $network ] ] $2 | $point $report(Recover,Attempting to recover,%recover. [ $+ [ $network ] ]) | recover | halt }
-      ;halt
     }
     ;#.reload Format: .reload (reloads the bots scripts)
     if ($strip($1) == .reload) {
@@ -629,7 +621,7 @@ on *:TEXT:*:#: {
       if ($network == Libera.Chat) { server irc.Libera.Chat | return }
       if ($network == Rizon) { server irc.rizon.net | return }
       if ($network == UnderNet) { server us.undernet.org | return }
-      else { server $server }
+      else { server $server | return }
       halt
     }
     ;#.safe Format: .safe (Goes into Safe mode ignoring everything except you)
@@ -692,12 +684,12 @@ on *:TEXT:*:#: {
       if ($chr(35) !isin $3) { while (%tmp <= $2) { msg # $3- | inc %tmp | if (%tmp > $2) { break } } }
       unset %tmp
       halt
-
     }
     ;#.slc Format: .slc [<-s (SHOW)|-r (RESET)>} (Configures the Security Log)
     if ($strip($1) == .slc) { slc $2- | halt }
-    ;#.seen Format: .seen <nick> (last time a nick was seen and where)
-    if ($strip($1) == .seen) {
+    ;#.lastseen Format: .lastseen <nick> (last time a person was seen and where)
+    ;#.seen Format: .seen <nick> (last time a person was seen and where)
+    if ($strip($1) == .seen) || ($strip($1) == .lastseen) {
       if ($2 == $null) { $point $report(Format,$null,$null,.seen <nick>) | halt }
       else { 
         var %tmp.x = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt
