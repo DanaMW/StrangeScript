@@ -75,11 +75,7 @@ on *:NOTICE:*:*:{
 }
 on *:JOIN:#: {
   set %lastjoin. $+ # $nick
-  if ($istok(%shitlist. [ $+ [ $network ] ],$address($nick,4),44) == $true) {
-    if (%shitlist.Do. [ $+ [ $network ] ] == ON) {
-      if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick :Bot $+ $chr(160) $+ Shitlist }
-    }
-  }
+  if ($istok(%shitlist. [ $+ [ $network ] ],$address($nick,4),44) == $true) { if (%shitlist.Do. [ $+ [ $network ] ] == ON) { if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick :Bot $+ $chr(160) $+ Shitlist } } }
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Join,%spy1,$nick,$address) }
   if ($nick == $me) {
     if ($chan(#) isin %pound) && (%pound.active == ON) { .notice %boss. [ $+ [ $network ] ] 04 $+ Pound Disabled, Entered Room | .timerPND OFF | set %pound "" | set %pound.active OFF }
@@ -182,7 +178,6 @@ alias deop.kill {
   if ($3 == %boss. [ $+ [ $network ] ]) && ($2 != %boss. [ $+ [ $network ] ]) { .flood on | .timerMFlud 1 30 .flood off | .raw kick $4 $2 Auto | halt }
 }
 on *:PART:#:{
-  ;msg # $0-
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Part,%spy1,$nick - $address) }
   ;if ($nick != $me) && (%boss. [ $+ [ $network ] ] !ison $chan(#)) && (%spy != ON) { .notice %boss. [ $+ [ $network ] ] 00 $+ Part: 11 $+ $nick 04 $+ just parted 11 $+ # }
   if ($nick != $me) {
@@ -255,7 +250,7 @@ on 1:DNS: {
     return 
   }
 }
-ctcp 1:*: { ssctcpflood | echo -t $nick CTCP $event $+ : $1- | halt }
+ctcp 1:*: { ssctcpflood | $point %boss. [ $+ [ $network ] ] $event $+ : $1- | halt }
 on 5:ctcpreply:REG*:{ if ($nick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ] | halt } | else { halt } }
 on 1:ctcpreply:*:{
   ssctcpflood
@@ -322,4 +317,4 @@ ctcp 5:TIME*: { ssctcpflood }
 ctcp 5:CLIENTINFO*: { ssctcpflood }
 ctcp 5:USERINFO*: { ssctcpflood }
 ctcp 5:RELOAD*: { load.again | halt }
-ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | .notice %boss. [ $+ [ $network ] ] $report(Versioned By $nick,the prick) | halt }
+ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | $point %boss. [ $+ [ $network ] ] $report(Versioned By $nick,the prick) | halt }

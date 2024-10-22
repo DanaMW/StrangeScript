@@ -350,28 +350,34 @@ lcr {
 ;}
 /quit.Pick {
   var %tmp.QP1 = 1
-  var %tmp.QP2 = $var(connected*,0)
-  var %maxq = $var(connected*,0)
+  var %maxq = $scon(0)
   if ($1 == $null) {
-    set %QP.set YES
     $point $report(0,$null,All Exit/Quit)
-    while (%tmp.QP1 <= %tmp.QP2) {
-      if (%tmp.QP2 == 1) { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value,$var(connserv*,%tmp.QP1).value) | break }
-      else { $point $report(%tmp.QP1,$null,$var(connected*,%tmp.QP1).value) $+ $report($null,$null,$var(connserv*,%tmp.QP1).value) }
+    while (%tmp.QP1 <= $scon(0)) {
+      $point $report(%tmp.QP1,$null,$scon(%tmp.QP1).network)
       inc %tmp.QP1
-      if (%tmp.QP1 > %tmp.QP2) { break }
+      if (%tmp.QP1 > $scon(0)) { break }
     }
-    $point $report(Select server to quit: 0 to %maxq $+ : ) 
+    $point $report(Select server to quit:,0 to %maxq $+ :,.quit x) 
   }
   else {
-    if (%QP.set == $null) { $scid(0) }
-    set %QP.set YES
-    if ($1 == 0) { $point $report($null,Quiting) $+ $report($1) $+ $report($null,$null,$var(connected*,$scon($1)).value) | halt }
-    else {
-      $point $report($null,Quiting) $+ $report($1)
-      scon $var(connserv*,$1).value
-      msg #StrangeScript test
-      ;quit $var(connserv*,$1).value Bosses Orders
+    if ($1 == 0) { 
+      $point $report($null,$null,Quiting all servers.)
+      halt
     }
-    unset %QP.set %tmp.QP1 %tmp.QP2
+    else { $point $report(Quiting,$null,$scon($1).network) | scon { $1 quit Bosses Orders } }
+    unset %tmp.QP1 %tmp.QP2 %maxq
   }
+}
+/last.seen {
+  if ($1 == $null) || ($2 == $null) || ($3 == $null) || ($4 == $null) || ($5 == $null)  { $point $report(Error,$null,LastSeen,is missing a needed param.,Check 1-5) }
+  ;praut (~praut@praut.users.undernet.org) was last seen quitting from #toronto-ops 13 hours, 2 minutes ago stating (Read error: EOF from client).
+  [praut]|[~praut@praut.users.undernet.org]|[Last seen quitting]|[#toronto-ops]|[13 hours, 2 minutes ago]|[Read error: EOF from client]
+  var %tmp.LS0 = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt
+  var %tmp.LS1 = $1   ; Nick._(Spaces_are_Underscores)
+  var %tmp.LS2 = $2   ; Full address.
+  var %tmp.LS3 = $3   ; Depart/Join method.
+  var %tmp.LS4 = $4   ; Location.
+  var %tmp.LS5 = $5-  ; The rest of the story.
+  ;write -wn %tmp.LS0 $report($remtok(%tmp.LS1,95),%tmp.LS2,%tmp.LS3,%tmp.LS4,<[ $asctime ]>,%tmp.LS5)
+}
