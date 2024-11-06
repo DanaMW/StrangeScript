@@ -5,10 +5,10 @@ ut1 return 2
 ut2 return 55
 ;
 ;month (xx)
-ut3 return 10
+ut3 return 11
 ;
 ;day (xx)
-ut4 return 22
+ut4 return 05
 ;
 ;year (xxxx)
 ut5 return 2024
