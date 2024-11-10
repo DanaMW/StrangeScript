@@ -826,7 +826,11 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.ver Format: .ver (returns bot version.)
-    if ($strip($1) == .ver) { .msg # $ver | halt }
+    if ($strip($1) == .ver) {
+      $point $ver
+      $point Using mIRC $version
+      halt
+    }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
     if ($strip($1) == drop) && ($2 == dead) { msg # $report(Exit,$null,$null,Done) | .exit | halt }
