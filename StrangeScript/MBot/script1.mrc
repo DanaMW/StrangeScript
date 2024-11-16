@@ -279,7 +279,7 @@ on *:TEXT:*:#: {
       if ($2 == -d) {
         if ($3 == $null) { halt }
         %method # Running dig $3- $+ , one minute ...
-        .run -n cmd.exe /c C:\dns\bin\dig.exe $3-  > temp.txt
+        ;.run -n cmd.exe /c C:\dns\bin\dig.exe $3-  > temp.txt
         if ($exists(temp.txt) == $false) { $point Error playing file, the fucking thing is missing | halt }
         else { .timer 1 3 play.filter # temp.txt }
         ;.timerldl 1 3 .play # temp.txt 100
@@ -295,12 +295,12 @@ on *:TEXT:*:#: {
       $point $report(Exit,Done)
       if ($2 != $null) {
         timer 1 1 quit $replace($2-,$chr(32),$chr(160))
-        timer -o 1 2 exit
+        timer -o 1 2 exit -n
         halt
       }
       else {
         timer 1 1 quit $replace(Miss me while I'm gone!,$chr(32),$chr(160))
-        timer -o 1 2 exit
+        timer -o 1 2 exit -n
         halt
       }
     }
@@ -347,7 +347,11 @@ on *:TEXT:*:#: {
     ;#.ignore Format: .ignore <nick/ip> (Makes the bot ignore given <nick or ip> for 15 minutes.)
     if ($strip($1) == .ignore) { if ($2 == $null) { $point Format: .ignore <nick/ip> | halt } | .ignore -u900 $2 | $point $report(Ignore,$2,Added) | halt }
     ;#.ircx Format: .ircx (Makes the bot set itself to ircx mode.)
-    if ($strip($1) == .ircx) { .ircx | $point $report(IRCx Mode,$null,Set) | halt }
+    if ($strip($1) == .ircx) {
+      .ircx
+      $point $report(IRCx Mode,$null,Set,%IRCX.mode. [ $+ [ $network ] ])
+      halt
+    }
     ;#.invite Format: .invite <nick or .invite <#channel> <nick> (Makes the bot invite nick to current channel or to #channel.)
     if ($strip($1) == .invite) {
       if ($2 == $null) { $point Format: .invite <nick> or .invite <nick> <channel> | halt }
@@ -383,9 +387,9 @@ on *:TEXT:*:#: {
           set %Lag.mrc.secs. [ $+ [ $network ] ] $3
           $point $report(Lag,$server,Interval set to,%Lag.mrc.secs. [ $+ [ $network ] ]) 
         }
-        $point $report(Lag,$server,%Lag.mrc. [ $+ [ $network ] ])
-        halt
       }
+      $point $report(Lag,$server,%Lag.mrc. [ $+ [ $network ] ])
+      halt
     }
     ;#.LiveMenu Format: .livemenu (Enters the interactive ip to ip mirc ini editor.)
     if ($strip($1) == .livemenu) {
@@ -398,8 +402,8 @@ on *:TEXT:*:#: {
     ;#.log Format: .log <-s ON/OFF|-q ON/OFF|ON|OFF|SHOW> (Turns log reads on or off.)
     if ($strip($1) == .log) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-      if ($2 == $null) { $point Format: .log <-s ON/OFF|-q ON/OFF|ON|OFF|SHOW> (Turns log reads on or off.) | halt }
-      LOG.ADJUST # $2-
+      if ($2 == $null) { $point Forat: .log <-s ON/OFF|-q ON/OFF|ON|OFF|SHOW> (Turns log reads on or off.) | halt }
+      LOG.ADJUST # $2-m
       halt
     }
     ;#.server Format: .server <server address:port> (Makes the bot login to <server address:port>.)
@@ -833,7 +837,11 @@ on *:TEXT:*:#: {
     }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
     if ($strip($1) == .you) { .nick $2 | halt }
-    if ($strip($1) == drop) && ($2 == dead) { msg # $report(Exit,$null,$null,Done) | .exit | halt }
+    if ($strip($1) == drop) && ($2 == dead) {
+      $point $report(Exit,$null,$null,Done)
+      .exit
+      halt
+    }
     if ($strip($1) == go) && ($2 == away) { msg # Fine then. | .part # pffft | timer $+ $rand(1,99) 1 30 join # | halt }
     if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 :Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
     ;#.setvar Format: .setvar <variable> <value>/CLEAR (allows you to create, set, change, or clear a variable.)
