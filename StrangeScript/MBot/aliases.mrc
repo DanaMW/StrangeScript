@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 58
+ut2 return 61
 ;
 ;month (xx)
 ut3 return 11
 ;
 ;day (xx)
-ut4 return 15
+ut4 return 22
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -25,11 +25,11 @@ botdir return $mircdirMBot\
 textdir return $mircdirtext\
 myecho if (@.* !isin $active) { return echo $color(normal text) -at < $+ $me $+ > }
 long { set %long ** | return }
-lowcol { if (%sc1 == $null) { return 04 } | else { if (%sc.bold == ON) { return  $+ %sc1 } | else { return  $+ %sc1 } } }
-highcol { if (%sc2 == $null) { return 11 } | else { if (%sc.bold == ON) { return  $+ %sc2 } | else { return  $+ %sc2 } } }
-bright { if (%sc3 == $null) { return 08 } | else { if (%sc.bold == ON) { return  $+ %sc3 } | else { return  $+ %sc3 } } }
-white { if (%sc4 == $null) { return 00 } | else { if (%sc.bold == ON) { return  $+ %sc4 } | else { return  $+ %sc4 } } }
-sep { if (%sc.seperater == $null) { return 10 } | else { if (%sc.bold == ON) { return  $+ %sc.seperater } | else { return  $+ %sc.seperater } } }
+lowcol { if (%sc1 == $null) { return  $+ 04 } | else { if (%sc.bold == ON) { return  $+ %sc1 } | else { return  $+ %sc1 } } }
+highcol { if (%sc2 == $null) { return  $+ 11 } | else { if (%sc.bold == ON) { return  $+ %sc2 } | else { return  $+ %sc2 } } }
+bright { if (%sc3 == $null) { return  $+ 08 } | else { if (%sc.bold == ON) { return  $+ %sc3 } | else { return  $+ %sc3 } } }
+white { if (%sc4 == $null) { return  $+ 00 } | else { if (%sc.bold == ON) { return  $+ %sc4 } | else { return  $+ %sc4 } } }
+sep { if (%sc.seperater == $null) { return  $+ 10 } | else { if (%sc.bold == ON) { return  $+ %sc.seperater } | else { return  $+ %sc.seperater } } }
 space return $chr(160)
 spcm return $chr(44) $+ $chr(160)
 output return 11,11 
@@ -225,7 +225,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
 /join { jn $1 $2 $3 $4 $5 $6- }
 /jn {
   if ($2 != $null) { .raw join $1 $2- }
-  if ($2 == $null) && (%key. [ $+ [ $1 ] ] != $null) { .raw join $1 %key. [ $+ [ $1 ] ] }
+  if ($2 == $null) && (%owner. [ $+ [ $1 ] ] != $null) { .raw join $1 %owner. [ $+ [ $1 ] ] }
   else { .raw join $1 }
 }
 /jns { .raw join $replace($1-,$chr(32),$chr(160)) }
@@ -303,7 +303,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%do.autojoin. [ $+ [ $network ] ] == OFF) { return }
   var %tmp.oo = 1
   while (%tmp.oo <= $numtok(%autojoin.rooms. [ $+ [ $network ] ],44)) {
-    .raw join $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) %key. [ $+ [ $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) ] ]
+    .raw join $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) %owner. [ $+ [ $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) ] ]
     inc %tmp.oo
     if (%tmp.oo > $numtok(%autojoin.rooms. [ $+ [ $network ] ],44)) { break }
   }
@@ -369,7 +369,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   :qloop2
   If (%tmp.quit <= $chan(0)) { 
     .raw part $chan(%tmp.quit)
-    .raw join $chan(%tmp.quit) %key. [ $+ [ $chan(%tmp.quit) ] ]
+    .raw join $chan(%tmp.quit) %owner. [ $+ [ $chan(%tmp.quit) ] ]
     inc %tmp.quit 
     goto qloop2
   }
@@ -430,8 +430,8 @@ deathip {
 }
 /addkey {
   ;var %tmp.addkey = $chr(91) $+ $rand(0,99999) $+ $rand(A,Z) $+ $rand(A,Z) $+ $rand(0,99999) $+ $chr(93)
-  ;if ($1 == $null) { set %key. [ $+ [ # ] ] %tmp.addkey | .raw prop # ownerkey %tmp.addkey }
-  ;if ($1 != $null) { set %key. [ $+ [ $1 ] ] %tmp.addkey | .raw prop $1 ownerkey %tmp.addkey }
+  ;if ($1 == $null) { set %owner. [ $+ [ # ] ] %tmp.addkey | .raw prop # ownerkey %tmp.addkey }
+  ;if ($1 != $null) { set %owner. [ $+ [ $1 ] ] %tmp.addkey | .raw prop $1 ownerkey %tmp.addkey }
   return
 }
 /myaddress {
@@ -788,17 +788,18 @@ MenuPicks {
 }
 /play.mod { if ($1 != $null) { .notice %boss $replace($1-,$chr(9),$chr(160))  } }
 /insta.aj {
-  $report(Insta-AutoJoin,$null,$null,Creating your autojoin list).active
+  $point $report(Insta-AutoJoin,$null,$null,Creating your autojoin list)
   var %tmp.iaj = 1
   var %tmp.iaj1 = ""
   while (%tmp.iaj <= $chan(0)) {
     var %tmp.iaj1 = $addtok(%tmp.iaj1,$chan(%tmp.iaj),44)
-    $report(Insta-AutoJoin,$null,Adding,$null,$chan(%tmp.iaj)).active
+    $point $report(Insta-AutoJoin,$null,Adding,$null,$chan(%tmp.iaj))
     inc %tmp.iaj
     if (%tmp.iaj > $chan(0)) { break }
   }
-  set %autojoin. [ $+ [ $network ] ] %tmp.iaj1
-  notice %boss $report(Insta-AutoJoin,$null,Done,%tmp.iaj1)
+  set %autojoin.rooms. [ $+ [ $network ] ] %tmp.iaj1
+  $point $report(Insta-AutoJoin,$null,Done,%tmp.iaj1)
+  return
 }
 /partall {
   set %tmp.pa 1

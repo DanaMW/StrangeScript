@@ -141,7 +141,7 @@ on *:TEXT:*:#: {
       }
       if ($2 == ON) { set %do.autojoin. [ $+ [ $network ] ] ON | $point $report(Current,$null,$null,%do.autojoin. [ $+ [ $network ] ]) | halt }
       if ($2 == OFF) { set %do.autojoin. [ $+ [ $network ] ] OFF | $point $report(Current,$null,$null,%do.autojoin. [ $+ [ $network ] ]) | halt }
-      if ($2 == -C) || ($2 == CREATE) { insta.aj | $point $report(Current,Created New,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
+      if ($2 == -C) || ($2 == CREATE) { insta.aj }
       halt
     }
     ;#.away Format: .away <reason> (Sets the bot away.)
@@ -190,8 +190,8 @@ on *:TEXT:*:#: {
     ;#.cycle Format: .cycle [<channel>|-A] (Cycles the current or given channel or cycles all joined channels.)
     if ($strip($1) == .cycle) {
       if ($2 == -A) || ($2 == -ALL) { $point Cycling [ALL] for the boss | cycleall | halt }
-      if ($2 == $null) { .raw part $chan $cr join $chan %key. [ $+ [ $chan ] ] | halt }
-      else { .raw part $2 | .raw join $2 %key. [ $+ [ $2 ] ] | halt }
+      if ($2 == $null) { .raw part $chan $cr join $chan %owner. [ $+ [ $chan ] ] | halt }
+      else { .raw part $2 | .raw join $2 %owner. [ $+ [ $2 ] ] | halt }
     }
     ;#.cycleall Format: .cycleall (Cycles all joined channels.)
     if ($strip($1) == .cycleall) { cycleall | halt }
@@ -554,14 +554,14 @@ on *:TEXT:*:#: {
     if ($strip($1) == .prop) {
       halt
       if ($2 == $null) {
-        if (%key. [ $+ [ # ] ] != $null) { prop # OWNERKEY %key. [ $+ [ # ] ] }
-        if (%key2. [ $+ [ # ] ] != $null) { prop # HOSTKEY %key2. [ $+ [ # ] ] }
+        if (%owner. [ $+ [ # ] ] != $null) { prop # OWNERKEY %owner. [ $+ [ # ] ] }
+        if (%host. [ $+ [ # ] ] != $null) { prop # HOSTKEY %host. [ $+ [ # ] ] }
         .raw mode # +ntw
         halt
       }
       if ($2 != $null) {
-        if (%key. [ $+ [ $2 ] ] != $null) { /prop $2 OWNERKEY %key. [ $+ [ $2 ] ] }
-        if (%key2. [ $+ [ $2 ] ] != $null) { .prop $2 HOSTKEY %key2. [ $+ [ $2 ] ] }
+        if (%owner. [ $+ [ $2 ] ] != $null) { /prop $2 OWNERKEY %owner. [ $+ [ $2 ] ] }
+        if (%host. [ $+ [ $2 ] ] != $null) { .prop $2 HOSTKEY %host. [ $+ [ $2 ] ] }
         .raw mode $2 +ntw
         set %report Props in $2 | /report1 # Set
         halt
@@ -606,7 +606,7 @@ on *:TEXT:*:#: {
       return
     }
     ;#.remkey Format: .remkey (Deletes the owner and host key on the current channel.)
-    if ($strip($1) == .remkey) { unset %key. [ $+ [ # ] ] | unset %key2. [ $+ [ # ] ] | set %report OwnerKey and Hostkey | /report1 # Deleted | halt }
+    if ($strip($1) == .remkey) { unset %owner. [ $+ [ # ] ] | unset %host. [ $+ [ # ] ] | set %report OwnerKey and Hostkey | /report1 # Deleted | halt }
     ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turns recover off.)
     if ($strip($1) == .recover) { 
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
@@ -750,7 +750,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .spy) {
       if ($2 == $null) { $point $report(Format:,.spy ON/OFF #room) | halt }
       if ($2 == ON) {
-        if ($me !ison $3) { .join $3 %key. [ $+ [ $3 ] ] }
+        if ($me !ison $3) { .join $3 %owner. [ $+ [ $3 ] ] }
         set %spy ON
         set %spy1 $3
         set %spy2 # 

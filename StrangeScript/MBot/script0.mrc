@@ -43,8 +43,8 @@ on 1:DISCONNECT:{
 ;on 1:DCCSERVER:SEND: halt
 on 1:DCCSERVER:FSERVE: halt
 on *:INVITE:#:{
-  if ($nick == %boss. [ $+ [ $network ] ]) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
-  if ($nick == ChanServ) { .raw join $chan %key. [ $+ [ $chan ] ] | halt }
+  if ($nick == %boss. [ $+ [ $network ] ]) { .raw join $chan %owner. [ $+ [ $chan ] ] | halt }
+  if ($nick == ChanServ) { .raw join $chan %owner. [ $+ [ $chan ] ] | halt }
   .ignore -u120 $nick
   halt 
 }
@@ -81,7 +81,7 @@ on *:JOIN:#: {
     if ($chan(#) isin %pound) && (%pound.active == ON) { .notice %boss. [ $+ [ $network ] ] 04 $+ Pound Disabled, Entered Room | .timerPND OFF | set %pound "" | set %pound.active OFF }
     ;if ($network == dalnet) { .chanserv op # $me }
     ;else { .msg chanserv op # $me }
-    if (%doautojoin == SPEED) { .prop # OWNERKEY %key. [ $+ [ # ] ] $+ $cr $+ mode # +nts }
+    if (%doautojoin == SPEED) { .prop # OWNERKEY %owner. [ $+ [ # ] ] $+ $cr $+ mode # +nts }
   }
   if ($level($address(%boss. [ $+ [ $network ] ],4)) == 4) { 
     if ($nick(#,$me,q) != $null) { .mode # +q $nick }
@@ -135,16 +135,16 @@ on *:NICK: {
 }
 raw 366:*:{ if ($me ison $2) { who $2 } | else { return } }
 on *:KICK:#: {
-  if ($nick == $server) && (*strange* iswm $server) { .raw join # %key. [ $+ [ # ] ] | halt }
+  if ($nick == $server) && (*strange* iswm $server) { .raw join # %owner. [ $+ [ # ] ] | halt }
   if ($nick == $server) && (*strange* !iswm $server) { halt }
   if ($nick == ChanServ) && (*strange* !iswm $server) { halt }
   if ($knick != %boss. [ $+ [ $network ] ]) && ($knick != $me) { HALT }
-  if ($knick == $me) && ($nick == %boss. [ $+ [ $network ] ]) { .raw join # %key. [ $+ [ # ] ] | msg # stop abusing the bot | halt }
-  if ($knick == $me) && ($nick != %boss. [ $+ [ $network ] ]) && ( $nick != $me) { .raw join # %key. [ $+ [ # ] ] | .raw kick # $nick Auto | halt }
-  if ($knick == $me) && ($nick == $me) { .raw join # %key. [ $+ [ # ] ] | halt }
+  if ($knick == $me) && ($nick == %boss. [ $+ [ $network ] ]) { .raw join # %owner. [ $+ [ # ] ] | msg # stop abusing the bot | halt }
+  if ($knick == $me) && ($nick != %boss. [ $+ [ $network ] ]) && ( $nick != $me) { .raw join # %owner. [ $+ [ # ] ] | .raw kick # $nick Auto | halt }
+  if ($knick == $me) && ($nick == $me) { .raw join # %owner. [ $+ [ # ] ] | halt }
   if ($knick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick Auto | halt }
   if ($knick == %boss. [ $+ [ $network ] ]) && ($nick == $me) { .mode # -o $me | halt }
-  if ($level($address($nick,4)) == 5) { .raw join # %key. [ $+ [ # ] ] | halt }
+  if ($level($address($nick,4)) == 5) { .raw join # %owner. [ $+ [ # ] ] | halt }
 }
 on *:RAWMODE:#: {
   if ($nick == $server) { halt }
@@ -168,7 +168,7 @@ alias deop.kill {
   if ($3 == $me) {
     .flood on
     .timerMFlud 1 30 .flood off
-    .raw part $4 $cr join $4 %key. [ $+ [ $4 ] ] $cr mode $4 -o $2
+    .raw part $4 $cr join $4 %owner. [ $+ [ $4 ] ] $cr mode $4 -o $2
     addkey $4
     .raw kick $4 $2 Lets $+ $chr(160) $+ Rock
     if ($chr(37) isin $4) { unset $4 }
@@ -213,8 +213,8 @@ raw 421:*: {
 }
 raw prop:*: {
   if ($2 == OWNERKEY) { 
-    set %oldkey. [ $+ [ $1 ] ] %key. [ $+ [ $1 ] ]
-    set %key. [ $+ [ $1 ] ] $3
+    set %oldkey. [ $+ [ $1 ] ] %owner. [ $+ [ $1 ] ]
+    set %owner. [ $+ [ $1 ] ] $3
     ;.notice %boss. [ $+ [ $network ] ] 04 $+ The OwnerKey has been saved for 11 $1
   }
 }
@@ -291,7 +291,7 @@ ctcp 5:SSBOT*:{
 }
 ctcp 5:DO*: {
   if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-  $2-
+  timerDO $+ $network 1 1 $2-
   halt
 }
 ctcp 5:KILL*: {
@@ -302,12 +302,12 @@ ctcp 5:KILL*: {
 ctcp 5:SAVEKEY*: { 
   if ($nick != %boss. [ $+ [ $network ] ]) { halt }
   if ($2 == O) {
-    set %key. [ $+ [ $3 ] ] $4
+    set %owner. [ $+ [ $3 ] ] $4
     $point $report(SAVEKEY,CTCP,$nick,The OWNER KEY has been saved for,$3)
     halt
   }
   if ($2 == H) {
-    set %key2. [ $+ [ $3 ] ] $4
+    set %host. [ $+ [ $3 ] ] $4
     $point $report(SAVEKEY,CTCP,$nick,The HOST KEY has been saved for,$3)
     halt
   }
