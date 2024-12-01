@@ -365,9 +365,14 @@ lcr {
       $point $report($null,$null,Quiting all servers.)
       halt
     }
-    else { $point $report(Quiting,$null,$scon($1).network) | scon { $1 quit Bosses Orders } }
-    unset %tmp.QP1 %tmp.QP2 %maxq
+    else {
+      $point $report(Quiting,$null,$scon($1).network)
+      scon -s $1 quit Bosses Orders
+      scon -s $1 partall
+      scon -s $1 close STATUS
+    }
   }
+  unset %tmp.QP1 %tmp.QP2 %maxq
 }
 /last.seen {
   if ($1 == $null) || ($2 == $null) || ($3 == $null) || ($4 == $null) || ($5 == $null)  { $point $report(Error,$null,LastSeen,is missing a needed param.,Check 1-5) }
@@ -381,3 +386,4 @@ lcr {
   var %tmp.LS5 = $5-  ; The rest of the story.
   ;write -wn %tmp.LS0 $report($remtok(%tmp.LS1,95),%tmp.LS2,%tmp.LS3,%tmp.LS4,<[ $asctime ]>,%tmp.LS5)
 }
+s
