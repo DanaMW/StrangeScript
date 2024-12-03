@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 61
+ut2 return 62
 ;
 ;month (xx)
-ut3 return 11
+ut3 return 12
 ;
 ;day (xx)
-ut4 return 22
+ut4 return 01
 ;
 ;year (xxxx)
 ut5 return 2024
@@ -18,7 +18,7 @@ ss return 10S04trange10S04cript
 ver return $name 10 $+ $chr(91) v00 $+ $ut1 $+ 10. $+ 00 $+ $ut2 $+ 10. $+ 00 $+ $ut3 $+ 10. $+ 00 $+ $ut4 $+ 10. $+ 00 $+ $ut5 10 $+ $chr(93) $+ 00 coded for $ss
 ;-----------------------------------------------------
 all scid -a $1-
-aj autojoin
+aj auto.join
 ca cycleall
 sysdir return $mircdirsystem\
 botdir return $mircdirMBot\
@@ -810,5 +810,5 @@ MenuPicks {
     if (%tmp.pa > $chan(0)) { break }
   }
   unset %tmp.pa
-  halt
+  return
 }
