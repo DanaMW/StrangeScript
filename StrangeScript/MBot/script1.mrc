@@ -120,6 +120,12 @@ on *:TEXT:*:#: {
       UP.Service # $remove($strip($1-),.)
       halt
     }
+    ;#.autoop Format: .autoop <ON|OFF> (For the Network you are on)
+    if ($strip($1) == .AUTOOP) {
+      if ($2 == $null) { if (%AutoOp. [ $+ [ $network ] ] == $null) { set %AutoOp. [ $+ [ $network ] ] OFF } | $point $report(AutoOp,$null,$network,%AutoOp. [ $+ [  $network ] ]) }
+      if ($2 == ON) { set %AutoOp. [ $+ [ $network ] ] ON | $point $report(AutoOp,$null,$network,%AutoOp. [ $+ [ $network ] ]) }
+      if ($2 == OFF) { set %AutoOp. [ $+ [ $network ] ] OFF | $point $report(AutoOp,$null,$network,%AutoOp. [ $+ [ $network ] ]) }
+    }
     ;#.autojoin Format: .autojoin <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST|-C/CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from currently joined rooms.)
     if ($strip($1) == .AUTOJOIN) {
       if ($2 == $null) { $point Format: .autojoin <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST|-C/CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from currently joined rooms.) | halt }
@@ -421,7 +427,6 @@ on *:TEXT:*:#: {
     if ($strip($1) == .auser) {
       if ($2 == $null) { $point Format: .auser <nick> | halt }
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-      halt
       auser 4 $address($2,4) $2
       $pointer I am now stuck taking orders from $2 $+ , sucks to be me.
       halt

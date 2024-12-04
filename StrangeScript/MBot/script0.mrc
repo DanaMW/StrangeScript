@@ -93,11 +93,13 @@ on *:JOIN:#: {
     if ($nick(#,$me,q) != $null) { .mode # +q %boss. [ $+ [ $network ] ] }
     if ($nick(#,$me,o) != $null) { .mode # +o %boss. [ $+ [ $network ] ] }
   }
-  var %t.us = $readini(up_service.mrc, n,#,$nick)
-  if (%t.us != $null) { 
-    if (%t.us == SOP) { mode # +o $nick }
-    if (%t.us == AOP) { mode # +v $nick }
-    if (%t.us == HOP) { mode # +h $nick }
+  var %t.us = $readini(up_service.ini, n,#,$nick)
+  if (%t.us != $null) {
+    if (%AutoOp. [ $+ [  $network ] ] == ON) { 
+      if (%t.us == SOP) { mode # +o $nick }
+      if (%t.us == AOP) { mode # +v $nick }
+      if (%t.us == HOP) { mode # +h $nick }
+    }
   }
 }
 #DoCommand off
