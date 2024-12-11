@@ -423,7 +423,7 @@ on 1:SOCKREAD:Bot*:{
       }
       else {
         ;$botsay(Full Info:,At else,$null,$null,$null,%bot.readline)
-        $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44),Ctcp,$remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ :,$remove($remove($gettok(%bot.readline,4-,32),:), ))
+        $botsay(BotSay,$null,$gettok($remove(%bot.onp2. [ $+ [ $network ] ],bot),1,44), ,$remove($gettok(%bot.readline,1,33),:) $+ @ $+ $remove($gettok(%bot.readline,3,32),:) $+ :,$remove($remove($gettok(%bot.readline,4-,32),:), ))
         goto bossout
       }
       goto botread
