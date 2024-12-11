@@ -5,7 +5,7 @@ on *:ACTION:*:#:{
 }
 alias point {
   if (%display. [ $+ [ $network ] ] == CHAN) {
-    if ($chan == $null) { return notice %boss. [ $+ [ $network ] ] }
+    if ($chan == $null) { return notice $nick }
     if ($chan != $null) { return msg $chan }
   }
   if (%display. [ $+ [ $network ] ] == NOTICE) { return notice %boss. [ $+ [ $network ] ] }
@@ -96,14 +96,14 @@ on *:TEXT:*:#: {
     if ($strip($1) == $chr(63) $+ $chr(63)) { SSpy.Help | halt }
     ;#.alias Format: .alias <alias> (Shows infomation on a given alias)
     if ($strip($1) == .alias) {
-      if ($isalias($2) != $true) { $pointer $report(Alias,Note,The alias,$2,was not found) | halt  }
+      if ($isalias($2) != $true) { $point $report(Alias,Note,The alias,$2,was not found) | halt  }
       else {
         .flood on
-        $pointer $report(Alias,$2,is in,$isalias($2).fname)
-        ;$pointer $report($null,$null,$isalias($2,0).alias),lines)
+        $point $report(Alias,$2,is in,$isalias($2).fname)
+        ;$point $report($null,$null,$isalias($2,0).alias),lines)
         var %tmp.alsh 1
         while (%tmp.alsh <= $isalias($2,0).alias) {
-          $pointer $report(Alias,$null,$isalias($2,%tmp.alsh).alias)
+          $point $report(Alias,$null,$isalias($2,%tmp.alsh).alias)
           inc %tmp.alsh
           if (%tmp.alsh > $isalias($2,0).alias) { break }
         }
@@ -213,7 +213,7 @@ on *:TEXT:*:#: {
       if ($chr(35) isin $2) { .raw mode $2 -o $3 | halt } | else { .raw mode # -o $2 | halt }
     }
     ;#.deq Format: .deq [channel] <nick> (Makes the bot deq <nick> in current room or [channel].)
-    if ($strip($1) == .deq) { if ($2 == $null) { $pointer $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
+    if ($strip($1) == .deq) { if ($2 == $null) { $point $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
     ;#.display Format: .display [CHAN/NOTICE/[HEX]] (Sets the bot reply channel/notice/[hex(format)]. Left blank it shows it's current state.)
     if ($strip($1) == .display) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
@@ -428,7 +428,7 @@ on *:TEXT:*:#: {
       if ($2 == $null) { $point Format: .auser <nick> | halt }
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       auser 4 $address($2,4) $2
-      $pointer I am now stuck taking orders from $2 $+ , sucks to be me.
+      $point I am now stuck taking orders from $2 $+ , sucks to be me.
       halt
     }
     ;#.ruser Format: .ruser <nick> (Removes a user from the UserList)
@@ -574,7 +574,7 @@ on *:TEXT:*:#: {
     }
     ;#.put Format: .put [#channel] <text> (Makes the bot say <text> on [#channel] or current channel if not defined.)
     if ($strip($1) == .put) {
-      if ($2 == $null) { $pointer Format: .put [#channel] <text> (Makes the bot say <text> on [#channel] or current channel if not defined.) }
+      if ($2 == $null) { $point Format: .put [#channel] <text> (Makes the bot say <text> on [#channel] or current channel if not defined.) }
       if ($chr(35) isin $2) { msg $2 $3- }
       else { msg # $2- }
       halt
@@ -711,7 +711,7 @@ on *:TEXT:*:#: {
     ;#.connect Format: .connect (Lists the server connected to)
     ;#.connection Format: .connection (Lists the server connected to)
     if ($strip($1) == .conn) || ($strip($1) == .connect) || ($strip($1) == .connection) {
-      ;$pointer $report(Connection,$null,Bot is connected to ,$scid(0) servers)
+      ;$point $report(Connection,$null,Bot is connected to ,$scid(0) servers)
       var %tmp.srv0 = $remove($1,.) $+ :
       var %tmp.srv1 = 1
       var %tmp.srv2 = $var(connect*,0)
@@ -949,6 +949,11 @@ on *:TEXT:*:#: {
       }
       halt
     }
+    ;#.x Format: .x (x Servers login.)
+    if ($strip($1) == .x) {
+      msg x@channels.undernet.org LOGIN $me %bot.nick.1.pass. [ $+ [ $network  ] ]
+      $point $report(X Login,$null,Complete)
+    }
   }
 }
 ;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss. [ $+ [ $network ] ] $upper($2) $3- } }
@@ -962,5 +967,6 @@ raw 433:*:{
   }
   halt
 }
-raw 473:*:{ .notice %boss. [ $+ [ $network ] ] Join Failed $2 Invite Only, Using ChanServ to auto invite me. | .chanserv invite $2 $me  }
+raw 473:*:{ .notice %boss. [ $+ [ $network ] ] Join Failed $2 Invite Only, Using ChanServ to auto invite me. | .chanserv invite $2 $me | halt }
+raw 477:*:{ .notice %boss. [ $+ [ $network ] ] Cannot join $2 (+r) - This Channel Requires A Registered Nick | halt }
 ;Check for end of file

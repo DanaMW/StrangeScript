@@ -2,20 +2,20 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 63
+ut2 return 68
 ;
 ;month (xx)
 ut3 return 12
 ;
 ;day (xx)
-ut4 return 03
+ut4 return 10
 ;
 ;year (xxxx)
 ut5 return 2024
 ;-----------------------------------------------------
 name return 10M04aster10B04ot
 ss return 10S04trange10S04cript
-ver return $name 10 $+ $chr(91) v00 $+ $ut1 $+ 10. $+ 00 $+ $ut2 $+ 10. $+ 00 $+ $ut3 $+ 10. $+ 00 $+ $ut4 $+ 10. $+ 00 $+ $ut5 10 $+ $chr(93) $+ 00 coded for $ss
+ver return $name 10 $+ $chr(91) v00 $+ $ut1 $+ 10. $+ 00 $+ $ut2 $+ 10. $+ 00 $+ $ut3 $+ 10. $+ 00 $+ $ut4 $+ 10. $+ 00 $+ $ut5 10 $+ $chr(93) $+ 00 coded for any $ss
 ;-----------------------------------------------------
 all scid -a $1-
 aj auto.join

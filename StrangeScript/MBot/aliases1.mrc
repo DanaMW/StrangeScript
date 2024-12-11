@@ -124,45 +124,45 @@ UP.Service {
   ;$4 is ADD|DEL|LIST|WIPE
   ;$5 is nick
   if ($exists(up_service.ini) == $false) { write -c up_service.ini }
-  if ($1 == $null) { $pointer $report(UP,$null,Error,Null in command to,UP.Service) | return }
-  if ($2 == $null) || ($3 == $null) || ($4 == $null) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-d/DEL/|-lLIST|-w/WIPE> <nick>) | return }
-  if ($4 != -A) && ($4 != ADD) && ($4 != -D) && ($4 != DEL) && ($4 != DELETE) && ($4 != -L) && ($4 != LIST) && ($4 != -W) && ($4 != WIPE) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>) | return }
+  if ($1 == $null) { $point $report(UP,$null,Error,Null in command to,UP.Service) | return }
+  if ($2 == $null) || ($3 == $null) || ($4 == $null) { $point $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-d/DEL/|-lLIST|-w/WIPE> <nick>) | return }
+  if ($4 != -A) && ($4 != ADD) && ($4 != -D) && ($4 != DEL) && ($4 != DELETE) && ($4 != -L) && ($4 != LIST) && ($4 != -W) && ($4 != WIPE) { $point $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>) | return }
   if ($4 == -a) || ($4 == ADD) {
-    if ($5 == $null) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>) | return }
+    if ($5 == $null) { $point $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>) | return }
     var %t.us = $readini(up_service.ini, n,$3,$5)
-    if (%t.us == $null) { .writeini -n up_service.ini $3 $5 $upper($2) | $pointer $report(UP,$null,Added $5 to $3 as an $upper($2)) | return }
-    else { $pointer $report(UP,$null,Note,$5 is already listed, as an $upper(%t.us) in, $3) +| return }
+    if (%t.us == $null) { .writeini -n up_service.ini $3 $5 $upper($2) | $point $report(UP,$null,Added $5 to $3 as an $upper($2)) | return }
+    else { $point $report(UP,$null,Note,$5 is already listed, as an $upper(%t.us) in, $3) +| return }
     ;.timer -m 1 500 HOP.Service $1 LIST
     return
   }
   if ($4 == -d) || ($4 == DEL) || ($4 == DELETE) {
-    if ($5 == $null) { $pointer $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL/|-L/LIST|-W/WIPE> <nick>) | return }
+    if ($5 == $null) { $point $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL/|-L/LIST|-W/WIPE> <nick>) | return }
     var %t.us = $readini(up_service.ini, n,$3,$5)
-    if (%t.us == $null) || ($readini(up_service.ini, n,$3,$5) != $upper($2)) { $pointer $report(UP,$null,$5 is not listed as an $upper($2) in $3) | return }
-    else { .remini up_service.ini $3 $5 | $pointer $report(UP,$null,Removed,$5 from $3.was $upper(%t.us))  | return }
+    if (%t.us == $null) || ($readini(up_service.ini, n,$3,$5) != $upper($2)) { $point $report(UP,$null,$5 is not listed as an $upper($2) in $3) | return }
+    else { .remini up_service.ini $3 $5 | $point $report(UP,$null,Removed,$5 from $3.was $upper(%t.us))  | return }
     ;.timer -m 1 500 HOP.Service $1 LIST
     return
   }
   if ($4 == -l) || ($4 == LIST) {
     var  %t.us = $ini(up_service.ini,$3,0)
-    if (%t.us < 1) { $pointer $report(UP,$null,Note,There are no HOP|AOP|SOP's listed for $3) | return }
+    if (%t.us < 1) { $point $report(UP,$null,Note,There are no HOP|AOP|SOP's listed for $3) | return }
     else {
-      $pointer $report(UP,$null,HOP AOP SOP list for $3)
+      $point $report(UP,$null,HOP AOP SOP list for $3)
       var %lcount = 1
       while (%lcount <= %t.us) {
         if ($readini(up_service.ini, n,$3,$ini(up_service.ini,$3,%lcount)) == SOP) { var %t.1 = +o }
         if ($readini(up_service.ini, n,$3,$ini(up_service.ini,$3,%lcount)) == AOP) { var %t.1 = +v }
         if ($readini(up_service.ini, n,$3,$ini(up_service.ini,$3,%lcount)) == HOP) { var %t.1 = +h }
-        $pointer $report($chr(91) %lcount $chr(93) $ini(up_service.ini,$3,%lcount) $+ $str(.,$calc(30 - $len($ini(up_service.ini,$3,%lcount)))) $+  ( %t.1 ))
+        $point $report($chr(91) %lcount $chr(93) $ini(up_service.ini,$3,%lcount) $+ $str(.,$calc(30 - $len($ini(up_service.ini,$3,%lcount)))) $+  ( %t.1 ))
         inc %lcount
         if (%lcount > %t.us) { break }
       }
-      $pointer $report(UP,$null,End of List)
+      $point $report(UP,$null,End of List)
     }
     return
   }
-  if ($4 == -w) || ($4 == WIPE) { .remini up_service.ini $3 | $pointer $report(UP,$1,Note,Wiped the room,$3) | return }
-  $pointer $report(UP,$1,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>)
+  if ($4 == -w) || ($4 == WIPE) { .remini up_service.ini $3 | $point $report(UP,$1,Note,Wiped the room,$3) | return }
+  $point $report(UP,$1,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>)
   return
 }
 play.filter {
@@ -361,12 +361,13 @@ lcr {
     $point $report(Select server to quit:,0 to %maxq $+ :,.quit x) 
   }
   else {
-    if ($1 == 0) { 
-      $point $report($null,$null,Quiting all servers.)
-      halt
+    if ($1 == 0) {
+      ;$point $report($null,$null,Quiting all servers.)
+      $point $report(Not written yet)
     }
     else {
-      $point $report(Quiting,$null,$scon($1).network)
+      ;$point $report(Quiting,$null,$scon($1).network)
+      ;$point $report(Not written yet)
       scon -s $1 quit Bosses Orders
       scon -s $1 partall
       scon -s $1 close STATUS
