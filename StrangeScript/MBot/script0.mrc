@@ -3,26 +3,28 @@ on 1:WALLOPS:*killed by System*:{ notice %boss. [ $+ [ $network ] ] $1- | echo -
 on 1:START: { mygo }
 alias mygo  {
   : this is set on the status/server menu
-  var %tmprs1 = 1
-  var %tmprs2 = $gettok($master(settings,autostartserver),0,44)
-  while (%tmprs1 <= %tmprs2) {
-    if (%tmprs1 == 1) { server $gettok($master(settings,autostartserver),%tmprs1,44) }
-    else { server -m $gettok($master(settings,autostartserver),%tmprs1,44) }
-    inc %tmprs1
-    if (%tmprs1 > %tmprs2) { break }
+  if (%autostart.A == ON) {
+    var %tmprs1 = 1
+    var %tmprs2 = $gettok($master(settings,autostartserver),0,44)
+    while (%tmprs1 <= %tmprs2) {
+      if (%tmprs1 == 1) { server $gettok($master(settings,autostartserver),%tmprs1,44) }
+      else { server -m $gettok($master(settings,autostartserver),%tmprs1,44) }
+      inc %tmprs1
+      if (%tmprs1 > %tmprs2) { break }
+    }
+    unset %tmprs1
+    unset %tmprs2
   }
-  unset %tmprs1
-  unset %tmprs2
   return
 }
 on 1:CONNECT:{
   auto.join
   join.setup
   timerBOSSSET $+ $network 1 30 Check.Boss %boss. [ $+ [ $network ] ]
-  if ($nopath($mircini) == SSC1.mrc) {
-    if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
-    if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }
-  }
+  ;if ($nopath($mircini) == SSC1.mrc) {
+  ;  if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
+  ;  if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }
+  ;}
   ;if (%irc.oper.nick. [ $+ [ $network ] ] != $null) && (%irc.oper.pass. [ $+ [ $network ] ] != $null) { .timerOPER 1 60 oper %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ] }
   halt
 }
@@ -57,7 +59,7 @@ on *:SNOTICE:*:{
 }
 on *:NOTICE:*:*:{
   ;if ($nick != ChanServ) && ($nick != NickServ) { 
-  .notice %boss. [ $+ [ $network ] ] Notice@ $+ $nick $+ : $1- 
+  .notice %boss. [ $+ [ $network ] ] $report(Notice@ $+ $nick) $+ : $report($null,$null,$1-)3
   ;}
   if ($nick == NickServ) && (*IDENTIFY* iswm $1-) { 
     if (*dal.net iswm $server) {

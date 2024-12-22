@@ -150,6 +150,43 @@ on *:TEXT:*:#: {
       if ($2 == -C) || ($2 == CREATE) { insta.aj }
       halt
     }
+    ;#.autostart Format: .autostart <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST> (Configures the autostart servers for the bot to join on start.)
+    if ($strip($1) == .AUTOSTART) {
+      if ($2 == $null) { $point Format: .autostart <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST> (Configures the autostart servers for the bot to join on start.) | halt }
+      if ($2 == ON) { set %autostart.A ON | $point $report(AutoStart,$null,Current,%autostart.A) | halt }
+      if ($2 == OFF) { set %autostart.A OFF | $point $report(AutoStart,$null,Current,%autostart.A) | halt }
+      if ($2 == -S) || ($2 == SHOW) || ($2 == -L) || ($2 == LIST) {
+        ;$point $report(AutoStart,$null,$null,$remtok(%autostart.S,0,44))
+        ;$point $report($chain)
+        ;$point $chain
+        if ($gettok(%autostart.S,1,44)) { $point $report(AutoStart,$null,1,$gettok(%autostart.S,1,44)) }
+        if ($gettok(%autostart.S,2,44)) { $point $report(AutoStart,$null,2,$gettok(%autostart.S,2,44)) }
+        if ($gettok(%autostart.S,3,44)) { $point $report(AutoStart,$null,3,$gettok(%autostart.S,3,44)) }
+        if ($gettok(%autostart.S,4,44)) { $point $report(AutoStart,$null,4,$gettok(%autostart.S,4,44)) }
+        if ($gettok(%autostart.S,5,44)) { $point $report(AutoStart,$null,5,$gettok(%autostart.S,5,44)) }
+        if ($gettok(%autostart.S,6,44)) { $point $report(AutoStart,$null,6,$gettok(%autostart.S,6,44)) }
+        if ($gettok(%autostart.S,7,44)) { $point $report(AutoSstart,$null,7,$gettok(%autostart.S,7,44)) }
+        if ($gettok(%autostart.S,8,44)) { $point $report(AutoStart,$null,8,$gettok(%autostart.S,8,44)) }
+        if ($gettok(%autostart.S,9,44)) { $point $report(AutoStart,$null,9,$gettok(%autostart.S,9,44)) }
+        if ($gettok(%autostart.S,10,44)) { $point $report(AutoStart,$null,10,$gettok(%autostart.S,10,44)) }
+        halt
+      }
+      if ($2 == -A) || ($2 == ADD) {
+        if ($chr(35) !isin $3) { var %t.aaj = $chr(35) $+ $3 }
+        else { var %t.aaj = $3 }
+        set %autostart.S $addtok(%autostart.S,%t.aaj,44)
+        $point $report(AutoStart,Adding,%t.aaj,%autostart.S)
+        halt
+      }
+      if ($2 == -D) || ($2 == DEL) || ($2 == DELETE) {
+        if ($chr(35) !isin $3) { var %t.da0j1 = $chr(35) $+ $3 }
+        else { var %t.daj1 = $3 }
+        set %autostart.S $remtok(%autostart.S,%t.daj1,44)
+        $point $report(AutoStart,Deleting,%t.daj1,%autostart.S)
+        halt
+      }
+      halt
+    }
     ;#.away Format: .away <reason> (Sets the bot away.)
     if ($strip($1) == .AWAY) { if ($2 != $null) { .ctcp # AWAY $2- | /away $2- | /ame is away: $2- | halt } | else { .ctcp # AWAY Out | /away out | /ame is away: out | halt } }
     ;#.blast Format: .blast <nick> (Insult the shit out of <nick>.)
@@ -334,7 +371,7 @@ on *:TEXT:*:#: {
     }
     ;#.heel Format: .heel (Makes the bot deop itself.)
     if ($strip($1) == .heel) { .raw mode # -o $me | halt }
-    ;#.ident Format: .ident (Makes the bot identify to chanserv using saved password.)
+    ;#.ident Format: .ident  (Makes the bot identify to chanserv using saved password.)
     ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
     if ($strip($1) == .identify) || ($strip($1) == .ident) { 
       if (*dal.net iswm $server) {
@@ -707,10 +744,11 @@ on *:TEXT:*:#: {
         $point $report(LastSeen,$2,$null,%tmp.xx)
       }
     }
+    ;#.con Format: .con (Lists the server connected to)
     ;#.conn Format: .conn (Lists the server connected to)
     ;#.connect Format: .connect (Lists the server connected to)
     ;#.connection Format: .connection (Lists the server connected to)
-    if ($strip($1) == .conn) || ($strip($1) == .connect) || ($strip($1) == .connection) {
+    if ($strip($1) == .con) || ($strip($1) == .conn) || ($strip($1) == .connect) || ($strip($1) == .connection) {
       ;$point $report(Connection,$null,Bot is connected to ,$scid(0) servers)
       var %tmp.srv0 = $remove($1,.) $+ :
       var %tmp.srv1 = 1
