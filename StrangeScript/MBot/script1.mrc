@@ -165,24 +165,26 @@ on *:TEXT:*:#: {
         if ($gettok(%autostart.S,4,44)) { $point $report(AutoStart,$null,4,$gettok(%autostart.S,4,44)) }
         if ($gettok(%autostart.S,5,44)) { $point $report(AutoStart,$null,5,$gettok(%autostart.S,5,44)) }
         if ($gettok(%autostart.S,6,44)) { $point $report(AutoStart,$null,6,$gettok(%autostart.S,6,44)) }
-        if ($gettok(%autostart.S,7,44)) { $point $report(AutoSstart,$null,7,$gettok(%autostart.S,7,44)) }
+        if ($gettok(%autostart.S,7,44)) { $point $report(AutoStart,$null,7,$gettok(%autostart.S,7,44)) }
         if ($gettok(%autostart.S,8,44)) { $point $report(AutoStart,$null,8,$gettok(%autostart.S,8,44)) }
         if ($gettok(%autostart.S,9,44)) { $point $report(AutoStart,$null,9,$gettok(%autostart.S,9,44)) }
         if ($gettok(%autostart.S,10,44)) { $point $report(AutoStart,$null,10,$gettok(%autostart.S,10,44)) }
         halt
       }
       if ($2 == -A) || ($2 == ADD) {
-        if ($chr(35) !isin $3) { var %t.aaj = $chr(35) $+ $3 }
-        else { var %t.aaj = $3 }
+        if ($3 != $null) { var %t.aaj = $3 }
+        else { halt }
         set %autostart.S $addtok(%autostart.S,%t.aaj,44)
         $point $report(AutoStart,Adding,%t.aaj,%autostart.S)
+        unset %t.aaj
         halt
       }
       if ($2 == -D) || ($2 == DEL) || ($2 == DELETE) {
-        if ($chr(35) !isin $3) { var %t.da0j1 = $chr(35) $+ $3 }
-        else { var %t.daj1 = $3 }
+        if ($3 != $null) { var %t.daj1 = $3 }
+        else { halt }
         set %autostart.S $remtok(%autostart.S,%t.daj1,44)
         $point $report(AutoStart,Deleting,%t.daj1,%autostart.S)
+        unset %t.daj1
         halt
       }
       halt
