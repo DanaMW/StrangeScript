@@ -158,17 +158,18 @@ on *:TEXT:*:#: {
       if ($2 == -S) || ($2 == SHOW) || ($2 == -L) || ($2 == LIST) {
         ;$point $report(AutoStart,$null,$null,$remtok(%autostart.S,0,44))
         ;$point $report($chain)
-        ;$point $chain
-        if ($gettok(%autostart.S,1,44)) { $point $report(AutoStart,$null,1,$gettok(%autostart.S,1,44)) }
-        if ($gettok(%autostart.S,2,44)) { $point $report(AutoStart,$null,2,$gettok(%autostart.S,2,44)) }
-        if ($gettok(%autostart.S,3,44)) { $point $report(AutoStart,$null,3,$gettok(%autostart.S,3,44)) }
-        if ($gettok(%autostart.S,4,44)) { $point $report(AutoStart,$null,4,$gettok(%autostart.S,4,44)) }
-        if ($gettok(%autostart.S,5,44)) { $point $report(AutoStart,$null,5,$gettok(%autostart.S,5,44)) }
-        if ($gettok(%autostart.S,6,44)) { $point $report(AutoStart,$null,6,$gettok(%autostart.S,6,44)) }
-        if ($gettok(%autostart.S,7,44)) { $point $report(AutoStart,$null,7,$gettok(%autostart.S,7,44)) }
-        if ($gettok(%autostart.S,8,44)) { $point $report(AutoStart,$null,8,$gettok(%autostart.S,8,44)) }
-        if ($gettok(%autostart.S,9,44)) { $point $report(AutoStart,$null,9,$gettok(%autostart.S,9,44)) }
-        if ($gettok(%autostart.S,10,44)) { $point $report(AutoStart,$null,10,$gettok(%autostart.S,10,44)) }
+        $point $report($chain(7) $+ ][ AutoStart ][ $+ $chain(7))
+        if ($gettok(%autostart.S,1,44)) { $point $report(Found,$null,1,$gettok(%autostart.S,1,44)) }
+        if ($gettok(%autostart.S,2,44)) { $point $report(Found,$null,2,$gettok(%autostart.S,2,44)) }
+        if ($gettok(%autostart.S,3,44)) { $point $report(Found,$null,3,$gettok(%autostart.S,3,44)) }
+        if ($gettok(%autostart.S,4,44)) { $point $report(Found,$null,4,$gettok(%autostart.S,4,44)) }
+        if ($gettok(%autostart.S,5,44)) { $point $report(Found,$null,5,$gettok(%autostart.S,5,44)) }
+        if ($gettok(%autostart.S,6,44)) { $point $report(Found,$null,6,$gettok(%autostart.S,6,44)) }
+        if ($gettok(%autostart.S,7,44)) { $point $report(Found,$null,7,$gettok(%autostart.S,7,44)) }
+        if ($gettok(%autostart.S,8,44)) { $point $report(Found,$null,8,$gettok(%autostart.S,8,44)) }
+        if ($gettok(%autostart.S,9,44)) { $point $report(Found,$null,9,$gettok(%autostart.S,9,44)) }
+        if ($gettok(%autostart.S,10,44)) { $point $report(Found,$null,10,$gettok(%autostart.S,10,44)) }
+        $point $report($chain(9) $+ ][ End ][ $+ $chain(9))
         halt
       }
       if ($2 == -A) || ($2 == ADD) {

@@ -2,16 +2,16 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 72
+ut2 return 73
 ;
 ;month (xx)
-ut3 return 12
+ut3 return 01
 ;
 ;day (xx)
-ut4 return 25
+ut4 return 01
 ;
 ;year (xxxx)
-ut5 return 2024
+ut5 return 2025
 ;-----------------------------------------------------
 name return 10M04aster10B04ot
 ss return 10S04trange10S04cript
@@ -40,6 +40,10 @@ lll return $chr(186) $+ (
 rrr return ) $+ $chr(186)
 cls clear
 clsa clearall
+chain {
+  if ($1 != $null) { return $lowcol $+  $+ $str(¤,$1) $+  }
+  else { return $lowcol $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ }
+}
 load.rest {
   load -rs script0.mrc
   load -rs script1.mrc

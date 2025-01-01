@@ -5,10 +5,10 @@ alias mygo  {
   : this is set on the status/server menu
   if (%autostart.A == ON) {
     var %tmprs1 = 1
-    var %tmprs2 = $gettok($master(settings,autostartserver),0,44)
+    var %tmprs2 = $gettok(%autostart.S,0,44)
     while (%tmprs1 <= %tmprs2) {
-      if (%tmprs1 == 1) { server $gettok($master(settings,autostartserver),%tmprs1,44) }
-      else { server -m $gettok($master(settings,autostartserver),%tmprs1,44) }
+      if (%tmprs1 == 1) { server $gettok(%autostart.S,%tmprs1,44) }
+      else { server -m $gettok(%autostart.S,%tmprs1,44) }
       inc %tmprs1
       if (%tmprs1 > %tmprs2) { break }
     }
