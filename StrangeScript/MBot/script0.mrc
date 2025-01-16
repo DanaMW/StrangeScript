@@ -80,6 +80,7 @@ on *:JOIN:#: {
   set %lastjoin. $+ # $nick
   if ($istok(%shitlist. [ $+ [ $network ] ],$address($nick,4),44) == $true) { if (%shitlist.Do. [ $+ [ $network ] ] == ON) { if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick :Bot $+ $chr(160) $+ Shitlist } } }
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Join,%spy1,$nick,$address) }
+  .timerLastBigIn 1 5 LastSeen $nick $address($nick,4) Joining $chan $network $time $time(TT)
   if ($nick == $me) {
     if ($chan(#) isin %pound) && (%pound.active == ON) { .notice %boss. [ $+ [ $network ] ] 04 $+ Pound Disabled, Entered Room | .timerPND OFF | set %pound "" | set %pound.active OFF }
     ;if ($network == dalnet) { .chanserv op # $me }
@@ -184,6 +185,7 @@ alias deop.kill {
 }
 on *:PART:#:{
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Part,%spy1,$nick - $address) }
+  .timerLastBigOut 1 5 LastSeen $nick $address($nick,4) Departing $chan $network $time $time(TT)
   ;if ($nick != $me) && (%boss. [ $+ [ $network ] ] !ison $chan(#)) && (%spy != ON) { .notice %boss. [ $+ [ $network ] ] 00 $+ Part: 11 $+ $nick 04 $+ just parted 11 $+ # }
   if ($nick != $me) {
     if ($nick($chan,0) <= 2) && ($me !isowner $chan(#)) && (%cycle.for.ops == ON) {

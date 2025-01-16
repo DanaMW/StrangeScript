@@ -1,0 +1,186 @@
+;
+;Originally: !seen By: maconga On: 07-25-2010 At: https://forums.mirc.com/ubbthreads.php/users/78515/maconga
+;
+;BUT I am going to modernize the shit out of this and change it to files instead of folders. And will make it cross network aware.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;     New: .SEEN+ v0.1    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;-----------------------------------------------------
+;Major version  (xx)
+ut1 return 0
+;
+;Minor version (xx)
+ut2 return 2
+;
+;month (xx)
+ut3 return 01
+;
+;day (xx)
+ut4 return 16
+;
+;year (xxxx)
+ut5 return 2025
+;-----------------------------------------------------
+;
+On 1:TEXT:.seen:#:{
+  msg $chan $nick $+ , there are $findfile($mircdir\seen,*.*,0) seen records in my database. Please refine your search.
+}
+On 1:TEXT:Suggest seen *:#:{
+  set %SugSeen102 * $+ $3 $+ *.*
+  .timer 1 1 /notice $nick [ClubCX AI] Based on your search, I would suggest you are looking for one of the following nicknames:
+  .timer 1 3 /notice $nick $remove($nopath($findfile($mircdir\seen,%SugSeen102,1)),.ini)
+  .timer 1 5 /notice $nick $remove($nopath($findfile($mircdir\seen,%SugSeen102,2)),.ini)
+  .timer 1 7 /notice $nick $remove($nopath($findfile($mircdir\seen,%SugSeen102,3)),.ini)
+  .timer 1 9 /notice $nick $remove($nopath($findfile($mircdir\seen,%SugSeen102,4)),.ini)
+  .timer 1 11 /notice $nick $remove($nopath($findfile($mircdir\seen,%SugSeen102,5)),.ini)
+  .timer 1 13 /notice $nick You can refine your search even more by supplying a better query. For example, *TAR* instead of *AR*
+}
+On 1:TEXT:.seen *:#:{
+  ; if the guy is looking for u
+  if ($chr(42) isin $2) {
+    set %Seen102 * $+ $2 $+ *.*
+    msg $chan 4 $nick $+ , there are $findfile($mircdir\seen,%Seen102,0) matching records in my database. To list them, type: suggest seen $2 
+  }
+  elseif ($2 == $me) { 
+    /msg $chan $2 is running successfully. 
+    .goto end 
+  }
+  ; Self search...
+  elseif ($2 == $nick) { 
+    /msg $chan $nick $+ , you do realise this is a computer don't you? 
+    .goto end 
+  } 
+  ; Searched person already on the channel...
+  elseif ($2 ison $chan) { 
+    /msg $chan $nick $+ , $2- is still in $chan $+ .
+    .goto end 
+  }
+  ; else u can allways check the ini files :D
+  else { 
+    if (($right($2,1) == ]) || ($left($2,1) == [)) { .set %seennick $replace($2,[,@) | .set %seennick $replace(%seennick,],~) }
+    else { .set %seennick $2 }
+    ; [ this are going to change @ and ] to ~
+    :inifile {
+      ; if he's not in the ini files
+      .set -u5 %seenaction $readini seen\ $+ $2 $+ .ini %seennick Action
+      if (%seenaction == $null) { /msg $chan Sorry $nick $+ , i haven't seen $2- around }
+      ; they joined a channel...
+      if (%seenaction == join) { 
+        .set -u5 %jointime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %joinchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        /msg $chan $nick $+ , $2- joined %joinchannel $duration($calc($ctime - %jointime)) ago.
+      }
+      ; they departed a channel...
+      if (%seenaction == part) { 
+        .set -u5 %parttime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %partchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        /msg $chan $nick $+ , $2 parted %partchannel $duration($calc($ctime - %parttime)) ago.
+      }
+      ; they quit...
+      if (%seenaction == quit) { 
+        .set -u5 %quittime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %quitmessage $readini seen\ $+ $2 $+ .ini %seennick Message
+        /msg $chan $nick $+ , $2 quitted with the message %quitmessage $duration($calc($ctime - %quittime)) ago.
+      }
+      ; they were kicked...
+      if (%seenaction == kick) { 
+        .set -u5 %kicktime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %kickchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        /msg $chan $nick $+ , $2 was kicked from %kickchannel $duration($calc($ctime - %kicktime)) ago.
+      }
+      ; they changed nickname...
+      if (%seenaction == nick) { 
+        .set -u5 %nicktime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %nicknew $readini seen\ $+ $2 $+ .ini %seennick Nick
+        /msg $chan $nick $+ , $2 changed his nick to %nicknew $duration($calc($ctime - %nicktime)) ago.
+      }
+      ; they said something...
+      if (%seenaction == text) { 
+        .set -u5 %texttime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %textchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        /msg $chan $nick $+ , $2 said something $duration($calc($ctime - %texttime)) ago.
+      }
+      ; they did was an action
+      if (%seenaction == action) { 
+        .set -u5 %actiontime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %actionchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        /msg $chan $nick $+ , $2 did an action in %actionchannel $duration($calc($ctime - %actiontime)) ago.
+      }
+    }
+  }
+  :end
+}
+
+; when someone joins the channel...
+On 1:JOIN:#:{
+  if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
+  else { .set %seennick $nick }
+  ; [ are going to change @ and ] to ~
+  .remini seen\ $+ $nick $+ .ini %seennick
+  .writeini seen\ $+ $nick $+ .ini %seennick Action join
+  .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan 
+  .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+}
+
+; when someone parts the channel
+On 1:PART:#:{
+  if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
+  else { .set %seennick $nick }
+  .remini seen\ $+ $nick $+ .ini %seennick
+  .writeini seen\ $+ $nick $+ .ini %seennick Action part
+  .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
+  .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+}
+
+; when someone quits the channel
+On 1:QUIT:{
+  if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
+  else { .set %seennick $nick }
+  .remini seen\ $+ $nick $+ .ini %seennick
+  .writeini seen\ $+ $nick $+ .ini %seennick Action quit
+  .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+  .writeini seen\ $+ $nick $+ .ini %seennick Message $1-
+}
+
+; when some moron gets kicked...
+On 1:KICK:#:{
+  if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
+  else { .set %seennick $nick }
+  .remini seen\ $+ $nick $+ .ini %seennick
+  .writeini seen\ $+ $nick $+ .ini %seennick Action kick
+  .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
+  .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+}
+
+; when someone changes nick...
+On 1:NICK:{
+  if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
+  else { .set %seennick $nick }
+  .remini seen\ $+ $nick $+ .ini %seennick
+  .writeini seen\ $+ $nick $+ .ini %seennick Action nick
+  .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+  .writeini seen\ $+ $nick $+ .ini %seennick Nick $newnick 
+}
+
+; when someone says something in the channel
+On 1:TEXT:*:#:{
+  if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
+  else { .set %seennick $nick }
+  .remini seen\ $+ $nick $+ .ini %seennick
+  .writeini seen\ $+ $nick $+ .ini %seennick Action text
+  .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+  .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
+  .writeini seen\ $+ $nick $+ .ini %seennick text $1-
+}
+
+; when someone makes an action
+On 1:ACTION:*:#:{
+  if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
+  else { .set %seennick $nick }
+  .remini seen\ $+ $nick $+ .ini %seennick
+  .writeini seen\ $+ $nick $+ .ini %seennick Action action
+  .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+  .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
+}

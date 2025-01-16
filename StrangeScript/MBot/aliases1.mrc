@@ -375,16 +375,26 @@ lcr {
   }
   unset %tmp.QP1 %tmp.QP2 %maxq
 }
-/last.seen {
-  if ($1 == $null) || ($2 == $null) || ($3 == $null) || ($4 == $null) || ($5 == $null)  { $point $report(Error,$null,LastSeen,is missing a needed param.,Check 1-5) }
+/LastSeen {
+  ;LastSeen $nick $address($nick,4) Joining $chan $network $time $time(TT)
   ;praut (~praut@praut.users.undernet.org) was last seen quitting from #toronto-ops 13 hours, 2 minutes ago stating (Read error: EOF from client).
-  [praut]|[~praut@praut.users.undernet.org]|[Last seen quitting]|[#toronto-ops]|[13 hours, 2 minutes ago]|[Read error: EOF from client]
-  var %tmp.LS0 = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt
-  var %tmp.LS1 = $1   ; Nick._(Spaces_are_Underscores)
-  var %tmp.LS2 = $2   ; Full address.
-  var %tmp.LS3 = $3   ; Depart/Join method.
-  var %tmp.LS4 = $4   ; Location.
-  var %tmp.LS5 = $5-  ; The rest of the story.
-  ;write -wn %tmp.LS0 $report($remtok(%tmp.LS1,95),%tmp.LS2,%tmp.LS3,%tmp.LS4,<[ $asctime ]>,%tmp.LS5)
+  ;[praut]|[~praut@praut.users.undernet.org]|[Last seen quitting]|[#toronto-ops]|[13 hours, 2 minutes ago]|[Read error: EOF from client]
+  ;Pass the following or it fails.
+  ;$1 is Nickname
+  ;$2 is Address/4
+  ;$3 is Join or Depart
+  ;$4 is Channel/Location
+  ;$5 is Network/Server
+  ;$6 is Time And Space
+  if ($1 == $null) || ($2 == $null) || ($3 == $null) || ($4 == $null) || ($5 == $null)  || ($6 == $null) { $point $report(Error,$null,LastSeen,is missing a needed param.,Check 1-5) }
+  var %tmp.LS0 = $mircdir $+ text\LastSeen.txt
+  var %tmp.LS1 = $1
+  var %tmp.LS2 = $2
+  var %tmp.LS3 = $3
+  var %tmp.LS4 = $4
+  var %tmp.LS5 = $5
+  var %tmp.LS6 = $6-
+  var %tmp.BIG = %tmp.LS1 %tmp.LS2 %tmp.LS3 %tmp.LS4 %tmp.LS5 %tmp.LS6
+  { write -w $+ %tmp.LS1 %tmp.LS0 %tmp.BIG }
+  return
 }
-s

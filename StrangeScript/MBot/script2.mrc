@@ -88,7 +88,7 @@ on 1:SOCKREAD:Spy*:{
 on 1:SOCKCLOSE:Spy*:{
   unset %clone.server. [ $+ [ $sockname ] ]
   msg $gettok(%server.spy.on. [ $+ [ $remove($sockname,Spy) ] ] ,2,44) $report(SockClose,$sockname,just closed,$sock($sockname).wserr,$sock($sockname).wsmsg)
-  if ($sockname == SpyICQ) { s.timer 1 1 ockopen SpyICQ irc.icq.com 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,ICQ) }
+  if ($sockname == SpyRIZ) { s.timer 1 1 ockopen SpyRIZ irc.icq.com 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,RIZ) }
   if ($sockname == SpyDAL) { .timer 1 1 sockopen SpyDAL irc.dal.net 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,DAL) }
   if ($sockname == SpySTRANGE) { .timer 1 1 sockopen SpySTRANGE cos.selfip.biz 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,STRANGE) }
   if ($sockname == SpyXPEACE) { .timer 1 1 sockopen SpyXPEACE irc.xpeacex.com 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,XPEACE) }

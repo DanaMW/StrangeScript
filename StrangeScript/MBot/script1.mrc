@@ -683,6 +683,7 @@ on *:TEXT:*:#: {
       if ($2 == SET) { $point $report(ScanLog,Error,There is no set funtion in scanlog yet.) | halt }
       halt
     }
+    ;#.seen Format: .seen <nick> (When the bot has seen <nick>)
     ;#.shit Format: .shit [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
     ;#.shit Format: .shitlist [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
     if ($strip($1) == .shit) || ($strip($1) == .shitlist) {
@@ -738,15 +739,15 @@ on *:TEXT:*:#: {
     if ($strip($1) == .slc) { slc $2- | halt }
     ;#.lastseen Format: .lastseen <nick> (last time a person was seen and where)
     ;#.seen Format: .seen <nick> (last time a person was seen and where)
-    if ($strip($1) == .seen) || ($strip($1) == .lastseen) {
-      if ($2 == $null) { $point $report(Format,$null,$null,.seen <nick>) | halt }
-      else { 
-        var %tmp.x = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt
-        var %tmp.xx = $read(%tmp.x,s,$2)
-        if (%tmp.xx == $null) { var %tmp.xx = User not in database }
-        $point $report(LastSeen,$2,$null,%tmp.xx)
-      }
-    }
+    ;if ($strip($1) == .seen) || ($strip($1) == .lastseen) {
+    ;  if ($2 == $null) { $point $report(Format,$null,$null,.seen <nick>) | halt }
+    ;  else { 
+    ;    var %tmp.x = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt
+    ;    var %tmp.xx = $read(%tmp.x,s,$2)
+    ;    if (%tmp.xx == $null) { var %tmp.xx = User not in database }
+    ;    $point $report(LastSeen,$2,$null,%tmp.xx)
+    ;  }
+    ;}
     ;#.con Format: .con (Lists the server connected to)
     ;#.conn Format: .conn (Lists the server connected to)
     ;#.connect Format: .connect (Lists the server connected to)
@@ -775,10 +776,10 @@ on *:TEXT:*:#: {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       Set.SS # $2- | halt
     }
-    ;#.ss Format: .ss  [ON/OFF/STATS/NICK] [DAL/ICQ] <room to join/nickforsocket> (spy from current serv to another)
-    ;#.servspy Format: .servspy  [ON/OFF/STATS/NICK] [DAL/ICQ] <room to join/nickforsocket> (spy from current serv to another)
+    ;#.ss Format: .ss  [ON/OFF/STATS/NICK] [DAL/RIZ] <room to join/nickforsocket> (spy from current serv to another)
+    ;#.servspy Format: .servspy  [ON/OFF/STATS/NICK] [DAL/RIZ] <room to join/nickforsocket> (spy from current serv to another)
     if ($strip($1) == .ss) || ($strip($1) == .servspy) {
-      if ($2 == $null) { $point $report(Format,$null,$null,.ss ON/OFF/STATS/NICK/SERVER/PASS/PORT DAL/ICQ <room to join/nickforsocket/newpass/port> (spy from current serv to another)) | halt }
+      if ($2 == $null) { $point $report(Format,$null,$null,.ss ON/OFF/STATS/NICK/SERVER/PASS/PORT DAL/RIZ <room to join/nickforsocket/newpass/port> (spy from current serv to another)) | halt }
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       SS.Command $1-
       halt
@@ -868,7 +869,11 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.timer Format: .timer (displays the currently active timers and info.)
-    if ($strip($1) == .timer) { timer.show # }
+    if ($strip($1) == .timer) {
+      if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+      if ($3 == OFF) { timer $2 OFF | $point $report(Turned off $2 timer) | halt }
+      timer.show #
+    }
     ;#.tease Format: .tease (.)
     if ($strip($1) == .tease) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
