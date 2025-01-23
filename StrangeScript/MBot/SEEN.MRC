@@ -12,13 +12,13 @@
 ut1 return 0
 ;
 ;Minor version (xx)
-ut2 return 2
+ut2 return 4
 ;
 ;month (xx)
 ut3 return 01
 ;
 ;day (xx)
-ut4 return 16
+ut4 return 23
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -70,43 +70,50 @@ On 1:TEXT:.seen *:#:{
       if (%seenaction == join) { 
         .set -u5 %jointime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %joinchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
-        /msg $chan $nick $+ , $2- joined %joinchannel $duration($calc($ctime - %jointime)) ago.
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2- joined %joinchannel $duration($calc($ctime - %jointime)) ago on %theNetwork $+ .
       }
       ; they departed a channel...
       if (%seenaction == part) { 
         .set -u5 %parttime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %partchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
-        /msg $chan $nick $+ , $2 parted %partchannel $duration($calc($ctime - %parttime)) ago.
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 parted %partchannel $duration($calc($ctime - %parttime)) ago on %theNetwork $+ .
       }
       ; they quit...
       if (%seenaction == quit) { 
         .set -u5 %quittime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %quitmessage $readini seen\ $+ $2 $+ .ini %seennick Message
-        /msg $chan $nick $+ , $2 quitted with the message %quitmessage $duration($calc($ctime - %quittime)) ago.
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 quit with the message ( %quitmessage ) $duration($calc($ctime - %quittime)) ago on %theNetwork $+ .
       }
       ; they were kicked...
       if (%seenaction == kick) { 
         .set -u5 %kicktime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %kickchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
-        /msg $chan $nick $+ , $2 was kicked from %kickchannel $duration($calc($ctime - %kicktime)) ago.
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 was kicked from %kickchannel $duration($calc($ctime - %kicktime)) ago on %theNetwork $+ .
       }
       ; they changed nickname...
       if (%seenaction == nick) { 
         .set -u5 %nicktime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %nicknew $readini seen\ $+ $2 $+ .ini %seennick Nick
-        /msg $chan $nick $+ , $2 changed his nick to %nicknew $duration($calc($ctime - %nicktime)) ago.
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 changed his nick to %nicknew $duration($calc($ctime - %nicktime)) ago on %theNetwork $+ .
       }
       ; they said something...
       if (%seenaction == text) { 
         .set -u5 %texttime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %textchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
-        /msg $chan $nick $+ , $2 said something $duration($calc($ctime - %texttime)) ago.
-      }
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 said something $duration($calc($ctime - %texttime)) ago on %theNetwork $+ .
+      } 
       ; they did was an action
       if (%seenaction == action) { 
         .set -u5 %actiontime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %actionchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
-        /msg $chan $nick $+ , $2 did an action in %actionchannel $duration($calc($ctime - %actiontime)) ago.
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 did an action in %actionchannel $duration($calc($ctime - %actiontime)) ago on %theNetwork $+ .
       }
     }
   }
@@ -122,6 +129,7 @@ On 1:JOIN:#:{
   .writeini seen\ $+ $nick $+ .ini %seennick Action join
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan 
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+  .writeini seen\ $+ $nick $+ .ini %seennick Network $network
 }
 
 ; when someone parts the channel
@@ -132,6 +140,7 @@ On 1:PART:#:{
   .writeini seen\ $+ $nick $+ .ini %seennick Action part
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+  .writeini seen\ $+ $nick $+ .ini %seennick Network $network
 }
 
 ; when someone quits the channel
@@ -142,6 +151,7 @@ On 1:QUIT:{
   .writeini seen\ $+ $nick $+ .ini %seennick Action quit
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Message $1-
+  .writeini seen\ $+ $nick $+ .ini %seennick Network $network
 }
 
 ; when some moron gets kicked...
@@ -152,6 +162,7 @@ On 1:KICK:#:{
   .writeini seen\ $+ $nick $+ .ini %seennick Action kick
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
+  .writeini seen\ $+ $nick $+ .ini %seennick Network $network
 }
 
 ; when someone changes nick...
@@ -161,7 +172,8 @@ On 1:NICK:{
   .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action nick
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
-  .writeini seen\ $+ $nick $+ .ini %seennick Nick $newnick 
+  .writeini seen\ $+ $nick $+ .ini %seennick Nick $newnick
+  .writeini seen\ $+ $nick $+ .ini %seennick Network $network
 }
 
 ; when someone says something in the channel
@@ -173,6 +185,7 @@ On 1:TEXT:*:#:{
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
   .writeini seen\ $+ $nick $+ .ini %seennick text $1-
+  .writeini seen\ $+ $nick $+ .ini %seennick Network $network
 }
 
 ; when someone makes an action
@@ -183,4 +196,5 @@ On 1:ACTION:*:#:{
   .writeini seen\ $+ $nick $+ .ini %seennick Action action
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
+  .writeini seen\ $+ $nick $+ .ini %seennick Network $network
 }

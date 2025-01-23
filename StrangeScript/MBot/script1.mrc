@@ -546,17 +546,25 @@ on *:TEXT:*:#: {
       if ($2 == long) { .nick $2 $+ $chr(91) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $chr(93) | halt }
       if ($2 != inc) && ($2 != long) { .nick $3 $+ $chr(91) $+ $right($remove($nopath($mircini),.ini),-3) $+ $chr(93) | halt }  
     }
-    ;#.o Format: .o [-A|ALL|-L|LAST|<nick>] (makes the bot op the boss or [nick] on current channel.)
-    if ($strip($1) == .o) {
+    ;#.op Format: .op [-A|ALL|-L|LAST|<chan>] [<nick>] (makes the bot op the boss or nick on current or given channel.)
+    ;#.o Format: .o [-A|ALL|-L|LAST|<chan>] [<nick>] (makes the bot op the boss or nick on current or given channel.)
+    if ($strip($1) == .o) || ($strip($1) == .op) {
       if ($2 == $null) { mode $chan +o $nick | halt }
+      if ($chr(35) isin $2) {
+        if ($3 == $null) { mode $2 +o $nick }
+        else { mode $2 +o $3 }
+        halt
+      }
       if ($2 == -A) || ($2 == ALL) { if ($3 == $null) { op.me %boss. [ $+ [ $network ] ] } | else { op.me $3 } | halt }
       if ($2 == -L) || ($2 == LAST) { mode $chan +o %lastjoin. [ $+ [ $chan ] ] | halt }
-      else { mode $chan +o $2 | halt }
+      else {
+        mode $chan +o $2
+        halt
+      }
     }
     ;#.oper  Format: .oper (makes the bot send /Oper to the server.)
     if ($strip($1) == .oper) {
       if (%irc.oper.nick == $null) { $point No nick is saved to oper with. Use .raw set % $+ irc.oper.nick <value> | halt }
-      if ( %irc.oper.pass == $null) { $point No pass is saved to oper with. Use .raw set % $+ irc.oper.pass <value> | halt }
       if ($2 == $null) {
         .raw oper %irc.oper.nick %irc.oper.pass
         $point Oper has been sent
