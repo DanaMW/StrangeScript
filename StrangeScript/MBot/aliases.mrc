@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 72
+ut2 return 73
 ;
 ;month (xx)
 ut3 return 01
 ;
 ;day (xx)
-ut4 return 23
+ut4 return 27
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -44,14 +44,21 @@ chain {
   if ($1 != $null) { return $lowcol $+  $+ $str(¤,$1) $+  }
   else { return $lowcol $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ }
 }
+load.again { 
+  load -a aliases.mrc
+  load -a aliases1.mrc
+  load.rest
+  msg %boss Reload Complete
+  halt
+}
 load.rest {
   load -rs script0.mrc
   load -rs script1.mrc
   load -rs script2.mrc
   load -rs unmask.mrc
   load -rs spell.mrc
-  msg %boss Reload Complete
-  halt
+  load -rs seen.mrc
+  return
 }
 slc {
   if ($1 == $null) { .msg # Format: .slc <-s|-r> | return }

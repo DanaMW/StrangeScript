@@ -12,7 +12,7 @@
 ut1 return 0
 ;
 ;Minor version (xx)
-ut2 return 4
+ut2 return 5
 ;
 ;month (xx)
 ut3 return 01
@@ -106,7 +106,7 @@ On 1:TEXT:.seen *:#:{
         .set -u5 %texttime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %textchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 said something $duration($calc($ctime - %texttime)) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 said something on %textchannel $duration($calc($ctime - %texttime)) ago on %theNetwork $+ .
       } 
       ; they did was an action
       if (%seenaction == action) { 
