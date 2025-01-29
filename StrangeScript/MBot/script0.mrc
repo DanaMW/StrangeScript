@@ -244,12 +244,6 @@ raw 438:*:{
     halt
   }
 }
-alias load.again { 
-  load -a aliases.mrc
-  load -a aliases1.mrc
-  load.rest
-  halt
-}
 on 1:DNS: {
   if (%awaiting.dns.*!*@ [ $+ [ $naddress ] ] != $null) {
     ;ssipsave $gettok(%awaiting.dns.*!*@ [ $+ [ $naddress ] ] ,1,44) $gettok(%awaiting.dns.*!*@ [ $+ [ $naddress ] ] ,2,44) *!*@ [ $+ [ $puttok($raddress,$chr(42),-1,46) ] ] DNS

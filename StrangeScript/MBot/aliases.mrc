@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 73
+ut2 return 75
 ;
 ;month (xx)
 ut3 return 01
 ;
 ;day (xx)
-ut4 return 27
+ut4 return 29
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -44,6 +44,7 @@ chain {
   if ($1 != $null) { return $lowcol $+  $+ $str(¤,$1) $+  }
   else { return $lowcol $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ }
 }
+reload load.again
 load.again { 
   load -a aliases.mrc
   load -a aliases1.mrc
@@ -172,7 +173,8 @@ Check.Serv.Log {
     if ($me == %bot.nick.2. [ $+ [ $network ] ]) { nickserv identify %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
     unset %recover. [ $+ [ $network ] ]
     mode $me
-    return
+    recover off
+    halt
   }
   if ($me != %recover. [ $+ [ $network ] ]) {
     if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] } 
@@ -344,6 +346,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%do.hex. [ $+ [ $network ] ] == $null) { set %do.hex. [ $+ [ $network ] ] OFF }
   set %count.note 0
   set %pound.active OFF
+  if (%GetNick. [ $+ [ $network ] ] == ON) && ($me != %bot.nick.1. [ $+ [ $network  ] ]) { recover %bot.nick.1. [ $+ [ $network  ] ] } 
   set %spy OFF
   set %spy1 ""
   set %spy2 ""
