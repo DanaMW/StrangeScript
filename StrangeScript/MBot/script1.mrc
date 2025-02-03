@@ -91,7 +91,7 @@ on *:TEXT:*:#: {
         if (%tmp1 != $null) { $point $report(Help,$null,No help found for:,%cleanup) | halt }
       $point $report(Help,$null,For a complete list of commands try,.help) | halt }
     }
-    ;&& (%tmp != 35) && (%tmp != 49)
+    ;&& (%tmp != 35) && (%tmp != 49) 
     ;
     if ($strip($1) == $chr(63) $+ $chr(63)) { SSpy.Help | halt }
     ;#.alias Format: .alias <alias> (Shows infomation on a given alias)
@@ -337,7 +337,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .domath) { if ($2 == $null) { $point Format: .domath <##> <+-*/> <##> <+-*/> <##> | halt } | $point $report(Math Calc,$null,Done,$calc($2-)) | halt }
     ;#.exit Format: .exit (Makes the bot exit.)
     if ($strip($1) == .exit) {
-      if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { halt }    
       $point $report(Exit,Done)
       if ($2 != $null) {
         timer 1 1 quit $replace($2-,$chr(32),$chr(160))
@@ -357,7 +357,7 @@ on *:TEXT:*:#: {
       var %tmp.stat1 = D:\SS\MircStats\Config\ $+ %tmp.stat $+ .cfg
       if ($exists(%tmp.stat1)  == $true) {
         $point Generating Stats for $chr(35) $+ %tmp.stat $+ ....
-        ;.timerSTATS. $+ %tmp.stat 1 30 $point Located: http://www.localdomain.net/~stats/ $+ %tmp.stat $+ /
+        ;.timerSTATS. $+ %tmp.stat 1 30 $point Located: http://www.strangeout.com/~stats/ $+ %tmp.stat $+ /
         ;.run -np %tmp.stat1
         .run -np D:\SS\MircStats\mircstats.exe -c %tmp.stat $+ .cfg
       }
@@ -376,7 +376,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .heel) { .raw mode # -o $me | halt }
     ;#.ident Format: .ident  (Makes the bot identify to chanserv using saved password.)
     ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
-    if ($strip($1) == .identify) || ($strip($1) == .ident) {
+    if ($strip($1) == .identify) || ($strip($1) == .ident) { 
       if (*dal.net iswm $server) {
         if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
         if ($me == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
@@ -410,7 +410,7 @@ on *:TEXT:*:#: {
       if ($chr(35) !isin $2) { var %t.join = $chr(35) $+ $2 }
       else { var %t.join = $2 }
       .join %t.join $3-
-      if ($3 == $null) { $point $report(Joined,$null,%t.join,$null,Done) }
+      if ($3 == $null) { $point $report(Joined,$null,%t.join,$null,Done) } 
       if ($3 != $null) { $point $report(Joined,$null,%t.join,With Key,Done) }
       halt
     }
@@ -424,14 +424,14 @@ on *:TEXT:*:#: {
     if ($strip($1) == .lag) {
       if ($2 == ON) { Lagon | halt }
       if ($2 == OFF) { Lagoff | halt }
-      if ($2 == seconds) || ($2 == -S) {
+      if ($2 == seconds) || ($2 == -S) { 
         if ($3 == $null) {
           set %Lag.mrc.secs. [ $+ [ $network ] ] 15
           $point $report(Lag,$server,Interval set to,%Lag.mrc.secs. [ $+ [ $network ] ])
         }
         if ($3 != $null) && ($3 isnum) {
           set %Lag.mrc.secs. [ $+ [ $network ] ] $3
-          $point $report(Lag,$server,Interval set to,%Lag.mrc.secs. [ $+ [ $network ] ])
+          $point $report(Lag,$server,Interval set to,%Lag.mrc.secs. [ $+ [ $network ] ]) 
         }
       }
       $point $report(Lag,$server,%Lag.mrc. [ $+ [ $network ] ])
@@ -505,7 +505,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .base) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       if ($2 != $null) { set %base. [ $+ [ $network ] ] $2 | goto ch1 | halt }
-      $point $report(Format:,$null,.base <NICK|CHANNEL>,Sets up the base USER or #ROOM reported to.)
+      $point $report(Format:,$null,.base <NICK|CHANNEL>,Sets up the base USER or #ROOM reported to.) 
       $point $report(Format:,$null,.display <CHAN/NOTICE>,Sets up the display method)
       :ch1
       $point $report(Display Method,$null,%display. [ $+ [ $network ] ]) $report(Base,$null,%base. [ $+ [ $network ] ])
@@ -531,7 +531,7 @@ on *:TEXT:*:#: {
     ;#.mode Format: .mode <raw command> (Makes the bot send a server raw.)
     if ($strip($1) == .mode) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-      .mode $2 $3 $4 $5 $6 $7 $8 $9
+      .mode $2 $3 $4 $5 $6 $7 $8 $9 
       $point $report(Mode,set,$2-,Done)
       halt
     }
@@ -541,10 +541,10 @@ on *:TEXT:*:#: {
       else { nick $2 | halt }
     }
     ;#.bnick Format: .bnick [INC/LONG] <base nick> (Changes all the bots nick to <base nick>[#] or <base nick>[#####].)
-    if ($strip($1) == .bnick) {
+    if ($strip($1) == .bnick) { 
       if ($2 == inc) { .nick $3 $+ $chr(91) $+ $right($remove($nopath($mircini),.ini),-3) $+ $chr(93) | halt }
       if ($2 == long) { .nick $2 $+ $chr(91) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $rand(0,9) $+ $chr(93) | halt }
-      if ($2 != inc) && ($2 != long) { .nick $3 $+ $chr(91) $+ $right($remove($nopath($mircini),.ini),-3) $+ $chr(93) | halt }
+      if ($2 != inc) && ($2 != long) { .nick $3 $+ $chr(91) $+ $right($remove($nopath($mircini),.ini),-3) $+ $chr(93) | halt }  
     }
     ;#.op Format: .op [-A|ALL|-L|LAST|<chan>] [<nick>] (makes the bot op the boss or nick on current or given channel.)
     ;#.o Format: .o [-A|ALL|-L|LAST|<chan>] [<nick>] (makes the bot op the boss or nick on current or given channel.)
@@ -587,7 +587,7 @@ on *:TEXT:*:#: {
     }
     ;#.ping Format: .ping [<nick|channel>] (Pings you, nick or channel. )
     if ($strip($1) == .ping) {
-      if ($2 == $null) {
+      if ($2 == $null) { 
         set %ping.chan #
         set %ping.nick $nick
         .raw -q privmsg $nick : $+ $chr(1) $+ PING $ticks $+ $chr(1)
@@ -661,7 +661,7 @@ on *:TEXT:*:#: {
     ;#.remkey Format: .remkey (Deletes the owner and host key on the current channel.)
     if ($strip($1) == .remkey) { unset %owner. [ $+ [ # ] ] | unset %host. [ $+ [ # ] ] | set %report OwnerKey and Hostkey | /report1 # Deleted | halt }
     ;#.recover Format: .recover <nick/OFF> (The bot recovers given nickname. Or turns recover off.)
-    if ($strip($1) == .recover) {
+    if ($strip($1) == .recover) { 
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       recover $2
       halt
@@ -749,7 +749,7 @@ on *:TEXT:*:#: {
     ;#.seen Format: .seen <nick> (last time a person was seen and where)
     ;if ($strip($1) == .seen) || ($strip($1) == .lastseen) {
     ;  if ($2 == $null) { $point $report(Format,$null,$null,.seen <nick>) | halt }
-    ;  else {
+    ;  else { 
     ;    var %tmp.x = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt
     ;    var %tmp.xx = $read(%tmp.x,s,$2)
     ;    if (%tmp.xx == $null) { var %tmp.xx = User not in database }
@@ -808,7 +808,7 @@ on *:TEXT:*:#: {
         if ($me !ison $3) { .join $3 %owner. [ $+ [ $3 ] ] }
         set %spy ON
         set %spy1 $3
-        set %spy2 #
+        set %spy2 # 
         $point $report(Spy,%spy1,Enabled)
         halt
       }
@@ -820,9 +820,9 @@ on *:TEXT:*:#: {
       else {
         if ($2 == ON) { set %server.spy.talk ON }
         else { set %server.spy.talk OFF }
-        $point $report(SpyTalk,SET,%server.spy.talk)
+        $point $report(SpyTalk,SET,%server.spy.talk) 
       }
-      halt
+      halt 
     }
     ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
@@ -841,7 +841,7 @@ on *:TEXT:*:#: {
         $point $report(Interactive Speach,$null,Finished)
         halt
       }
-      if ($2 == ON) {
+      if ($2 == ON) { 
         .load -rs talker.mrc
         if ($3 == $null) {
           set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],#,44)
@@ -855,7 +855,7 @@ on *:TEXT:*:#: {
         halt
       }
       if ($2 == OFF) {
-        if ($3 != $null) {
+        if ($3 != $null) { 
           set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44)
           $point $report(Interactive Speach,$null,Turned,Off,$3)
         }
@@ -972,7 +972,7 @@ on *:TEXT:*:#: {
         if ($3 == $null) { .set %easy.room # }
         else { .set %easy.room $3 }
         $point $report(Ez-Relay,Active,%easy.room,to,%easy.server)
-        halt
+        halt 
       }
       if ($2 == OFF) { .unset %easy.room | $point $report(Ez-Relay,$null,OFF) | halt }
       if ($2 == SERVER) { .set %easy.server $3 | $point $report(Ez-Relay,Server Set,%easy.server) | halt }
@@ -989,7 +989,7 @@ on *:TEXT:*:#: {
       if ($2 == COUNT) { $point $report(Var,$var(*,0),set variables) | halt }
       if ($var($2,1) = $null) { $point $report(Var,Error,The variable,$2,does not exist) | halt }
       else {
-        if ($var($2,0) == 1) { $point $report(Var,$var($2,1),=,$var($2,1).value) | halt }
+        if ($var($2,0) == 1) { $point $report(Var,$var($2,1),=,$var($2,1).value) | halt } 
         else { $point $report(Var,$null,There are,$var($2,0),Displaying:) }
         if ($var($2,0) > 1) {
           var %tmp.vr 1
@@ -1017,7 +1017,7 @@ raw 433:*:{
     if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
     if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
     if ($network != UnderNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
-    ;assimilate
+    ;assimilate 
   }
   halt
 }

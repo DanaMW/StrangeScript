@@ -115,9 +115,9 @@ voice=default
 
 [mirc]
 user=doda
-email=rappid@localdomain.net
+email=rappid@strangeout.com
 nick=Blitz
-host=localdomain.netSERVER:127.0.0.1:8000:5DdR2JKUdDIlwUoxc8E=GROUP:StrangeScript
+host=strangeout.comSERVER:127.0.0.1:8000:5DdR2JKUdDIlwUoxc8E=GROUP:StrangeOut
 anick=SServ-[02]
 
 [files]
@@ -141,7 +141,7 @@ wchannel=1,682,11,309,0,1,0
 wquery=1,682,11,309,1,1,0
 main=193,693,57,422,0,0,0
 wstatus=-1,423,-1,177,1,1,0
-wstatus-StrangeScript=-1,423,-1,177,1,1,0
+wstatus-StrangeOut=-1,423,-1,177,1,1,0
 
 [wizard]
 warning=2

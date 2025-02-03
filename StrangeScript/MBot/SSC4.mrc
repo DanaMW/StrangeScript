@@ -43,7 +43,7 @@ timestamp=[HH:nn]
 accept=*.jpg,*.gif,*.png,*.bmp,*.txt,*.log,*.wav,*.mid,*.mp3,*.wma,*.ogg,*.zip
 ignore=*.exe,*.com,*.bat,*.dll,*.ini,*.mrc,*.vbs,*.js,*.pif,*.scr,*.lnk,*.pl,*.shs,*.htm,*.html
 network=Strange
-aptitle=- [ Clone 4. ] [ nick: ]3laste|2 ] [ lag: .060 secs ] [ IRCX: ON ] [ localdomain.net ]
+aptitle=- [ Clone 4. ] [ nick: ]3laste|2 ] [ lag: .060 secs ] [ IRCX: ON ] [ strangeout.com ]
 theme=mIRC Classic
 defport=6667
 lastreset=
@@ -84,8 +84,8 @@ voice=default
 nick=]3laste|2
 anick=Cog
 user=Strange
-email=humble@localdomain.net
-host=localdomain.netSERVER:127.0.0.1:8000:5DdR2JKUdDIlwUoxc8E=GROUP:StrangeScript
+email=humble@strangeout.com
+host=strangeout.comSERVER:127.0.0.1:8000:5DdR2JKUdDIlwUoxc8E=GROUP:StrangeOut
 
 [dde]
 ServerStatus=on

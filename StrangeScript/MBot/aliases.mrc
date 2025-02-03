@@ -2,7 +2,7 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 75
+ut2 return 76
 ;
 ;month (xx)
 ut3 return 02
@@ -46,20 +46,20 @@ chain {
 }
 reload load.again
 load.again { 
+  .timer 1 2 load.rest
   load -a aliases.mrc
-  load -a aliases1.mrc
-  load.rest
-  msg %boss Reload Complete
   halt
 }
 load.rest {
+  load -a aliases1.mrc
   load -rs script0.mrc
   load -rs script1.mrc
   load -rs script2.mrc
   load -rs unmask.mrc
   load -rs spell.mrc
   load -rs seen.mrc
-  return
+  msg %boss Reload Complete
+  halt
 }
 slc {
   if ($1 == $null) { .msg # Format: .slc <-s|-r> | return }
