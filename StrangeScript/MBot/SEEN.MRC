@@ -4,7 +4,7 @@
 ;BUT I am going to modernize the shit out of this and change it to files instead of folders. And will make it cross network aware.
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;     New: .SEEN+ v0.1    ;;
+;;          .SEEN+            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ;-----------------------------------------------------
@@ -12,13 +12,13 @@
 ut1 return 0
 ;
 ;Minor version (xx)
-ut2 return 5
+ut2 return 6
 ;
 ;month (xx)
-ut3 return 01
+ut3 return 02
 ;
 ;day (xx)
-ut4 return 23
+ut4 return 02
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -83,9 +83,10 @@ On 1:TEXT:.seen *:#:{
       ; they quit...
       if (%seenaction == quit) { 
         .set -u5 %quittime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %quitchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %quitmessage $readini seen\ $+ $2 $+ .ini %seennick Message
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 quit with the message ( %quitmessage ) $duration($calc($ctime - %quittime)) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 quit %quitchannel with the message ( %quitmessage ) $duration($calc($ctime - %quittime)) ago on %theNetwork $+ .
       }
       ; they were kicked...
       if (%seenaction == kick) { 
@@ -149,6 +150,7 @@ On 1:QUIT:{
   else { .set %seennick $nick }
   .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action quit
+  .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Message $1-
   .writeini seen\ $+ $nick $+ .ini %seennick Network $network

@@ -1016,7 +1016,7 @@ raw 433:*:{
   if (timer(RECOV. [ $+ [ $network ] ]) != $null) {
     if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
     if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
-    $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ])
+    if ($network != UnderNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
     ;assimilate 
   }
   halt
