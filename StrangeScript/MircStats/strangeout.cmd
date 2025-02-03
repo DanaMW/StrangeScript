@@ -1,2 +1,2 @@
 cd D:\StrangeScript\MircStats
-mircstats.exe -c StrangeOut.cfg
+mircstats.exe -c StrangeScript.cfg

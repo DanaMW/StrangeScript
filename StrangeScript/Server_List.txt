@@ -3,8 +3,8 @@ strange.d2g.com,many things are better left unsaid.
 strange.d2g.com,many things are better left unsaid.
 strange.d2g.com,many things are better left unsaid.
 strange.d2g.com,many things are better left unsaid.
-secure.strangeout.com,I touch myself and you can't stop me.
+secure.localdomain.net,I touch myself and you can't stop me.
 strange.kicks-ass.org,Who's your alien baby!!
-StrangeOut.kicks-ass.org,You finally realized your not welcome.
-irc.strangeout.com,Interesting possiblities.
-chat.strangeout.com,I'm to lazy to edit this config file.
+StrangeScript.kicks-ass.org,You finally realized your not welcome.
+irc.localdomain.net,Interesting possiblities.
+chat.localdomain.net,I'm to lazy to edit this config file.

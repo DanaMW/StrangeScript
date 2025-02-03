@@ -42,7 +42,7 @@ linesep=none
 timestamp=[HH:nn]
 accept=*.jpg,*.gif,*.png,*.bmp,*.txt,*.log,*.wav,*.mid,*.mp3,*.wma,*.ogg,*.zip
 ignore=*.exe,*.com,*.bat,*.dll,*.ini,*.mrc,*.vbs,*.js,*.pif,*.scr,*.lnk,*.pl,*.shs,*.htm,*.html
-network=StrangeOut
+network=StrangeScript
 aptitle=- [ Clone 1. ] [ nick: Cognizant ] [ lag: .00 secs ] [ IRCX: OFF ] [ cos.selfip.biz ]
 theme=mIRC Classic
 defport=6667
@@ -85,7 +85,7 @@ voice=default
 nick=Cognizant
 anick=Cog
 user=-authorized-
-email=strange@strangeout.com
+email=strange@localdomain.net
 host=Random UnderNet IRCSERVER:186.233.185.155:+8000:GROUP:UnderNet
 
 [dde]
@@ -159,7 +159,7 @@ buttons=0
 #Mystical=off
 #StrangeScript=off
 #House-of-Insults=D:\MircStats\#House-of-Insults.log
-#StrangeOut=LOGS\#StrangeOut.log
+#StrangeScript=LOGS\#StrangeScript.log
 #UnholyOnline=off
 
 [nicklist]
@@ -190,7 +190,7 @@ n0=defaultEXTDIR:download\
 n1=*.wav,*.mid,*.mp3,*.wma,*.oggEXTDIR:sounds\
 
 [local]
-local=gig.strangeout.com
+local=gig.localdomain.net
 localip=206.148.136.18
 
 [colors]
@@ -216,7 +216,7 @@ n8=spell.mrc
 n9=mail.mrc
 
 [find]
-n0=strangeout
+n0=StrangeScript
 n1=:NOTICE
 n2=logging
 n3=.log
@@ -229,13 +229,13 @@ n9=.dns
 
 [replace]
 n0=68.116.130.77
-n1=%method %base 
+n1=%method %base
 n2=msg %boss
 n3=spell.
 n4=%spell.
 n5=%long
 n6=msg %weath.room
-n7=msg 
+n7=msg
 
 [chanlist]
 last=channels.txt

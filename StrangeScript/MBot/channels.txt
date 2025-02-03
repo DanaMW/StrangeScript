@@ -1,7 +1,7 @@
 lethalinjection.kicks-ass.net Sat Jun 14 17:38:41 2003
-#HobbyShop 2  
+#HobbyShop 2
 #mIRC 4 [+ntr] mIRC scripting
-#StrangeOut 11 [+ntrl] Home Base / Network Information / LakeServ Services Info
+#StrangeScript 11 [+ntrl] Home Base / Network Information / LakeServ Services Info
 #lakeserv 1 [+ntr] LakeServ Support Channel
 #PaRaDiSX.Serv.Project 1 [+ntr] Paradis X server Projetx using Delphi
 #deathrow 3 [+ntrl] Dead Men Walking

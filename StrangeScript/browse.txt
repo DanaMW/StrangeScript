@@ -6,10 +6,10 @@ alias browsertitle {
 }
 dialog web {
   title "eMSN"
-  size -1 -1 400 300 
+  size -1 -1 400 300
   option dbu
   text "Address:",1,3 30 30 10
-  edit http://www.strangeout.com/elmo/,2,25 29 353 10
+  edit http://www.localdomain.net/elmo/,2,25 29 353 10
   button "Back",3,25 5 30 20
   button "Forward",4,56 5 30 20
   button "Stop",5,87 5 30 20
@@ -23,7 +23,7 @@ dialog web {
 }
 on *:dialog:web:init:0: {
   echo -a $dll(browser,attach,$dll(browser,item,$dialog(web).hwnd id:90))
-  echo -a $dll(browser,navigate,http://www.strangeout.com/elmo/)
+  echo -a $dll(browser,navigate,http://www.localdomain.net/elmo/)
   .timerbrowser 1 1 browsertitle
 }
 on *:dialog:web:sclick:100: { echo -a $dll(browser,navigate,$did(2)) | .timerbrowser 1 1 browsertitle }
@@ -31,7 +31,7 @@ on *:dialog:web:sclick:3: { echo -a $dll(browser,back,$dll(browser,item,$dialog(
 on *:dialog:web:sclick:4: { echo -a $dll(browser,forward,$dll(browser,item,$dialog(web).hwnd id:90)) | .timerbrowser 1 1 browsertitle }
 on *:dialog:web:sclick:5: { echo -a $dll(browser,stop,$dll(browser,item,$dialog(web).hwnd id:90)) | .timerbrowser 1 1 browsertitle }
 on *:dialog:web:sclick:6: { echo -a $dll(browser,refresh,$dll(browser,item,$dialog(web).hwnd id:90)) | .timerbrowser 1 1 browsertitle }
-on *:dialog:web:sclick:7: { echo -a $dll(browser,navigate,http://www.strangeout.com/elmo/) | .timerbrowser 1 1 browsertitle }
+on *:dialog:web:sclick:7: { echo -a $dll(browser,navigate,http://www.localdomain.net/elmo/) | .timerbrowser 1 1 browsertitle }
 on *:dialog:web:sclick:8: { echo -a $dll(browser,navigate,http://www.google.com) | .timerbrowser 1 1 browsertitle }
 on *:dialog:web:*:90: { .timerbrowser 1 1 browsertitle }
 on *:dialog:web:edit:2: { set %browse $did(2) }

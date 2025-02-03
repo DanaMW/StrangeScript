@@ -1,7 +1,7 @@
 # Welcome To StrangeScript Information
 
 ```text
-The original mIRC script. StrangeScript ©1999-2024
+The original mIRC script. StrangeScript ©1999-2025
 Dana L. Meli-Wischman. I put a bunch of time into this
 little thing. If you are going to rip out a piece of it
 and add it to your script at least give me credit, in
@@ -29,12 +29,14 @@ script running. It won't hurt a thing.
 ```
 
 ```text
-To use the new bot, do /bot OFF first then /bot on. That
-resets the bot. You may use /bot off at any time the bot
-needs resetting. The bot is multi-server, you can have 1
-copy running on each server if you like.
-The OLD bot MBot (MasterBot) Runs off its own copy of mIRC.
-It is fully integrated into the script.
+There is a small bot, do /bot OFF first then /bot ON.
+That resets the bot. You may use /bot OFF at any time the
+bot needs resetting. The bot is multi-server, you can have
+1 copy running on each server if you like.
+I am fond of the main bot, MBot (MasterBot) Runs off its own copy of mIRC in the MBot folder. That is it's own session.
+It is fully integrated into the script. but I like to copy
+everything over to another machine and run it. You don't
+have to, but you can.
 ```
 
 ```text
@@ -45,7 +47,7 @@ I hope you have fun.
 ```
 
 ```text
-I updated the original bot, MasterBot (MBot).
+I am updating the original bot, MasterBot (MBot).
 It seems to be running fine but if you use it
 and see something let me know.
 ```

@@ -1,9 +1,9 @@
-dev.strangeout.com Wed Sep 24 11:58:16 2003
-#help 2 admin@strangeout.com || StrangeOut Network Help and Information || http://www.strangeout.com
+dev.localdomain.net Wed Sep 24 11:58:16 2003
+#help 2 admin@localdomain.net || StrangeScript Network Help and Information || http://www.localdomain.net
 #HobbyShop 4 Hobby Fun Room
 #mIRC 3 mIRC scripting
 #rOOt 1 root access
-#StrangeOut 20 IRC Gets a boost from the big boy? --> http://www.cnn.com/2003/TECH/internet/09/24/microsoft.chat/index.html
+#StrangeScript 20 IRC Gets a boost from the big boy? --> http://www.cnn.com/2003/TECH/internet/09/24/microsoft.chat/index.html
 #TheTwilightZone 2 Crazy
 #lakeserv 1 LakeServ Support Channel [ http://www.lakeserv.tk ]
 #Trivia 1 Trivia
