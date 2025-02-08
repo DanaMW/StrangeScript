@@ -747,15 +747,6 @@ on *:TEXT:*:#: {
     if ($strip($1) == .slc) { slc $2- | halt }
     ;#.lastseen Format: .lastseen <nick> (last time a person was seen and where)
     ;#.seen Format: .seen <nick> (last time a person was seen and where)
-    ;if ($strip($1) == .seen) || ($strip($1) == .lastseen) {
-    ;  if ($2 == $null) { $point $report(Format,$null,$null,.seen <nick>) | halt }
-    ;  else { 
-    ;    var %tmp.x = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt
-    ;    var %tmp.xx = $read(%tmp.x,s,$2)
-    ;    if (%tmp.xx == $null) { var %tmp.xx = User not in database }
-    ;    $point $report(LastSeen,$2,$null,%tmp.xx)
-    ;  }
-    ;}
     ;#.con Format: .con (Lists the server connected to)
     ;#.conn Format: .conn (Lists the server connected to)
     ;#.connect Format: .connect (Lists the server connected to)
@@ -892,6 +883,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .ver) {
       $point $ver
       $point Using mIRC $version
+      $point Using Seen+ $verseen
       halt
     }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
@@ -1009,6 +1001,8 @@ on *:TEXT:*:#: {
       $point $report(X Login,$null,Complete)
     }
   }
+  ;#.notify Format: .notify [-shrln] <on|off|nickname> [network|address] [note] (Adds/Removes a user from the notify list. Do /help /notify for complete help.)
+  if ($strip($1) == .notify) { if ($2 != $null) { notify $2- | halt } }
 }
 ;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss. [ $+ [ $network ] ] $upper($2) $3- } }
 raw 433:*:{

@@ -12,8 +12,7 @@ alias mygo  {
       inc %tmprs1
       if (%tmprs1 > %tmprs2) { break }
     }
-    unset %tmprs1
-    unset %tmprs2
+    unset %tmprs1 %tmprs2
   }
   return
 }
@@ -80,7 +79,7 @@ on *:JOIN:#: {
   set %lastjoin. $+ # $nick
   if ($istok(%shitlist. [ $+ [ $network ] ],$address($nick,4),44) == $true) { if (%shitlist.Do. [ $+ [ $network ] ] == ON) { if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick :Bot $+ $chr(160) $+ Shitlist } } }
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Join,%spy1,$nick,$address) }
-  .timerLastBigIn 1 5 LastSeen $nick $address($nick,4) Joining $chan $network $time $time(TT)
+  ;.timerLastBigIn 1 5 LastSeen $nick $address($nick,4) Joining $chan $network $time $time(TT)
   if ($nick == $me) {
     if ($chan(#) isin %pound) && (%pound.active == ON) { .notice %boss. [ $+ [ $network ] ] 04 $+ Pound Disabled, Entered Room | .timerPND OFF | set %pound "" | set %pound.active OFF }
     ;if ($network == dalnet) { .chanserv op # $me }
