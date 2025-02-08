@@ -12,6 +12,8 @@ right thing to do. Thank you.
 ```text
 Notice: This is NOT a beginner script.This script requires
 skill with IRC servers and mIRC to use. I warned you.
+
+*I started adding comments throughout strange, should help you.*
 ```
 
 ```text
