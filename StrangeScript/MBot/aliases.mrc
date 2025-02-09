@@ -2,23 +2,25 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 78
+ut2 return 79
 ;
 ;month (xx)
 ut3 return 02
 ;
 ;day (xx)
-ut4 return 07
+ut4 return 09
 ;
 ;year (xxxx)
 ut5 return 2025
 ;-----------------------------------------------------
 name return 10M04aster10B04ot
 ss return 10S04trange10S04cript
-ver return $name 10 $+ $chr(91) v00 $+ $ut1 $+ 10. $+ 00 $+ $ut2 $+ 10. $+ 00 $+ $ut3 $+ 10. $+ 00 $+ $ut4 $+ 10. $+ 00 $+ $ut5 10 $+ $chr(93) $+ 00 coded for $ss
+ver return $name 10 $+ $chr(91) v00 $+ $ut1 $+ 10. $+ 00 $+ $ut2 $+ 10. $+ 00 $+ $ut3 $+ 10. $+ 00 $+ $ut4 $+ 10. $+ 00 $+ $ut5 10 $+ $chr(93) $+ 00
+;coded for $ss
 ;-----------------------------------------------------
-!seen .seen $2-
-.lastseen .seen $2-
+!seen .seen $1-
+.lastseen .seen $1-
+!lastseen .seen $1-
 all scid -a $1-
 aj auto.join
 ca cycleall

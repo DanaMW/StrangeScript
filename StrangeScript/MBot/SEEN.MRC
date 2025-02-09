@@ -1,30 +1,30 @@
 ;
-;Originally: !seen By: maconga On: 07-25-2010 At: https://forums.mirc.com/ubbthreads.php/users/78515/maconga
+;Originally based on !seen By: maconga On: 07-25-2010 At: https://forums.mirc.com/ubbthreads.php/users/78515/maconga
 ;
-;BUT I am going to modernize the shit out of this and change it to files instead of folders. And will make it cross network aware.
 ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;          ;;;;;;;;
+;;;;;;;;;;;;      ;;;;;;;;;;;;;;
 ;;          .SEEN+            ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
+;;;;;;;;;;;;      ;;;;;;;;;;;;;;
+;          ;;;;;;;;
 ;-----------------------------------------------------
 ;Major version (xx)
 alias uu1 return 0
 ;
 ;Minor version (xx)
-alias uu2 return 7
+alias uu2 return 8
 ;
 ;month (xx)
 alias uu3 return 02
 ;
 ;day (xx)
-alias uu4 return 07
+alias uu4 return 09
 ;
 ;year (xxxx)
 alias uu5 return 2025
 ;-----------------------------------------------------
-alias verseen return { $uu1 $+ . $+ $uu2 }
-alias verseenfull return { $uu1 $+ . $+ $uu2 $+ . $+ $uu3 $+ . $+ $uu4 $+ . $+ $uu5 }
+alias seenver return { $uu1 $+ . $+ $uu2 }
+alias seenverfull return { $uu1 $+ . $+ $uu2 $+ . $+ $uu3 $+ . $+ $uu4 $+ . $+ $uu5 }
 ;
 On 1:TEXT:.seen:#:{
   msg $chan $nick $+ , there are $findfile($mircdir\seen,*.*,0) seen records in my database. Please refine your search.
@@ -139,8 +139,7 @@ On 1:JOIN:#:{
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
   ; [ are going to change @ and ] to ~
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action join
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan 
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
@@ -151,8 +150,7 @@ On 1:JOIN:#:{
 On 1:PART:#:{
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action part
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
@@ -163,8 +161,7 @@ On 1:PART:#:{
 On 1:QUIT:{
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action quit
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
@@ -176,8 +173,7 @@ On 1:QUIT:{
 On 1:KICK:#:{
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action kick
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
@@ -188,8 +184,7 @@ On 1:KICK:#:{
 On 1:NICK:{
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action nick
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Nick $newnick
@@ -200,8 +195,7 @@ On 1:NICK:{
 On 1:TEXT:*:#:{
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action text
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
@@ -213,8 +207,7 @@ On 1:TEXT:*:#:{
 On 1:ACTION:*:#:{
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action action
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
@@ -223,8 +216,7 @@ On 1:ACTION:*:#:{
 on 1:NOTIFY: {
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action notify
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Network $network
@@ -232,8 +224,7 @@ on 1:NOTIFY: {
 on 1:UNOTIFY: {
   if (($right($nick,1) == ]) || ($left($nick,1) == [)) { .set %seennick $replace($nick,[,@) | .set %seennick $replace(%seennick,],~) }
   else { .set %seennick $nick }
-  ;.remini seen\ $+ $nick $+ .ini %seennick
-  .writeini seen\ $+ $nick $+ .ini -cz 
+  .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action unotify
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Network $network

@@ -692,6 +692,18 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.seen Format: .seen <nick> (When the bot has seen <nick>)
+    if ($2 == .seen) {
+      if ($3 == ON) {
+        load -rs seen.mrc
+        notice %boss. [ $+ [ $network ] ] Lastseen has been loaded and turned on
+        halt
+      }
+      if ($3 == OFF) {
+        unload -rs seen.mrc
+        notice %boss. [ $+ [ $network ] ] Lastseen has been turned off and unloaded
+        halt
+      }
+    }
     ;#.shit Format: .shit [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
     ;#.shit Format: .shitlist [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
     if ($strip($1) == .shit) || ($strip($1) == .shitlist) {
@@ -883,7 +895,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .ver) {
       $point $ver
       $point Using mIRC $version
-      $point Using Seen+ $verseen
+      if ($seenver != $null) { $point Using Seen+ $seenver }
       halt
     }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)

@@ -95,8 +95,8 @@ on 1:SOCKCLOSE:Spy*:{
   if ($sockname == SpyCHAT) { .timer 1 1 sockopen SpyCHAT irc.chatnet.org 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,CHAT) }
 }
 on *:NOTIFY: {
-  notice %boss. [ $+ [ $network ] ] $report(NoteOn,$null,$nick graced us with his presence,$network)
+  notice %boss. [ $+ [ $network ] ] $report(NoteOn,$null,$nick graced us with his presence on,$network)
 }
 on *:UNOTIFY: {
-  notice %boss. [ $+ [ $network ] ] $report(NoteOff,$null,We seem to have lost $nick ,$network)
+  notice %boss. [ $+ [ $network ] ] $report(NoteOff,$null,We seem to have lost $nick from,$network)
 }
