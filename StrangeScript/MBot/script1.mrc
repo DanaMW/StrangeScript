@@ -1013,7 +1013,7 @@ on *:TEXT:*:#: {
       $point $report(X Login,$null,Complete)
     }
   }
-  ;#.notify Format: .notify [-shrln] <on|off|nickname> [network|address] [note] (Adds/Removes a user from the notify list. Do /help /notify for complete help.)
+  ;#.notify Format: .notify [-A|ADD|D|L]<ON|OFF|nickname> [note] (Adds/Removes a user from the notify list.)
   if ($strip($1) == .notify) { if ($2 != $null) { notify $2- | halt } }
 }
 ;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss. [ $+ [ $network ] ] $upper($2) $3- } }
