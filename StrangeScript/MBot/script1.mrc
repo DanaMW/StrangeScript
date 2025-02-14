@@ -235,7 +235,7 @@ on *:TEXT:*:#: {
     if ($strip($1) == .cnn) { cnn # $nick $2- | halt }
     ;#.cycle Format: .cycle [<channel>|-A] (Cycles the current or given channel or cycles all joined channels.)
     if ($strip($1) == .cycle) {
-      if ($2 == -A) || ($2 == -ALL) { $point Cycling [ALL] for the boss | cycleall | halt }
+      if ($2 == -A) || ($2 == -ALL) { cycleall | halt }
       if ($2 == $null) { .raw part $chan $cr join $chan %owner. [ $+ [ $chan ] ] | halt }
       else { .raw part $2 | .raw join $2 %owner. [ $+ [ $2 ] ] | halt }
     }

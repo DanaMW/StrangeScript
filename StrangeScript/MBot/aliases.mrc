@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 80
+ut2 return 82
 ;
 ;month (xx)
 ut3 return 02
 ;
 ;day (xx)
-ut4 return 11
+ut4 return 14
 ;
 ;year (xxxx)
 ut5 return 2025
