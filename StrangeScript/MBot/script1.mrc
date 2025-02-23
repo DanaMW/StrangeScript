@@ -573,11 +573,11 @@ on *:TEXT:*:#: {
     }
     ;#.unoper Format: .unoper (makes the bot send /Unoper to the server. Works only if supprted.)
     if ($strip($1) == .unoper) { if ($2 == $null) { .raw unoper | halt } }
-    ;#.part Format: .part [ALL|<channel>] (Parts current or given channel.)
+    ;#.part Format: .part [-a|ALL|<channel>] (Parts current or given channel.)
     if ($strip($1) == .part) {
       if ($2 == $null) { part # I'm out | halt }
       if ($2 != $null) {
-        if ($2 == ALL) { partall | halt }
+        if ($2 == ALL) || ($2 == -A) { partall | halt }
         if ($chr(35) !isin $2) { var %t.part = $chr(35) $+ $2 }
         else { var %t.part = $2 }
         part %t.part Gotta go!
@@ -829,7 +829,7 @@ on *:TEXT:*:#: {
     }
     ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-    ;#.talk Format: .talk [ON/OFF] (Turns Interactive Speach on or off for the room you are in and gives basic info. )
+    ;#.talk Format: .talk [ON|OFF|-A|ALL|*] <#room> (Turns Interactive Speach on or off for the room you are in and gives basic info. )
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     if ($strip($1) == .talk) {
       if ($2 == -a) || ($2 == ALL) || ($2 == $chr(42)) {
