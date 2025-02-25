@@ -829,7 +829,7 @@ on *:TEXT:*:#: {
     }
     ;#.stop Format: .stop (stops a .pound)
     if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-    ;#.talk Format: .talk [ON|OFF|-A|ALL|*] <#room> (Turns Interactive Speach on or off for the room you are in and gives basic info. )
+    ;#.talk Format: .talk [ON|OFF|-A|ALL|*] <#room> (Turns Interactive Speach on-------------******************************************* or off for the room you are in or <#room> and gives basic info. )
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     if ($strip($1) == .talk) {
       if ($2 == -a) || ($2 == ALL) || ($2 == $chr(42)) {
