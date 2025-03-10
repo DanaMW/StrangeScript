@@ -4,13 +4,14 @@ on *:ACTION:*:#:{
   }
 }
 alias point {
+  if (%display. [ $+ [ $network ] ] == OFF) { halt }
   if (%display. [ $+ [ $network ] ] == CHAN) {
     if ($chan == $null) { return notice $nick }
     if ($chan != $null) { return msg $chan }
   }
   if (%display. [ $+ [ $network ] ] == NOTICE) { return notice %boss. [ $+ [ $network ] ] }
   notice %boss. [ $+ [ $network ] ] We have a display problem at point.
-  notice %boss. [ $+ [ $network ] ] Set .display to CHAN or NOTICE on the bot to fix it.
+  notice %boss. [ $+ [ $network ] ] Set .display to OFF, CHAN, or NOTICE, on the bot to fix it.
   halt
 }
 alias pointer {
@@ -20,10 +21,11 @@ alias pointer {
   }
   if (%display.user. [ $+ [ $network ] ] == NOTICE) { return notice $nick }
   notice %boss. [ $+ [ $network ] ] We have a display problem at pointer, not point.
-  notice %boss. [ $+ [ $network ] ] Set .displayuser to CHAN or NOTICE on the bot to fix it.
+  notice %boss. [ $+ [ $network ] ] Set .displayuser to OFF, CHAN, or NOTICE, on the bot to fix it.
   halt
 }
 on *:TEXT:*:#: {
+  echo -at # $1-
   if ($nick == $chan(#)) { halt }
   if ($nick == $me) { halt }
   if (%boss.repeat == ON) { msg # On # %boss. [ $+ [ $network ] ] said: $1- }
@@ -254,19 +256,20 @@ on *:TEXT:*:#: {
     }
     ;#.deq Format: .deq [channel] <nick> (Makes the bot deq <nick> in current room or [channel].)
     if ($strip($1) == .deq) { if ($2 == $null) { $point $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
-    ;#.display Format: .display [CHAN/NOTICE/[HEX]] (Sets the bot reply channel/notice/[hex(format)]. Left blank it shows it's current state.)
+    ;#.display Format: .display [OFF/CHAN/NOTICE/[HEX]] (Sets the bot reply OFF/channel/notice/[hex(format)]. Left blank it shows it's current state.)
     if ($strip($1) == .display) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       if ($2 == $null) {
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
       }
+      if ($2 == OFF) { set %display. [ $+ [ $network ] ] OFF }
       if ($2 == CHAN) {
         set %display. [ $+ [ $network ] ] CHAN
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ]) }
       }
-      if ($2 == NOT) || if ($2 == NOTE) || if ($2 == NOTi) || ($2 == NOTICE) {
+      = NOT) || if ($2 == NOTE) || if ($2 == NOTi) || ($2 == NOTICE) {
         set %display. [ $+ [ $network ] ] NOTICE
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
@@ -290,7 +293,7 @@ on *:TEXT:*:#: {
       }
     }
 
-    ;#.displayuser Format: .displayuser [CHAN/NOTICE] (Sets the bot user reply channel/notice). Left blank it shows it's current state.)
+    ;#.displayuser Format: .displayuser [OFF/CHAN/NOTICE] (Sets the bot user reply channel/notice). Left blank it shows it's current state.)
     if ($strip($1) == .displayuser) {
       ;if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       if ($2 == $null) { $point $report(DisplayUser,$null,is,%display.user. [ $+ [ $network ] ]) }
