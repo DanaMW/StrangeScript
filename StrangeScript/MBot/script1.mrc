@@ -262,17 +262,20 @@ on *:TEXT:*:#: {
       if ($2 == $null) {
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
+        halt
       }
-      if ($2 == OFF) { set %display. [ $+ [ $network ] ] OFF }
+      if ($2 == OFF) { set %display. [ $+ [ $network ] ] OFF | halt }
       if ($2 == CHAN) {
         set %display. [ $+ [ $network ] ] CHAN
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ]) }
+        halt
       }
       = NOT) || if ($2 == NOTE) || if ($2 == NOTi) || ($2 == NOTICE) {
         set %display. [ $+ [ $network ] ] NOTICE
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
+        halt
       }
       if ($2 == HEX) {
         if ($3 == ON) {

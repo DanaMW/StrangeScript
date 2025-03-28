@@ -8,7 +8,7 @@ ut2 return 87
 ut3 return 03
 ;
 ;day (xx)
-ut4 return 09
+ut4 return 22
 ;
 ;year (xxxx)
 ut5 return 2025
