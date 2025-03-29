@@ -27,7 +27,7 @@ alias bot.stop {
   if ($window(@botSay [ $+ [ %temp.btoff ] ]) != $null) { window -c @botSay [ $+ [ %temp.btoff ] ] }
   window -c @botSay [ $+ [ %temp.btoff ] ] 
   set %Bot.active. [ $+ [ %temp.btoff ] ] 0
-  botsetshow $chain(5) Bot Off $chain(12)
+  botsetshow $chain(5) [ Bot Off ] $chain(13)
   botsetshow OFF You selected off. It's off.
   botsetshow bot.active %temp.btoff is set to %bot.active. [ $+ [ %temp.btoff ] ]
   botsetshow $chain(5) $chain(19)
@@ -43,10 +43,7 @@ alias bot {
     bot.go $2 $3
     return
   }
-  if ($1 == OFF) || ($1 == STOP) {
-    bot.stop $2 $3 $4
-    return
-  }
+  if ($1 == OFF) || ($1 == STOP) { bot.stop $2 $3 $4 | return }
   if ($1 == ID) {
     .timer 1 2 sockwrite -n Bot [ $+ [ $network ] ] identify %bot.pass. [ $+ [ $network ] ]
     .timer 1 4 sockwrite -n Bot [ $+ [ $network ] ] join %bot.work. [ $+ [ $network ] ]
@@ -656,7 +653,7 @@ on *:CLOSE:@: {
     }
   }
 }
-alias botsetshow { $report(Bot Setting,$null,SET,$1,$2-).active | script.play Notify.wav }
+alias botsetshow { $report(Bot Setting,$null,SET, $null,$1,$2,$3-).active | script.play Notify.wav }
 ;on ^1:INPUT:@:{
 ;  if ($remove($target,@BotSay) == Dalnet) { 
 ;    ;privmsg #StrangeScript : $+ $1- 
