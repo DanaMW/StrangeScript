@@ -775,8 +775,8 @@ on *:TEXT:*:#: {
       var %tmp.srv1 = 1
       var %tmp.srv2 = $var(connect*,0)
       while (%tmp.srv1 <= %tmp.srv2) {
-        if (%tmp.srv2 == 1) { $point $report(%tmp.srv0,%tmp.srv1,$var(connect*,%tmp.srv1).value) $report(%connserv. [ $+ [ $var(connect*,%tmp.srv1).value ] ])  | break }
-        else { $point $report(%tmp.srv0,%tmp.srv1,$var(connect*,%tmp.srv1).value) $report(%connserv. [ $+ [ $var(connect*,%tmp.srv1).value ] ])  }
+        if (%tmp.srv2 == 1) { $point $report(%tmp.srv0,%tmp.srv1,$var(connect*,%tmp.srv1).value,$null,%connserv. [ $+ [ $var(connect*,%tmp.srv1).value ] ]) | break }
+        else { $point $report(%tmp.srv0,%tmp.srv1,$var(connect*,%tmp.srv1).value,$null,%connserv. [ $+ [ $var(connect*,%tmp.srv1).value ] ])  }
         inc %tmp.srv1
         if (%tmp.srv1 > %tmp.srv2) { break }
       }

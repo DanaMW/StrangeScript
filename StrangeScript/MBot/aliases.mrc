@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 87
+ut2 return 89
 ;
 ;month (xx)
-ut3 return 03
+ut3 return 04
 ;
 ;day (xx)
-ut4 return 22
+ut4 return 06
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -275,7 +275,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   unset %tmp %temp* %count
 }
 /pound {
-  if ($me ison %pound) { set %pound "" | set %pound.active OFF | .notice %boss Pound Disabled, Entered Room | halt } 
+  if ($me ison %pound) { set %pound "" | set %pound.active OFF | .notice %boss. [ $+[ $network ] ] Pound Disabled, Entered Room | halt } 
   .timerPND 1 10 /pound
   .raw join %pound
 }
@@ -285,7 +285,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
     /ignore -ntu45 *!*@*
     .timerFloodOver 1 45 /set %attempt 0
     if (%attempt == 3) { 
-      .notice %boss 00 $+ CTCP 04 $+ Flood Protection has been 11 $+ ACTIVATED 04 $+ by 11 $+ $nick
+      .notice %boss. [ $+[ $network ] ] 00 $+ CTCP 04 $+ Flood Protection has been 11 $+ ACTIVATED 04 $+ by 11 $+ $nick
       echo -st 00 $+ CTCP 04 $+ Flood Protection has been 11 $+ ACTIVATED 04 $+ by 11 $+ $nick
     }
     return
@@ -396,7 +396,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
 /ReadSpy {
   var %temp.servspy = $findfile(%server.spy2,*.txt,1)
   if (%temp.servspy == $null) { return }
-  if (%server.spy.type == BOSS) { .notice %boss $read -n %temp.servspy }
+  if (%server.spy.type == BOSS) { .notice %boss. [ $+[ $network ] ] $read -n %temp.servspy }
   if (%server.spy.type != BOSS) { .msg %server.spy1 $read -n %temp.servspy }
   .remove %temp.servspy
 }
@@ -801,10 +801,10 @@ MenuPicks {
   .msg $1 Server Nick: %server.spy.nick. [ $+ [ %tmp.spy.serv ] ]
   .msg $1 Server Port: %server.spy.port. [ $+ [ %tmp.spy.serv ] ]
   if (%server.spy.pass. [ $+ [ %tmp.spy.serv ] ] == $null) { .msg $1 Password: Not Set }
-  else { .msg $1 Password: *hidden* (Set) | .notice %boss Password: %server.spy.pass. [ $+ [ %tmp.spy.serv ] ] }
+  else { .msg $1 Password: *hidden* (Set) | .notice %boss. [ $+[ $network ] ] Password: %server.spy.pass. [ $+ [ %tmp.spy.serv ] ] }
   return
 }
-/play.mod { if ($1 != $null) { .notice %boss $replace($1-,$chr(9),$chr(160))  } }
+/play.mod { if ($1 != $null) { .notice %boss. [ $+[ $network ] ] $replace($1-,$chr(9),$chr(160))  } }
 /insta.aj {
   $point $report(Insta-AutoJoin,$null,$null,Creating your autojoin list)
   var %tmp.iaj = 1
