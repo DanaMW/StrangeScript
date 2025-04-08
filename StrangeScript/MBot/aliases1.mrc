@@ -1,6 +1,6 @@
 /SL.PLAY {
   return
-  ;.notice %boss 
+  ;.notice %boss. [ $+[ $network ] ] 
 }
 log.value {
   if (%logging == 0.0.0) { return OFF }

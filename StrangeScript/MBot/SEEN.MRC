@@ -8,17 +8,20 @@
 ;          ;;;;;;;;
 ;
 ;-----------------------------------------------------
+;--- Please submit working changes for inclusion. ----
+;-----------------------------------------------------
+;
 ;Major version (xx)
 alias uu1 return 0
 ;
 ;Minor version (xx)
-alias uu2 return 8
+alias uu2 return 10
 ;
 ;month (xx)
-alias uu3 return 02
+alias uu3 return 04
 ;
 ;day (xx)
-alias uu4 return 09
+alias uu4 return 04
 ;
 ;year (xxxx)
 alias uu5 return 2025
@@ -56,10 +59,10 @@ On 1:TEXT:.seen *:#:{
   } 
   ; Searched person already on the channel...
   elseif ($2 ison $chan) { 
-    /msg $chan $nick $+ , $2- is still in $chan $+ .
+    /msg $chan $nick $+ , $2- is online in $chan on $network $+ .
     .goto end 
   }
-  ; else u can allways check the ini files :D
+  ; else u can always check the ini files :D
   else { 
     if (($right($2,1) == ]) || ($left($2,1) == [)) { .set %seennick $replace($2,[,@) | .set %seennick $replace(%seennick,],~) }
     else { .set %seennick $2 }
