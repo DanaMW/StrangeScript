@@ -347,11 +347,13 @@ on *:TEXT:*:#: {
       $point $report(Exit,Done)
       if ($2 != $null) {
         timer 1 1 quit $replace($2-,$chr(32),$chr(160))
+        window -c $window($active)
         timer -o 1 2 exit -n
         halt
       }
       else {
         timer 1 1 quit $replace(Miss me while I'm gone!,$chr(32),$chr(160))
+        window -c $window($active)
         timer -o 1 2 exit -n
         halt
       }

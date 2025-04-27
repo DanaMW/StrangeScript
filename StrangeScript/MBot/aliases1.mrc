@@ -370,7 +370,7 @@ lcr {
       ;$point $report(Not written yet)
       scon -s $1 quit Bosses Orders
       scon -s $1 partall
-      scon -s $1 close STATUS
+      scon -s $1 close $window($active)
     }
   }
   unset %tmp.QP1 %tmp.QP2 %maxq
