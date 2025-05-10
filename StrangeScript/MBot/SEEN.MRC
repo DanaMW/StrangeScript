@@ -15,13 +15,13 @@
 alias uu1 return 0
 ;
 ;Minor version (xx)
-alias uu2 return 12
+alias uu2 return 13
 ;
 ;month (xx)
-alias uu3 return 04
+alias uu3 return 05
 ;
 ;day (xx)
-alias uu4 return 26
+alias uu4 return 05
 ;
 ;year (xxxx)
 alias uu5 return 2025

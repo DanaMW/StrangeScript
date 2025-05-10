@@ -218,7 +218,7 @@ on *:TEXT:*:#: {
     ;#.boss Format: .boss <nick> (Displays/Sets the BOSS variable.)
     if ($strip($1) == .boss) {
       if ($2 == $null) {
-        $point $report(Boss,$null,Boss is set:,%boss. [ $+ [ $network ] ])
+        $point $report(Boss,$null,is set:,%boss. [ $+ [ $network ] ])
         halt
       }
       if ($2 != $null) {
@@ -442,6 +442,7 @@ on *:TEXT:*:#: {
           $point $report(Lag,$server,Interval set to,%Lag.mrc.secs. [ $+ [ $network ] ]) 
         }
       }
+      if (%lag.check. [ $+ [ $network ] ] == OFF) { $point $report(Lag,$null,is OFF) | halt }
       $point $report(Lag,$server,%Lag.mrc. [ $+ [ $network ] ])
       halt
     }
