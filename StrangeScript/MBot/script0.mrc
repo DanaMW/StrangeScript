@@ -133,7 +133,7 @@ on *:NICK: {
     set %boss. [ $+ [ $network ] ] $newnick
     ;$point $report(Boss,Set,%boss. [ $+ [ $network ] ])
     .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
-    timerBC [ $+ [ $network ] ] 1 10 check.boss $newnick
+    timerBC [ $+ [ $network ] ] 1 20 check.boss $newnick
   }
   if ($nick == $me) && ($comchan(%boss. [ $+ [ $network ] ],0) == $null) { .ctcp %boss. [ $+ [ $network ] ] SSBOTNICK $nick $newnick %bot.key. [ $+ [ $network ] ] }
   recover

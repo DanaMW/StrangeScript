@@ -15,13 +15,13 @@
 alias uu1 return 0
 ;
 ;Minor version (xx)
-alias uu2 return 13
+alias uu2 return 14
 ;
 ;month (xx)
 alias uu3 return 05
 ;
 ;day (xx)
-alias uu4 return 05
+alias uu4 return 10
 ;
 ;year (xxxx)
 alias uu5 return 2025
@@ -76,14 +76,14 @@ On 1:TEXT:.seen *:#:{
         .set -u5 %jointime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %joinchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2- joined %joinchannel $duration($calc($ctime - %jointime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2- joined %joinchannel $duration($calc($ctime - %jointime)) ago on %theNetwork $+ .
       }
       ; they departed a channel...
       if (%seenaction == part) { 
         .set -u5 %parttime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %partchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 parted %partchannel $duration($calc($ctime - %parttime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 parted %partchannel $duration($calc($ctime - %parttime)) ago on %theNetwork $+ .
       }
       ; they quit...
       if (%seenaction == quit) { 
@@ -91,47 +91,47 @@ On 1:TEXT:.seen *:#:{
         .set -u5 %quitchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %quitmessage $readini seen\ $+ $2 $+ .ini %seennick Message
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 quit %quitchannel with the message ( %quitmessage ) $duration($calc($ctime - %quittime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 quit %quitchannel with the message ( %quitmessage ) $duration($calc($ctime - %quittime)) ago on %theNetwork $+ .
       }
       ; they were kicked...
       if (%seenaction == kick) { 
         .set -u5 %kicktime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %kickchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 was kicked from %kickchannel $duration($calc($ctime - %kicktime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 was kicked from %kickchannel $duration($calc($ctime - %kicktime)) ago on %theNetwork $+ .
       }
       ; they changed nickname...
       if (%seenaction == nick) { 
         .set -u5 %nicktime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %nicknew $readini seen\ $+ $2 $+ .ini %seennick Nick
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 changed his nick to %nicknew $duration($calc($ctime - %nicktime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 changed his nick to %nicknew $duration($calc($ctime - %nicktime)) ago on %theNetwork $+ .
       }
       ; they said something...
       if (%seenaction == text) { 
         .set -u5 %texttime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %textchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 said something on %textchannel $duration($calc($ctime - %texttime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 said something on %textchannel $duration($calc($ctime - %texttime)) ago on %theNetwork $+ .
       } 
       ; they did was an action...
       if (%seenaction == action) { 
         .set -u5 %actiontime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %actionchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 did an action in %actionchannel $duration($calc($ctime - %actiontime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 did an action in %actionchannel $duration($calc($ctime - %actiontime)) ago on %theNetwork $+ .
       }
       ; they came online...
       if (%seenaction == notify) { 
         .set -u5 %texttime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 came online $duration($calc($ctime - %texttime),2) ago on %theNetwork $+ .
+        /msg $chan $nick $+ , $2 came online $duration($calc($ctime - %texttime)) ago on %theNetwork $+ .
       } 
       ; they went offline...
       if (%seenaction == unotify) { 
         .set -u5 %actiontime $readini seen\ $+ $2 $+ .ini %seennick Time
         .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
-        /msg $chan $nick $+ , $2 appears to have gone offline at $duration($calc($ctime - %actiontime),2) from %theNetwork $+ .
+        /msg $chan $nick $+ , $2 appears to have gone offline at $duration($calc($ctime - %actiontime)) from %theNetwork $+ .
       }
     }
   }
