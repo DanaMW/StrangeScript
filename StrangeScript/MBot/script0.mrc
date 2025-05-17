@@ -17,6 +17,10 @@ alias mygo  {
   return
 }
 on 1:CONNECT:{
+  if ($network == UnderNet) { 
+    msg X@channels.undernet.org LOGIN %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ]
+    mode $me +x
+  }
   auto.join
   join.setup
   timerBOSSSET $+ $network 1 30 Check.Boss %boss. [ $+ [ $network ] ]
@@ -24,7 +28,7 @@ on 1:CONNECT:{
   ;  if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
   ;  if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }
   ;}
-  ;if (%irc.oper.nick. [ $+ [ $network ] ] != $null) && (%irc.oper.pass. [ $+ [ $network ] ] != $null) { .timerOPER 1 60 oper %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ] }
+  ;if (%irc.oper.nick. [ $+ [ $network ] ] != $null) && (%irc.oper.pass. [ $+ [ $network ] ] != $null) { .timerOPER 1 60 oper %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] }
   halt
 }
 on 1:DISCONNECT:{
