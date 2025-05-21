@@ -271,7 +271,7 @@ on *:TEXT:*:#: {
         else { $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ]) }
         halt
       }
-      = NOT) || if ($2 == NOTE) || if ($2 == NOTi) || ($2 == NOTICE) {
+      if ($2 == NOT) || if ($2 == NOTE) || if ($2 == NOTi) || ($2 == NOTICE) {
         set %display. [ $+ [ $network ] ] NOTICE
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
@@ -295,7 +295,6 @@ on *:TEXT:*:#: {
         else { $point $report(Display,$null,Use:,.display hex ON/OFF) }
       }
     }
-
     ;#.displayuser Format: .displayuser [OFF/CHAN/NOTICE] (Sets the bot user reply channel/notice). Left blank it shows it's current state.)
     if ($strip($1) == .displayuser) {
       ;if ($nick != %boss. [ $+ [ $network ] ]) { halt }
@@ -582,7 +581,7 @@ on *:TEXT:*:#: {
     }
     ;#.unoper Format: .unoper (makes the bot send /Unoper to the server. Works only if supprted.)
     if ($strip($1) == .unoper) { if ($2 == $null) { .raw unoper | halt } }
-    ;#.part Format: .part [-a|ALL|<channel>] (Parts current or given channel.)
+    ;#.part Format: .part [-a|ALL|<channel>] (Parts current, all, or given channel.)
     if ($strip($1) == .part) {
       if ($2 == $null) { part # I'm out | halt }
       if ($2 != $null) {
@@ -594,7 +593,7 @@ on *:TEXT:*:#: {
         halt
       }
     }
-    ;#.ping Format: .ping [<nick|channel>] (Pings you, nick or channel. )
+    ;#.ping Format: .ping [<nick|channel>] (Pings you, nick, or channel. )
     if ($strip($1) == .ping) {
       if ($2 == $null) { 
         set %ping.chan #
@@ -687,6 +686,7 @@ on *:TEXT:*:#: {
       if ($network == Libera.Chat) { server irc.Libera.Chat | return }
       if ($network == Rizon) { server irc.rizon.net | return }
       if ($network == UnderNet) { server us.undernet.org | return }
+      if ($network == DeepNet) { server 192.168.0.4 | return }
       else { server $server | return }
       halt
     }

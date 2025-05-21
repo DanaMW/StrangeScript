@@ -100,3 +100,24 @@ on *:NOTIFY: {
 on *:UNOTIFY: {
   notice %boss. [ $+ [ $network ] ] $report(NoteOff,$null,We seem to have lost $nick from,$network)
 }
+on *:text:8ball*:#: { 
+  if ($key(settings,8ball) != off) {
+    if ($2 == $null) { msg # $report(You need to ask a yes or no question. Example: 8ball Am i cool?) | halt }
+    if ($2 != $null) {
+      msg # $report(8ball,$null,$null,$2-)
+      msg # $report($read($Textdir $+ 8ball.txt))
+      halt
+    }
+  }
+}
+alias 8 {
+  if ($key(settings,8ball) == off) && ($nick != $null) { $report(The 8ball is disabled).active | return }
+  if ($1 == $null) && ($nick == $null) { msg # $report(You need to ask a yes or no question. Example: 8ball am i cool?) | return }
+  if ($1 == $null) && ($nick != $null) { $report(You need to ask a yes or no question. Example: 8ball am i cool?).active | return }
+  if ($nick == $null) { $report(8ball,$null,$null,$1-).active | $report($read($Textdir $+ 8ball.txt)).active }
+  if ($nick != $null) { msg # $lowcol $+ $read($Textdir $+ 8ball.txt) }
+  else { 
+    if ($nick != $null) { notice $nick $report(The 8ball is disabled).active | return }
+    if ($nick == $null) { msg # $report(The 8ball is disabled) | return }
+  }
+}

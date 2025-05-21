@@ -2,13 +2,13 @@
 ut1 return 2
 ;
 ;Minor version (xx)
-ut2 return 95
+ut2 return 97
 ;
 ;month (xx)
 ut3 return 05
 ;
 ;day (xx)
-ut4 return 17
+ut4 return 21
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -124,7 +124,7 @@ Check.Serv.Log {
 /check.boss {
   notice %boss. [ $+ [ $network ] ] $report(Boss,$null,Checking/Repairing the Boss keys and settings.)
   ;if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | notice %boss. [ $+ [ $network ] ] $report(Boss,$null,You better hope you're you.) }
-  if (%boss. [ $+ [ $network ] ] == $null) { notice %boss. [ $+ [ $network ] ] $report(Check.Boss,Error,CB variable is null,Line 72 alias) | halt }
+  if (%boss. [ $+ [ $network ] ] == $null) { notice %boss. [ $+ [ $network ] ] $report(Check.Boss,Error,CB variable is null,Line 127 alias) | halt }
   notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
   ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
   auser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
