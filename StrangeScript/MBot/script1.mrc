@@ -15,6 +15,7 @@ alias point {
   halt
 }
 alias pointer {
+  if (%display. [ $+ [ $network ] ] == OFF) { halt }
   if (%display.user. [ $+ [ $network ] ] == CHAN) {
     if ($chan == $null) { return notice $nick }
     if ($chan != $null) { return msg $chan }
@@ -114,23 +115,27 @@ on *:TEXT:*:#: {
     }
     ;#.aj Format: .aj (Joins all set .autojoin rooms.)
     if ($strip($1) == .AJ) { .raw join : $+ %autojoin.rooms. [ $+ [ $network ] ] | $point $report(AutoJoin All,$null,Joined,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
-    ;#.sop Format: .SOP <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto owner settings.)
-    ;#.aop Format: .AOP <#room> <-A/ADD|-D/DEL|-L/LIST)|-W/WIPE> [<nick>] (Configures the join auto ops settings.)
-    ;#.hop Format: .HOP <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto half ops settings.)
-    if ($strip($1) == .SOP) || ($strip($1) == .AOP) || ($strip($1) == .HOP) {
+    ;#.sop Format: .sop <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto owner settings.)
+    ;#.aop Format: .aop <#room> <-A/ADD|-D/DEL|-L/LIST)|-W/WIPE> [<nick>] (Configures the join auto ops settings.)
+    ;#.hop Format: .hop <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>] (Configures the join auto half ops settings.)
+    if ($strip($1) == .sop) || ($strip($1) == .aop) || ($strip($1) == .hop) {
       if ($2 == $null) { $point $report(UP,$null,Format: $upper($1) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> [<nick>]) | halt }
       UP.Service # $remove($strip($1-),.)
       halt
     }
     ;#.autoop Format: .autoop <ON|OFF> (For the Network you are on)
-    if ($strip($1) == .AUTOOP) {
+    if ($strip($1) == .autoop) {
       if ($2 == $null) { if (%AutoOp. [ $+ [ $network ] ] == $null) { set %AutoOp. [ $+ [ $network ] ] OFF } | $point $report(AutoOp,$null,$network,%AutoOp. [ $+ [  $network ] ]) }
       if ($2 == ON) { set %AutoOp. [ $+ [ $network ] ] ON | $point $report(AutoOp,$null,$network,%AutoOp. [ $+ [ $network ] ]) }
       if ($2 == OFF) { set %AutoOp. [ $+ [ $network ] ] OFF | $point $report(AutoOp,$null,$network,%AutoOp. [ $+ [ $network ] ]) }
     }
     ;#.autojoin Format: .autojoin <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST|-C/CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from currently joined rooms.)
-    if ($strip($1) == .AUTOJOIN) {
-      if ($2 == $null) { $point Format: .autojoin <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST|-C/CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from currently joined rooms.) | halt }
+    if ($strip($1) == .autojoin) {
+      if ($2 == $null) {
+        $point Format: .autojoin <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST|-C/CREATE> [#room] (Configures the autojoin for the bot. Or creates aj from currently joined rooms.)
+        $point $report(AutoJoin,for,$network,is currently,%do.autojoin. [ $+ [ $network ] ])
+        halt
+      }
       if ($2 == -S) || ($2 == SHOW) { $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
       if ($2 == -L) || ($2 == LIST) { $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
       if ($2 == -A) || ($2 == ADD) {
@@ -153,7 +158,7 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.autostart Format: .autostart <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST> (Configures the autostart servers for the bot to join on start.)
-    if ($strip($1) == .AUTOSTART) {
+    if ($strip($1) == .autostart) {
       if ($2 == $null) { $point Format: .autostart <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST> (Configures the autostart servers for the bot to join on start.) | halt }
       if ($2 == ON) { set %autostart.A ON | $point $report(AutoStart,$null,Current,%autostart.A) | halt }
       if ($2 == OFF) { set %autostart.A OFF | $point $report(AutoStart,$null,Current,%autostart.A) | halt }
@@ -357,6 +362,25 @@ on *:TEXT:*:#: {
         halt
       }
     }
+    ;#.extra Format: .extra <ON|OFF> (Turns verbos information on or off.)
+    if ($strip($1) == .extra) {
+      if ($2 == $null) {
+        $point Format: .extra <ON|OFF> (Turns verbos information on or off.)
+        $point $report(Extra,$null,is set,%extra. [ $+ [ $network ] ])
+        halt
+      }
+      if ($2 == ON) {
+        set %extra. [ $+ [ $network ] ] ON
+        $point $report(Extra,$null,is set,%extra. [ $+ [ $network ] ])
+        halt
+      }
+      if ($2 == OFF) {
+        set %extra. [ $+ [ $network ] ] OFF
+        $point $report(Extra,$null,is set,%extra. [ $+ [ $network ] ])
+        halt
+      }
+      halt
+    }
     ;#.gen Format: .gen <#room> (Generates stats for the given room.)
     if ($strip($1) == .gen) {
       if ($2 == $null) { $point Format: .gen <#room> (Generates stats for the given room.) }
@@ -379,8 +403,11 @@ on *:TEXT:*:#: {
       quit.Pick $2-
       halt
     }
-    ;#.heel Format: .heel (Makes the bot deop itself.)
-    if ($strip($1) == .heel) { .raw mode # -o $me | halt }
+    ;#.heel Format: .heel <#room> (Makes the bot deop itself.)
+    if ($strip($1) == .heel) {
+      if ($2 == $null) { .raw mode # -o $me | halt }
+      if ($2 != $null) { .raw mode $2 -o $me | halt }
+    }
     ;#.ident Format: .ident  (Makes the bot identify to chanserv using saved password.)
     ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
     if ($strip($1) == .identify) || ($strip($1) == .ident) { 
@@ -462,7 +489,7 @@ on *:TEXT:*:#: {
     }
     ;#.server Format: .server <server address:port> (Makes the bot login to <server address:port>.)
     if ($strip($1) == .server) {
-      ;if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+      if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       if ($2 == $null) {
         $point $report(Server,Error,You need to include the server address.)
         $point $report(Server,$null,server <-m> <valid.server.address>)
@@ -908,12 +935,19 @@ on *:TEXT:*:#: {
       halt
     }
     ;#.you Format: .you <nick> (causes the bot to take the given nick.)
-    if ($strip($1) == .you) { .nick $2 | halt }
-    if ($strip($1) == drop) && ($2 == dead) {
-      $point $report(Exit,$null,$null,Done)
-      .exit
+    if ($strip($1) == .you) {
+      if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+      nick $2
       halt
     }
+    ;#drop dead Format: drop dead (causes the bot to exit all servers, exit the software, and quit completely.)
+    if ($strip($1) == drop) && ($2 == dead) {
+      if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+      $point $report(Exit,$null,$null,Done)
+      exit
+      halt
+    }
+    ;#go away Format: go away (causes the bot to exit all servers, exit the software, and quit completely.)
     if ($strip($1) == go) && ($2 == away) { msg # Fine then. | .part # pffft | timer $+ $rand(1,99) 1 30 join # | halt }
     if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 :Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
     ;#.setvar Format: .setvar <variable> <value>/CLEAR (allows you to create, set, change, or clear a variable.)
@@ -1031,7 +1065,7 @@ raw 433:*:{
   if (timer(RECOV. [ $+ [ $network ] ]) != $null) {
     if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
     if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
-    if ($network != UnderNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
+    if ($network != UnderNet) && ($network != DeepNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
     ;assimilate 
   }
   halt

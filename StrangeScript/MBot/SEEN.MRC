@@ -7,6 +7,7 @@
 ;;;;;;;;;;;;      ;;;;;;;;;;;;;;
 ;          ;;;;;;;;
 ;
+;--- Needs LOTS  of works
 ;-----------------------------------------------------
 ;--- Please submit working changes for inclusion. ----
 ;-----------------------------------------------------
@@ -15,13 +16,13 @@
 alias uu1 return 0
 ;
 ;Minor version (xx)
-alias uu2 return 14
+alias uu2 return 15
 ;
 ;month (xx)
 alias uu3 return 05
 ;
 ;day (xx)
-alias uu4 return 10
+alias uu4 return 25
 ;
 ;year (xxxx)
 alias uu5 return 2025
@@ -29,9 +30,7 @@ alias uu5 return 2025
 alias seenver return { $uu1 $+ . $+ $uu2 }
 alias seenverfull return { $uu1 $+ . $+ $uu2 $+ . $+ $uu3 $+ . $+ $uu4 $+ . $+ $uu5 }
 ;
-On 1:TEXT:.seen:#:{
-  msg $chan $nick $+ , there are $findfile($mircdir\seen,*.*,0) seen records in my database. Please refine your search.
-}
+On 1:TEXT:.seen:#:{ msg $chan $nick $+ , there are $findfile($mircdir\seen,*.*,0) seen records in my database. Please refine your search. }
 On 1:TEXT:Suggest seen *:#:{
   set %SugSeen102 * $+ $3 $+ *.*
   .timer 1 1 /notice $nick Based on your search, I would suggest you are looking for one of the following nicknames:
@@ -166,7 +165,7 @@ On 1:QUIT:{
   else { .set %seennick $nick }
   .remini seen\ $+ $nick $+ .ini %seennick
   .writeini seen\ $+ $nick $+ .ini %seennick Action quit
-  .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan
+  if ($chan != $null) { .writeini seen\ $+ $nick $+ .ini %seennick Channel $chan }
   .writeini seen\ $+ $nick $+ .ini %seennick Time $ctime
   .writeini seen\ $+ $nick $+ .ini %seennick Message $1-
   .writeini seen\ $+ $nick $+ .ini %seennick Network $network

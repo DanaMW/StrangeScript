@@ -1,14 +1,14 @@
 ;Major version  (xx)
-ut1 return 2
+ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 97
+ut2 return 03
 ;
 ;month (xx)
-ut3 return 05
+ut3 return 08
 ;
 ;day (xx)
-ut4 return 21
+ut4 return 02
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -316,8 +316,6 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   unset %mass %mass1 %mass2
 }
 /auto.join {
-  .raw mode $me +i
-  if (%do.autojoin. [ $+ [ $network ] ] == OFF) { return }
   var %tmp.oo = 1
   while (%tmp.oo <= $numtok(%autojoin.rooms. [ $+ [ $network ] ],44)) {
     .raw join $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) %owner. [ $+ [ $gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.oo,44) ] ]

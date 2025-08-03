@@ -17,25 +17,27 @@ alias mygo  {
   return
 }
 on 1:CONNECT:{
-  if ($network == UnderNet) { 
-    msg X@channels.undernet.org LOGIN %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ]
-    mode $me +x
-  }
-  auto.join
+  if ($network == UnderNet) { if (%irc.oper.nick. [ $+ [ $network ] ] != $null) { msg X@channels.undernet.org LOGIN %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ] } }
+  if ($network == DeepNet) { if (%irc.oper.nick. [ $+ [ $network ] ] != $null) { msg X@channels.Deep.org LOGIN %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ] } }
+  .raw mode $me +i 
+  ;if ($network == UnderNet) || ($network == Deepnet) { .raw mode $me +x }
+  if (%do.autojoin. [ $+ [ $network ] ] == $null) { set %do.autojoin. [ $+ [ $network ] ] OFF }
+  if (%do.autojoin. [ $+ [ $network ] ] == ON) { auto.join }
   join.setup
   timerBOSSSET $+ $network 1 30 Check.Boss %boss. [ $+ [ $network ] ]
+  ; below is for mailing the log setup. needs work like a lot of shit.
   ;if ($nopath($mircini) == SSC1.mrc) {
   ;  if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
   ;  if (%mail.run == ON) { .timerMAIL 0 120 mail #COS }
   ;}
+  ; below is where i am going to add the oper stuff for us.
   ;if (%irc.oper.nick. [ $+ [ $network ] ] != $null) && (%irc.oper.pass. [ $+ [ $network ] ] != $null) { .timerOPER 1 60 oper %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] }
-  halt
 }
 on 1:DISCONNECT:{
   if (%reconnect. [ $+ [ $network ] ] == ON) {
     unset %connected. [ $+ [ $network ] ]
     unset %connserv. [ $+ [ $network ] ]
-    beep | beep
+    beep
     server $network
     return
   }
@@ -48,7 +50,8 @@ on 1:DISCONNECT:{
 ;on 1:DCCSERVER:CHAT: halt
 ;on 1:DCCSERVER:SEND: halt
 on 1:DCCSERVER:FSERVE: halt
-on *:INVITE:#:{
+on ^*:INVITE:#:{
+  haltdef
   if ($nick == %boss. [ $+ [ $network ] ]) { .raw join $chan %owner. [ $+ [ $chan ] ] | halt }
   if ($nick == ChanServ) { .raw join $chan %owner. [ $+ [ $chan ] ] | halt }
   .ignore -u120 $nick
@@ -57,11 +60,10 @@ on *:INVITE:#:{
 on *:SNOTICE:*:{
   if (*quote PASS* iswm $1-) { quote pass %BNC.pass }
   if (*quote conn* iswm $1-) { quote conn %BNC.server }
-  .privmsg %boss. [ $+ [ $network ] ] ServerNotice: $1-
-  ;.notice %boss. [ $+ [ $network ] ] ServerNotice: $1-
+  if (%extra. [ $+ [ $network ] ] == ON) { .privmsg %boss. [ $+ [ $network ] ] ServerNotice: $1- }
 }
 on *:NOTICE:*:*:{
-  .notice %boss. [ $+ [ $network ] ] $report(Notice@ $+ $nick) $+ : $report($null,$null,$1-)
+  if (%extra. [ $+ [ $network ] ] == ON) { .notice %boss. [ $+ [ $network ] ] $report(Notice@ $+ $nick) $+ : $report($null,$null,$1-) }
   if ($nick == NickServ) && (IDENTIFY isin $1-) { 
     if (*dal.net iswm $server) {
       if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
@@ -89,6 +91,8 @@ on *:JOIN:#: {
     ;if ($network == dalnet) { .chanserv op # $me }
     ;else { .msg chanserv op # $me }
     if (%doautojoin == SPEED) { .prop # OWNERKEY %owner. [ $+ [ # ] ] $+ $cr $+ mode # +nts }
+    ;---------------[ Rizon ]--------------------
+    if ($network == Rizon) { .timerFixJoin $+ $network 1 90 /aj }
   }
   if ($level($address(%boss. [ $+ [ $network ] ],4)) == 4) { 
     if ($nick(#,$me,q) != $null) { .mode # +q $nick }
