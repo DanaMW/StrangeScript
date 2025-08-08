@@ -270,13 +270,13 @@ on *:TEXT:*:#: {
         halt
       }
       if ($2 == OFF) { set %display. [ $+ [ $network ] ] OFF | halt }
-      if ($2 == CHAN) {
+      if ($2 == CHAN) || ($2 == CHANNEL) {
         set %display. [ $+ [ $network ] ] CHAN
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is set to,%display. [ $+ [ $network ] ]) }
         halt
       }
-      if ($2 == NOT) || if ($2 == NOTE) || if ($2 == NOTi) || ($2 == NOTICE) {
+      if ($2 == NOT) || ($2 == NOTE) || ($2 == NOTI) || ($2 == NOTICE) {
         set %display. [ $+ [ $network ] ] NOTICE
         if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
         else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
@@ -1056,8 +1056,49 @@ on *:TEXT:*:#: {
       $point $report(X Login,$null,Complete)
     }
   }
-  ;#.notify Format: .notify [-A|ADD|D|L]<ON|OFF|nickname> [note] (Adds/Removes a user from the notify list.)
-  if ($strip($1) == .notify) { if ($2 != $null) { notify $2- | halt } }
+  ;#.notify Format: .notify [-A/ADD|-D/Del|-L/LIST]<ON|OFF|nickname> [note] (Adds/Removes a user from the notify list.)
+  if ($strip($1) == .notify) {
+    if ($2 == $null) { $point $report(Format: .notify [-A/ADD|-D/Del|-L/LIST]<ON|OFF|nickname> [note] (Adds/Removes a user from the notify list.)) | halt }
+    if ($2 != $null) {
+      if ($2 == -A) || ($2 == ADD) {
+        if ($3 != $null) { .notify $3 $4 }
+        $point $report(Notify,$null,Add,$3,$4)
+        halt
+      }
+      if ($2 == -D) || ($2 == DEL) {
+        if ($3 != $null) { .notify -r $3 }
+        $point $report(Notify,$null,Delete,$3)
+        halt
+      }
+      if ($2 == -L) || ($2 == LIST) {
+        ;$point $report(Notify,$null,%tmp.Note.1,in the notify list)
+        $point $report($chain(5)) $report(Notify) $report($chain(5))
+        var %tmp.Note.1 = 1
+        while (%tmp.Note.1 <= $notify(0)) {
+          $point $report(Notify,$null,%tmp.Note.1,$notify(%tmp.Note.1))
+          inc %tmp.Note.1
+          if (%tmp.Note.1 > $notify(0)) { break }
+        }
+        halt
+      }
+      if ($2 == ON) {
+        .notify on
+        $point $report(Notify,$null,Set,On)
+        halt
+      }
+      if ($2 == OFF) {
+        .notify off
+        $point $report(Notify,$null,Set,Off)
+        halt
+      }
+      else { 
+        notify $2-
+        $point $report(Notify,$null,$null,$null,$2-)
+      }
+      halt
+      ;Properties: ison, note, sound, sound2, whois, addr, network
+    }
+  }
 }
 ;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss. [ $+ [ $network ] ] $upper($2) $3- } }
 raw 433:*:{

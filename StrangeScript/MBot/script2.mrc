@@ -95,10 +95,12 @@ on 1:SOCKCLOSE:Spy*:{
   if ($sockname == SpyCHAT) { .timer 1 1 sockopen SpyCHAT irc.chatnet.org 6667 | notice %boss. [ $+ [ $network ] ] $report(ServerSpy,ON,CHAT) }
 }
 on *:NOTIFY: {
-  notice %boss. [ $+ [ $network ] ] $report(NoteOn,$null,$nick graced us with his presence on,$network)
+  $point $report(NoteOn,$null,$nick graced us with his presence on,$network)
+  ;notice %boss. [ $+ [ $network ] ] $report(NoteOn,$null,$nick graced us with his presence on,$network)
 }
 on *:UNOTIFY: {
-  notice %boss. [ $+ [ $network ] ] $report(NoteOff,$null,We seem to have lost $nick from,$network)
+  $point $report(NoteOff,$null,We seem to have lost $nick from,$network)
+  ;notice %boss. [ $+ [ $network ] ] $report(NoteOff,$null,We seem to have lost $nick from,$network)
 }
 on 1:text:8ball*:#: { 
   if (%8ball.Running  == ON) {
