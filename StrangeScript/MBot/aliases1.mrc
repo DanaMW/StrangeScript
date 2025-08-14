@@ -362,8 +362,9 @@ lcr {
   }
   else {
     if ($1 == 0) {
-      ;$point $report($null,$null,Quiting all servers.)
-      $point $report(Not written yet)
+      $point $report(Quiting all servers,$null,Zeroed Out)
+      exit
+      halt
     }
     else {
       ;$point $report(Quiting,$null,$scon($1).network)
