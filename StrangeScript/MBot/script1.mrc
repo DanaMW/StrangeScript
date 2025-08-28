@@ -736,7 +736,7 @@ on *:TEXT:*:#: {
     }
   }
   ;#.shit Format: .shit [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
-  ;#.shit Format: .shitlist [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
+  ;#.shitlist Format: .shitlist [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP> (manages the shitlist)
   if ($strip($1) == .shit) || ($strip($1) == .shitlist) {
     if ($2 == $null) { $point $report(Format,$null,.shit [ON|OFF|-A/ADD|-D/DEL/DELETE|-C/CLEAR|-L/LIST|-S/SHOW] <NICK/IP>) | halt }
     if ($2 == ON) { set %shitlist.Do. [ $+ [ $network ] ] ON | $point $report(ShitList,$null,Is Set,%shitlist.Do. [ $+ [ $network ] ]) | halt }
@@ -860,7 +860,7 @@ on *:TEXT:*:#: {
   }
   ;#.stop Format: .stop (stops a .pound)
   if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-  ;#.talk Format: .talk [ON|OFF|-A|ALL|*] <#room> (Turns Interactive Speach on-------------******************************************* or off for the room you are in or <#room> and gives basic info. )
+  ;#.talk Format: .talk [ON|OFF|-A|ALL|*] <#room> (Turns Interactive Speach on or off for the room you are in or <#room> and gives basic info. )
   if ($nick != %boss. [ $+ [ $network ] ]) { halt }
   if ($strip($1) == .talk) {
     if ($2 == -a) || ($2 == ALL) || ($2 == $chr(42)) {
@@ -898,14 +898,14 @@ on *:TEXT:*:#: {
         }
         halt
       }
-      if ($numtok(%talk.room. [ $+ [ $network ] ],44) > 0) {
-        $point $report(Let's have a look...)
-        if (# isin %talk.room. [ $+ [ $network ] ]) { $point $report(Interactive Speach is active in this and $calc($numtok(%talk.room. [ $+ [ $network ] ],44) - 1) other room(s).) }
-      }
-      else {
-        if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 1) { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) room but not this one.) }
-        else { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) rooms but not this one.) }
-      }
+    }
+    if ($numtok(%talk.room. [ $+ [ $network ] ],44) > 0) {
+      $point $report(Let's have a look...)
+      if (# isin %talk.room. [ $+ [ $network ] ]) { $point $report(Interactive Speach is active in this and $calc($numtok(%talk.room. [ $+ [ $network ] ],44) - 1) other room(s).) }
+    }
+    else {
+      if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 1) { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) room but not this one.) }
+      else { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) rooms but not this one.) }
     }
     if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 0) { $point $report(Interactive Speach is not active on this server.) }
     halt
@@ -1000,7 +1000,7 @@ on *:TEXT:*:#: {
   }
   ;#.spawn Format: .spawn # (.)
   if ($strip($1) == .spawn) {
-    $point $report(Spawn,Error,The Information Utility is not yet configured)
+    $point $report(Spawn,Error,Spawn Hold On Line 1003-1004)
     halt
   }
   if ($left($strip($1-),1) == >) { SSPy $1- }
