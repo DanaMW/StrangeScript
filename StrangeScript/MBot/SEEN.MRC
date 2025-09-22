@@ -16,17 +16,20 @@
 alias uu1 return 0
 ;
 ;Minor version (xx)
-alias uu2 return 15
+alias uu2 return 16
 ;
 ;month (xx)
-alias uu3 return 05
+alias uu3 return 09
 ;
 ;day (xx)
-alias uu4 return 25
+alias uu4 return 22
 ;
 ;year (xxxx)
 alias uu5 return 2025
 ;-----------------------------------------------------
+; !seen .seen $1-
+; .lastseen .seen $1-
+; !lastseen .seen $1-
 alias seenver return { $uu1 $+ . $+ $uu2 }
 alias seenverfull return { $uu1 $+ . $+ $uu2 $+ . $+ $uu3 $+ . $+ $uu4 $+ . $+ $uu5 }
 ;
@@ -42,6 +45,101 @@ On 1:TEXT:Suggest seen *:#:{
   .timer 1 13 /notice $nick You can refine your search even more by supplying a better query. For example, *TAR* instead of *AR*
 }
 On 1:TEXT:.seen *:#:{
+  ; if the guy is looking for u
+  if ($chr(42) isin $2) {
+    set %Seen102 * $+ $2 $+ *.*
+    msg $chan 4 $nick $+ , there are $findfile($mircdir\seen,%Seen102,0) matching records in my database. To list them, type: suggest seen $2 
+  }
+  elseif ($2 == $me) { 
+    /msg $chan $2 is running successfully. 
+    .goto end 
+  }
+  ; Self search...
+  elseif ($2 == $nick) { 
+    /msg $chan $nick $+ , you do realise this is a computer don't you? 
+    .goto end 
+  } 
+  ; Searched person already on the channel...
+  elseif ($2 ison $chan) { 
+    /msg $chan $nick $+ , $2- is online in $chan on $network $+ .
+    .goto end 
+  }
+  ; else u can always check the ini files :D
+  else { 
+    if (($right($2,1) == ]) || ($left($2,1) == [)) { .set %seennick $replace($2,[,@) | .set %seennick $replace(%seennick,],~) }
+    else { .set %seennick $2 }
+    ; [ this are going to change @ and ] to ~
+    :inifile {
+      ; if he's not in the ini files...
+      .set -u5 %seenaction $readini seen\ $+ $2 $+ .ini %seennick Action
+      if (%seenaction == $null) { /msg $chan Sorry $nick $+ , i haven't seen $2- around }
+      ; they joined a channel...
+      if (%seenaction == join) { 
+        .set -u5 %jointime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %joinchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2- joined %joinchannel $duration($calc($ctime - %jointime)) ago on %theNetwork $+ .
+      }
+      ; they departed a channel...
+      if (%seenaction == part) { 
+        .set -u5 %parttime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %partchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 parted %partchannel $duration($calc($ctime - %parttime)) ago on %theNetwork $+ .
+      }
+      ; they quit...
+      if (%seenaction == quit) { 
+        .set -u5 %quittime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %quitchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        .set -u5 %quitmessage $readini seen\ $+ $2 $+ .ini %seennick Message
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 quit %quitchannel with the message ( %quitmessage ) $duration($calc($ctime - %quittime)) ago on %theNetwork $+ .
+      }
+      ; they were kicked...
+      if (%seenaction == kick) { 
+        .set -u5 %kicktime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %kickchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 was kicked from %kickchannel $duration($calc($ctime - %kicktime)) ago on %theNetwork $+ .
+      }
+      ; they changed nickname...
+      if (%seenaction == nick) { 
+        .set -u5 %nicktime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %nicknew $readini seen\ $+ $2 $+ .ini %seennick Nick
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 changed his nick to %nicknew $duration($calc($ctime - %nicktime)) ago on %theNetwork $+ .
+      }
+      ; they said something...
+      if (%seenaction == text) { 
+        .set -u5 %texttime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %textchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 said something on %textchannel $duration($calc($ctime - %texttime)) ago on %theNetwork $+ .
+      } 
+      ; they did was an action...
+      if (%seenaction == action) { 
+        .set -u5 %actiontime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %actionchannel $readini seen\ $+ $2 $+ .ini %seennick Channel
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 did an action in %actionchannel $duration($calc($ctime - %actiontime)) ago on %theNetwork $+ .
+      }
+      ; they came online...
+      if (%seenaction == notify) { 
+        .set -u5 %texttime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 came online $duration($calc($ctime - %texttime)) ago on %theNetwork $+ .
+      } 
+      ; they went offline...
+      if (%seenaction == unotify) { 
+        .set -u5 %actiontime $readini seen\ $+ $2 $+ .ini %seennick Time
+        .set -u5 %theNetwork $readini seen\ $+ $2 $+ .ini %seennick Network
+        /msg $chan $nick $+ , $2 appears to have gone offline at $duration($calc($ctime - %actiontime)) from %theNetwork $+ .
+      }
+    }
+  }
+  :end
+}
+On 1:TEXT:.lastseen *:#:{
   ; if the guy is looking for u
   if ($chr(42) isin $2) {
     set %Seen102 * $+ $2 $+ *.*

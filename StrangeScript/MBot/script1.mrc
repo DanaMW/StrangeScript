@@ -483,8 +483,8 @@ on *:TEXT:*:#: {
     halt
   }
   ;#.server Format: .server <server address:port> (Makes the bot login to <server address:port>.)
-  if (97$strip($1) == .server) {
-    if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+  if ($strip($1) == .server) {
+    ;if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     if ($2 == $null) {
       $point $report(Server,Error,You need to include the server address.)
       $point $report(Server,$null,server <-m> <valid.server.address>)
