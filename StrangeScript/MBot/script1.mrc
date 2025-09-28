@@ -924,10 +924,35 @@ on *:TEXT:*:#: {
   }
   ;#.ver Format: .ver (returns bot version.)
   if ($strip($1) == .ver) {
-    $point $ver
-    $point Using mIRC $version
-    if ($seenver != $null) { $point Using Seen+ $seenver }
-    halt
+    if ($nick == %boss. [ $+ [ $network ] ]) { $point Hi Boss }
+    if ($2 == $null) {
+      $point $ver
+      $point Using mIRC $version
+      if ($seenver != $null) { $point Using Seen+ $seenver }
+      halt
+    }
+    if ($2 == FULL) {
+      $point $ver
+      $point Using mIRC $version
+      if ($seenver != $null) { $point Using Seen+ $seenver }
+      Set %temp1al $alias(0)
+      set %ticker 1
+      while (%ticker <= %temp1al) {
+        $point $nopath($alias(%ticker))
+        inc %ticker
+        if (%ticker > %temp1al) { break }
+      }
+      set %temp1sc $script(0)
+      set %ticker 1
+      while (%ticker <= %temp1sc) {
+        $point $nopath($script(%ticker))
+        inc %ticker
+        if (%ticker > %temp1sc) { break }
+      }
+      unset %temp1al %temp1sc %ticker
+      $point Done.
+      halt
+    }
   }
   ;#.you Format: .you <nick> (causes the bot to take the given nick.)
   if ($strip($1) == .you) {
@@ -943,7 +968,7 @@ on *:TEXT:*:#: {
     halt
   }
   ;#go away Format: go away (causes the bot to exit all servers, exit the software, and quit completely.)
-  if ($strip($1) == go) && ($2 == away) { msg # Fine then. | .part # pffft | timer $+ $rand(1,99) 1 30 join # | halt }
+  if ($strip($1) == go) && ($2 == away) { set %verytmp # | msg # Fine then. | .part # pffft | timer $+ $rand(1,99) 1 30 join %verytmp | unset %verytmp | halt }
   if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 :Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
   ;#.setvar Format: .setvar <variable> <value>/CLEAR (allows you to create, set, change, or clear a variable.)
   if ($strip($1) == .setvar) {

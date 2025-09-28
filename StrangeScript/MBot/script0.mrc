@@ -1,3 +1,8 @@
+;;;
+;;;   MasterBot(MBot)[For StrangeScript]
+;;;   Version Kept in Alias files.
+;;;   Please submit working changes for inclusion. Thanks.
+;;;
 ;raw  *:*:{ $report($event,$rawmsg).active }
 on 1:WALLOPS:*killed by System*:{ notice %boss. [ $+ [ $network ] ] $1- | echo -st $1- }
 on 1:START: { mygo }
