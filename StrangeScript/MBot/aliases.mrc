@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 14
+ut2 return 15
 ;
 ;month (xx)
-ut3 return 09
+ut3 return 10
 ;
 ;day (xx)
-ut4 return 27
+ut4 return 06
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -356,8 +356,8 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   reset
   if ($group(#DoCommand) == on) { .disable #DoCommand }
   .timerbar 0 1 mybar
-  lagset 15
-  lagon
+  if (%Lag.mrc.secs. [ $+ [ $network ] ] == $null) { lagset 15 }
+  if (%Lag.check. [ $+ [ $network ] ] == ON) { lagon }
   set %LM.editor OFF
   return
 }
