@@ -860,55 +860,41 @@ on *:TEXT:*:#: {
   }
   ;#.stop Format: .stop (stops a .pound)
   if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-  ;#.talk Format: .talk [ON|OFF|-A|ALL|*] <#room> (Turns Interactive Speach on or off for the room you are in or <#room> and gives basic info. )
+  ;#.talk Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST] <#room> (Controls Interactive Speach for the given <#room>.)
   if ($nick != %boss. [ $+ [ $network ] ]) { halt }
   if ($strip($1) == .talk) {
-    if ($2 == -a) || ($2 == ALL) || ($2 == $chr(42)) {
-      set %tmp.talk1 $numtok(%talk.room. [ $+ [ $network ] ],44)
-      var %tmp.talk2 = 1
-      $point $report(Interactive Speach,$null,Enabled in...)
-      while (%tmp.talk2 <= %tmp.talk1) {
-        $point $report(%tmp.talk2,$gettok(%talk.room. [ $+ [ $network ] ],%tmp.talk2,44))
-        inc %tmp.talk2
-        if (%tmp.talk2 > %tmp.talk1) { break }
-      }
-      $point $report(Interactive Speach,$null,Finished)
-      halt
-    }
+    if ($2 == -H) { $point $report(Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST] <#room> (Controls Interactive Speach for the given <#room>.)) }
     if ($2 == ON) { 
       .load -rs talker.mrc
-      if ($3 == $null) {
-        set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],#,44)
-        $point $report(Interactive Speach,$null,Turned,On,#)
-      }
-      if ($3 != $null) {
-        set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44)
-        $point $report(Interactive Speach,$null,Turned,On,$3)
-      }
+      set %talk.on. [ $+ [ $network ] ] ON
+      if ($3 == $null) { $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ]) | halt }
+      if ($3 != $null) { set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44) }
+      $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ])
       $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
       halt
-      if ($2 == OFF) {
-        if ($3 != $null) { 
-          set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44)
-          $point $report(Interactive Speach,$null,Turned,Off,$3)
-        }
-        if ($3 == $null) {
-          set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],#,44)
-          $point $report(Interactive Speach,$null,Turned,Off,#)
-        }
-        halt
-      }
     }
-    if ($numtok(%talk.room. [ $+ [ $network ] ],44) > 0) {
-      $point $report(Let's have a look...)
-      if (# isin %talk.room. [ $+ [ $network ] ]) { $point $report(Interactive Speach is active in this and $calc($numtok(%talk.room. [ $+ [ $network ] ],44) - 1) other room(s).) }
+    if ($2 == OFF) {
+      set %talk.on. [ $+ [ $network ] ] OFF
+      if ($3 == $null) { $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ]) | halt }
+      if ($3 != $null) { set %talk.on. [ $+ [ $network ] ] ON | set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44) }
+      $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ])
+      $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
+      halt
     }
-    else {
-      if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 1) { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) room but not this one.) }
-      else { $point $report(Interactive Speach is active in $numtok(%talk.room. [ $+ [ $network ] ],44) rooms but not this one.) }
+    if ($2 == -L) || ($2 == LIST) {
+      $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ])
+      $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
     }
-    if ($numtok(%talk.room. [ $+ [ $network ] ],44) == 0) { $point $report(Interactive Speach is not active on this server.) }
-    halt
+    if ($2 == -A) || ($2 == ADD) {
+      set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44)
+      $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
+      halt
+    }
+    if ($2 == -D) || ($2 == DEL) {
+      set %talk.room. [ $+ [ $network ] ] $remtok(%talk.room. [ $+ [ $network ] ],$3,44)
+      $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
+      halt
+    }
   }
   ;#.timer Format: .timer (displays the currently active timers and info.)
   if ($strip($1) == .timer) {
