@@ -860,11 +860,11 @@ on *:TEXT:*:#: {
   }
   ;#.stop Format: .stop (stops a .pound)
   if ($strip($1) == .stop) { .timerPND OFF | set %pound "" | set %pound.active == OFF | set %report Pound | /report1 # Off | halt }
-  ;#.talk Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST] <#room> (Controls Interactive Speach for the given <#room>.)
+  ;#.talk Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST|-S/STATUS] <#room> (Controls Interactive Speach for the given <#room>.)                                                                                                                                                                                              Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST] <#room> (Controls Interactive Speach for the given <#room>.)
   if ($nick != %boss. [ $+ [ $network ] ]) { halt }
   if ($strip($1) == .talk) {
-    if ($2 == -H) { $point $report(Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST] <#room> (Controls Interactive Speach for the given <#room>.)) }
-    if ($2 == ON) { 
+    if ($2 == -H) { $point $report(Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST|-S/STATUS] <#room> (Controls Interactive Speach for the given <#room>.)) }
+    if ($2 == ON) {
       .load -rs talker.mrc
       set %talk.on. [ $+ [ $network ] ] ON
       if ($3 == $null) { $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ]) | halt }
@@ -895,6 +895,12 @@ on *:TEXT:*:#: {
       $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
       halt
     }
+    if ($2 == -S) || ($2 == STATUS) {
+      $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ])
+      $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
+      halt
+    }
+    $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ])
   }
   ;#.timer Format: .timer (displays the currently active timers and info.)
   if ($strip($1) == .timer) {
