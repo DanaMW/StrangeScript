@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 17
+ut2 return 18
 ;
 ;month (xx)
 ut3 return 10
 ;
 ;day (xx)
-ut4 return 21
+ut4 return 27
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -350,7 +350,6 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   set %spy1 ""
   set %spy2 ""
   set %server.spy* ""
-  if ($script(talker.mrc) != $null) { .unload -rs $mircdirtalker.mrc }
   if ($script(unmask.mrc) == $null) { .load -rs unmask.mrc }
   if ($script(script1.mrc) == $null) { .load -rs script1.mrc }
   reset
