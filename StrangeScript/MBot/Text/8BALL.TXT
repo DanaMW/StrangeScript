@@ -1,0 +1,15 @@
+*8-ball reply* - Outlook not so good $nick 
+*8-ball reply* - Yes $nick 
+*8-ball reply* - No $nick 
+*8-ball reply* - Maybe $nick 
+*8-ball reply* - Reply is hazy please try again $nick 
+*8-ball reply* - Definetly $nick 
+*8-ball reply* - No way $nick 
+*8-ball reply* - It's likely $nick 
+*8-ball reply* - I'm leaning toward no $nick 
+*8-ball reply* - It's a chance $nick 
+*8-ball reply* - No chance at all $nick 
+*8-ball reply* - I think you should ask yourself that question $nick 
+*8-ball reply* - I'm leaning toward yes $nick 
+*8-ball reply* - It's a 60/40 chance $nick 
+*8-ball reply* - It's a 40/60 chance $nick 

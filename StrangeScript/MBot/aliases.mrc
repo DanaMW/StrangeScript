@@ -24,6 +24,7 @@ ca cycleall
 sysdir return $mircdirsystem\
 botdir return $mircdirMBot\
 textdir return $mircdirtext\
+kickfile return $textdir $+ KickBot.txt
 myecho if (@.* !isin $active) { return echo $color(normal text) -at < $+ $me $+ > }
 long { set %long ** | return }
 lowcol { if (%sc1 == $null) { return  $+ 04 } | else { if (%sc.bold == ON) { return  $+ %sc1 } | else { return  $+ %sc1 } } }

@@ -157,7 +157,11 @@ on *:KICK:#: {
   if ($nick == $server) && (*strange* !iswm $server) { halt }
   if ($nick == ChanServ) && (*strange* !iswm $server) { halt }
   if ($knick != %boss. [ $+ [ $network ] ]) && ($knick != $me) { HALT }
-  if ($knick == $me) && ($nick == %boss. [ $+ [ $network ] ]) { .raw join # %owner. [ $+ [ # ] ] | msg # stop abusing the bot | halt }
+  if ($knick == $me) && ($nick == %boss. [ $+ [ $network ] ]) {
+    .raw join # %owner. [ $+ [ # ] ]
+    msg # $read($kickfile)
+    halt
+  }
   if ($knick == $me) && ($nick != %boss. [ $+ [ $network ] ]) && ( $nick != $me) { .raw join # %owner. [ $+ [ # ] ] | .raw kick # $nick Auto | halt }
   if ($knick == $me) && ($nick == $me) { .raw join # %owner. [ $+ [ # ] ] | halt }
   if ($knick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick Auto | halt }
