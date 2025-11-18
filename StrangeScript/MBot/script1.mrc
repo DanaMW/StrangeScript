@@ -137,8 +137,21 @@ on *:TEXT:*:#: {
       $point $report(AutoJoin,for,$network,is currently,%do.autojoin. [ $+ [ $network ] ])
       halt
     }
-    if ($2 == -S) || ($2 == SHOW) { $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
-    if ($2 == -L) || ($2 == LIST) { $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
+    if ($2 == -S) || ($2 == SHOW) { $point $report(Current on connect AutoJoins are as follows:) | $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ]) | halt }
+    if ($2 == -L) || ($2 == LIST) {
+      ;.flood on
+      set %tmp.ajl2 $numtok(%autojoin.rooms. [ $+ [ $network ] ],44)
+      set %tmp.ajl1 1
+      $point $report($chain(5) AutoJoin $chain(5))
+      while (%tmp.ajl1 <= %tmp.ajl2) {
+        $point $report(%tmp.ajl1,$null,$gettok(%autojoin.rooms. [ $+ [ $network ] ],%tmp.ajl1,44))
+        inc %tmp.ajl1
+        if (%tmp.ajl1 > %tmp.ajl2) { break }
+      }
+      unset %tmp.ajl1 %tmp.ajl2
+      ;.flood off
+      halt
+    }
     if ($2 == -A) || ($2 == ADD) {
       if ($chr(35) !isin $3) { var %t.aaj = $chr(35) $+ $3 }
       else { var %t.aaj = $3 }
@@ -153,9 +166,9 @@ on *:TEXT:*:#: {
       $point $report(Current,$null,$null,%autojoin.rooms. [ $+ [ $network ] ])
       halt
     }
-    if ($2 == ON) { set %do.autojoin. [ $+ [ $network ] ] ON | $point $report(Current,$null,$null,%do.autojoin. [ $+ [ $network ] ]) | halt }
-    if ($2 == OFF) { set %do.autojoin. [ $+ [ $network ] ] OFF | $point $report(Current,$null,$null,%do.autojoin. [ $+ [ $network ] ]) | halt }
-    if ($2 == -C) || ($2 == CREATE) { insta.aj }
+    if ($2 == ON) { set %do.autojoin. [ $+ [ $network ] ] ON | $point $report(On Connect,$null,Rooms AutoJoin,is set,%do.autojoin. [ $+ [ $network ] ]) | halt }
+    if ($2 == OFF) { set %do.autojoin. [ $+ [ $network ] ] OFF | $point $report(On Connect,$null,Rooms AutoJoin,is set,%do.autojoin. [ $+ [ $network ] ]) | halt }
+    if ($2 == -C) || ($2 == CREATE) { insta.aj | halt }
     halt
   }
   ;#.autostart Format: .autostart <ON|OFF|-A/ADD|-D/DEL/DELETE|-S/SHOW|-L/LIST> (Configures the autostart servers for the bot to join on start.)
