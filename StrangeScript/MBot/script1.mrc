@@ -709,6 +709,17 @@ on *:TEXT:*:#: {
     recover $2
     halt
   }
+  ;#.release Format: .release 1|2 (release saved nick 1 or 2. Which ever is held by NickServ)
+  if ($strip($1) == .release) {
+    if ($2 == $null) {
+      $point $report(Format:,$null,$null,$null,$null,.release 1|2 (release saved nick 1 or 2. Which ever is held by NickServ))
+      halt
+    }
+    $point $report(Release,$null,From NickServ,Saved Nick,$2)
+    if ($2 == 1) { ns RELEASE %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] | .timer 1 15 nick %bot.nick.1. [ $+ [ $network ] ] | halt }
+    if ($2 == 2) { ns RELEASE %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] | .timer 1 15 nick %bot.nick.2. [ $+ [ $network ] ] | halt }
+    halt
+  }
   ;#.reload Format: .reload (reloads the bots scripts)
   if ($strip($1) == .reload) {
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
@@ -721,7 +732,6 @@ on *:TEXT:*:#: {
     if ($network == Libera.Chat) { server irc.Libera.Chat | return }
     if ($network == Rizon) { server irc.rizon.net | return }
     if ($network == UnderNet) { server us.undernet.org | return }
-    if ($network == DeepNet) { server 192.168.0.4 | return }
     else { server $server | return }
     halt
   }
