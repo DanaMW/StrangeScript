@@ -420,14 +420,14 @@ on *:TEXT:*:#: {
   ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
   if ($strip($1) == .identify) || ($strip($1) == .ident) { 
     if (*dal.net iswm $server) {
-      if ($me == %user.nick.1. [ $+ [ $network ] ]) && (%user.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.1. [ $+ [ $network ] ] %user.nick.1.pass. [ $+ [ $network ] ] }
-      if ($me == %user.nick.2. [ $+ [ $network ] ]) && (%user.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.2. [ $+ [ $network ] ] %user.nick.2.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
       $point $report(Ident,Done)
       halt
     }
     else {
-      if ($me == %user.nick.1. [ $+ [ $network ] ]) && (%user.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.1. [ $+ [ $network ] ] %user.nick.1.pass. [ $+ [ $network ] ] }
-      if ($me == %user.nick.2. [ $+ [ $network ] ]) && (%user.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.2. [ $+ [ $network ] ] %user.nick.2.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
       $point $report(Ident,Done)
       halt
     }
@@ -1088,7 +1088,7 @@ on *:TEXT:*:#: {
   }
   ;#.x Format: .x (x Servers login.)
   if ($strip($1) == .x) {
-    msg x@channels.undernet.org LOGIN $me %user.nick.1.pass. [ $+ [ $network  ] ]
+    msg x@channels.undernet.org LOGIN $me %bot.nick.1.pass. [ $+ [ $network  ] ]
     $point $report(X Login,$null,Complete)
   }
   ;#.notify Format: .notify [-A/ADD|-D/Del|-L/LIST]<ON|OFF|nickname> [note] (Adds/Removes a user from the notify list.)
@@ -1141,8 +1141,8 @@ on *:TEXT:*:#: {
 raw 433:*:{
   $point $report(Nick,$2,Failed,$3-)
   if (timer(RECOV. [ $+ [ $network ] ]) != $null) {
-    if (%recover. [ $+ [ $network ] ] == %user.nick.1. [ $+ [ $network ] ]) && (%user.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %user.nick.1.pass. [ $+ [ $network ] ] }
-    if (%recover. [ $+ [ $network ] ] == %user.nick.2. [ $+ [ $network ] ]) && (%user.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %user.nick.2.pass. [ $+ [ $network ] ] }
+    if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+    if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
     if ($network != UnderNet) && ($network != DeepNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
     ;assimilate 
   }

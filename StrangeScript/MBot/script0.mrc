@@ -71,12 +71,12 @@ on *:NOTICE:*:*:{
   if (%extra. [ $+ [ $network ] ] == ON) { .notice %boss. [ $+ [ $network ] ] $report(Notice@ $+ $nick) $+ : $report($null,$null,$1-) }
   if ($nick == NickServ) && (IDENTIFY isin $1-) { 
     if (*dal.net iswm $server) {
-      if ($me == %user.nick.1. [ $+ [ $network ] ]) && (%user.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.1. [ $+ [ $network ] ] %user.nick.1.pass. [ $+ [ $network ] ] }
-      if ($me == %user.nick.2. [ $+ [ $network ] ]) && (%user.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.2. [ $+ [ $network ] ] %user.nick.2.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.2. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
     }
     else {
-      if ($me == %user.nick.1. [ $+ [ $network ] ]) && (%user.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.1.pass. [ $+ [ $network ] ] }
-      if ($me == %user.nick.2. [ $+ [ $network ] ]) && (%user.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %user.nick.2.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.1.pass. [ $+ [ $network ] ] }
+      if ($me == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { nickserv identify %bot.nick.2.pass. [ $+ [ $network ] ] }
     }
   }
   inc %count.note
