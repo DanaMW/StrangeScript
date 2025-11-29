@@ -49,7 +49,6 @@ on *:TEXT:*:#: {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
       msg # yes?
       .enable #DoCommand
-      halt
     }
   }
   ;#.help Format: .help [[.]<command>] (Makes the bot show the complete command list or the specified command.)

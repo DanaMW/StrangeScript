@@ -119,14 +119,15 @@ on *:JOIN:#: {
   }
 }
 #DoCommand off
-on 5:TEXT:*:#: {
-  if ($nick == %boss. [ $+ [ $network ] ]) { 
+on 1:TEXT:*:#: {
+  if ($nick == %boss. [ $+ [ $network ] ]) {
+    set %DC disable #DoCommand 
     if ($1 == cancel) { .disable #DoCommand | $point $report(Fuckup,$null,$null,Canceled) | halt }
-    msg # ok
-    if ($chr(47) !isin $1) { $chr(47) $+ $1- }
-    else { $1- }
-    .disable #DoCommand 
-    msg # done
+    if ($chr(47) !isin $1) { set %doComm $strip($chr(47) $+ $1-) }
+    else { set %doComm $strip($1-) }
+    msg # Okay, doing %doComm for you
+    timerDC1 1 3 %doComm
+    timerDC2 1 10 %DC
   }
   halt
 }

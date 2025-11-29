@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 23
+ut2 return 24
 ;
 ;month (xx)
 ut3 return 11
 ;
 ;day (xx)
-ut4 return 21
+ut4 return 29
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -176,6 +176,7 @@ Check.Serv.Log {
     unset %recover. [ $+ [ $network ] ]
     mode $me
     recover off
+    .timerOPME 1 15 op.me
     halt
   }
   if ($me != %recover. [ $+ [ $network ] ]) {
@@ -183,6 +184,17 @@ Check.Serv.Log {
     $point $report(Auto Nick Recover,$null,Attempting to Recover Nickname,%recover. [ $+ [ $network ] ])
     return
   }
+}
+/opme {
+  set %tmp.om2 $1
+  set %tmp.om1 1
+  while (%tmp.om1 <= $chan(0)) {
+    mode $chan(%tmp.om1) +o %tmp.om2
+    inc %tmp.om1
+    if (%tmp.om1 > $chan(0)) { break }
+  }
+  unset %tmp.om1 %tmp.om2
+  return
 }
 /op.me {
   set %tmp.om2 $1
@@ -193,6 +205,7 @@ Check.Serv.Log {
     if (%tmp.om1 > $chan(0)) { break }
   }
   unset %tmp.om1 %tmp.om2
+  return
 }
 /report1 {
   .msg $1 10 $+ $chr(91) $+ 00,01 $+ %report $+ 10 $+ $chr(93) $chr(91) $+ 11,01 $+ $2- $+  $+ 10 $+ $chr(93)
