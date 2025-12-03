@@ -50,7 +50,7 @@ on *:TEXT:*:#:{
     if (*yep* iswm $strip($1-)) { .msg # yep I'm right. | halt }
     if (*coo iswm $strip($1-)) { .msg # Wheres the L? | halt }
     if (*stoned* iswm $strip($1-)) { .msg # I'm always stoned | halt }
-    if (*script* iswm $strip($1-)) { .msg # I write my own damn scripts. | halt }
+    if (*script* iswm $strip($1-)) { .msg # $read $mircdirtext\script.txt | halt }
     if (*sleep* iswm $strip($1-)) { .msg # You need some sleep $nick, you look like shit. | halt }
     if (*yup* iswm $strip($1-)) { .msg # Nope | halt }
     if (*hello* iswm $strip($1-)) { .msg # Well hello there $nick | halt }

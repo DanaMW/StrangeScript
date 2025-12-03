@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 24
+ut2 return 25
 ;
 ;month (xx)
-ut3 return 11
+ut3 return 12
 ;
 ;day (xx)
-ut4 return 29
+ut4 return 02
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -389,13 +389,11 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
 }
 /fly { if ($chr(35) isin $1) { .raw join $1 $cr kick $1 :boom $cr part $1 } }
 /cycle {
-  if ($1 != $null) {
-    if ($chr(35) isin $1) { .raw part $1 :cycle $cr join $1 %ownerkey. [ $+ [ $network ] ] }
-    if ($chr(35) !isin $1) { $report(Cycle,ERROR,You need to include a proper room name,$1).active }
-  }
-  if ($1 == $null) { .raw part # :cycle $cr join # %ownerkey. [ $+ [ $network ] ]  }
-  ;.timerCYC1a. $+ $network 1 5 keywrite settings cycle.counter 0
-  ;.timerCYC1b. $+ $network 1 5 $report(Cycle Counter,Reset,$null,0).status
+  if ($1 == $null) { var %cycleTmp # }
+  else { var %cycleTmp $1 }
+  if ($chr(35) isin %cycleTmp) { .raw part %cycleTmp :cycle $cr join %cycleTmp %ownerkey. [ $+ [ $network ] ] }
+  ; : $+ %ownerkey. [ $+ [ $network ] ]
+  if ($chr(35) !isin %cycleTmp) { $report(Cycle,ERROR,You need to include a proper room name,%cycleTmp).active }
 }
 /cycleall {
   set %rumble OFF
