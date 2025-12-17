@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 25
+ut2 return 27
 ;
 ;month (xx)
 ut3 return 12
 ;
 ;day (xx)
-ut4 return 02
+ut4 return 17
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -138,24 +138,28 @@ Check.Serv.Log {
 }
 /recover {
   if ($1 == OFF) {
+    unset %recoverCnt %tmp.recover
     unset %recover. [ $+ [ $network ] ]
     .timerRECOV. $+ $network off
     $point $report(Nick Recover,Set,Off)
-    return
+    halt
   }
   if ($1 == $null) {
     if (%recover. [ $+ [ $network ] ] == $null) {
       $point $report(Nick Recover,Error,No Nick To Recover)
-      $point $report(Nick Recover,$null,Include the nick to recover .recover <nick>)
+      $point $report(Nick Recover,%recoverCnt,Include the nick to recover .recover <nick>)
       halt
     }
     ;set %recover. [ $+ [ $network ] ] %bot.nick.1. [ $+ [ $network ] ]
     .timerRECOV. $+ $network 0 15 assimilate %recover. [ $+ [ $network ] ]
-    $point $report(Nick Recover,$null,On,Recovering Nickname,%recover. [ $+ [ $network ] ])
+    $point $report(Nick Recover,%recoverCnt,On,Recovering Nickname,%recover. [ $+ [ $network ] ])
     assimilate %recover. [ $+ [ $network ] ]
-    return
   }
-  if ($1 != $null) { 
+  if ($1 != $null) {
+    if !(%recoverTot) { set %recoverTot 20 }
+    if !(%recoverCnt) { set %recoverCnt 1 }
+    else { inc %recoverCnt }
+    if (%recoverCnt >= %recoverTot) { /recover off }
     set %recover. [ $+ [ $network ] ] $1
     .timerRECOV. $+ $network 0 15 assimilate %recover. [ $+ [ $network ] ]
     assimilate %recover. [ $+ [ $network ] ]
@@ -169,11 +173,12 @@ Check.Serv.Log {
     return
   } 
   if ($me == %recover. [ $+ [ $network ] ]) {
-    $point $report(Auto Nick Recover,$null,Done,Recover Complete,%recover. [ $+ [ $network ] ])
+    $point $report(Nick Recover,%recoverCnt,Done,Recover Complete,%recover. [ $+ [ $network ] ])
     .timerRECOV. $+ $network off
     if ($me == %bot.nick.1. [ $+ [ $network ] ]) { nickserv identify %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
     if ($me == %bot.nick.2. [ $+ [ $network ] ]) { nickserv identify %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
     unset %recover. [ $+ [ $network ] ]
+    unset %recoverCnt %tmp.recover
     mode $me
     recover off
     .timerOPME 1 15 op.me
@@ -181,7 +186,7 @@ Check.Serv.Log {
   }
   if ($me != %recover. [ $+ [ $network ] ]) {
     if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] } 
-    $point $report(Auto Nick Recover,$null,Attempting to Recover Nickname,%recover. [ $+ [ $network ] ])
+    $point $report(Nick Recover,%recoverCnt,Attempting to Recover Nickname,%recover. [ $+ [ $network ] ])
     return
   }
 }

@@ -1,4 +1,4 @@
-;;;
+`;;;
 ;;;   MasterBot(MBot)[For StrangeScript]
 ;;;   Version Kept in Alias files.
 ;;;   Please submit working changes for inclusion. Thanks.
@@ -85,6 +85,9 @@ on *:NOTICE:*:*:{
     if ($chr(64) isin $1-) { halt }
   }
   .timernc 1 45 /set %count.note 0
+}
+on *:TEXT:*:#: {
+  $report($nick
 }
 on *:JOIN:#: {
   set %lastjoin. $+ # $nick
@@ -261,6 +264,19 @@ raw 438:*:{
     halt
   }
 }
+;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss. [ $+ [ $network ] ] $upper($2) $3- } }
+raw 433:*:{
+  $point $report(Nick,$2,Failed,$3-)
+  if (timer(RECOV. [ $+ [ $network ] ]) != $null) {
+    if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+    if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
+    if ($network != UnderNet) && ($network != DeepNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
+    ;assimilate 
+  }
+  halt
+}
+raw 473:*:{ .notice %boss. [ $+ [ $network ] ] Join Failed $2 Invite Only, Using ChanServ to auto invite me. | .chanserv invite $2 $me | halt }
+raw 477:*:{ .notice %boss. [ $+ [ $network ] ] Cannot join $2 (+r) - This Channel Requires A Registered Nick | halt }
 on 1:DNS: {
   if (%awaiting.dns.*!*@ [ $+ [ $naddress ] ] != $null) {
     ;ssipsave $gettok(%awaiting.dns.*!*@ [ $+ [ $naddress ] ] ,1,44) $gettok(%awaiting.dns.*!*@ [ $+ [ $naddress ] ] ,2,44) *!*@ [ $+ [ $puttok($raddress,$chr(42),-1,46) ] ] DNS

@@ -410,10 +410,23 @@ on *:TEXT:*:#: {
     quit.Pick $2-
     halt
   }
-  ;#.heel Format: .heel <#room> (Makes the bot deop itself.)
+  ;#.heel Format: .heel <#room>|-A (Makes the bot deop itself.)
   if ($strip($1) == .heel) {
     if ($2 == $null) { .raw mode # -o $me | halt }
-    if ($2 != $null) { .raw mode $2 -o $me | halt }
+    if ($2 != $null) { 
+      if ($2 == -A) {
+        set %tmp.hquit 1
+        :qhloop2
+        If (%tmp.hquit <= $chan(0)) { 
+          .raw mode $chan(%tmp.hquit) -o $me
+          inc %tmp.hquit 
+          goto qhloop2
+        }
+        unset %tmp.hquit
+        halt
+      }
+      else { .raw mode $2 -o $me | halt }
+    }
   }
   ;#.ident Format: .ident  (Makes the bot identify to chanserv using saved password.)
   ;#.identify Format: .identify (Makes the bot identify to chanserv using saved password.)
@@ -1136,17 +1149,3 @@ on *:TEXT:*:#: {
     }
   }
 }
-;raw 421:*:{ if (*Lag-CK* !iswm $1-) { notice %boss. [ $+ [ $network ] ] $upper($2) $3- } }
-raw 433:*:{
-  $point $report(Nick,$2,Failed,$3-)
-  if (timer(RECOV. [ $+ [ $network ] ]) != $null) {
-    if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
-    if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
-    if ($network != UnderNet) && ($network != DeepNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
-    ;assimilate 
-  }
-  halt
-}
-raw 473:*:{ .notice %boss. [ $+ [ $network ] ] Join Failed $2 Invite Only, Using ChanServ to auto invite me. | .chanserv invite $2 $me | halt }
-raw 477:*:{ .notice %boss. [ $+ [ $network ] ] Cannot join $2 (+r) - This Channel Requires A Registered Nick | halt }
-;Check for end of file
