@@ -268,8 +268,8 @@ raw 438:*:{
 raw 433:*:{
   $point $report(Nick,$2,Failed,$3-)
   if (timer(RECOV. [ $+ [ $network ] ]) != $null) {
-    if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
-    if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
+    if (%recover. [ $+ [ $network ] ] == %bot.nick.1. [ $+ [ $network ] ]) && (%bot.nick.1.pass. [ $+ [ $network ] ] != $null) && ($me != %bot.nick.1. [ $+ [ $network ] ]) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.1.pass. [ $+ [ $network ] ] }
+    if (%recover. [ $+ [ $network ] ] == %bot.nick.2. [ $+ [ $network ] ]) && (%bot.nick.2.pass. [ $+ [ $network ] ] != $null) && ($me != %bot.nick.2. [ $+ [ $network ] ]) { ns ghost %recover. [ $+ [ $network ] ] %bot.nick.2.pass. [ $+ [ $network ] ] }
     if ($network != UnderNet) && ($network != DeepNet) { $point $report(Nick,Recover,Auto-Ghost,$null,Recovery is Auto-Ghost'ing %recover. [ $+ [ $network ] ]) }
     ;assimilate 
   }
