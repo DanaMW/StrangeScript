@@ -86,9 +86,9 @@ on *:NOTICE:*:*:{
   }
   .timernc 1 45 /set %count.note 0
 }
-on *:TEXT:*:#: {
-  $report($nick
-}
+;on *:TEXT:*:#: {
+;  $report($nick,$1-)
+;}
 on *:JOIN:#: {
   set %lastjoin. $+ # $nick
   if ($istok(%shitlist. [ $+ [ $network ] ],$address($nick,4),44) == $true) { if (%shitlist.Do. [ $+ [ $network ] ] == ON) { if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick :Bot $+ $chr(160) $+ Shitlist } } }
@@ -124,13 +124,11 @@ on *:JOIN:#: {
 #DoCommand off
 on 1:TEXT:*:#: {
   if ($nick == %boss. [ $+ [ $network ] ]) {
-    set %DC disable #DoCommand 
     if ($1 == cancel) { .disable #DoCommand | $point $report(Fuckup,$null,$null,Canceled) | halt }
-    if ($chr(47) !isin $1) { set %doComm $strip($chr(47) $+ $1-) }
-    else { set %doComm $strip($1-) }
-    msg # Okay, doing %doComm for you
-    timerDC1 1 3 %doComm
-    timerDC2 1 10 %DC
+    if ($chr(47) !isin $1) { timerDC1 1 3 $strip($chr(47) $+ $1-) }
+    else { timerDC1 1 3 $strip($1-) }
+    msg # Okay, doing $1- for you
+    timerDC2 1 10 .disable #DoCommand
   }
   halt
 }

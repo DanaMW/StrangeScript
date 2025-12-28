@@ -26,7 +26,8 @@ alias pointer {
   halt
 }
 on *:TEXT:*:#: {
-  echo -at # $1-
+  $report($nick,$1-).chan
+  ;echo -at # $1-
   if ($nick == $chan(#)) { halt }
   if ($nick == $me) { halt }
   if (%boss.repeat == ON) { msg # On # %boss. [ $+ [ $network ] ] said: $1- }

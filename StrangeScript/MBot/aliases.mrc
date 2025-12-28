@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 28
+ut2 return 29
 ;
 ;month (xx)
 ut3 return 12
 ;
 ;day (xx)
-ut4 return 26
+ut4 return 28
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -191,25 +191,33 @@ Check.Serv.Log {
   }
 }
 /opme {
-  set %tmp.om2 $1
   set %tmp.om1 1
   while (%tmp.om1 <= $chan(0)) {
-    mode $chan(%tmp.om1) +o %tmp.om2
+    cs op $chan(%tmp.om1) $me
     inc %tmp.om1
     if (%tmp.om1 > $chan(0)) { break }
   }
-  unset %tmp.om1 %tmp.om2
+  unset %tmp.om1
   return
 }
 /op.me {
-  set %tmp.om2 $1
   set %tmp.om1 1
   while (%tmp.om1 <= $chan(0)) {
-    mode $chan(%tmp.om1) +o %tmp.om2
+    cs op $chan(%tmp.om1) $me
     inc %tmp.om1
     if (%tmp.om1 > $chan(0)) { break }
   }
-  unset %tmp.om1 %tmp.om2
+  unset %tmp.om1
+  return
+}
+/op.boss {
+  set %tmp.ob1 1
+  while (%tmp.ob1 <= $chan(0)) {
+    mode $chan(%tmp.ob1) +o %boss. [ $+ [ $network ] ] 
+    inc %tmp.ob1
+    if (%tmp.ob1 > $chan(0)) { break }
+  }
+  unset %tmp.ob1
   return
 }
 /report1 {
