@@ -2,7 +2,7 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 29
+ut2 return 30
 ;
 ;month (xx)
 ut3 return 12
@@ -124,7 +124,7 @@ Check.Serv.Log {
   ;if ($1 != $null) { set %boss. [ $+ [ $network ] ] $1 | notice %boss. [ $+ [ $network ] ] $report(Boss,$null,You better hope you're you.) }
   if (%boss. [ $+ [ $network ] ] == $null) { notice %boss. [ $+ [ $network ] ] $report(Check.Boss,Error,CB variable is null,Line 127 alias) | halt }
   notice %boss. [ $+ [ $network ] ] $report(Boss,Set,%boss. [ $+ [ $network ] ])
-  ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
+  .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
   auser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
   ;guser 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ]
   notice %boss. [ $+ [ $network ] ] $report(Boss,Adding User,level 5 $address(%boss. [ $+ [ $network ] ],4) %boss. [ $+ [ $network ] ])

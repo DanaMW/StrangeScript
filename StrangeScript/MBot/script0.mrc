@@ -29,7 +29,7 @@ on 1:CONNECT:{
   if (%do.autojoin. [ $+ [ $network ] ] == $null) { set %do.autojoin. [ $+ [ $network ] ] OFF }
   if (%do.autojoin. [ $+ [ $network ] ] == ON) { auto.join }
   join.setup
-  timerBOSSSET $+ $network 1 30 Check.Boss %boss. [ $+ [ $network ] ]
+  .timerBOSSSET $+ $network 1 30 Check.Boss %boss. [ $+ [ $network ] ]
   ; below is for mailing the log setup. needs work like a lot of shit.
   ;if ($nopath($mircini) == SSC1.mrc) {
   ;  if (%logging == 1.1.1) || (%logging == 1.0.1) || (%logging == 1.1.0) { .timerLOG 0 1 Check.Serv.Log }
@@ -125,10 +125,10 @@ on *:JOIN:#: {
 on 1:TEXT:*:#: {
   if ($nick == %boss. [ $+ [ $network ] ]) {
     if ($1 == cancel) { .disable #DoCommand | $point $report(Fuckup,$null,$null,Canceled) | halt }
-    if ($chr(47) !isin $1) { timerDC1 1 3 $strip($chr(47) $+ $1-) }
-    else { timerDC1 1 3 $strip($1-) }
+    if ($chr(47) !isin $1) { .timerDC1 1 3 $strip($chr(47) $+ $1-) }
+    else { .timerDC1 1 3 $strip($1-) }
     msg # Okay, doing $1- for you
-    timerDC2 1 10 .disable #DoCommand
+    .timerDC2 1 10 .disable #DoCommand
   }
   halt
 }
@@ -148,7 +148,7 @@ on *:NICK: {
     set %boss. [ $+ [ $network ] ] $newnick
     ;$point $report(Boss,Set,%boss. [ $+ [ $network ] ])
     .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ]
-    timerBC [ $+ [ $network ] ] 1 20 check.boss $newnick
+    .timerBC [ $+ [ $network ] ] 1 20 check.boss $newnick
   }
   if ($nick == $me) && ($comchan(%boss. [ $+ [ $network ] ],0) == $null) { .ctcp %boss. [ $+ [ $network ] ] SSBOTNICK $nick $newnick %bot.key. [ $+ [ $network ] ] }
   recover
@@ -283,7 +283,7 @@ on 1:DNS: {
   }
 }
 ctcp 1:*: { ssctcpflood | $point %boss. [ $+ [ $network ] ] $event $+ : $1- | halt }
-on 5:ctcpreply:REG*:{ if ($nick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ] | halt } | else { halt } }
+on 5:ctcpreply:REG*:{ if ($nick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { .ctcp %boss. [ $+ [ $network ] ] SSBOT %bot.key. [ $+ [ $network ] ] | halt } | else { halt } }
 on 1:ctcpreply:*:{
   ssctcpflood
   if (%ping.nick != $null) {

@@ -238,7 +238,7 @@ on *:TEXT:*:#: {
   if ($strip($1) == .boss) {
     $point $report(Boss,$null,is set:,%boss. [ $+ [ $network ] ])
     if ($2 != $null) { $point $report(Boss,$null,Are you the man?)
-    ctcp %boss. [ $+ [ $network ] ] SSBOT $key(settings,botkey. [ $+ [ $network ] ]) }
+    .ctcp %boss. [ $+ [ $network ] ] SSBOT $key(settings,botkey. [ $+ [ $network ] ]) }
   }
   ;#.cb Format: .cb (Runs Check.Boss)
   if ($strip($1) == .cb) {
@@ -358,15 +358,15 @@ on *:TEXT:*:#: {
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }    
     $point $report(Exit,Done)
     if ($2 != $null) {
-      timer 1 1 quit $replace($2-,$chr(32),$chr(160))
+      .timer 1 1 quit $replace($2-,$chr(32),$chr(160))
       window -c $window($active)
-      timer -o 1 2 exit -n
+      .timer -o 1 2 exit -n
       halt
     }
     else {
-      timer 1 1 quit $replace(Miss me while I'm gone!,$chr(32),$chr(160))
+      .timer 1 1 quit $replace(Miss me while I'm gone!,$chr(32),$chr(160))
       window -c $window($active)
-      timer -o 1 2 exit -n
+      .timer -o 1 2 exit -n
       halt
     }
   }
@@ -942,7 +942,7 @@ on *:TEXT:*:#: {
   ;#.timer Format: .timer (displays the currently active timers and info.)
   if ($strip($1) == .timer) {
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-    if ($3 == OFF) { timer $2 OFF | $point $report(Turned off $2 timer) | halt }
+    if ($3 == OFF) { .timer $2 OFF | $point $report(Turned off $2 timer) | halt }
     timer.show #
   }
   ;#.tease Format: .tease (.)
