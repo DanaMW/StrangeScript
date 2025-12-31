@@ -124,7 +124,7 @@ on *:JOIN:#: {
 #DoCommand off
 on 1:TEXT:*:#: {
   if ($nick == %boss. [ $+ [ $network ] ]) {
-    if ($1 == cancel) { .disable #DoCommand | $point $report(Fuckup,$null,$null,Canceled) | halt }
+    if ($1 == cancel) { .disable #DoCommand | $point Done. | halt }
     if ($chr(47) !isin $1) { .timerDC1 1 3 $strip($chr(47) $+ $1-) }
     else { .timerDC1 1 3 $strip($1-) }
     msg # Okay, doing $1- for you

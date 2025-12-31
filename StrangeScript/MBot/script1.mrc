@@ -46,10 +46,14 @@ on *:TEXT:*:#: {
   if ($level($address($nick,4)) = 5) || ($level($address($nick,1)) = 5) || ($level($address($nick,4)) = 4) || ($level($address($nick,1)) = 4) {
     if (%LM.editor == ON) { if (%LM.chan != #) { halt } | MenuPicks $1- | halt }
     if ($strip($1) == /) || ($strip($1) == .) || ($strip($1) == ..) || ($strip($1) == .cmd) { halt }
+    ;
+    ;  ##############   If It Is Me! Right here it is after all that time ... ##############
+    ;
+    ;  Right below is where you call the bot and it answers.
+    ;
     if ($strip($1-) = $me) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-      msg # yes?
-      .enable #DoCommand
+      $point Yes? | .enable #DoCommand
     }
   }
   ;#.help Format: .help [[.]<command>] (Makes the bot show the complete command list or the specified command.)
@@ -1073,10 +1077,11 @@ on *:TEXT:*:#: {
     if ($2 == OFF) { .unset %easy.room | $point $report(Ez-Relay,$null,OFF) | halt }
     if ($2 == SERVER) { .set %easy.server $3 | $point $report(Ez-Relay,Server Set,%easy.server) | halt }
   }
-  ;#.wz Format: .wz <city, state/zipcode> (returns the weather)
+  ;#.wz Format: .wz <city, state|zipcode> (returns the weather)
   if ($strip($1) == .wz) {
-    if ($2 == $null) { $point Format: .wz <city, state/zipcode> (returns the weather) | halt }
-    elseif ($2 == OFF) { sockclose weather | sockclose wt | $point Weather sockets closed. | return }
+    .load -rs weather.mrc
+    if ($2 == $null) { $point Format: .wz <city, state|zipcode> (returns the weather) | halt }
+    elseif ($2 == OFF) { sockclose weather | sockclose wt | .unload -rs weather.mrc | $point $report(Weather,OFF,sockets closed.) | return }
     else { weather # $2- | return }
   }
   ;#.var Format: .var <%variable> (Shows infomation on a given variable)
@@ -1107,6 +1112,10 @@ on *:TEXT:*:#: {
   ;#.notify Format: .notify [-A/ADD|-D/Del|-L/LIST]<ON|OFF|nickname> [note] (Adds/Removes a user from the notify list.)
   if ($strip($1) == .notify) {
     if ($2 == $null) { $point $report(Format: .notify [-A/ADD|-D/Del|-L/LIST]<ON|OFF|nickname> [note] (Adds/Removes a user from the notify list.)) | halt }
+    if ($2 == HELP) {
+      $point $report(The notify list is like a buddy list It notifies you when someone in your list comes on or leaves the IRC network that you are on.)
+      halt
+    }
     if ($2 != $null) {
       if ($2 == -A) || ($2 == ADD) {
         if ($3 != $null) { .notify $3 $4 }

@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 30
+ut2 return 32
 ;
 ;month (xx)
 ut3 return 12
 ;
 ;day (xx)
-ut4 return 28
+ut4 return 31
 ;
 ;year (xxxx)
 ut5 return 2025
@@ -64,7 +64,7 @@ load.rest {
   halt
 }
 slc {
-  if ($1 == $null) { .msg # Format: .slc <-s|-r> | return }
+  if ($1 == $null) { $point Format: .slc <-s|-r> | return }
   if ($1 == -s) {
     if (%log.query == $null) { set %log.query 1 }
     if (%log.qso == $null) { set %log.query 0 }
@@ -218,6 +218,18 @@ Check.Serv.Log {
     if (%tmp.ob1 > $chan(0)) { break }
   }
   unset %tmp.ob1
+  return
+}
+/op.other {
+  $point $report(1 - $1,2 - $2,3 - $3)
+  if ($1 == $null) { return } 
+  set %tmp.oo1 1
+  while (%tmp.oo1 <= $chan(0)) {
+    mode $chan(%tmp.oo1) +o $1
+    inc %tmp.oo1
+    if (%tmp.oo1 > $chan(0)) { break }
+  }
+  unset %tmp.oo1
   return
 }
 /report1 {
