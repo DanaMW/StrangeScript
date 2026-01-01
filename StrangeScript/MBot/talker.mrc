@@ -27,19 +27,19 @@ on *:TEXT:*:#:{
     if (*whore* iswm $strip($1-)) { $point $read $mircdirtext\hoe.txt | halt }
     if (*no* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point uh huh | halt } }
     if (*lol* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point $read $mircdirtext\laugh.txt } | halt }
-    if (*question* iswm $strip($1-)) { $point Oh great! another fucking question from $nick | halt }
-    if ($chr(63) isin $strip($1-)) { if ($rand(1,3) == 1) { $point Oh great! another fucking question from $nick } | halt } 
-    if (*llol* iswm $strip($1-)) { $point Cant you fucking spell $nick | halt }
-    if (*loll* iswm $strip($1-)) { $point Cant you fucking spell $nick | halt }
-    if (*lool* iswm $strip($1-)) { $point Whats a LOOL $nick? | halt }
-    if (*good* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point You know I'm good. | halt } }
+    if (*question* iswm $strip($1-)) { $point Oh great! another question from $nick | halt }
+    if ($chr(63) isin $strip($1-)) { if ($rand(1,3) == 1) { $point Oh great! another question from $nick } | halt } 
+    if (*llol* iswm $strip($1-)) { $point lol | halt }
+    if (*loll* iswm $strip($1-)) { $point lol | halt }
+    if (*lool* iswm $strip($1-)) { $point lol | halt }
+    if (*good* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point You know I'm good. } | halt }
     if (*brb* iswm $strip($1-)) { $point Dont worry I'll be here! | halt }
     if (*test* iswm $strip($1-)) { $point $read $mircdirtext\test.txt | halt }
     if (*later* iswm $strip($1-)) { $point OK later. I'll be around. | halt }
     if (*butt* iswm $strip($1-)) { $point Kiss my butt. | halt }
     if (*night* iswm $strip($1-)) { $point Good night $nick. | halt }
-    if (*yes* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point No Way | halt } }
-    if (*bot* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point $read $mircdirtext\bot.txt | halt } }
+    if (*yes* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point No Way } | halt }
+    if (*bot* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point $read $mircdirtext\bot.txt } | halt }
     if (*good night* iswm $strip($1-)) { $point Good night $nick. | halt }
     if (*rofl* iswm $strip($1-)) { $point Get up off the floor. | halt }
     if (*lmao* iswm $strip($1-)) { $point thats alot of ass to laugh off $nick | halt }
@@ -63,6 +63,6 @@ on *:TEXT:*:#:{
     if (*shut up* iswm $strip($1-)) { $point You shut the fuck up $nick, or i'll stomp you | halt }
     if (*strange* iswm $strip($1-)) && (* $+ $me $+ * !iswm $strip($1-)) { $point Strange is the man!! | halt }
     if (*joke* iswm $strip($1-)) { $point $read -n $mircdirtext\Redneck.txt | halt }
-    if (hey $me iswm $strip($1-)) { $point $read -n $mircdirtext\ME.TXT | halt }
+    if (hey $me iswm $strip($1-)) { set %tnick. [ $+ [ $network ] ] $nick | $point $read -n $mircdirtext\ME.TXT | halt }
   }
 }

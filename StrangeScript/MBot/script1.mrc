@@ -53,7 +53,8 @@ on *:TEXT:*:#: {
     ;
     if ($strip($1-) = $me) {
       if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-      $point Yes? | .enable #DoCommand
+      ;$point Yes?
+      .enable #DoCommand
     }
   }
   ;#.help Format: .help [[.]<command>] (Makes the bot show the complete command list or the specified command.)

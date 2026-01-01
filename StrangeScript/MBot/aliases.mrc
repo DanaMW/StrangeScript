@@ -2,16 +2,16 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 32
+ut2 return 33
 ;
 ;month (xx)
-ut3 return 12
+ut3 return 01
 ;
 ;day (xx)
-ut4 return 31
+ut4 return 01
 ;
 ;year (xxxx)
-ut5 return 2025
+ut5 return 2026
 ;-----------------------------------------------------
 name return 10M04aster10B04ot
 ss return 10S04trange10S04cript
