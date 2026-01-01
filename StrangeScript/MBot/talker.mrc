@@ -63,6 +63,6 @@ on *:TEXT:*:#:{
     if (*shut up* iswm $strip($1-)) { $point You shut the fuck up $nick, or i'll stomp you | halt }
     if (*strange* iswm $strip($1-)) && (* $+ $me $+ * !iswm $strip($1-)) { $point Strange is the man!! | halt }
     if (*joke* iswm $strip($1-)) { $point $read -n $mircdirtext\Redneck.txt | halt }
-    if (hey $me iswm $strip($1-)) { set %tnick. [ $+ [ $network ] ] $nick | $point $read -n $mircdirtext\ME.TXT | halt }
+    if (hey $me iswm $strip($1-)) { $point $read -n $mircdirtext\ME.TXT | halt }
   }
 }
