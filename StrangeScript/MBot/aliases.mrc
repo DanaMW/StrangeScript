@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 33
+ut2 return 34
 ;
 ;month (xx)
 ut3 return 01
 ;
 ;day (xx)
-ut4 return 01
+ut4 return 02
 ;
 ;year (xxxx)
 ut5 return 2026
@@ -50,6 +50,7 @@ reload load.again
 load.again { 
   .timer 1 2 load.rest
   load -a aliases.mrc
+  msg %boss. [ $+ [ $network ] ] Reload One Done.
   halt
 }
 load.rest {
@@ -60,7 +61,9 @@ load.rest {
   load -rs unmask.mrc
   load -rs spell.mrc
   load -rs seen.mrc
-  msg %boss Reload Complete
+  load -rs talker.mrc
+  load -rs weather.mrc
+  msg %boss. [ $+ [ $network ] ] Reload Complete
   halt
 }
 slc {
@@ -84,7 +87,7 @@ slc {
 Check.Serv.Log {
   if (%logging == 0.0.0) { return }
   if ($lines(c:\IRC\services\services.log) > 0) {
-    %method %boss $read(c:\IRC\services\services.log, 1)
+    %method %boss. [ $+ [ $network ] ] $read(c:\IRC\services\services.log, 1)
     write -dl1 c:\IRC\services\services.log
   }
   ;
@@ -96,8 +99,8 @@ Check.Serv.Log {
     if ($lines(c:\dns\etc\namedb\query.log) == %log.query) { set %log.qso 1 }
     if ($lines(c:\dns\etc\namedb\query.log) > %log.query) { inc %log.query | set %log.qso 0 }
     var %tmp.log = $read(c:\dns\etc\namedb\query.log, %log.query)
-    ;if (%log.qso != 1) && (client 68.187.32.* !iswm %tmp.log) && (*IN PTR* !iswm %tmp.log) && (client 192.168.0.* !iswm %tmp.log) { %method %boss Query ( $+ %log.query $+ ) -- %tmp.log }
-    if (%log.qso != 1) { %method %boss Query ( $+ %log.query $+ ) -- %tmp.log }
+    ;if (%log.qso != 1) && (client 68.187.32.* !iswm %tmp.log) && (*IN PTR* !iswm %tmp.log) && (client 192.168.0.* !iswm %tmp.log) { %method %boss. [ $+ [ $network ] ] Query ( $+ %log.query $+ ) -- %tmp.log }
+    if (%log.qso != 1) { %method %boss. [ $+ [ $network ] ] Query ( $+ %log.query $+ ) -- %tmp.log }
     ;if (*IN MX* iswm %tmp.log) { .msg #COS Incoming mail (MX) from $gettok($remove($gettok(%tmp.log,2,32),:),1,35) }
   }
   ;
@@ -113,7 +116,7 @@ Check.Serv.Log {
     var %tmp.log = $read(c:\dns\etc\namedb\security.log, %log.security)
     ;if (%log.sso != 1) && (client 68.187.32.* !iswm %tmp.log) && (client 192.168.0.* !iswm %tmp.log) {
     if (%log.sso != 1)  {
-      if ($gettok(%tmp.log,3,32) == update) || ($gettok(%tmp.log,3,32) == query) { %method %boss Security ( $+ %log.security $+ ) -- %tmp.log }
+      if ($gettok(%tmp.log,3,32) == update) || ($gettok(%tmp.log,3,32) == query) { %method %boss. [ $+ [ $network ] ]s Security ( $+ %log.security $+ ) -- %tmp.log }
     }
   }
   :endit 
@@ -506,7 +509,7 @@ deathip {
   else { return $address($1,4) }
 }
 /ssipsave {
-  ;.msg %boss $report($1-)
+  ;.msg %boss. [ $+ [ $network ] ] $report($1-)
   if (%current.server == COS) && (*server* iswm $address($1,4)) { return }
   var %tmp.x = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\IPTracker.txt
   var %tmp.xx = $gettok($mircdir,1,92) $+ $chr(92) $+ $gettok($mircdir,2,92) $+ $chr(92) $+ text\LastSeen.txt

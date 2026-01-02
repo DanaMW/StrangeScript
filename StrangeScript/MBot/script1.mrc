@@ -394,6 +394,9 @@ on *:TEXT:*:#: {
     }
     halt
   }
+  ;#.function Format: .function <-A|ALL <#room> (Generates stats for the given room.)
+  if ($strip($1) == .gen) {
+  }
   ;#.gen Format: .gen <#room> (Generates stats for the given room.)
   if ($strip($1) == .gen) {
     if ($2 == $null) { $point Format: .gen <#room> (Generates stats for the given room.) }

@@ -28,7 +28,7 @@ on *:TEXT:*:#:{
     if (*no* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point uh huh | halt } }
     if (*lol* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point $read $mircdirtext\laugh.txt } | halt }
     if (*question* iswm $strip($1-)) { $point Oh great! another question from $nick | halt }
-    if ($chr(63) isin $strip($1-)) { if ($rand(1,3) == 1) { $point Oh great! another question from $nick } | halt } 
+    if ($chr(63) isin $strip($1-)) { if ($rand(1,3) == 1) { $point What is real, anyway? } | halt } 
     if (*llol* iswm $strip($1-)) { $point lol | halt }
     if (*loll* iswm $strip($1-)) { $point lol | halt }
     if (*lool* iswm $strip($1-)) { $point lol | halt }
