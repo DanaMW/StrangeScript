@@ -90,7 +90,10 @@ on *:NOTICE:*:*:{
 ;  $report($nick,$1-)
 ;}
 on *:JOIN:#: {
-  set %lastjoin. $+ # $nick
+  set %lastjoin. $+ $network $+ . $+ # $nick
+  ;
+  ; read the above with: %lastjoin. [ $+ [ $network ] $+ ] . [ $+ [ # ] ]
+  ;
   if ($istok(%shitlist. [ $+ [ $network ] ],$address($nick,4),44) == $true) { if (%shitlist.Do. [ $+ [ $network ] ] == ON) { if ($nick != %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick :Bot $+ $chr(160) $+ Shitlist } } }
   if (%spy == ON) && ($chan == %spy1) { .msg %spy2 $report(Spy,Join,%spy1,$nick,$address) }
   ;.timerLastBigIn 1 5 LastSeen $nick $address($nick,4) Joining $chan $network $time $time(TT)
@@ -102,15 +105,15 @@ on *:JOIN:#: {
     ;---------------[ Rizon ]--------------------
     if ($network == Rizon) { .timerFixJoin $+ $network 1 90 /aj }
   }
-  if ($level($address(%boss. [ $+ [ $network ] ],4)) == 4) { 
-    if ($nick(#,$me,q) != $null) { .mode # +q $nick }
-    if ($nick(#,$me,o) != $null) { .mode # +o $nick }
-  }
   if ($nick == %boss. [ $+ [ $network ] ]) && ($level($address(%boss. [ $+ [ $network ] ],4)) == 5) {
     if ($nick == $me) { halt }
     if (%boss. [ $+ [ $network ] ] != $me) { .ctcp %boss. [ $+ [ $network ] ] REG }
     if ($nick(#,$me,q) != $null) { .mode # +q %boss. [ $+ [ $network ] ] }
     if ($nick(#,$me,o) != $null) { .mode # +o %boss. [ $+ [ $network ] ] }
+  }
+  if ($level($address(%boss. [ $+ [ $network ] ],4)) == 4) { 
+    if ($nick(#,$me,q) != $null) { .mode # +q $nick }
+    if ($nick(#,$me,o) != $null) { .mode # +o $nick }
   }
   var %t.us = $readini(up_service.ini, n,#,$nick)
   if (%t.us != $null) {

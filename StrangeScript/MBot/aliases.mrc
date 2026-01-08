@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 34
+ut2 return 35
 ;
 ;month (xx)
 ut3 return 01
 ;
 ;day (xx)
-ut4 return 02
+ut4 return 07
 ;
 ;year (xxxx)
 ut5 return 2026
@@ -385,6 +385,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   if (%display. [ $+ [ $network ] ] == $null) { set %display. [ $+ [ $network ] ] = CHAN }
   if (%autojoin.rooms. [ $+ [ $network ] ] == $null) { set %autojoin.rooms. [ $+ [ $network ] ] = #StrangeScript }
   if (%do.hex. [ $+ [ $network ] ] == $null) { set %do.hex. [ $+ [ $network ] ] OFF }
+  if (%extra. [ $+ [ $network ] ] == $null) { set %extra. [ $+ [ $network ] ] ON }
   set %count.note 0
   set %pound.active OFF
   if (%GetNick. [ $+ [ $network ] ] == ON) && ($me != %bot.nick.1. [ $+ [ $network  ] ]) { recover %bot.nick.1. [ $+ [ $network  ] ] } 
@@ -394,7 +395,7 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   set %server.spy* ""
   if ($script(unmask.mrc) == $null) { .load -rs unmask.mrc }
   reset
-  if ($group(#DoCommand) == on) { .disable #DoCommand }
+  if ($group(#DoCommand) == ON) { .disable #DoCommand }
   .timerbar 0 1 mybar
   if (%Lag.mrc.secs. [ $+ [ $network ] ] == $null) { lagset 15 }
   if (%Lag.check. [ $+ [ $network ] ] == ON) { lagon }

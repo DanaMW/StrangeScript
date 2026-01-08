@@ -375,10 +375,10 @@ on *:TEXT:*:#: {
       halt
     }
   }
-  ;#.extra Format: .extra <ON|OFF> (Turns verbos information on or off.)
+  ;#.extra Format: .extra <ON|OFF> (Turns verbos information ON or OFF.)
   if ($strip($1) == .extra) {
     if ($2 == $null) {
-      $point Format: .extra <ON|OFF> (Turns verbos information on or off.)
+      $point Format: .extra <ON|OFF> (Turns verbos information ON or OFF.)
       $point $report(Extra,$null,is set,%extra. [ $+ [ $network ] ])
       halt
     }
@@ -620,7 +620,7 @@ on *:TEXT:*:#: {
       halt
     }
     if ($2 == -A) || ($2 == ALL) { if ($3 == $null) { op.me %boss. [ $+ [ $network ] ] } | else { op.me $3 } | halt }
-    if ($2 == -L) || ($2 == LAST) { mode $chan +o %lastjoin. [ $+ [ $chan ] ] | halt }
+    if ($2 == -L) || ($2 == LAST) { mode $chan +o %lastjoin. [ $+ [ $network ] $+ ] . [ $+ [ $chan ] ] | halt }
     else {
       mode $chan +o $2
       halt
@@ -696,7 +696,7 @@ on *:TEXT:*:#: {
   if ($strip($1) == .q) {
     halt
     if ($2 == $null) { .raw mode # +q $nick | halt }
-    elseif ($2 == ?) { .raw mode $chan +q %lastjoin. [ $+ [ $chan ] ] | halt }
+    elseif ($2 == ?) { .raw mode $chan +q %lastjoin. [ $+ [ $network ] $+ ] . [ $+ [ $chan ] ] | halt }
     else { .raw mode # +q $2 | halt }
   }
   ;#.rand Format: .rand (Gives the bot a random lettered nick.)
@@ -962,16 +962,14 @@ on *:TEXT:*:#: {
   ;#.ver Format: .ver (returns bot version.)
   if ($strip($1) == .ver) {
     if ($nick == %boss. [ $+ [ $network ] ]) { $point Hi Boss }
-    if ($2 == $null) {
-      $point $ver
-      $point Using mIRC $version
-      if ($seenver != $null) { $point Using Seen+ $seenver }
-      halt
-    }
+    else { $point Hi Friend }
+    $point $ver
+    $point Using mIRC $version
+    if ($seenver != $null) { $point Using Seen+ $seenver }
+    $point Includes 8ball Module
+    $point Includes Joke Sheet Module
     if ($2 == FULL) {
       $point $ver
-      $point Using mIRC $version
-      if ($seenver != $null) { $point Using Seen+ $seenver }
       Set %temp1al $alias(0)
       set %ticker 1
       while (%ticker <= %temp1al) {
@@ -987,26 +985,41 @@ on *:TEXT:*:#: {
         if (%ticker > %temp1sc) { break }
       }
       unset %temp1al %temp1sc %ticker
-      $point Done.
-      halt
     }
+    $point Done.
+    halt
   }
   ;#.you Format: .you <nick> (causes the bot to take the given nick.)
   if ($strip($1) == .you) {
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
+    if ($2 == $null) { $point $report(You,$null,Error,$null,You must include a nick after: you <nick>. Thats how it works.) | halt }
     nick $2
     halt
   }
-  ;#drop dead Format: drop dead (causes the bot to exit all servers, exit the software, and quit completely.)
+  ;#.drop_dead Format: drop dead (causes the bot to exit all servers, exit the software, and quit completely.)
   if ($strip($1) == drop) && ($2 == dead) {
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     $point $report(Exit,$null,$null,Done)
     exit
     halt
   }
-  ;#go away Format: go away (causes the bot to exit all servers, exit the software, and quit completely.)
-  if ($strip($1) == go) && ($2 == away) { set %verytmp # | msg # Fine then. | .part # pffft | timer $+ $rand(1,99) 1 30 join %verytmp | unset %verytmp | halt }
-  if ($strip($1) == get) && ($2 == rid) && ($3 == of) { if ($4 != $me) { .raw kick # $4 :Bosses $+ $chr(160) $+ Orders | halt } | if ($4 == $me) { $point What? Do i look fucking stupid? | halt } }
+  ;#.go_away Format: go away <##|forever> (causes the bot to exit the room for two minutes. Or <forever>, or how many seconds you say.)
+  if ($strip($1) == go) && ($2 == away) {
+    set %verytmp #
+    msg # Fine then.
+    part # pffft
+    if ($3 isnum) { .timer $+ $rand(1,99) 1 $3 join %verytmp | unset %verytmp | halt }
+    if ($3 != forever) { .timer $+ $rand(1,99) 1 120 join %verytmp }
+    unset %verytmp
+    halt
+  }
+  ;#.get_rid_of Format: get rid of [nick] (causes the bot to kick someone out of the room you are in.)
+  if ($strip($1) == get) && ($2 == rid) && ($3 == of) {
+    if ($4 == %boss. [ $+ [ $network ] ]) { $point Not on your best day, asshole. | halt }
+    if ($4 == $me) { $point What? Do I look stupid? | halt }
+    .raw kick # $4 :Bosses $+ $chr(160) $+ Orders
+    halt
+  }
   ;#.setvar Format: .setvar <variable> <value>/CLEAR (allows you to create, set, change, or clear a variable.)
   if ($strip($1) == .setvar) {
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
