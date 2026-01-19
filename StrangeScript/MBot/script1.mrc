@@ -548,7 +548,11 @@ on *:TEXT:*:#: {
     $point $report(UList,$null,Extracting UserList)
     var %tmpul = 1
     while (%tmpul <= $ulist(*,0)) {
-      $point $report(%tmpul,$ulist(*,%tmpul),$ulist(*,%tmpul).info)
+      if ($level($address($ulist(*,%tmpul).info,1)) = 1) || ($level($address($ulist(*,%tmpul).info,4)) = 1) { $point $report(%tmpul,$ulist(*,%tmpul),$ulist(*,%tmpul).info,Level 1) }
+      if ($level($address($ulist(*,%tmpul).info,1)) = 2) || ($level($address($ulist(*,%tmpul).info,4)) = 2) { $point $report(%tmpul,$ulist(*,%tmpul),$ulist(*,%tmpul).info,Level 2) }
+      if ($level($address($ulist(*,%tmpul).info,1)) = 3) || ($level($address($ulist(*,%tmpul).info,4)) = 3) { $point $report(%tmpul,$ulist(*,%tmpul),$ulist(*,%tmpul).info,Level 3) }
+      if ($level($address($ulist(*,%tmpul).info,1)) = 4) || ($level($address($ulist(*,%tmpul).info,4)) = 4) { $point $report(%tmpul,$ulist(*,%tmpul),$ulist(*,%tmpul).info,Level 4) }
+      if ($level($address($ulist(*,%tmpul).info,1)) = 5) || ($level($address($ulist(*,%tmpul).info,4)) = 5) { $point $report(%tmpul,$ulist(*,%tmpul),$ulist(*,%tmpul).info,Level 5) }
       inc %tmpul
       if (%tmpul > $ulist(*,0)) { break }
     }

@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 35
+ut2 return 37
 ;
 ;month (xx)
 ut3 return 01
 ;
 ;day (xx)
-ut4 return 07
+ut4 return 18
 ;
 ;year (xxxx)
 ut5 return 2026
@@ -159,9 +159,9 @@ Check.Serv.Log {
     assimilate %recover. [ $+ [ $network ] ]
   }
   if ($1 != $null) {
-    if !(%recoverTot) { set %recoverTot 20 }
-    if !(%recoverCnt) { set %recoverCnt 1 }
-    else { inc %recoverCnt }
+    if (%recoverTot == $null) { set %recoverTot 20 }
+    if (%recoverCnt == $null) { set %recoverCnt 1 }
+    if (%recoverCnt != $null) { inc %recoverCnt }
     if (%recoverCnt >= %recoverTot) { /recover off }
     set %recover. [ $+ [ $network ] ] $1
     .timerRECOV. $+ $network 0 15 assimilate %recover. [ $+ [ $network ] ]
@@ -184,8 +184,9 @@ Check.Serv.Log {
     unset %recoverCnt %tmp.recover
     mode $me
     recover off
-    .timerOPME 1 15 op.me
-    halt
+    op.boss
+    op.me
+    return
   }
   if ($me != %recover. [ $+ [ $network ] ]) {
     if (%recover. [ $+ [ $network ] ] != $null) { nick %recover. [ $+ [ $network ] ] } 
