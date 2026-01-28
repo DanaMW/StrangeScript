@@ -367,11 +367,8 @@ lcr {
       halt
     }
     else {
-      ;$point $report(Quiting,$null,$scon($1).network)
-      ;$point $report(Not written yet)
       scon -s $1 quit Bosses Orders
-      scon -s $1 partall
-      scon -s $1 close $window($active)
+      scon -s $1 close -xt STATUS
     }
   }
   unset %tmp.QP1 %tmp.QP2 %maxq
