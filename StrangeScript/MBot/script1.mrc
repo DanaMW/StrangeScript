@@ -64,21 +64,23 @@ on *:TEXT:*:#: {
     if ($2 == $null) {
       $point $report(Help,$null,Please wait while I extract the help.,This may take a second.)
       var %tmp = 1
+      var %lineItem 0
       while (%tmp <= $lines(script1.mrc)) {
         var %tmp1 = $read(script1.mrc,n,%tmp)
         if (*;#.* iswm %tmp1) && (*iswm* !iswm %tmp1) && (*=* !iswm %tmp1) {
           var %tmp1 = $remove(%tmp1,;#)
           var %tmp1 = $gettok(%tmp1,3,32)
-          var %tmp2 = %tmp2 $lower(%tmp1)
+          if (* $+ $chr(95) $+ * iswm %tmp1) { var %tmp1 $chr(91) $replace(%tmp1,$chr(95),$chr(32)) $chr(93) }
+          var %tmp2 = %tmp2 $+ $chr(44) $+ $lower(%tmp1)
         }
         inc %tmp
-        if ($numtok(%tmp2,32) == 15) {
-          $point $report(Help,$null,$null,$null,$null,%tmp2)
+        if ($numtok(%tmp2,44) == 15) {
+          $point $report(Help,$null,$null,$null,$null,$replace(%tmp2,$chr(44),$chr(32)))
           var %tmp2
         }
         if (%tmp > $lines(script1.mrc)) { break }
       }
-      if (%tmp2 != $null) { $point $report(Help,$null,$null,$null,$null,%tmp2) }
+      if (%tmp2 != $null) { $point $report(Help,$null,$null,$null,$null,$replace(%tmp2,$chr(44),$chr(32))) }
       $point $report(Help,$null,For help on a specific command try:,.help <command>)
       halt
     }
@@ -1000,14 +1002,14 @@ on *:TEXT:*:#: {
     nick $2
     halt
   }
-  ;#.drop_dead Format: drop dead (causes the bot to exit all servers, exit the software, and quit completely.)
+  ;#.drop_dead Format: drop_dead (causes the bot to exit all servers, exit the software, and quit completely.)
   if ($strip($1) == drop) && ($2 == dead) {
     if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     $point $report(Exit,$null,$null,Done)
     exit
     halt
   }
-  ;#.go_away Format: go away <##|forever> (causes the bot to exit the room for two minutes. Or <forever>, or how many seconds you say.)
+  ;#.go_away Format: go_away <##|forever> (causes the bot to exit the room for two minutes. Or <forever>, or how many seconds you say.)
   if ($strip($1) == go) && ($2 == away) {
     set %verytmp #
     msg # Fine then.
@@ -1017,7 +1019,7 @@ on *:TEXT:*:#: {
     unset %verytmp
     halt
   }
-  ;#.get_rid_of Format: get rid of [nick] (causes the bot to kick someone out of the room you are in.)
+  ;#.get_rid_of Format: get_rid_of [nick] (causes the bot to kick someone out of the room you are in.)
   if ($strip($1) == get) && ($2 == rid) && ($3 == of) {
     if ($4 == %boss. [ $+ [ $network ] ]) { $point Not on your best day, asshole. | halt }
     if ($4 == $me) { $point What? Do I look stupid? | halt }
