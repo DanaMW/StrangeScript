@@ -1104,8 +1104,8 @@ on *:TEXT:*:#: {
   if ($strip($1) == .wz) {
     .load -rs weather.mrc
     if ($2 == $null) { $point Format: .wz <city, state|zipcode> (returns the weather) | halt }
-    elseif ($2 == OFF) { sockclose weather | sockclose wt | .unload -rs weather.mrc | $point $report(Weather,OFF,sockets closed.) | return }
-    else { weather # $2- | return }
+    elseif ($2 == OFF) { sockclose wttr | $point $report(Weather,OFF,sockets closed.) | return }
+    else { wz # $2- | return }
   }
   ;#.var Format: .var <%variable> (Shows infomation on a given variable)
   if ($strip($1) == .var) {
