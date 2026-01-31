@@ -17,12 +17,12 @@ on *:TEXT:*:#:{
     if (*cunt* iswm $strip($1-)) { $point $read $mircdirtext\cunt.txt | halt }
     if (*bastard* iswm $strip($1-)) { $point $read $mircdirtext\bastard.txt | halt }
     if (*dick* iswm $strip($1-)) { $point $read $mircdirtext\dick.txt | halt }
-    if (*fag* iswm $strip($1-)) { $point $read $mircdirtext\fag.txt | halt }
+    if (*fag* iswm $strip($1-)) { halt }
     if (*ok* iswm $strip($1-)) && (*joke* !iswm $strip($1-)) { if ($rand(1,3) == 1) { $point $+ It better be ok. } | halt } 
     if (*tramp* iswm $strip($1-)) { $point $read $mircdirtext\tramp.txt | halt }
     if (*asshole* iswm $strip($1-)) { $point $read $mircdirtext\ass.txt | halt }
     if (*shit* iswm $strip($1-)) { $point $read $mircdirtext\shit.txt | halt } 
-    if (*lamer* iswm $strip($1-)) { $point $read $mircdirtext\lamer.txt | halt }
+    if (*lamer* iswm $strip($1-)) { halt }
     if (*hoe* iswm $strip($1-)) { $point $read $mircdirtext\hoe.txt | halt }
     if (*whore* iswm $strip($1-)) { $point $read $mircdirtext\hoe.txt | halt }
     if (*no* iswm $strip($1-)) { if ($rand(1,3) == 1) { $point uh huh | halt } }
@@ -48,7 +48,6 @@ on *:TEXT:*:#:{
     if (*cool* iswm $strip($1-)) { $point I am the coolest! | halt }
     if (*bye* iswm $strip($1-)) { $point $read $mircdirtext\bye.txt | halt }
     if (*yep* iswm $strip($1-)) { $point yep I'm right. | halt }
-    if (*coo iswm $strip($1-)) { $point Wheres the L? | halt }
     if (*stoned* iswm $strip($1-)) { $point I'm always stoned | halt }
     if (*script* iswm $strip($1-)) { $point $read $mircdirtext\script.txt | halt }
     if (*sleep* iswm $strip($1-)) { $point You need some sleep $nick, you look like shit. | halt }
@@ -56,11 +55,11 @@ on *:TEXT:*:#:{
     if (*hello* iswm $strip($1-)) { $point Well hello there $nick | halt }
     if (*dana* iswm $strip($1-)) { $point $read $mircdirtext\dana.txt | halt }
     if (*uh huh* iswm $strip($1-)) { $point Not today | halt }
-    if (*anal* iswm $strip($1-)) { $point Studies have shown people that use the word anal like it up the ass | halt }
-    if (*written by* iswm $strip($1-)) { $point I was written by Dana L. Meli-Wischman. | halt }
-    if (*wrote* iswm $strip($1-)) { $point I was written by Dana L. Meli-Wischman. | halt }
-    if (*stupid* iswm $strip($1-)) { $point I know someone stupid! It's $nick | halt }
-    if (*shut up* iswm $strip($1-)) { $point You shut the fuck up $nick, or i'll stomp you | halt }
+    if (*anal* iswm $strip($1-)) { $point Studies have shown people that use the word anal like it up the pooper | halt }
+    ;if (*written by* iswm $strip($1-)) { $point I was written by Dana L. Meli-Wischman. | halt }
+    ;if (*wrote* iswm $strip($1-)) { $point I was written by Dana L. Meli-Wischman. | halt }
+    if (*stupid* iswm $strip($1-)) { $point Holds up a mirror for $nick | halt }
+    if (*shut up* iswm $strip($1-)) { $point Harsh. | halt }
     if (*strange* iswm $strip($1-)) && (* $+ $me $+ * !iswm $strip($1-)) { $point Strange is the man!! | halt }
     if (*joke* iswm $strip($1-)) { $point $read -n $mircdirtext\Redneck.txt | halt }
     if (hey $me iswm $strip($1-)) { $point $read -n $mircdirtext\ME.TXT | halt }
