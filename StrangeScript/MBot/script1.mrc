@@ -972,6 +972,7 @@ on *:TEXT:*:#: {
     $point $ver
     $point Using mIRC $version
     if ($seenver != $null) { $point Using Seen+ $seenver }
+    $point Using TinyWeather
     $point Includes 8ball Module
     $point Includes Joke Sheet Module
     if ($2 == FULL) {
@@ -1105,7 +1106,8 @@ on *:TEXT:*:#: {
     .load -rs weather.mrc
     if ($2 == $null) { $point Format: .wz <city, state|zipcode> (returns the weather) | halt }
     elseif ($2 == OFF) { sockclose wttr | $point $report(Weather,OFF,sockets closed.) | return }
-    else { wz # $2- | return }
+    elseif ($2 == SAVE) { wz.save $3- }
+    else { wz.weather # $2- | return }
   }
   ;#.var Format: .var <%variable> (Shows infomation on a given variable)
   if ($strip($1) == .var) {

@@ -131,7 +131,7 @@ UP.Service {
     if ($5 == $null) { $point $report(UP,$null,Format: . $+ $UPPER($2) <#room> <-A/ADD|-D/DEL|-L/LIST|-W/WIPE> <nick>) | return }
     var %t.us = $readini(up_service.ini, n,$3,$5)
     if (%t.us == $null) { .writeini -n up_service.ini $3 $5 $upper($2) | $point $report(UP,$null,Added $5 to $3 as an $upper($2)) | return }
-    else { $point $report(UP,$null,Note,$5 is already listed, as an $upper(%t.us) in, $3) +| return }
+    else { $point $report(UP,$null,Note,$5 is already listed, as an $upper(%t.us) in, $3) | return }
     ;.timer -m 1 500 HOP.Service $1 LIST
     return
   }

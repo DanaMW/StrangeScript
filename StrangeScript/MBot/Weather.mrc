@@ -1,49 +1,34 @@
 ==================================================
-; Weather script for StrangeScript
-; Code by d3t0x for recess. v 0.1.4
+; TinyWeather for MasterBot and StrangeScript
+; Code by d3t0x and recess. v0.1.13 2-1-2026
 ; ==================================================
-alias .wz {
-  if (!$1) {
-    msg $chan 10[12 Help 10][14 Format: .wz <city> 10]
-    return
-  }
+alias wz.weather {
+  set %wz.room $1
+  set %wz.city $replace($2-,$chr(32),+)
 
-  sockclose wttr
-  set %wt.room $chan
-  set %wt.city $replace($1-,$chr(32),+)
+  msg %wz.room $report(Weather,$null,Please wait while I retrieve the weather...)
 
-  msg %wt.room 10[12 Weather 10][14 Please wait while I retrieve the weather... 10]
-  sockopen wttr wttr.in 80
+  if ($exists(wz_weather.txt)) .remove wz_weather.txt
+
+  ; -s = silent, -L = follow redirects, 2>&1 = merge stderr
+  ;-o wz_weather.txt
+  ;msg %wz.room $report(Weather,$null,curl -s -L "https://wttr.in/ $+ %wz.city $+ ?format=3")
+  ;run cmd /c curl -s -L "https://wttr.in/%wz.city?format=3" > wz_weather.txt 2>&1
+  run curl -s -L -o wz_weather.txt "http://wttr.in/ $+ %wz.city $+ ?format=3"
+
+  ; poll until file has data
+  .timerwzpoll 1 3 wz.check
 }
 
-on *:sockopen:wttr:{
-  if ($sockerr) {
-    msg %wt.room 10[12 Weather 10][04 Unable to connect to weather service 10]
-    return
-  }
-
-  sockwrite -n wttr GET /%wt.city?format=3 HTTP/1.0
-  sockwrite -n wttr Host: wttr.in
-  sockwrite -n wttr User-Agent: mIRC-StrangeScript
-  sockwrite -n wttr Connection: close
-  sockwrite -n wttr $crlf
+alias wz.check {
+  if (!$exists(wz_weather.txt)) .timerwzpoll 1 3 wz.check
+  ;elseif ($file(wz_weather.txt).size == 0) return
+  var %line = $read(wz_weather.txt,1)
+  if (%line != $null) { msg %wz.room Weather $replace(%line,+,$chr(32)) }
+  else { msg %wz.room $report(Weather,$null,Error,Unable to retrieve weather data) | .timerwzpoll off }
+  ;.remove wz_weather.txt
 }
 
-on *:sockread:wttr:{
-  if ($sockerr) {
-    sockclose wttr
-    msg %wt.room 10[12 Weather 10][04 Error reading weather data 10]
-    return
-  }
+wz.save {
 
-  sockread %wt.line
-  if (!$sockbr) return
-
-  ; ignore headers
-  if (%wt.line iswm HTTP/*) return
-  if (%wt.line == $null) return
-
-  ; THIS LINE IS THE RESULT
-  msg %wt.room 10[12 Weather 10][14 %wt.line 10]
-  sockclose wttr
 }
