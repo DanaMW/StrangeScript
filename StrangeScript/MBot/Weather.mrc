@@ -1,6 +1,6 @@
 ==================================================
 ; TinyWeather for MasterBot and StrangeScript
-; Code by d3t0x and recess. v0.1.13 2-1-2026
+; Code by d3t0x and recess. v0.1.14 2-1-2026
 ; ==================================================
 alias wz.weather {
   set %wz.room $1
@@ -17,15 +17,18 @@ alias wz.weather {
   run curl -s -L -o wz_weather.txt "http://wttr.in/ $+ %wz.city $+ ?format=3"
 
   ; poll until file has data
-  .timerwzpoll 1 3 wz.check
+  set %tt 1
+  timerwzpoll 1 1 wz.check
 }
 
 alias wz.check {
-  if (!$exists(wz_weather.txt)) .timerwzpoll 1 3 wz.check
-  ;elseif ($file(wz_weather.txt).size == 0) return
-  var %line = $read(wz_weather.txt,1)
-  if (%line != $null) { msg %wz.room Weather $replace(%line,+,$chr(32)) }
-  else { msg %wz.room $report(Weather,$null,Error,Unable to retrieve weather data) | .timerwzpoll off }
+  inc %tt
+  if (%tt == 60) { msg %wz.room $report(Weather,$null,Error,Unable to retrieve weather data) | .timerwzpoll off | return }
+  if ($exists(wz_weather.txt)) {
+    var %line = $read(wz_weather.txt)
+    msg %wz.room Weather $replace(%line,+,$chr(32))
+  }
+  else { timerwzpoll 1 1 wz.check }
   ;.remove wz_weather.txt
 }
 
