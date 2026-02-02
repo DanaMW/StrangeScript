@@ -1107,7 +1107,11 @@ on *:TEXT:*:#: {
     if ($2 == $null) { $point Format: .wz <city, state|zipcode> (returns the weather) | halt }
     elseif ($2 == OFF) { sockclose wttr | $point $report(Weather,OFF,sockets closed.) | return }
     elseif ($2 == SAVE) { wz.save $3- }
-    else { wz.weather # $2- | return }
+    else { wz.weather # $nick $2- | return }
+  }
+  ;#.wz Format: whats_my_weather (returns your saved weather)
+  if ($strip($1) == whats_my_weather) {
+
   }
   ;#.var Format: .var <%variable> (Shows infomation on a given variable)
   if ($strip($1) == .var) {
