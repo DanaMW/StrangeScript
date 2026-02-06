@@ -14,17 +14,6 @@ alias point {
   notice %boss. [ $+ [ $network ] ] Set .display to OFF, CHAN, or NOTICE, on the bot to fix it.
   halt
 }
-alias pointer {
-  if (%display. [ $+ [ $network ] ] == OFF) { halt }
-  if (%display.user. [ $+ [ $network ] ] == CHAN) {
-    if ($chan == $null) { return notice $nick }
-    if ($chan != $null) { return msg $chan }
-  }
-  if (%display.user. [ $+ [ $network ] ] == NOTICE) { return notice $nick }
-  notice %boss. [ $+ [ $network ] ] We have a display problem at pointer, not point.
-  notice %boss. [ $+ [ $network ] ] Set .displayuser to OFF, CHAN, or NOTICE, on the bot to fix it.
-  halt
-}
 on *:TEXT:*:#: {
   $report($nick,$1-).chan
   ;echo -at # $1-
@@ -275,13 +264,25 @@ on *:TEXT:*:#: {
     if ($chr(35) isin $2) { .raw mode $2 -o $3 | halt } | else { .raw mode # -o $2 | halt }
   }
   ;#.deq Format: .deq [channel] <nick> (Makes the bot deq <nick> in current room or [channel].)
-  if ($strip($1) == .deq) { if ($2 == $null) { $point $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>) | halt } | if ($3 == $null) { .raw mode $chan +o $2 | halt } else { .raw mode $3 -o $2 | halt } }
+  if ($strip($1) == .deq) {
+    if ($2 == $null) {
+      $point $report(Format,$null,$null,.deq <nick> or .deq <nick> <channel>)
+      halt
+    }
+    if ($3 == $null) {
+      .raw mode $chan +o $2
+      halt
+    }
+    else {
+      .raw mode $3 -o $2
+      halt
+    }
+  }
   ;#.display Format: .display [OFF/CHAN/NOTICE/[HEX]] (Sets the bot reply OFF/channel/notice/[hex(format)]. Left blank it shows it's current state.)
   if ($strip($1) == .display) {
-    if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     if ($2 == $null) {
       if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
-      else { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
+      else { msg # $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
       halt
     }
     if ($2 == OFF) { set %display. [ $+ [ $network ] ] OFF | halt }
@@ -313,19 +314,6 @@ on *:TEXT:*:#: {
         halt
       }
       else { $point $report(Display,$null,Use:,.display hex ON/OFF) }
-    }
-  }
-  ;#.displayuser Format: .displayuser [OFF/CHAN/NOTICE] (Sets the bot user reply channel/notice). Left blank it shows it's current state.)
-  if ($strip($1) == .displayuser) {
-    ;if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-    if ($2 == $null) { $point $report(DisplayUser,$null,is,%display.user. [ $+ [ $network ] ]) }
-    if ($2 == CHAN) {
-      set %display.user. [ $+ [ $network ] ] CHAN
-      $point $report(DisplayUser,$null,is set to,%display.user. [ $+ [ $network ] ])
-    }
-    if ($2 == NOT) || ($2 == NOTICE) {
-      set %display.user. [ $+ [ $network ] ] NOTICE
-      $point $report(DisplayUser,$null,is,%display.user. [ $+ [ $network ] ])
     }
   }
   ;#.dns Format: .dns <-s(STATS)|-i(INFO)|-d(DIG)> [<domian.name>] (Manages ISC BIND dns server.)
@@ -998,7 +986,6 @@ on *:TEXT:*:#: {
   }
   ;#.you Format: .you <nick> (causes the bot to take the given nick.)
   if ($strip($1) == .you) {
-    if ($nick != %boss. [ $+ [ $network ] ]) { halt }
     if ($2 == $null) { $point $report(You,$null,Error,$null,You must include a nick after: you <nick>. Thats how it works.) | halt }
     nick $2
     halt
@@ -1109,7 +1096,7 @@ on *:TEXT:*:#: {
     elseif ($2 == SAVE) { wz.save $3- }
     else { wz.weather # $nick $2- | return }
   }
-  ;#.wz Format: my_weather (returns your saved weather location)
+  ;#.my_weather Format: my_weather (returns your saved weather location)
   if ($strip($1) == my) && ($2 == weather) {
     set %tta $read($mircdirtext\wz_save.txt,w,* $+ $nick $+ *)
     if (%tta == $null) { $point $report(Error,$null,You don't have a saved location. Please do .wz <city, state>) | halt }  
