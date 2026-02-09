@@ -51,7 +51,7 @@ on *:TEXT:*:#: {
     .flood off
     write -c bothelp.txt
     if ($2 == $null) {
-      $point $report(Help,$null,Please wait while I extract the help.,This may take a second.)
+      msg # $report(Help,$null,Please wait while I extract the help.,This may take a second.)
       var %tmp = 1
       var %lineItem 0
       while (%tmp <= $lines(script1.mrc)) {
@@ -64,24 +64,24 @@ on *:TEXT:*:#: {
         }
         inc %tmp
         if ($numtok(%tmp2,44) == 15) {
-          $point $report(Help,$null,$null,$null,$null,$replace(%tmp2,$chr(44),$chr(32)))
+          msg # $report(Help,$null,$null,$null,$null,$replace(%tmp2,$chr(44),$chr(32)))
           var %tmp2
         }
         if (%tmp > $lines(script1.mrc)) { break }
       }
-      if (%tmp2 != $null) { $point $report(Help,$null,$null,$null,$null,$replace(%tmp2,$chr(44),$chr(32))) }
-      $point $report(Help,$null,For help on a specific command try:,.help <command>)
+      if (%tmp2 != $null) { msg # $report(Help,$null,$null,$null,$null,$replace(%tmp2,$chr(44),$chr(32))) }
+      msg # $report(Help,$null,For help on a specific command try:,.help <command>)
       halt
     }
     else {
-      $point $report(Help,$null,Please wait while I extract the help.,This may take a second.)
+      msg # $report(Help,$null,Please wait while I extract the help.,This may take a second.)
       var %tmp = 1
       var %cleanup = $remove($2,.)
       while (%tmp <= $lines(script1.mrc)) {
         var %tmp1 = $read(script1.mrc,n,%tmp)
         var %tmp2 = $chr(42) $+ ;#. $+ %cleanup $+ $chr(42)
         if (%tmp2 iswm %tmp1) {
-          $point $report(Help,$null,$null,$null,$gettok(%tmp1,2-,32))
+          msg # $report(Help,$null,$null,$null,$gettok(%tmp1,2-,32))
           unset %tmp1
           break
         }
@@ -89,7 +89,7 @@ on *:TEXT:*:#: {
         if (%tmp > $lines(script1.mrc)) { break }
       }
       if (%tmp1 != $null) { $point $report(Help,$null,No help found for:,%cleanup) | halt }
-    $point $report(Help,$null,For a complete list of commands try,.help) | halt }
+    msg # $report(Help,$null,For a complete list of commands try,.help) | halt }
   }
   ;&& (%tmp != 35) && (%tmp != 49) 
   ;
