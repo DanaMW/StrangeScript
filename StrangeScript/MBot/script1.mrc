@@ -285,7 +285,11 @@ on *:TEXT:*:#: {
       else { msg # $report(Display,$null,is,%display. [ $+ [ $network ] ]) }
       halt
     }
-    if ($2 == OFF) { set %display. [ $+ [ $network ] ] OFF | halt }
+    if ($2 == OFF) {
+      set %display. [ $+ [ $network ] ] OFF
+      msg # $report(Display,$null,is,%display. [ $+ [ $network ] ])
+      halt
+    }
     if ($2 == CHAN) || ($2 == CHANNEL) {
       set %display. [ $+ [ $network ] ] CHAN
       if (%do.hex. [ $+ [ $network ] ] == ON) { $point $report(Display,$null,is,%display. [ $+ [ $network ] ]) $+ $report(Hex,$null,is,%do.hex. [ $+ [ $network ] ]) }
@@ -310,7 +314,7 @@ on *:TEXT:*:#: {
       }
       if ($3 == OFF) {
         set %do.hex. [ $+ [ $network ] ] OFF
-        $point $report(Display,$null,is,%display. [ $+ [ $network ] ])
+        msg # $report(Display,$null,is,%display. [ $+ [ $network ] ])
         halt
       }
       else { $point $report(Display,$null,Use:,.display hex ON/OFF) }

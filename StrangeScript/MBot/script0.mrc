@@ -326,7 +326,7 @@ ctcp 5:SSBOT*:{
 }
 ctcp 5:DO*: {
   if ($nick != %boss. [ $+ [ $network ] ]) { halt }
-  timerDO $+ $network 1 1 $2-
+  .timerDO $+ $network 1 1 $2-
   halt
 }
 ctcp 5:KILL*: {
