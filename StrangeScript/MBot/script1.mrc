@@ -822,10 +822,10 @@ on *:TEXT:*:#: {
     }
   }
   if ($2 isnum) {
-    set %tmp 1
-    if ($chr(35) isin $3) { while (%tmp <= $2) { .msg $3 $4- | inc %tmp | if (%tmp > $2) { break } } }
-    if ($chr(35) !isin $3) { while (%tmp <= $2) { msg # $3- | inc %tmp | if (%tmp > $2) { break } } }
-    unset %tmp
+    set %tmvp 1
+    if ($chr(35) isin $3) { while (%tmvp <= $2) { msg $3 $4- | inc %tmvp | if (%tmvp > $2) { break } } }
+    if ($chr(35) !isin $3) { while (%tmvp <= $2) { msg # $3- | inc %tmvp | if (%tmvp > $2) { break } } }
+    unset %tmvp
     halt
   }
   ;#.slc Format: .slc [<-s (SHOW)|-r (RESET)>} (Configures the Security Log)

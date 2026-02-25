@@ -304,7 +304,7 @@ on 1:ctcpreply:*:{
       }
       if (%ping.tmp <= 1) { set %ping.tmp $chr(149) $+ $str($chr(215),9) }
       .notice %ping.nick Ping reply from you took %ping.tmp1
-      $point $report(Ping Reply,$null,%ping.nick,took about,%ping.tmp1)
+      notice %boss. [ $+ [ $network ] ] $report(Ping Reply,$null,%ping.nick,took about,%ping.tmp1)
       unset %ping.chan %ping.nick
     }
     halt
@@ -338,12 +338,12 @@ ctcp 5:SAVEKEY*: {
   if ($nick != %boss. [ $+ [ $network ] ]) { halt }
   if ($2 == O) {
     set %owner. [ $+ [ $3 ] ] $4
-    $point $report(SAVEKEY,CTCP,$nick,The OWNER KEY has been saved for,$3)
+    notice %boss. [ $+ [ $network ] ] $report(SAVEKEY,CTCP,$nick,The OWNER KEY has been saved for,$3)
     halt
   }
   if ($2 == H) {
     set %host. [ $+ [ $3 ] ] $4
-    $point $report(SAVEKEY,CTCP,$nick,The HOST KEY has been saved for,$3)
+    notice %boss. [ $+ [ $network ] ] $report(SAVEKEY,CTCP,$nick,The HOST KEY has been saved for,$3)
     halt
   }
 }
@@ -352,4 +352,4 @@ ctcp 5:TIME*: { ssctcpflood }
 ctcp 5:CLIENTINFO*: { ssctcpflood }
 ctcp 5:USERINFO*: { ssctcpflood }
 ctcp 5:RELOAD*: { load.again | halt }
-ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | $point %boss. [ $+ [ $network ] ] $report(Versioned By $nick,the prick) | halt }
+ctcp 1:VERSION*: { ssctcpflood | .ctcpreply $nick VERSION $ver | notice %boss. [ $+ [ $network ] ] $report(Versioned By $nick,the prick) | halt }
