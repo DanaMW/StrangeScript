@@ -42,7 +42,6 @@ on 1:DISCONNECT:{
   if (%reconnect. [ $+ [ $network ] ] == ON) {
     unset %connected. [ $+ [ $network ] ]
     unset %connserv. [ $+ [ $network ] ]
-    beep
     server $network
     return
   }
@@ -213,7 +212,6 @@ on *:PART:#:{
       cycle
       .notice %boss. [ $+ [ $network ] ] 00 $+ Auto-Cycle: 11 $+ $chan 04 $+ is empty $+ , 11 $+ Auto-Cycle 04 $+ to get 11 $+ Ops $+ 04 $+ ...
       echo -st 00 $+ Auto-Cycle: 11 $+ $chan 04 $+ is empty $+ , 11 $+ Auto-Cycle 04 $+ to get 11 $+ Ops $+ 04 $+ ...
-      beep
     }
   }
 }

@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 50
+ut2 return 51
 ;
 ;month (xx)
 ut3 return 03
 ;
 ;day (xx)
-ut4 return 08
+ut4 return 21
 ;
 ;year (xxxx)
 ut5 return 2026
@@ -365,7 +365,6 @@ mybar { titlebar - $chr(91) Clone $mid($nopath($mircini),4,2) ] $chr(91) nick: $
   return
 }
 /join.setup {
-  beep
   set %connected. [ $+ [ $network ] ] $network
   set %connserv. [ $+ [ $network ] ] $server
   if (%boss. [ $+ [ $network ] ] != $me) { .ctcp %boss. [ $+ [ $network ] ] REG }
