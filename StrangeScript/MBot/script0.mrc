@@ -170,7 +170,8 @@ on *:KICK:#: {
   if ($knick == $me) && ($nick == $me) { .raw join # %owner. [ $+ [ # ] ] | halt }
   if ($knick == %boss. [ $+ [ $network ] ]) && ($nick != $me) { .raw kick # $nick Auto | halt }
   if ($knick == %boss. [ $+ [ $network ] ]) && ($nick == $me) { .mode # -o $me | halt }
-  if ($level($address($nick,4)) == 5) { .raw join # %owner. [ $+ [ # ] ] | halt }
+  if ($level($address($nick,4)) == 4) { .raw join # %owner. [ $+ [ # ] ] | msg # One of these days Buster | halt }
+  if ($level($address($nick,4)) == 5) { .raw join # %owner. [ $+ [ # ] ] | msg # Troublemaker | halt }
 }
 on *:RAWMODE:#: {
   if ($nick == $server) { halt }
