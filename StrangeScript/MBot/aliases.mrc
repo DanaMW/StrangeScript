@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 52
+ut2 return 53
 ;
 ;month (xx)
-ut3 return 03
+ut3 return 04
 ;
 ;day (xx)
-ut4 return 28
+ut4 return 02
 ;
 ;year (xxxx)
 ut5 return 2026
@@ -42,6 +42,7 @@ lll return $chr(186) $+ (
 rrr return ) $+ $chr(186)
 cls clear
 clsa clearall
+setupshow $report(System Setting,$null,SET,$null,$1-).active
 chain {
   if ($1 != $null) { return $lowcol $+  $+ $str(¤,$1) $+  }
   else { return $lowcol $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ }
