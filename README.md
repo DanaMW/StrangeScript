@@ -50,7 +50,7 @@ That resets the bot. You may use /bot OFF at any time the
 bot needs resetting. The bot is multi-server, you can have
 1 copy running on each server if you like.
 
-I am fond of the main bot, MBot (StrangeScript/StrangeScript/System)
+I am fond of the main bot, MBot (StrangeScript/StrangeScript/MBot)
 Runs off its own copy of mIRC in the MBot folder. That is
 it's own session. It is fully integrated into the script.
 But I like to copy everything over to another machine and
