@@ -324,7 +324,7 @@ masterwrite {
   goto begin
   :end
   if ($1 == $2) { 
-    if ($master(settings,Query.Windows) == ON) && ($window(=$nick) == $null) { /query $1 }
+    if (%Query.Windows. [ $ [ $network ] ] == ON) && ($window(=$nick) == $null) { /query $1 }
     if ($window(=$nick) == $null) { echo $color(highlight) -at WHISPER:  $+ %sc.me $+ $lll $white $+ $1  $+ %sc.me $+ $rrr $+  $report($null,UnHexed) $+  $replace(%hex.comp,$chr(95),$chr(160)) }
     if ($window(=$nick) != $null) { echo $color(highlight) -t $nick $output  $+ %sc.me $+ $lll $white $+ $1  $+ %sc.me $+ $rrr $+  $report($null,UnHexed) $+  $replace(%hex.comp,$chr(95),$chr(160)) }
   }
