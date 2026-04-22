@@ -372,18 +372,18 @@ on *:TEXT:*:#: {
   ;#.extra Format: .extra <ON|OFF> (Turns verbos information ON or OFF.)
   if ($strip($1) == .extra) {
     if ($2 == $null) {
-      $point Format: .extra <ON|OFF> (Turns verbos information ON or OFF.)
-      $point $report(Extra,$null,is set,%extra. [ $+ [ $network ] ])
+      msg # Format: .extra <ON|OFF> (Turns verbos information ON or OFF.)
+      msg # $report(Extra,$null,is set,%extra. [ $+ [ $network ] ]) $report($null,$null,for) $report($network)
       halt
     }
     if ($2 == ON) {
       set %extra. [ $+ [ $network ] ] ON
-      $point $report(Extra,$null,is set,%extra. [ $+ [ $network ] ])
+      msg # $report(Extra,$null,is set,%extra. [ $+ [ $network ] ]) $report($null,$null,for) $report($network)
       halt
     }
     if ($2 == OFF) {
       set %extra. [ $+ [ $network ] ] OFF
-      $point $report(Extra,$null,is set,%extra. [ $+ [ $network ] ])
+      msg # $report(Extra,$null,is set,%extra. [ $+ [ $network ] ]) $report($null,$null,for) $report($network)
       halt
     }
     halt
@@ -707,8 +707,9 @@ on *:TEXT:*:#: {
     $point $report(Raw,$null,Sent,$2-)
     halt
   }
-  ;#.reconnect Format: .reconnect <ON|OFF> ( Sets reconnect after disconnect for the bot [You must use .quit to exit if ON]. )
-  if ($strip($1) == .reconnect) {
+  ;#.restart Format: .restart <ON|OFF> ( Sets reconnect after disconnect for the bot [You must use .quit to exit if ON (or DROP DEAD)]. )
+  ;#.reconnect Format: .reconnect <ON|OFF> ( Sets reconnect after disconnect for the bot [You must use .quit to exit if ON (or DROP DEAD)]. )
+  if ($strip($1) == .reconnect) || ($strip($1) == .restart) {
     var %tmp.reconnect = $lcr
     if ($2 == ON) {
       set %reconnect. [ $+ [ $network ] ] ON
