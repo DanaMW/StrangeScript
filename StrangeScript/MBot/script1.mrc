@@ -907,10 +907,12 @@ on *:TEXT:*:#: {
   if ($strip($1) == .talk) {
     if ($2 == -H) || ($2 == HELP) { $point $report(Format: .talk [ON|OFF|-A/ADD|-D/DEL|-L/LIST|-S/STATUS] <#room> (Controls Interactive Speach for the given <#room>.)) | halt }
     if ($2 == ON) {
-      .load -rs talker.mrc
       set %talk.on. [ $+ [ $network ] ] ON
       if ($3 == $null) { $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ]) | halt }
-      if ($3 != $null) { set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44) }
+      if ($3 != $null) {
+        if ($chr(35) !isin $3) { $point $report(Error,$null,Room names include $chr(35)) | halt }
+        set %talk.room. [ $+ [ $network ] ] $addtok(%talk.room. [ $+ [ $network ] ],$3,44) 
+      }
       $point $report(Interactive Speach,$null,Turned,%talk.on. [ $+ [ $network ] ])
       $point $report(Active Rooms,$null,$null,$replace(%talk.room. [ $+ [ $network ] ],$chr(44),$chr(32)))
       halt

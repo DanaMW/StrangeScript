@@ -2,13 +2,13 @@
 ut1 return 03
 ;
 ;Minor version (xx)
-ut2 return 54
+ut2 return 55
 ;
 ;month (xx)
 ut3 return 04
 ;
 ;day (xx)
-ut4 return 22
+ut4 return 24
 ;
 ;year (xxxx)
 ut5 return 2026
@@ -47,6 +47,7 @@ chain {
   if ($1 != $null) { return $lowcol $+  $+ $str(¤,$1) $+  }
   else { return $lowcol $+ ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤ }
 }
+separator return ---------------------
 reload load.again
 load.again { 
   .timer 1 2 load.rest
