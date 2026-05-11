@@ -61,6 +61,12 @@ alias bot {
       botsetshow WORK bot.work channel is now %bot.work. [ $+ [ $network ] ]
       return
     }
+    if ($2 == BOT.DEV) || ($2 == DEV) {
+      if ($3 == $null) { return }
+      set %bot.dev. [ $+ [ $network ] ] $3-
+      botsetshow DEV bot.dev method is now %bot.dev. [ $+ [ $network ] ]
+      return
+    }
     if ($2 == BOT.PLAY) || ($2 == PLAY) {
       if ($3 == $null) { return }
       set %bot.play. [ $+ [ $network ] ] $3-
@@ -189,8 +195,8 @@ alias bot {
     return
   }
   if ($1 == KICK) {
-    if ($chr(35) isin $2) { sockwrite -n Bot [ $+ [ $network ] ] kick $2  $3 : $+ $4- | return }
-    else { sockwrite -n Bot [ $+ [ $network ] ] kick # $2  : $+ $3- | return }
+    if ($chr(35) isin $2) { if ($3 != $key(settings,boss)) { sockwrite -n Bot [ $+ [ $network ] ] kick $2  $3 : $+ $4- } | return }
+    else { if ($2 != $key(settings,boss)) { sockwrite -n Bot [ $+ [ $network ] ] kick # $2  : $+ $3- } | return }
   }
   if ($1 == JOIN) {
     if ($2 == $null) { sockwrite -n Bot [ $+ [ $network ] ] join # }
@@ -233,12 +239,12 @@ alias bot {
   if ($1 == QUIT) {
     if ($2 == $null) {
       sockwrite -n Bot [ $+ [ $network ] ] quit :Goodbye
-      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] }
       return
     }
     else {
       if ($sock(bot [ $+ [ $network ] ]) != $null) { sockwrite -n Bot [ $+ [ $network ] ] quit : $+ $2- }
-      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] }
       return
     }
   }
@@ -434,7 +440,7 @@ on 1:SOCKREAD:Bot*:{
 }
 on 1:SOCKCLOSE:Bot*:{
   sockclose Bot [ $+ [ $network ] ]
-  if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] ] }
+  if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] ] }
   set %Bot.active. [ $+ [ $network ] ] 0
   botsetshow BotClose ClosingBot [ $+ [ $network ] ] $sock(Bot [ $+ [ $network ] ] ).wserr $sock(Bot [ $+ [ $network ] ] ).wsmsg
   if (%bot.reconnect. [ $+ [ $network ] ] == ON) { timerfire $+ $network 1 1 goto bot start $network }
@@ -456,34 +462,34 @@ alias botsay {
   if (%bot.disp. [ $+ [ $network ] ] == OFF) { return }
   if (%bot.disp. [ $+ [ $network ] ] == ACTIVE) { return echo -at # $sys %tmp.zbuild }
   if (%bot.disp. [ $+ [ $network ] ] == STATUS) { return echo -st # $sys %tmp.zbuild }
-  if (%bot.disp. [ $+ [ $network ] ] == CHANNEL) { return echo -t %bot.disp.dev. [ $+ [ $network ] ] $sys %tmp.zbuild }
-  if (%bot.disp. [ $+ [ $network ] ] == MESSAGE) { return msg %bot.disp.dev. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == CHANNEL) { return echo -t %bot.dev. [ $+ [ $network ] ] $sys %tmp.zbuild }
+  if (%bot.disp. [ $+ [ $network ] ] == MESSAGE) { return msg %bot.dev. [ $+ [ $network ] ] $sys %tmp.zbuild }
   if (%bot.disp. [ $+ [ $network ] ] == WINDOW) {
-    window -g1e0 %bot.disp.dev. [ $+ [ $network ] ]
-    return aline -p %bot.disp.dev. [ $+ [ $network ] ] $sys %tmp.zbuild
+    window -g1e0 %bot.dev. [ $+ [ $network ] ]
+    return aline -p %bot.dev. [ $+ [ $network ] ] $sys %tmp.zbuild
   }
   return
 }
 alias bot.disp {
   if ($1 == $null) { set %bot.disp. [ $+ [ $network ] ] STATUS }
-  if ($1 == REPORT) { $report(Bot Setting,bot.disp,is set to,%bot.disp. [ $+ [ $network ] ]).active | $report(Bot Setting,bot.disp.dev,is set to,%bot.disp.dev. [ $+ [ $network ] ]).active | return }
+  if ($1 == REPORT) { $report(Bot Setting,bot.disp,is set to,%bot.disp. [ $+ [ $network ] ]).active | $report(Bot Setting,bot.dev,is set to,%bot.dev. [ $+ [ $network ] ]).active | return }
   if ($1 == OFF) { 
-    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] }
     set %bot.disp. [ $+ [ $network ] ] $1
     $report(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
     return
   }
   if ($1 == ACTIVE) { 
-    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] }
     set %bot.disp. [ $+ [ $network ] ] ACTIVE
-    unset %bot.disp.dev. [ $+ [ $network ] ]
+    unset %bot.dev. [ $+ [ $network ] ]
     $report(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
     return
   }
   if ($1 == STATUS) {
-    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+    if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] }
     set %bot.disp. [ $+ [ $network ] ] STATUS
-    unset %bot.disp.dev. [ $+ [ $network ] ]
+    unset %bot.dev. [ $+ [ $network ] ]
 
     $report(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
     return
@@ -491,15 +497,15 @@ alias bot.disp {
   if ($1 == CHANNEL) {
     if ($2 == $null) {
       set %bot.disp. [ $+ [ $network ] ] CHANNEL
-      set %bot.disp.dev. [ $+ [ $network ] ] #
+      set %bot.dev. [ $+ [ $network ] ] #
     }
     if ($2 != $null) {
-      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] }
       set %bot.disp. [ $+ [ $network ] ] CHANNEL
-      set %bot.disp.dev. [ $+ [ $network ] ] $2
+      set %bot.dev. [ $+ [ $network ] ] $2
     }
     $report(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
-    $report(BotSay,SET,Option,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ $network ] ]).active
+    $report(BotSay,SET,Option,$null,bot.dev,%bot.dev. [ $+ [ $network ] ]).active
     return
   }
   if ($1 == MESSAGE) {
@@ -509,12 +515,12 @@ alias bot.disp {
       return
     }
     if ($2 != $null) {
-      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.disp.dev. [ $+ [ $network ] ] }
+      if ($window(@botSay [ $+ [ $network ] ]) != $null) { window -c %bot.dev. [ $+ [ $network ] ] }
       set %bot.disp. [ $+ [ $network ] ] MESSAGE
-      set %bot.disp.dev. [ $+ [ $network ] ] $2
+      set %bot.dev. [ $+ [ $network ] ] $2
     }
     $report(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
-    $report(BotSay,SET,Option,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ $network ] ]).active
+    $report(BotSay,SET,Option,$null,bot.dev,%bot.dev. [ $+ [ $network ] ]).active
     return
   }
   if ($1 == WINDOW) {
@@ -526,12 +532,12 @@ alias bot.disp {
     if ($2 != $null) {
       var %tmp.winmake $2 [ $+ [ $network ] ]
       set %bot.disp. [ $+ [ $network ] ] WINDOW
-      set %bot.disp.dev. [ $+ [ $network ] ] $chr(64) $+ $remove(%tmp.winmake,$chr(64))
+      set %bot.dev. [ $+ [ $network ] ] $chr(64) $+ $remove(%tmp.winmake,$chr(64))
       window -a $chr(64) $+ $remove(%tmp.winmake,$chr(64))
       return
     }
     $report(BotSay,SET,Option,$null,bot.disp,%bot.disp. [ $+ [ $network ] ]).active
-    $report(BotSay,SET,Option,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ $network ] ]).active
+    $report(BotSay,SET,Option,$null,bot.dev,%bot.dev. [ $+ [ $network ] ]).active
     return
   }
 }
@@ -568,7 +574,7 @@ alias bothelp {
   $report($chain(2),$null,Bot Status,$sock(Bot [ $+ [ %tmp.bhlp ] ]).status,$sock(Bot [ $+ [ %tmp.bhlp ] ] ).name).active 
   $report($chain(2),$null,$null,Current Network,%tmp.bhlp).active
   $report($chain(2),$null,$null,bot.disp,%bot.disp. [ $+ [ %tmp.bhlp ] ] ).active
-  $report($chain(2),$null,$null,bot.disp.dev,%bot.disp.dev. [ $+ [ %tmp.bhlp ] ] ).active
+  $report($chain(2),$null,$null,bot.dev,%bot.dev. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.work, %bot.work. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.play, %bot.play. [ $+ [ %tmp.bhlp ] ] ).active
   $report($chain(2),$null,$null,bot.nick, %bot.nick. [ $+ [ %tmp.bhlp ] ] ).active
@@ -622,7 +628,7 @@ alias bot.status {
   $report($chain(11) Listing Active Bots $chain(11)).active
   while (%tmp.botn1 <= %tmp.botn2) {
     $report(Bot Status,On Server,%tmp.botn1,$remove($sock(bot*,%tmp.botn1),Bot)).active
-    $report(Using,$null,%bot.disp. [ $+ [ $remove($sock(bot*,%tmp.botn1),Bot) ] ] $+ %bot.disp.dev. [ $+ [ $remove($sock(bot*,%tmp.botn1),Bot) ] ]).active
+    $report(Using,$null,%bot.disp. [ $+ [ $remove($sock(bot*,%tmp.botn1),Bot) ] ] $+ %bot.dev. [ $+ [ $remove($sock(bot*,%tmp.botn1),Bot) ] ]).active
     $report($chain(37)).active
     inc %tmp.botn1
   }
