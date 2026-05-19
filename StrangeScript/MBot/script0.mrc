@@ -3,7 +3,9 @@
 ;;;   Version Kept in Alias files.
 ;;;   Please submit working changes for inclusion. Thanks.
 ;;;
+;;;   Uncomment below for debugging
 ;raw  *:*:{ $report($event,$rawmsg).active }
+;;;
 on 1:WALLOPS:*killed by System*:{ notice %boss. [ $+ [ $network ] ] $1- | echo -st $1- }
 on 1:START: { mygo }
 alias mygo  {
@@ -22,6 +24,7 @@ alias mygo  {
   return
 }
 on 1:CONNECT:{
+  ;Extra shit for manual config networks.
   if ($network == UnderNet) { if (%irc.oper.nick. [ $+ [ $network ] ] != $null) { msg X@channels.undernet.org LOGIN %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ] } }
   if ($network == DeepNet) { if (%irc.oper.nick. [ $+ [ $network ] ] != $null) { msg X@channels.Deep.org LOGIN %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] ] } }
   .raw mode $me +i 
@@ -37,6 +40,7 @@ on 1:CONNECT:{
   ;}
   ; below is where i am going to add the oper stuff for us.
   ;if (%irc.oper.nick. [ $+ [ $network ] ] != $null) && (%irc.oper.pass. [ $+ [ $network ] ] != $null) { .timerOPER 1 60 oper %irc.oper.nick. [ $+ [ $network ] ] %irc.oper.pass. [ $+ [ $network ] }
+  ;;;     The bot is up and running.
 }
 on 1:DISCONNECT:{
   if (%reconnect. [ $+ [ $network ] ] == ON) {
